@@ -1,7 +1,7 @@
 # pomdp-py
 
 A package that contains implementation of POMDP, Object-Oriented POMDP, and Abstract POMDP.
-Includes solvers, such as POMCP, OO-POMCP. Integrated with `simple-rl`. 
+Includes solvers, such as POMCP, OO-POMCP. Integrated with [`simple_rl`](https://github.com/david-abel/simple_rl). 
 
 Can be used for POMDP related research, or if you want to formulate a problem as a POMDP as solve it.
 Just describe your problem in the `pomdp` format, and use an existing solver to solve it.
@@ -22,7 +22,7 @@ cd simple_rl
 git checkout -b kaiyu/pomdp
 ```
 
-Install `python-py` as a developer
+Install `pomdp-py` as a developer
 ```
 git clone git@github.com:zkytony/pomdp-py.git
 cd pomdp-py
