@@ -159,7 +159,7 @@ class Maze1DPOMDP(POMDP):
         cur_robot_pose = state.robot_pose
         next_robot_pose = next_state.robot_pose
         reward = 0
-        if cur_robot_pose == next_robot_pose:
+        if action != AbstractPOMDP.BACKTRACK and cur_robot_pose == next_robot_pose:
             reward -= 10  # didn't move sucessfully
         if self.maze.target_pose < self.world_range[0] or self.maze.target_pose >= self.world_range[1]:
             if action == AbstractPOMDP.BACKTRACK:
