@@ -3,6 +3,7 @@ import random
 import math
 import sys
 import time
+import copy
 from pomdp_py import *
 
 
@@ -33,40 +34,62 @@ class Maze1D_BeliefState(BeliefState):
     def __init__(self, distribution, name="BeliefState"):
         super().__init__(distribution, name=name)
 
-
-class Maze1D:
-    def __init__(self, worldstr, **kwargs):
+class Maze1D(Environment):
+    def __init__(self, worldstr):
         """worldstr: e.g. ...R...T.."""
         self.worldstr = worldstr
         self._d = np.zeros((len(worldstr),))
-        self._robot_pose = kwargs.get("robot_pose", None)
-        self._target_pose = kwargs.get("target_pose", None)
         for i, c in enumerate(worldstr):
             if c == ".":
                 self._d[i] = 0
             elif c == "T":
                 self._d[i] = 1
-                self._target_pose = i
+                target_pose = i
             elif c == "R":
                 self._d[i] = 0
-                self._robot_pose = i
+                robot_pose = i
+        self.cur_state = Maze1D_State(robot_pose, target_pose)
+        
     @property
     def robot_pose(self):
-        return self._robot_pose
+        return self.cur_state.robot_pose
+    
     @property
     def target_pose(self):
-        return self._target_pose
+        return self.cur_state.target_pose
+
+    @property
+    def state(self):
+        return self.cur_state
+
+    def state_transition(self, action):
+        """The maze environment only understands low-level actions."""
+        self.cur_state = Maze1D_State(self.if_move_by(self.robot_pose, action),
+                                      self.target_pose)
+        return self.cur_state
+    
     def move_robot(self, action):
         self._robot_pose = self.if_move_by(self.robot_pose, action)
+        
+    def if_move_by(self, robot_pose, movement):
+        return max(0, min(len(self._d), robot_pose + movement))
+    
+    def __len__(self):
+        return len(self._d)
+    
     def if_move_by(self, robot_pose, action, world_range=None):
         if type(action) != int:
             return robot_pose
         if world_range is None:
             world_range = (0, len(self._d))
         return max(world_range[0], min(world_range[1]-1, robot_pose + action))
+    
     def __len__(self):
         return len(self._d)
-        
+
+
+## WARNING. POMDP will not maintain true state. True state should be maintained by
+# some other object (the environment).
     
 class Maze1DPOMDP(POMDP):
     def __init__(self, maze, gamma=0.99, prior="RANDOM", representation="particles", **kwargs):
@@ -168,16 +191,12 @@ class Maze1DPOMDP(POMDP):
 
     def execute_agent_action(self, real_action, **kwargs):
         # just executes the action. no belief will be updated.
-        cur_true_state = Maze1D_State(self.robot_pose, self.target_pose)
-        if type(real_action) == int:
-            next_true_state = Maze1D_State(max(0,min(len(self.maze), self.robot_pose + real_action)), self.target_pose)
-        else:
-            next_true_state = Maze1D_State(cur_true_state.robot_pose, self.target_pose)
+        cur_true_state = copy.deepcopy(self.maze.state)
+        self.maze.state_transition(real_action)
+        next_true_state = copy.deepcopy(self.maze.state)
         real_observation = self.observation_func(next_true_state, real_action)
-        self.maze.move_robot(real_action)
-        self.cur_state = next_true_state
-        self._last_real_action = real_action
         reward = self.reward_func(cur_true_state, real_action, next_true_state)
+        self._last_real_action = real_action
         return reward, real_observation
     
     def belief_update(self, real_action, real_observation, **kwargs):
@@ -262,7 +281,7 @@ def unittest():
     num_particles = 1000
     maze = Maze1D(sys.argv[1])
     pomdp = Maze1DPOMDP(maze, prior="RANDOM", representation="particles",
-                        num_particles=num_particles, world_range=(3, 10))
+                        num_particles=num_particles)
     planner = POMCP(pomdp, num_particles=num_particles,
                     max_time=1.0, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
                     exploration_const=math.sqrt(2))
