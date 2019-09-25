@@ -271,6 +271,7 @@ class POMCP(Planner):
         reward = self._pomdp.reward_func(state, action, next_state)
         return next_state, observation, reward
 
+    # Deprecated!
     def plan_and_execute_next_action(self):
         """This function is supposed to plan an action, execute that action,
         and update the belief"""
@@ -278,6 +279,7 @@ class POMCP(Planner):
         # execute action and update belief
         return self.execute_next_action(action)
 
+    # Deprecated!    
     def execute_next_action(self, action):
         """Execute the given action, and update the belief"""
         reward, observation = self._pomdp.execute_agent_action_update_belief(action, num_particles=self._num_particles,
@@ -285,6 +287,7 @@ class POMCP(Planner):
         self.cleanup(action, observation)
         return action, reward, observation
 
+    # Deprecated! Exists only for update()
     def cleanup(self, action, observation):
         self._history += ((action, observation),)
         # Truncate the tree
@@ -295,3 +298,13 @@ class POMCP(Planner):
             self._expand_vnode(self._tree)
 
 
+    def plan_next_action(self):
+        return self.search(self._history)
+
+    def update(self, real_action, real_observation):
+        self.cleanup(real_action, real_observation)
+
+    @property
+    def params(self):
+        return {"num_particles":self._num_particles,
+                "observation_based_resampling":self._observation_based_resampling}

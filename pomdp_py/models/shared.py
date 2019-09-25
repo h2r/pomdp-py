@@ -16,19 +16,23 @@ class BeliefState(State):
      Abstract class defining a belief state,
     i.e a probability distribution over states.
     '''
-    def __init__(self, belief_distribution):
+    def __init__(self, belief_distribution, name=None):
         '''
         Args:
             belief_distribution (defaultdict)
         '''
         self.distribution = belief_distribution
+        if name is None:
+            name = self.__class__.__name__
+        self.name = name
         State.__init__(self, data=[])
+            
 
     def __repr__(self):
         return self.__str__()
 
     def __str__(self):
-        return 'BeliefState::' + str(self.distribution)
+        return '%s::%s' % (self.name, str(self.distribution))
 
     def update(self, *params, **kwargs):
         self.distribution = self.distribution.update(*params, **kwargs)
@@ -68,6 +72,10 @@ class BeliefDistribution:
         pass
     def update(self, real_action, real_observation, pomdp, **kwargs):
         pass
+    def get_abstraction(self, state_mapper):
+        """Returns a representation of the distribution over abstracted states
+        which can be used to initialize an instance of this kind of distribution"""
+        pass
         
 class BeliefDistribution_Particles(BeliefDistribution):
     def __init__(self, particles):
@@ -79,7 +87,7 @@ class BeliefDistribution_Particles(BeliefDistribution):
 
     def __str__(self):
         hist = self.get_histogram()
-        hist = [(k,hist[k]) for k in list(reversed(sorted(hist, key=hist.get)))[:5]]
+        hist = [(k,hist[k]) for k in list(reversed(sorted(hist, key=hist.get)))]
         return str(hist)
 
     def __len__(self):
@@ -161,6 +169,11 @@ class BeliefDistribution_Particles(BeliefDistribution):
             state_counts_self[s] = state_counts_self[s] / len(self._particles)
         return state_counts_self
 
+    def get_abstraction(self, state_mapper):
+        particles = [state_mapper(s) for s in self._particles]
+        return particles
+        
+
 
 class BeliefDistribution_Histogram:
     def __init__(self, histogram):
@@ -227,3 +240,14 @@ class BeliefDistribution_Histogram:
 
     def get_histogram(self):
         return self._histogram
+
+    def get_abstraction(self, state_mapper):
+        state_mappings = {s:state_mapper(s) for s in self._histogram}
+        hist = {}
+        for s in self._histogram:
+            a_s = state_mapper(s)
+            if a_s not in hist[a_s]:
+                hist[a_s] = 0
+            hist[a_s] += self._histogram[s]
+        return hist
+    

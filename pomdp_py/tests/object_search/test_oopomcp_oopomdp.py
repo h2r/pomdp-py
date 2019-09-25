@@ -1,12 +1,12 @@
 #OO OO
 import pygame
 from maze2d_oo import MultiTargetGridWorld, MultiTargetEnvironment, dist
-from maze2d import Environment
 
 # from simple_rl.pomdp.OOPOMDPClass import OOPOMDP
 from simple_rl.mdp.StateClass import State
 
 from pomdp_py import * # OOPOMDP
+from maze2d import Environment
 # from pomdp_py.OOPOMDP import OOPOMDP_ObjectState, OOPOMDP, OOPOMDP_State, OOPOMDP_BeliefState
 # from moos3d.planning.shared import BeliefState, RandomPlanner
 # from moos3d.planning.oopomcp import OOPOMCP_Histogram, OOPOMCP

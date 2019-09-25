@@ -8,7 +8,7 @@ class POMDP(MDP):
     ''' Abstract class for a Partially Observable Markov Decision Process. '''
 
     def __init__(self, actions, transition_func, reward_func, observation_func,
-                 init_belief, init_true_state, gamma=0.99, step_cost=0):
+                 init_belief, init_true_state=None, gamma=0.99, step_cost=0):
         '''
         In addition to the input parameters needed to define an MDP, the POMDP
         definition requires an observation function, a way to update the belief
@@ -32,7 +32,10 @@ class POMDP(MDP):
         self.observation_func = observation_func
         self.init_belief = init_belief
         self.cur_belief = init_belief
-        MDP.__init__(self, actions, transition_func, reward_func, init_true_state, gamma, step_cost)
+        self._last_real_action = None
+        MDP.__init__(self, actions, transition_func, reward_func,
+                     init_state=init_true_state,
+                     gamma=gamma, step_cost=step_cost)
 
     def get_cur_belief(self):
         return self.cur_belief
@@ -43,7 +46,8 @@ class POMDP(MDP):
             observation_function: O(s, a) -> o
         '''
         return self.observation_func
-        
+
+    # DEPRECATED!
     def execute_agent_action_update_belief(self, action, **kwargs):
         # Execute agent action AND update the current belief. This function is used
         # by planners (e.g. POMCP) and it combines the two steps to ensure flexibility
@@ -52,6 +56,19 @@ class POMDP(MDP):
             """reward provided by the environment after the agent executes a real action"""
             raise NotImplemented
         raise NotImplemented
+
+
+    # The Environment should execute actions and maintain true states. The
+    # POMDP is only used to provide observation and reward, based on the
+    # O and R specified in the POMDP; The transition function does not
+    # matter when a real action is being executed, because a real next
+    # state will occur.
+    def real_action_taken(self, real_action, state, next_state):
+        observation = self.observation_func(next_state, real_action)
+        # Note: This may not be the environment's reward function. 
+        reward = self.reward_func(state, real_action, next_state)
+        self._last_real_action = real_action
+        return observation, reward
 
     def belief_update(self, real_action, real_observation, **kwargs):
         raise NotImplemented

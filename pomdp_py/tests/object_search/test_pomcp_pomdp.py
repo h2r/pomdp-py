@@ -1,6 +1,6 @@
 # Test POMCP on a POMDP
-from maze2d import GridWorld, Environment, dist
 from pomdp_py import *
+from maze2d import GridWorld, Environment, dist
 
 import pygame
 import cv2

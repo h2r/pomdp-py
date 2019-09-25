@@ -62,11 +62,13 @@ class Maze1D(Environment):
     def state(self):
         return self.cur_state
 
-    def state_transition(self, action):
+    def state_transition(self, action, execute=True):
         """The maze environment only understands low-level actions."""
-        self.cur_state = Maze1D_State(self.if_move_by(self.robot_pose, action),
-                                      self.target_pose)
-        return self.cur_state
+        next_state = Maze1D_State(self.if_move_by(self.robot_pose, action),
+                                  self.target_pose)
+        if execute:
+            self.cur_state = next_state
+        return next_state
     
     def move_robot(self, action):
         self._robot_pose = self.if_move_by(self.robot_pose, action)
@@ -98,7 +100,6 @@ class Maze1DPOMDP(POMDP):
         world_range = max(0, world_range[0]), min(len(self.maze), world_range[1])
         self.world_range = world_range
 
-        init_true_state = Maze1D_State(self.robot_pose, self.target_pose)
         if representation == "exact":
             histogram = {}
             total_prob = 0
@@ -132,7 +133,7 @@ class Maze1DPOMDP(POMDP):
         actions = [1, -1, AbstractPOMDP.BACKTRACK]
         self._last_real_action = None
         POMDP.__init__(self, actions, self.transition_func, self.reward_func, self.observation_func,
-                       init_belief, init_true_state, gamma=gamma)
+                       init_belief, None, gamma=gamma)
     @property
     def robot_pose(self):
         return max(0, self.world_range[0], min(self.maze.robot_pose, self.world_range[1]))
@@ -170,35 +171,6 @@ class Maze1DPOMDP(POMDP):
                 reward += 10*math.exp(-abs(next_state.robot_pose - self.maze.target_pose))
         return reward - 0.01
     
-    def execute_agent_action_update_belief(self, real_action, **kwargs):
-        """Completely overriding parent's function.
-        Belief update NOT done here; see update_belief"""
-
-        # def env_reward_func(agent_mpe_state, prev_agent_mpe_state):
-        #     """The function that computes the reward that the environment gives to the robot"""
-        #     reward = 10*math.exp(-abs(agent_mpe_state.robot_pose - self.maze.target_pose))
-        #     if agent_mpe_state.robot_pose == prev_agent_mpe_state.robot_pose:
-        #         if agent_mpe_state.target_pose < self.world_range[0] or agent_mpe_state.target_pose >= self.world_range[1]:
-        #             if real_action == AbstractPOMDP.GIVEUP:
-        #                 reward += 10
-        #         else:
-        #             reward -= 10                                
-        #     return reward
-        reward, real_observation = self.execute_agent_action(real_action, **kwargs)
-        # update the belief.
-        self.belief_update(real_action, real_observation, **kwargs)
-        return reward, real_observation
-
-    def execute_agent_action(self, real_action, **kwargs):
-        # just executes the action. no belief will be updated.
-        cur_true_state = copy.deepcopy(self.maze.state)
-        self.maze.state_transition(real_action)
-        next_true_state = copy.deepcopy(self.maze.state)
-        real_observation = self.observation_func(next_true_state, real_action)
-        reward = self.reward_func(cur_true_state, real_action, next_true_state)
-        self._last_real_action = real_action
-        return reward, real_observation
-    
     def belief_update(self, real_action, real_observation, **kwargs):
         print("updating belief (concrete pomdp)>>>>")
         # print(self.cur_belief.distribution.mpe())
@@ -215,7 +187,6 @@ class Maze1DPOMDP(POMDP):
         """Used for particle reinvigoration"""
         state.target_pose = max(0, min(len(self.maze)-1, state.target_pose + random.randint(-1, 1)))
 
-
     def print_true_state(self):
         s = ["."] * len(self.maze)
         s[self.robot_pose] = "R"
@@ -225,8 +196,9 @@ class Maze1DPOMDP(POMDP):
 
 class POMDPExperiment:
 
-    def __init__(self, pomdp, planner, max_episodes=100):
+    def __init__(self, maze, pomdp, planner, max_episodes=100):
         self._planner = planner
+        self._maze = maze  # the environment
         self._pomdp = pomdp
         self._discounted_sum_rewards = 0
         self._num_iter = 0
@@ -244,10 +216,18 @@ class POMDPExperiment:
                 reward = None
 
                 start_time = time.time()
-                action, reward, observation = \
-                    self._planner.plan_and_execute_next_action()  # the action is a control to the robot
+                action = self._planner.plan_next_action()
                 total_time += time.time() - start_time
 
+                state = copy.deepcopy(self._maze.state)
+                next_state = self._maze.state_transition(action)
+                observation, reward = self._pomdp.real_action_taken(action, state, next_state)
+                self._pomdp.belief_update(action, observation, **self._planner.params)
+                self._planner.update(action, observation)
+                
+                # action, reward, observation = \
+                #     self._planner.plan_and_execute_next_action()  # the action is a control to the robot
+                
                 if reward is not None:
                     self._pomdp.print_true_state()                
                     print("---------------------------------------------")
@@ -286,7 +266,7 @@ def unittest():
                     max_time=1.0, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
                     exploration_const=math.sqrt(2))
     
-    experiment = POMDPExperiment(pomdp, planner, max_episodes=100)
+    experiment = POMDPExperiment(maze, pomdp, planner, max_episodes=100)
     experiment.run()
 
 if __name__ == '__main__':
