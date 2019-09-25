@@ -123,7 +123,7 @@ class POMCP(Planner):
         print("%s%s" % ("    "*depth, str(root)))
         for c in root.children:
             if root[c].num_visits > 1:
-                self.print_tree_helper(root[c], depth+1)
+                self.print_tree_helper(root[c], depth+1, max_depth=max_depth)
             
     def print_tree(self, max_depth=None):
         self.print_tree_helper(self._tree, 0, max_depth=max_depth)
@@ -243,6 +243,8 @@ class POMCP(Planner):
         progresses."""
         if history is None:
             history = self._history
+        # Sync POMDP's belief to tree
+        self._tree.belief = copy.deepcopy(self._pomdp.cur_belief.distribution)            
         start_time = time.time()
         while time.time() - start_time < self._max_time:
             if len(history) == 0:
@@ -291,6 +293,5 @@ class POMCP(Planner):
             # observation was never encountered in simulation.
             self._tree = POMCP.VNode(self._num_visits_init, self._value_init, POMCP_Particles([]))
             self._expand_vnode(self._tree)
-        # Sync POMDP's belief to tree 
-        self._tree.belief = copy.deepcopy(self._pomdp.cur_belief.distribution)
+
 
