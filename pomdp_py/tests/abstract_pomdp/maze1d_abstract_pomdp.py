@@ -59,7 +59,7 @@ class Maze1D_AbstractPOMDP(AbstractPOMDP):
             movement = -1
         elif abstract_action == "right":
             movement = 1
-        world_range = (0, len(self.maze)//self._seglen+1)
+        world_range = (0, len(self.maze)//self._seglen)
         next_robot_pose = self.maze.if_move_by(state.robot_pose, movement, world_range=world_range)
         return Maze1D_State(next_robot_pose, state.target_pose)
 
@@ -252,7 +252,10 @@ class POMDPExperiment:
                     self._maze.state_transition(action)
                 next_state = self._abstract_pomdp.state_mapper(self._maze.state)
                 abstract_observation, reward = self._abstract_pomdp.real_action_taken(abstract_action, state, next_state)
+                # try:
                 self._abstract_pomdp.belief_update(abstract_action, abstract_observation, **self._planner.params)
+                # except Exception:
+                #     import pdb; pdb.set_trace()
                 self._planner.update(abstract_action, abstract_observation)                
 
                 # action, reward, observation = \

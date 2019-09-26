@@ -189,6 +189,7 @@ def plan_abstract_BACKTRACK(maze, abstract_pomdp, planner, max_iter=50):
             observations.append(observation)
             print_info(action, observation, reward)
 
+        abstract_observation = None            
         if action == AbstractPOMDP.BACKTRACK:
             print("BACKTRACK!")
             # udpate abstract pomdp belief using accumulated obseravtions
