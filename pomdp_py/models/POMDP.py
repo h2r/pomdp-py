@@ -57,16 +57,18 @@ class POMDP(MDP):
             raise NotImplemented
         raise NotImplemented
 
-
     # The Environment should execute actions and maintain true states. The
     # POMDP is only used to provide observation and reward, based on the
     # O and R specified in the POMDP; The transition function does not
     # matter when a real action is being executed, because a real next
     # state will occur.
+    def env_reward_func(self, state, real_action, next_state):
+        return self.reward_func(state, real_action, next_state)
+    
     def real_action_taken(self, real_action, state, next_state):
         observation = self.observation_func(next_state, real_action)
         # Note: This may not be the environment's reward function. 
-        reward = self.reward_func(state, real_action, next_state)
+        reward = self.env_reward_func(state, real_action, next_state)
         self._last_real_action = real_action
         return observation, reward
 

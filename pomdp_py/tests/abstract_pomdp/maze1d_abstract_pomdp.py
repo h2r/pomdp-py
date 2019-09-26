@@ -289,15 +289,13 @@ class POMDPExperiment:
         return self._num_iter
     
     
-def unittest():
+def unittest(mazestr, num_segments):
     random.seed(100)
     num_particles = 1500
-    maze = Maze1D(sys.argv[1])
+    maze = Maze1D(mazestr)
     pomdp = Maze1DPOMDP(maze, prior="RANDOM", representation="particles",
                         num_particles=num_particles, gamma=0.6)
     pomdp.print_true_state()
-
-    num_segments = int(sys.argv[2])
 
     init_state = Maze1D_State(maze.robot_pose, maze.robot_pose)
     init_belief = pomdp.init_belief
@@ -315,80 +313,5 @@ def unittest():
     experiment = POMDPExperiment(maze, abstract_pomdp, planner, max_episodes=100)
     experiment.run()    
 
-    # # TEST initial belief 
-    # test_init_belief_correct(abstract_pomdp)
-    # # TEST transition function
-    # test_transition_function_correct(abstract_pomdp)
-    
-    # planner = AbstractPOMDPPlanner(abstract_pomdp, pomcp_builder)
-
-    # # run
-    # num_iter = 0
-    # max_iter = 100
-    # total_time = 0
-    # discounted_sum_rewards = 0
-    # rewards = []
-    # try:
-    #     while not abstract_pomdp.is_in_goal_state()\
-    #           and (num_iter < max_iter):
-
-    #         reward = None
-
-    #         start_time = time.time()
-    #         r = \
-    #             planner.plan_and_execute_next_action(
-    #                 # representation="particles",
-    #                 num_particles=num_particles,
-    #                 observation_based_resampling=False)  # the action is a control to the robot
-    #         total_time += time.time() - start_time
-    #         action, reward, observation = r[:3]            
-
-    #         if reward is not None:
-    #             pomdp.print_true_state()                
-    #             print("---------------------------------------------")
-    #             print("%d: Action: %s; Reward: %.3f; Cumulative Reward: %.3f; Observation: %s"
-    #                   % (num_iter, str(action), reward, discounted_sum_rewards, str(observation)))
-    #             print("---------------------------------------------")
-    #             discounted_sum_rewards += ((pomdp.gamma ** num_iter) * reward)
-    #             rewards.append(reward)
-
-    #         # inp = input("continue? ")
-    #         # while not inp.startswith("y"):
-    #         #     if inp.startswith("n"):
-    #         #         num_iter = max_iter
-    #         #         break
-    #         #     else:
-    #         #         inp = input("continue? ")
-
-    #         # self._env._last_observation = self._pomdp.gridworld.provide_observation()
-    #         num_iter += 1
-        
-    # except KeyboardInterrupt:
-    #     print("Stopped")
-    # finally:
-    #     print("Belief log:")
-    #     # import numpy as np
-    #     # import matplotlib.pyplot as plt
-    #     # for i, dist in enumerate(abstract_pomdp.belief_log):
-    #     #     print(dist)
-    #     #     x = np.arange(len(maze) // scale+1)
-    #     #     y = np.zeros((len(maze) // scale+1,))
-    #     #     hist = dist.get_histogram()
-    #     #     for s in hist:
-    #     #         y[s.target_pose] = hist[s]
-    #     #     robot_pose = abstract_pomdp.state_log[i].robot_pose
-    #     #     plt.plot(x,y,"o-")
-    #     #     plt.axhline(y=0, color='k')
-    #     #     plt.axvline(x=0, color='k')
-    #     #     plt.axvline(x=maze.target_pose//scale, color='g')        
-    #     #     plt.axvline(x=robot_pose, color='r')
-    #     #     plt.xlabel("maze locations")
-    #     #     plt.ylabel("p(target_pose)")
-    #     #     plt.tight_layout()
-    #     #     plt.savefig("figures/abstract-belief-%d.png" % i)
-    #     #     plt.close()
-    # print("Done!")        
-    # return total_time, rewards
-
 if __name__ == '__main__':
-    unittest()
+    unittest(sys.argv[1], sys.argv[2])

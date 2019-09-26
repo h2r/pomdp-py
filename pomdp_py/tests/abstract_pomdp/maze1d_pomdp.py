@@ -6,6 +6,8 @@ import time
 import copy
 from pomdp_py import *
 
+POMCP_PLANNING_TIME = 0.5
+
 
 # Unit testing
 class Maze1D_State(State):
@@ -170,6 +172,14 @@ class Maze1DPOMDP(POMDP):
             else:
                 reward += 10*math.exp(-abs(next_state.robot_pose - self.maze.target_pose))
         return reward - 0.01
+
+    def env_reward_func(self, state, action, next_state):
+        reward = -0.01
+        if next_state.robot_pose == self.maze.target_pose:
+            reward += 10
+        if type(action) == int and next_state.robot_pose == state.robot_pose:
+            reward -= 10
+        return reward
     
     def belief_update(self, real_action, real_observation, **kwargs):
         print("updating belief (concrete pomdp)>>>>")
@@ -257,17 +267,20 @@ class POMDPExperiment:
 def _rollout_policy(tree, actions):
     return random.choice(actions)    
                    
-def unittest():
+def unittest(mazestr, max_episodes=50):
     num_particles = 1000
-    maze = Maze1D(sys.argv[1])
+    maze = Maze1D(mazestr)
     pomdp = Maze1DPOMDP(maze, prior="RANDOM", representation="particles",
                         num_particles=num_particles)
     planner = POMCP(pomdp, num_particles=num_particles,
-                    max_time=1.0, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
-                    exploration_const=math.sqrt(2))
+                    max_time=POMCP_PLANNING_TIME, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
+                    exploration_const=math.sqrt(4))
     
     experiment = POMDPExperiment(maze, pomdp, planner, max_episodes=100)
-    experiment.run()
+    total_time, rewards = experiment.run()
+    print("Total planning time: %.3fs; Rewards: %.3f" % (total_time, sum(rewards)))
+    return total_time, rewards
+    
 
 if __name__ == '__main__':
-    unittest()
+    unittest(sys.argv[1])
