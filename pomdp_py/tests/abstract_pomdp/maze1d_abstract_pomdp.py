@@ -90,6 +90,13 @@ class Maze1D_AbstractPOMDP(AbstractPOMDP):
         #     reward -= 10
         # return reward - 0.01
 
+    def env_reward_func(self, state, action, next_state):
+        reward = 0
+        if self.is_in_goal_state():
+            reward += 10
+        return reward - 0.01
+        
+
     def state_mapper(self, state):
         return Maze1D_State(state.robot_pose//self._seglen, state.target_pose//self._seglen)
 

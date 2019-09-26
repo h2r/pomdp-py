@@ -4,7 +4,7 @@ from maze1d_hierarchical import unittest as unittest_hierarchical
 import numpy as np
 
 
-worldlen = 20
+worldlen = 30
 num_segments = 5
 
 results_pomdp = []
@@ -13,7 +13,7 @@ results_backtrack = []
 
 try:
 
-    for i in range(3):
+    for i in range(30):
         print()
         print()
         print("~~~~~~~~~~~~~~~~~~~~Case %d~~~~~~~~~~~~~~~~~~~~" % i)

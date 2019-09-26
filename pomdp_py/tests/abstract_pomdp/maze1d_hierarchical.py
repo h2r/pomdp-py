@@ -291,6 +291,7 @@ def plan_abstract_SEARCH(maze, abstract_pomdp, planner, max_iter=50):
             abstract_observation, reward = abstract_pomdp.real_action_taken(abstract_action, abstract_state, next_abstract_state)
             abstract_pomdp.belief_update(abstract_action, abstract_observation, **planner.params)
             planner.update(abstract_action, abstract_observation)
+            rewards.append(reward)
         print_info(abstract_action, abstract_observation, reward)
     return total_time, rewards
 
