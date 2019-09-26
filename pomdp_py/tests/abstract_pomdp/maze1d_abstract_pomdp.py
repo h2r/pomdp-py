@@ -19,8 +19,11 @@ class Maze1D_AbstractBeliefState(Maze1D_BeliefState):
         super().__init__(distribution, name=name)
 
 class Maze1D_AbstractPOMDP(AbstractPOMDP):
-    def __init__(self, maze, num_segments, gamma=0.99):
-        abstract_actions = ['left', 'right',AbstractPOMDP.SEARCH]
+    def __init__(self, maze, num_segments, gamma=0.99, allow_search=True):
+        if allow_search:
+            abstract_actions = ['left', 'right', AbstractPOMDP.SEARCH]
+        else:
+            abstract_actions = ['left', 'right']
         self.maze = maze
         self._seglen = len(self.maze) // num_segments
         assert self._seglen * num_segments == len(maze), "Segments must have same length. (%d/%d)" % (len(self.maze), num_segments)
@@ -95,6 +98,14 @@ class Maze1D_AbstractPOMDP(AbstractPOMDP):
             if o >= 0:
                 return o//self._seglen
         return -1
+
+    def generate_concrete_pomdp(self, abstract_state, gamma=0.8, **kwargs):
+        world_range = (self._seglen*(abstract_state.robot_pose),
+                       self._seglen*(abstract_state.robot_pose+1))
+        pomdp = Maze1DPOMDP(self.maze, gamma=gamma,
+                            world_range=world_range,
+                            **kwargs)
+        return pomdp
 
     def generate_pomdp_from_abstract_action(self, abstract_action, abstract_state, *params, **kwargs):
         # Because we assume the robot knows its own pose, by taking the abstract
