@@ -4,10 +4,11 @@ A package that contains implementation of POMDP, Object-Oriented POMDP, and Abst
 Includes solvers, such as POMCP, OO-POMCP. Integrated with [`simple_rl`](https://github.com/david-abel/simple_rl). 
 
 Can be used for POMDP related research, or if you want to formulate a problem as a POMDP as solve it.
-Just describe your problem in the `pomdp` format, and use an existing solver to solve it.
 
-There are existing repositories of POMDP implementation in Python. Currently, the additional value of this package
-is the object-oriented POMDP implementation, abstract pomdp implementation.
+There are existing repositories of POMDP implementation in Python. Currently,
+the additional value of this package is the implementation of POMCP,
+object-oriented POMCP, object-oriented POMDP, abstract POMDP implementation, and
+an intuitive POMDP class hierarchy and interface.
 
 ## Getting started
 
