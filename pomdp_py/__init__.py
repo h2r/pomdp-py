@@ -10,3 +10,4 @@ from pomdp_py.solvers.OOPOMCP import OOPOMCP, OOPOMCP_Histogram
 from pomdp_py.solvers.random import RandomPlanner
 from pomdp_py.models.AbstractPOMDP import AbstractPOMDP
 from pomdp_py.solvers.AbstractPOMDPPlanner import AbstractPOMDPPlanner
+from pomdp_py.models.AbstractOOPOMDP import AbstractOOPOMDP

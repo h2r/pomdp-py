@@ -9,130 +9,6 @@ import time
 
 POMCP_PLANNING_TIME = 0.5
 
-# class AbstractPOMDPPlanner(Planner):
-#     def __init__(self, maze, abstract_pomdp, num_particles=1000):
-#         self._abstract_pomdp = abstract_pomdp
-#         self._abstract_pomdp_planner = POMCP(abstract_pomdp, num_particles=num_particles,
-#                                        max_time=1.0, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
-#                                        exploration_const=math.sqrt(4))  # exploration const helps!!!!!
-#         self._maze = maze
-#         self._num_particles = num_particles
-#         self._plan_level = "abstract"
-#         self._pending_actions = []
-#         self._accumulating_observations = []
-#         self._concrete_pomdp = None
-#         self._concrete_pomdp_planner = None
-#         self.cur_abstract_action = None
-
-#     def plan_next_action(self):
-#         if self._plan_level == "abstract":
-#             if len(self._pending_actions) == 0:
-#                 abstract_action = self._abstract_pomdp_planner.plan_next_action()
-#                 self.cur_abstract_action = abstract_action
-#                 if abstract_action != AbstractPOMDP.SEARCH:
-#                     self._pending_actions = self._abstract_pomdp.action_mapper(abstract_action, self._maze.state)
-#                     action = self._pending_actions.pop(0)
-#                 else:
-#                     self._plan_level = "concrete"
-#                     self._concrete_pomdp = self._abstract_pomdp.generate_concrete_pomdp(self._abstract_pomdp.state_mapper(self._maze.state),
-#                                                                                         num_particles=self._num_particles)  # techinically, concrete pomdp can have different num_particles
-#             else:
-#                 action = self._pending_actions.pop(0)
-#                 if len(self._pending_actions) == 0:
-#                     self._plan_level = "abstract"
-                    
-#         if self._plan_level == "concrete":
-#             if self._concrete_pomdp_planner is None:
-#                 self._concrete_pomdp_planner = POMCP(self._concrete_pomdp_planner, num_particles=self._num_particles,
-#                                                      max_time=1.0, max_depth=100, gamma=0.6, rollout_policy=_rollout_policy,
-#                                                      exploration_const=math.sqrt(4))  # exploration const helps!!!!!
-#             action = self._concrete_pomdp_planner.plan_next_action()
-#         return action
-
-#     def update(self, real_action, real_observation):
-#         if self._plan_level == "abstract":
-#             self._abstract_pomdp_planner.update(real_action, real_observation)
-#             if real_action == AbstractPOMDP.SEARCH:
-#                 self._plan_level = "concrete"
-#         else:
-#             self._concrete_pomdp_planner.update(real_action, real_observation)
-#             if real_action == AbstractPOMDP.BACKTRACK:
-#                 self._plan_level = "abstract"
-
-
-# class POMDPExperiment:
-
-#     def __init__(self, maze, abstract_pomdp, fullpomdp, abstract_planner, max_episodes=100):
-#         self._maze = maze
-#         self._abstract_planner = abstract_planner
-#         self._abstract_pomdp = abstract_pomdp
-#         self._pomdp = fullpomdp
-#         self._discounted_sum_rewards = 0
-#         self._num_iter = 0
-#         self._max_episodes = max_episodes
-
-#     def run(self):
-#         # self._env.on_loop()
-#         self._num_iter = 0
-#         total_time = 0
-#         rewards = []
-
-#         accumulating_observations = []
-#         try:
-#             while not self._abstract_pomdp.is_in_goal_state()\
-#                   and (self._num_iter < self._max_episodes):
-
-#                 reward = None
-
-#                 start_time = time.time()
-#                 action = self._planner.plan_next_action()
-#                 total_time += time.time() - start_time
-
-#                 # execute the action, and transition state.
-#                 state = copy.deepcopy(self._maze.state)
-#                 self._maze.state_transition(action)
-#                 next_state = copy.deepcopy(self._maze.state)
-
-#                 # accumulate the observation
-#                 observation, reward = self._pomdp.real_action_taken(action, state, next_state)
-#                 self.accumulating_observations.append(observation)
-
-#                 if action == AbstractPOMDP.BACKTRACK:
-#                     abstract_observation = self._abstract_pomdp.observation_mapper(self._accumulating_observations)
-#                     self._abstract_pomdp.belief_update(self._planner.cur_abstract_action,
-#                                                        abstract_observation)
-#                     sim_abstract_observation, reward = self._abstract_pomdp.real_action_taken(abstract_action, state, next_state)
-#                     assert sim_abstract_observation == abstract_observation, "sim!=real; belief update will suffer"
-#                     self._planner.update(self._planner.cur_abstract_action, abstract_observation)
-#                 else:
-#                     self._planner.update(action, observation)
-
-#                 if reward is not None:
-#                     self._abstract_pomdp.print_true_state()                
-#                     print("---------------------------------------------")
-#                     print("%d: Action: %s; Reward: %.3f; Cumulative Reward: %.3f;  Observation: %s"
-#                           % (self._num_iter, str(action), reward, self._discounted_sum_rewards, str(observation)))
-#                     print("---------------------------------------------")
-#                     self._discounted_sum_rewards += reward
-#                     rewards.append(reward)
-
-#                 # self._env._last_observation = self._abstract_pomdp.gridworld.provide_observation()
-#                 self._num_iter += 1
-#         except KeyboardInterrupt:
-#             print("Stopped")
-#             return
-
-#         print("Done!")
-#         return total_time, rewards
-
-#     @property
-#     def discounted_sum_rewards(self):
-#         return self._discounted_sum_rewards
-
-#     @property
-#     def num_episode(self):
-#         return self._num_iter
-
 def print_true_state(maze, seglen=1):
     s = ["."] * (len(maze)//seglen)
     s[maze.robot_pose//seglen] = "R"
@@ -228,7 +104,8 @@ def plan_abstract_SEARCH(maze, abstract_pomdp, planner, max_iter=50):
         print_true_state(maze, seglen=abstract_pomdp._seglen)
         print("=True world=======")
         print_true_state(maze, seglen=1)
-        
+
+        abstract_observation = None
         abstract_state = abstract_pomdp.state_mapper(maze.state)
         start_time = time.time()
         abstract_action = planner.plan_next_action()

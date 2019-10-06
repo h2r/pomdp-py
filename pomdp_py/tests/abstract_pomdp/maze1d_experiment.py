@@ -4,7 +4,7 @@ from maze1d_hierarchical import unittest as unittest_hierarchical
 import numpy as np
 
 
-worldlen = 30
+worldlen = 60
 num_segments = 5
 
 results_pomdp = []

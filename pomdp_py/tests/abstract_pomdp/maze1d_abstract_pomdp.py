@@ -27,12 +27,12 @@ class Maze1D_AbstractPOMDP(AbstractPOMDP):
         self.maze = maze
         self._seglen = len(self.maze) // num_segments
         assert self._seglen * num_segments == len(maze), "Segments must have same length. (%d/%d)" % (len(self.maze), num_segments)
-        init_state = self.state_mapper(Maze1D_State(self.maze.robot_pose, self.maze.target_pose))
+        # init_state = self.state_mapper(Maze1D_State(self.maze.robot_pose, self.maze.target_pose))
         self._last_action = None
         super().__init__(abstract_actions, self.transition_func,
                          self.reward_func, self.observation_func,
                          None,
-                         init_state,
+                         # init_state,
                          gamma=gamma)
 
     def set_prior(self, belief):

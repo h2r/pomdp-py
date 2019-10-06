@@ -7,7 +7,7 @@ Can be used for POMDP related research, or if you want to formulate a problem as
 Just describe your problem in the `pomdp` format, and use an existing solver to solve it.
 
 There are existing repositories of POMDP implementation in Python. Currently, the additional value of this package
-is the object-oriented POMDP implementation, abstract pomdp implementation, and a parser for easy POMDP description.
+is the object-oriented POMDP implementation, abstract pomdp implementation.
 
 ## Getting started
 
