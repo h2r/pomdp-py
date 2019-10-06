@@ -16,6 +16,6 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def state_transition(self, action, execute=True):
+    def state_transition(self, action, execute=True, **kwargs):
         """Modifies current state of the environment"""
         pass

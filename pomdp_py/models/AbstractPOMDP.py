@@ -13,14 +13,14 @@ class AbstractPOMDP(POMDP):
                  abstract_reward_func,
                  abstract_observation_func,
                  init_abstract_belief,
-                 init_abstract_state,
+                 init_abstract_state=None,  # this is deprecated. See POMDP
                  gamma=0.99):
         super().__init__(abstract_actions,
                          abstract_transition_func,
                          abstract_reward_func,
                          abstract_observation_func,
                          init_abstract_belief,
-                         init_abstract_state,
+                         init_true_state=init_abstract_state,
                          gamma=gamma)
 
     def state_mapper(self, state, *params, **kwargs):

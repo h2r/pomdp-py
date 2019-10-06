@@ -157,7 +157,7 @@ class OOPOMDP(POMDP):
 
     def __init__(self, attributes, domains,
                  actions, transition_func, reward_func, observation_func,
-                 init_belief, init_objects_state, gamma=0.99, step_cost=0):
+                 init_belief, init_objects_state=None, gamma=0.99, step_cost=0):
         """
         attributes: a dictionary that maps from class to a set of strings.
         domains: a dictionary that maps from (class, attribute) to a function 
@@ -169,21 +169,29 @@ class OOPOMDP(POMDP):
         self.attributes = attributes
         self.domains = domains
 
-        super().__init__(actions, transition_func, reward_func, observation_func,
-                         init_belief, init_objects_state, gamma=gamma, step_cost=step_cost)
+        POMDP.__init__(self, actions, transition_func, reward_func, observation_func,
+                       init_belief,
+                       init_true_state=init_objects_state,  # deprecated
+                       gamma=gamma, step_cost=step_cost)
         
-    def verify_state(self, state):
+    def verify_state(self, state, verbose=True):
         """Returns true if state (OOPOMDP_State) is valid."""
         object_states = state.object_states
         for objid in object_states:
             objclass = object_states[objid].objclass
             if objclass not in self.attributes:
+                if verbose:
+                    print("Object class %s does not have specified attriubtes!" % objclass)
                 return False
             attrs = object_states[objid].attributes
             for attr in attrs:
                 if attr not in self.attributes[objclass]:
+                    if verbose:
+                        print("Attribute %s is not specified for class %s!" % (attr, objclass))
                     return False
                 attr_value = object_states[objid][attr]
                 if not self.domains[(objclass, attr)](attr_value):
+                    if verbose:
+                        print("Attribute value %s not in domain (%s, %s)" % (attr_value, objclass, attr))
                     return False
         return True

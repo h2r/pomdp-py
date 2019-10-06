@@ -17,6 +17,11 @@ class POMDP(MDP):
         by the agent internally. This is different from the reward provided by
         the environment after the agent executes a real action; this reward should
         be specified in the `env_reward_func` under `execute_agent_action_update_belief`.
+
+        `init_true_state` is deprecated. POMDP doesn't maintain true state; It should
+        be maintained by the Environment.
+
+        `step_cost` is deprecated. The reward function defines costs.
         
         Args:
             actions (list)

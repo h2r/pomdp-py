@@ -137,17 +137,16 @@ class BeliefDistribution_Particles(BeliefDistribution):
                 state_counts_other[s] += 1
             return state_counts_self == state_counts_other
 
-    def mpe(self):
-        max_counts = 0
+    def mpe(self, hist=None):
         mpe_state = None
-        state_counts_self = {}
-        for s in self._particles:
-            if s not in state_counts_self:
-                state_counts_self[s] = 0
-            state_counts_self[s] += 1
-            if state_counts_self[s] > max_counts:
-                max_counts = state_counts_self[s]
+        if hist is None:
+            hist = self.get_histogram()
+        for s in hist:
+            if mpe_state is None:
                 mpe_state = s
+            else:
+                if hist[s] > hist[mpe_state]:
+                    mpe_state = s
         return mpe_state
 
     def random(self):
