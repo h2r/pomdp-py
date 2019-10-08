@@ -163,7 +163,8 @@ class Maze1DPOMDP(POMDP):
         reward = 0
         if action != AbstractPOMDP.BACKTRACK and cur_robot_pose == next_robot_pose:
             reward -= 10  # didn't move sucessfully
-        if self.maze.target_pose < self.world_range[0] or self.maze.target_pose >= self.world_range[1]:
+        # if self.maze.target_pose < self.world_range[0] or self.maze.target_pose >= self.world_range[1]:            
+        if next_state.target_pose < self.world_range[0] or next_state.target_pose >= self.world_range[1]:
             if action == AbstractPOMDP.BACKTRACK:
                 reward += 10
         else:
@@ -283,4 +284,7 @@ def unittest(mazestr, max_episodes=50):
     
 
 if __name__ == '__main__':
-    unittest(sys.argv[1])
+    if len(sys.argv) < 2:
+        print("Usage: %s <mazestr>\n\n<mazestr>: Maze string e.g. T....R" % (sys.argv[0]))
+    else:
+        unittest(sys.argv[1])

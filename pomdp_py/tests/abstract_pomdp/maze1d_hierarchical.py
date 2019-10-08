@@ -205,6 +205,10 @@ def unittest(mazestr, num_segments, allow_search=True):
 
 if __name__ == '__main__':
     allow_search = True
+    if len(sys.argv) < 2:
+        print("Usage: %s <mazestr> <num_segments> [--no-search]\n\n"\
+              "<mazestr>: Maze string e.g. T....R\n\n"\
+              "<num_segments>: number of segments e.g. 5" % (sys.argv[0]))        
     if len(sys.argv) > 3:
         if sys.argv[3] == "--no-search":
             allow_search = False

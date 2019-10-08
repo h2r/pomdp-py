@@ -74,7 +74,7 @@ class Maze1D_AbstractPOMDP(AbstractPOMDP):
         next_robot_pose = next_state.robot_pose
         reward = 0
         if abstract_action == AbstractPOMDP.SEARCH:
-            if next_state.robot_pose == self.maze.target_pose//self._seglen:
+            if next_state.robot_pose == next_state.target_pose: #self.maze.target_pose//self._seglen:
                 reward += 10
             else:
                 reward -= 10
@@ -321,4 +321,9 @@ def unittest(mazestr, num_segments):
     experiment.run()    
 
 if __name__ == '__main__':
-    unittest(sys.argv[1], sys.argv[2])
+    if len(sys.argv) < 3:
+        print("Usage: %s <mazestr> <num_segments>\n\n"\
+              "<mazestr>: Maze string e.g. T....R\n\n"\
+              "<num_segments>: number of segments e.g. 5" % (sys.argv[0]))
+    else:    
+        unittest(sys.argv[1], int(sys.argv[2]))
