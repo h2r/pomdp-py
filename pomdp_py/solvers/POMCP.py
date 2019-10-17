@@ -36,9 +36,13 @@ class POMCP_Particles(BeliefDistribution_Particles):
             return next_state, observation, reward
         
         # Update the belief
+        observations = []
+        states = []
         new_belief = POMCP_Particles([])
         for state in self._particles:
             next_state, observation, reward = generator(state, real_action)
+            observations.append(observation)
+            states.append(next_state)
             if observation == real_observation:
                 new_belief.add(next_state)
         if len(new_belief) == num_particles:
@@ -61,11 +65,14 @@ class POMCP_Particles(BeliefDistribution_Particles):
                         break
             else:
                 # random
-                print("Randomly resample all particles.")
+                print("**Randomly resample all particles.**")
                 for i in range(num_particles):
                     new_belief.add(pomdp.cur_belief.sample(sampling_method='random'))
 
             if len(new_belief) == 0:  # If still not able to help, fail.
+                print("REAL OBSERVATION: %s" % str(real_observation))
+                print(states[:10])                
+                print(observations[:10])
                 raise ValueError("No help. Particle depletion.")
                 
         # If not enough particles, introduce artificial noise to existing particles (reinvigoration)
