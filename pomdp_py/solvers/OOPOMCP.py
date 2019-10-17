@@ -229,28 +229,27 @@ class OOPOMCP(Planner):
     def execute_next_action(self, action):
         """Execute the given action, and update the belief"""
         reward, observation = self._oopomdp.execute_agent_action_update_belief(action)
-        self._history += ((action, observation),)
-        # Truncate the tree
-        self._tree = self._tree[action][observation]
-        if self._tree is None:
-            # observation was never encountered in simulation.
-            self._tree = OOPOMCP.VNode(self._num_visits_init, self._value_init)
-        self._expand_vnode(self._tree)
+        self.update(action, observation)
         return action, reward, observation
-    
 
     # TODO
     def plan_next_action(self):
-        pass
+        return self.search(self._history)
     
     # TODO
     def update(self, real_action, real_observation):
         """update the planner (e.g. truncate the search tree) after
         a real action has been taken and a real observation obtained"""
-        pass
+        self._history += ((real_action, real_observation),)
+        # Truncate the tree
+        self._tree = self._tree[real_action][real_observation]
+        if self._tree is None:
+            # observation was never encountered in simulation.
+            self._tree = OOPOMCP.VNode(self._num_visits_init, self._value_init)
+            self._expand_vnode(self._tree)
 
     # TODO    
     @property
     def params(self):
         """returns a dictionary of parameter names to values"""
-        pass
+        return {}
