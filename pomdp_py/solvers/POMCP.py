@@ -66,8 +66,12 @@ class POMCP_Particles(BeliefDistribution_Particles):
             else:
                 # random
                 print("**Randomly resample all particles.**")
-                for i in range(num_particles):
-                    new_belief.add(pomdp.cur_belief.sample(sampling_method='random'))
+                if hasattr(pomdp, "generate_prior"):
+                    # Warning: Depends on specific pomdp implementation
+                    new_belief = pomdp.generate_prior("RANDOM", "particles", num_particles=num_particles).distribution
+                else:
+                    for i in range(num_particles):
+                        new_belief.add(pomdp.cur_belief.sample(sampling_method='random'))
 
             if len(new_belief) == 0:  # If still not able to help, fail.
                 print("REAL OBSERVATION: %s" % str(real_observation))
