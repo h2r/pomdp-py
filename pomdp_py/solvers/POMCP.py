@@ -259,7 +259,7 @@ class POMCP(Planner):
         start_time = time.time()
         while time.time() - start_time < self._max_time:
             if len(history) == 0:
-                state = self._pomdp.init_belief.sample(sampling_method='max')
+                state = self._pomdp.init_belief.sample(sampling_method='random')
             else:
                 state = self._tree.belief.random()
             self._simulate(state, self._tree, None, None, 0)

@@ -175,14 +175,19 @@ class BeliefDistribution_Particles(BeliefDistribution):
 
 
 class BeliefDistribution_Histogram:
-    def __init__(self, histogram):
+    def __init__(self, histogram, log=False):
         """Histogram is a dictionary mapping from state to probability"""
         if not (isinstance(histogram, dict)):
             raise ValueError("Unsupported histogram representation! %s" % str(type(histogram)))
         self._histogram = histogram
+        self._log = log
         # ticks = (np.arange(self._histogram.shape[i]) for i in range(len(self._histogram.shape)))
         # indices = np.meshgrid(*ticks)
         # self._vertices = np.stack([*indices], axis=-1).reshape(-1, len(self._histogram.shape))
+
+    @property
+    def log_space(self):
+        return self._log
 
     @property
     def histogram(self):
