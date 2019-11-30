@@ -44,7 +44,7 @@ class OOPOMDP(ABC):
         pass    
 
 
-class OOPOMDP_ObjectState(ABC):
+class ObjectState(ABC):
     def __init__(self, objclass, attributes):
         """
         class: "class",
@@ -85,7 +85,7 @@ class OOPOMDP_ObjectState(ABC):
         return OOPOMDP_ObjectState(self.objclass, copy.deepcopy(self.attributes))
     
 
-class OOPOMDP_State(ABC):
+class OOState(ABC):
 
     def __init__(self, object_states):
         """

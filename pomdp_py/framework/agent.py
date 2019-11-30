@@ -1,6 +1,4 @@
-from abc import ABC, abstractmethod
-
-class Agent(ABC):
+class Agent:
 
     def __init__(self, pomdp, init_belief,
                  policy_model,
@@ -22,6 +20,7 @@ class Agent(ABC):
                 and self._observation_model is not None\
                 and self._reward_model is not None
 
+        # For online planning
         self._cur_belief = init_belief
         self._history = ()
 
@@ -57,7 +56,6 @@ class Agent(ABC):
     def generative_model(self):
         return self.blackbox_model
 
-    @abstractmethod
     def update(self, real_action, real_observation, **kwargs):
         """updates the history and performs belief update"""
         raise NotImplemented

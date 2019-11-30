@@ -1,6 +1,4 @@
-from abc import ABC, abstractmethod
-
-class Environment(ABC):
+class Environment:
     """An Environment maintains the true state of the world.
     For example, it is the 2D gridworld, rendered by pygame.
     Or it could be the 3D simulated world rendered by OpenGL.

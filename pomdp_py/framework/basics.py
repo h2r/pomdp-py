@@ -43,7 +43,7 @@ class ObservationModel(ABC):
         raise NotImplemented
     @abstractmethod    
     def sample(self, next_state, action, normalized=False, **kwargs):
-        """Returns a tuple, (observation, probability) """
+        """Returns observation"""
         raise NotImplemented
     @abstractmethod
     def argmax(self, next_state, action, normalized=False, **kwargs):
@@ -60,7 +60,7 @@ class TransitionModel(ABC):
         raise NotImplemented
     @abstractmethod    
     def sample(self, state, action, normalized=False, **kwargs):
-        """Returns a tuple, (next_staet, probability) """
+        """Returns next_state"""
         raise NotImplemented
     @abstractmethod
     def argmax(self, state, action, normalized=False, **kwargs):
@@ -77,7 +77,7 @@ class RewardModel(ABC):
         raise NotImplemented
     @abstractmethod    
     def sample(self, state, action, next_state, normalized=False, **kwargs):
-        """Returns a tuple, (reward, probability) """
+        """Returns a reward"""
         raise NotImplemented
     @abstractmethod
     def argmax(self, state, action, next_state, normalized=False, **kwargs):
@@ -95,12 +95,15 @@ class BlackboxModel(ABC):
         raise NotImplemented
 
 class PolicyModel(ABC):
+    """The reason to have a policy model is to accommodate problems
+    with very large action spaces, and the available actions may vary
+    depending on the state (that is, certain actions have probabilty=0)"""
     @abstractmethod
-    def probability(self, state, normalized=False, **kwargs):
+    def probability(self, action, state, normalized=False, **kwargs):
         raise NotImplemented
     @abstractmethod    
     def sample(self, state, normalized=False, **kwargs):
-        """Returns a tuple, (reward, probability) """
+        """Returns an action"""
         raise NotImplemented
     @abstractmethod
     def argmax(self, state, normalized=False, **kwargs):
@@ -111,3 +114,9 @@ class PolicyModel(ABC):
         """Returns the underlying distribution of the model"""
         raise NotImplemented    
 
+# Belief distribution is just a distribution. There's nothing special,
+# except that the update/abstraction function can be performed over them.
+# But it would make the class hierarchy a lot more complicated if belief
+# distribution is also made explicit, which means, for example, a belief
+# distribution represented as a histogram would have to do multiple
+# inheritance; doing so, the additional value is little.

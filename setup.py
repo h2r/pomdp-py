@@ -7,7 +7,6 @@ setup(name='pomdp-py',
       version='1.0',
       description='POMDP, OO-POMDP for python with a parser.',
       install_requires=[
-          'simple_rl',     # make sure to use zkytony/simple_rl
           'numpy',
           'matplotlib',
           'pygame',        # for some tests
