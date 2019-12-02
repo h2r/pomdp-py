@@ -36,6 +36,16 @@ class Histogram(GenerativeDistribution):
             value = self.random()
             return hash(self._histogram[value])
 
+    def __eq__(self, other):
+        if not isinstance(other, Histogram):
+            return False
+        else:
+            for s in self._histogram:
+                if s not in other._histogram:
+                    return False
+                if self[s] != other[s]:
+                    return False
+
     def __iter__(self):
         return iter(self._histogram)
 
@@ -57,7 +67,7 @@ class Histogram(GenerativeDistribution):
     def get_histogram(self):
         return self._histogram
     
-    # Deprecated; it's assumign non-log probabilities
+    # Deprecated; it's assuming non-log probabilities
     def is_normalized(self):
         """Returns true if this distribution is normalized"""
         prob_sum = sum(self._histogram[state] for state in self._histogram)

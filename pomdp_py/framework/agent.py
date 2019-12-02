@@ -49,6 +49,10 @@ class Agent:
         return self._reward_model
 
     @property
+    def policy_model(self):
+        return self._policy_model
+
+    @property
     def blackbox_model(self):
         return self._blackbox_model
 
@@ -59,4 +63,21 @@ class Agent:
     def update(self, real_action, real_observation, **kwargs):
         """updates the history and performs belief update"""
         raise NotImplemented
-    
+
+    @property
+    def all_states(self):
+        """Only available if the transition model implements
+        `get_all_states`."""
+        return self.transition_model.get_all_states()
+
+    @property
+    def all_actions(self):
+        """Only available if the policy model implements
+        `get_all_actions`."""
+        return self.policy_model.get_all_actions()
+
+    @property
+    def all_observations(self):
+        """Only available if the observation model implements
+        `get_all_observations`."""
+        return self.observation_model.get_all_observations()    

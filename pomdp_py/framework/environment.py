@@ -15,6 +15,7 @@ class Environment:
         self._pomdp = pomdp
         self._init_state = init_state
         self._transition_model = transition_model
+        self._reward_model = reward_model
         self._cur_state = init_state
 
     @property
@@ -32,6 +33,10 @@ class Environment:
     @property
     def transition_model(self):
         return self._transition_model
+
+    @property
+    def reward_model(self):
+        return self._reward_model
     
     def state_transition(self, action, execute=True, **kwargs):
         """Modifies current state of the environment"""

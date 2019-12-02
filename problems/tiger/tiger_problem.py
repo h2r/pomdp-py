@@ -34,7 +34,7 @@ class TigerProblem:
 
     STATES = {"tiger-left", "tiger-right"}
     ACTIONS = {"open-left", "open-right", "listen"}
-    OBSERVATIONS = {"open-left", "open-right", "listen"}
+    OBSERVATIONS = {"tiger-left", "tiger-right"}
 
     def __init__(self, obs_probs, trans_probs, init_true_state, init_belief):
         """init_belief is a Distribution."""
@@ -50,10 +50,10 @@ class TigerProblem:
                                    init_true_state,
                                    TigerProblem.TransitionModel(self._trans_probs),
                                    TigerProblem.RewardModel())
-        self._agent = agent
-        self._env = env
+        self.agent = agent
+        self.env = env
 
-    class POMDP(pomdp_py.pomdp):
+    class POMDP(pomdp_py.POMDP):
         @classmethod
         def verify_state(cls, state):
             return state in TigerProblem.STATES
@@ -87,6 +87,9 @@ class TigerProblem:
         def get_distribution(self, next_state, action, **kwargs):
             """Returns the underlying distribution of the model; In this case, it's just a histogram"""
             return pomdp_py.Histogram(self._probs[next_state][action])
+
+        def get_all_observations(self):
+            return TigerProblem.OBSERVATIONS
         
     # Transition Model
     class TransitionModel(pomdp_py.TransitionModel):
@@ -109,12 +112,15 @@ class TigerProblem:
         def get_distribution(self, state, action, **kwargs):
             """Returns the underlying distribution of the model"""
             return pomdp_py.Histogram(self._probs[state][action])
+        
+        def get_all_states(self):
+            return TigerProblem.STATES
 
     # Reward Model
     class RewardModel(pomdp_py.RewardModel):
         def __init__(self, scale=1):
             self._scale = scale
-        def _reward_func(self, state, action, next_state):
+        def _reward_func(self, state, action):
             reward = 0
             if action == "open-left":
                 if state== "tiger-right":
@@ -131,23 +137,23 @@ class TigerProblem:
             return reward
 
         def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
-            if reward == self._reward_func(state, action, next_state):
+            if reward == self._reward_func(state, action):
                 return 1.0
             else:
                 return 0.0
-        @abstractmethod    
+            
         def sample(self, state, action, next_state, normalized=False, **kwargs):
             """Returns a reward"""
             # deterministic
-            return self._reward_func(state, action, next_state)
-        @abstractmethod
+            return self._reward_func(state, action)
+        
         def argmax(self, state, action, next_state, normalized=False, **kwargs):
             """Returns the most likely reward"""
-            return self._reward_func(state, action, next_state)
-        @abstractmethod    
+            return self._reward_func(state, action)
+        
         def get_distribution(self, state, action, next_state, **kwargs):
             """Returns the underlying distribution of the model"""
-            reward = self._reward_func(state, action, next_state)
+            reward = self._reward_func(state, action)
             return pomdp_py.Histogram({reward:1.0})
 
     # Policy Model
@@ -179,3 +185,60 @@ class TigerProblem:
         def get_distribution(self, state, **kwargs):
             """Returns the underlying distribution of the model"""
             return pomdp_py.Histogram(self._probs[state])
+
+        def get_all_actions(self):
+            return TigerProblem.ACTIONS
+
+
+if __name__ == '__main__':
+    # The values are set according to the paper.
+    obs_probs = {  # next_state -> action -> observation
+        "tiger-left":{ 
+            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
+        },
+        "tiger-right":{
+            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
+        }
+    }
+    
+    trans_probs = {  # state -> action -> next_state
+        "tiger-left":{ 
+            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
+        },
+        "tiger-right":{
+            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+            "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
+        }
+    }
+
+    init_true_state = random.choice(list(TigerProblem.STATES))
+    init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
+    tiger_problem = TigerProblem(obs_probs, trans_probs, init_true_state, init_belief)
+    planner = pomdp_py.ValueIteration(horizon=2)
+    action = planner.plan(tiger_problem.agent)
+
+    print("==== Step 1 ====")
+    print("True state: %s" % init_true_state)
+    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
+    print("Action: %s" % str(action))
+    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+
+    # Let's create some simulated real observation; Update the belief (a bit hacky)
+    real_observation = init_true_state 
+    tiger_problem.agent._cur_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
+                                                                       action, real_observation,
+                                                                       tiger_problem.agent.observation_model,
+                                                                       tiger_problem.agent.transition_model)
+    action = planner.plan(tiger_problem.agent)
+    print("==== Step 2 ====")
+    print("True state: %s" % init_true_state)
+    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
+    print("Action: %s" % str(action))
+    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))

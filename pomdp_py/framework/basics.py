@@ -25,7 +25,7 @@ class Distribution(ABC):
         raise NotImplemented
     def __next__(self):
         """Returns the next value of the iterator"""
-        raise NotImplemented    
+        raise NotImplemented
 
 class GenerativeDistribution(Distribution):
     def mpe(self):
@@ -53,6 +53,9 @@ class ObservationModel(ABC):
     def get_distribution(self, next_state, action, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
+    def get_all_observations(self):
+        """Returns a set of all possible observations, if feasible."""
+        raise NotImplemented        
     
 class TransitionModel(ABC):
     @abstractmethod
@@ -70,6 +73,9 @@ class TransitionModel(ABC):
     def get_distribution(self, state, action, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
+    def get_all_states(self):
+        """Returns a set of all possible states, if feasible."""
+        raise NotImplemented    
 
 class RewardModel(ABC):
     @abstractmethod
@@ -112,7 +118,10 @@ class PolicyModel(ABC):
     @abstractmethod    
     def get_distribution(self, state, **kwargs):
         """Returns the underlying distribution of the model"""
-        raise NotImplemented    
+        raise NotImplemented
+    def get_all_actions(self):
+        """Returns a set of all possible actions, if feasible."""
+        raise NotImplemented
 
 # Belief distribution is just a distribution. There's nothing special,
 # except that the update/abstraction function can be performed over them.
