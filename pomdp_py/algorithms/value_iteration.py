@@ -112,8 +112,7 @@ class ValueIteration(Planner):
                 if group_size > 0:
                     assert len(groups[o]) == group_size
                 group_size = len(groups[o])
-
-
+                
             permutations = itertools.product(*([np.arange(group_size)]*len(observations)))
             policy_trees = []
             for perm in permutations:

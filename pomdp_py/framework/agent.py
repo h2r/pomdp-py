@@ -25,12 +25,29 @@ class Agent:
         self._history = ()
 
     @property
+    def history(self):
+        # history are of the form ((a,o),...);
+        return self._history
+
+    def update_history(self, real_action, real_observation):
+        self._history += ((real_action, real_observation))
+
+    @property
+    def init_belief(self):
+        return self._init_belief
+
+    @property
     def belief(self):
         return self.cur_belief
 
     @property
     def cur_belief(self):
         return self._cur_belief
+
+    def set_belief(self, belief, prior=False):
+        self._cur_belief = belief
+        if prior:
+            self._init_belief = belief
 
     @property
     def pomdp(self):
@@ -59,6 +76,14 @@ class Agent:
     @property
     def generative_model(self):
         return self.blackbox_model
+
+    def add_attr(self, attr_name, attr_value):
+        """A function that allows adding attributes to the agent.
+        Sometimes useful for planners to store agent-specific information."""
+        if hasattr(self, attr_name):
+            raise ValueError("attributes %s already exists for agent." % attr_name)
+        else:
+            setattr(self, attr_name, attr_value)
 
     def update(self, real_action, real_observation, **kwargs):
         """updates the history and performs belief update"""

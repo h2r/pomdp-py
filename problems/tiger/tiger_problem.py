@@ -77,7 +77,6 @@ class TigerProblem:
             return self._probs[next_state][action][observation]
 
         def sample(self, next_state, action, normalized=False, **kwargs):
-            """Returns a tuple, (observation, probability) """
             return self.get_distribution(next_state, action).random()
 
         def argmax(self, next_state, action, normalized=False, **kwargs):
@@ -102,7 +101,6 @@ class TigerProblem:
             return self._probs[state][action][next_state]
 
         def sample(self, state, action, normalized=False, **kwargs):
-            """Returns a tuple, (next_staet, probability) """
             return self.get_distribution(state, action).random()
             
         def argmax(self, state, action, normalized=False, **kwargs):
@@ -143,7 +141,6 @@ class TigerProblem:
                 return 0.0
             
         def sample(self, state, action, next_state, normalized=False, **kwargs):
-            """Returns a reward"""
             # deterministic
             return self._reward_func(state, action)
         
@@ -190,6 +187,35 @@ class TigerProblem:
             return TigerProblem.ACTIONS
 
 
+def test_planner(tiger_problem, planner):
+    action = planner.plan(tiger_problem.agent)
+    print("==== Step 1 ====")
+    print("True state: %s" % tiger_problem.env.state)
+    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
+    print("Action: %s" % str(action))
+    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+
+    # Let's create some simulated real observation; Update the belief (a bit hacky)
+    real_observation = tiger_problem.env.state
+    print(">> Observation: %s" % real_observation)
+    tiger_problem.agent.update_history(action, real_observation)
+    if planner.update_agent_belief:
+        planner.update(tiger_problem.agent, action, real_observation)
+    else:
+        if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
+            new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
+                                                          action, real_observation,
+                                                          tiger_problem.agent.observation_model,
+                                                          tiger_problem.agent.transition_model)
+            tiger_problem.agent.set_belief(new_belief)
+            
+    action = planner.plan(tiger_problem.agent)
+    print("==== Step 2 ====")
+    print("True state: %s" % tiger_problem.env.state)
+    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
+    print("Action: %s" % str(action))
+    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))    
+
 if __name__ == '__main__':
     # The values are set according to the paper.
     obs_probs = {  # next_state -> action -> observation
@@ -214,31 +240,23 @@ if __name__ == '__main__':
         "tiger-right":{
             "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
             "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
+            "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
         }
     }
 
-    init_true_state = random.choice(list(TigerProblem.STATES))
+    init_true_state = "tiger-right" #random.choice(list(TigerProblem.STATES))
     init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
     tiger_problem = TigerProblem(obs_probs, trans_probs, init_true_state, init_belief)
-    planner = pomdp_py.ValueIteration(horizon=2)
-    action = planner.plan(tiger_problem.agent)
 
-    print("==== Step 1 ====")
-    print("True state: %s" % init_true_state)
-    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
-    print("Action: %s" % str(action))
-    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+    # Value iteration
+    print("** Testing value iteration **")
+    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
+    test_planner(tiger_problem, vi)
 
-    # Let's create some simulated real observation; Update the belief (a bit hacky)
-    real_observation = init_true_state 
-    tiger_problem.agent._cur_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
-                                                                       action, real_observation,
-                                                                       tiger_problem.agent.observation_model,
-                                                                       tiger_problem.agent.transition_model)
-    action = planner.plan(tiger_problem.agent)
-    print("==== Step 2 ====")
-    print("True state: %s" % init_true_state)
-    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
-    print("Action: %s" % str(action))
-    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+    # Reset agent belief
+    tiger_problem.agent.set_belief(init_belief, prior=True)
+
+    print("** Testing POMCP **")
+    tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
+    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=2., exploration_const=110)
+    test_planner(tiger_problem, pomcp)

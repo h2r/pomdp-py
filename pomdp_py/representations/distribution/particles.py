@@ -1,4 +1,5 @@
 from pomdp_py import GenerativeDistribution
+import random
 
 class Particles(GenerativeDistribution):
     def __init__(self, particles):
@@ -41,7 +42,7 @@ class Particles(GenerativeDistribution):
             return hash(self._particles[indx])
         
     def __eq__(self, other):
-        if not isinstance(other, BeliefDistribution_Particles):
+        if not isinstance(other, Particles):
             return False
         else:
             if len(self._particles) != len(other.praticles):
@@ -95,3 +96,14 @@ class Particles(GenerativeDistribution):
         particles = [state_mapper(s) for s in self._particles]
         return particles
 
+    @classmethod
+    def from_histogram(self, histogram, num_particles=1000):
+        """
+        Given a Histogram distribution `histogram`, return
+        a particle representation of it, which is an approximation.
+        """
+        particles = []
+        for i in range(num_particles):
+            particles.append(histogram.random())
+        return Particles(particles)
+        

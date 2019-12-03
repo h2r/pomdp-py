@@ -1,4 +1,7 @@
 from pomdp_py import GenerativeDistribution
+import sys
+import random
+import numpy as np
 
 class Histogram(GenerativeDistribution):
     def __init__(self, histogram):

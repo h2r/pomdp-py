@@ -96,6 +96,10 @@ class RewardModel(ABC):
 
 class BlackboxModel(ABC):
     @abstractmethod
+    def sample(self, state, action, normalized=False, **kwargs):
+        """Sample (s',o,r) ~ G(s',o,r)"""
+        raise NotImplemented
+    @abstractmethod
     def argmax(self, state, action, normalized=False, **kwargs):
         """Returns the most likely (s',o,r)"""
         raise NotImplemented
