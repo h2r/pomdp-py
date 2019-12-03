@@ -37,24 +37,30 @@ class TreeNode:
         self.children[key] = value
     def __contains__(self, key):
         return key in self.children
+    def __hash__(self):
+        return hash(id(self))
+    def __eq__(self, other):
+        return id(self) == id(other)
 
 class QNode(TreeNode):
-    def __init__(self, action, num_visits, value):
+    def __init__(self, num_visits, value):
+        """
+        `history_action`: a tuple ((a,o),(a,o),...(a,)). This is only
+            used for computing hashses
+        """
         self.num_visits = num_visits
         self.value = value
-        self.action = action
         self.children = {}  # o -> VNode
     def __str__(self):
-        return "QNode(%.3f, %.3f | %s)->%s" % (self.num_visits, self.value, str(self.children.keys()), str(self.action))
+        return "QNode(%.3f, %.3f | %s)->%s" % (self.num_visits, self.value, str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
 
 class VNode(TreeNode):
-    def __init__(self, num_visits, value, belief, history):
+    def __init__(self, num_visits, value, belief):
         self.num_visits = num_visits
         self.value = value
         self.belief = belief
-        self.history = history
         self.children = {}  # a -> QNode
     def __str__(self):
         return "VNode(%.3f, %.3f, %d | %s)" % (self.num_visits, self.value, len(self.belief),
@@ -62,16 +68,27 @@ class VNode(TreeNode):
     def __repr__(self):
         return self.__str__()
 
-def print_tree_helper(root, depth, max_depth=None, complete=False):
+class RootVNode(VNode):
+    def __init__(self, num_visits, value, belief, history):
+        VNode.__init__(self, num_visits, value, belief)
+        self.history = history
+    @classmethod
+    def from_vnode(cls, vnode, history):
+        rootnode = RootVNode(vnode.num_visits, vnode.value, vnode.belief, history)
+        rootnode.children = vnode.children
+        return rootnode
+
+def print_tree_helper(root, parent_edge, depth, max_depth=None, complete=False):
     if max_depth is not None and depth >= max_depth:
         return
-    print("%s%s" % ("    "*depth, str(root)))
+    print("%s%s" % ("    "*depth, str(parent_edge)))
+    print("%s-%s" % ("    "*depth, str(root)))
     for c in root.children:
         if complete or (root[c].num_visits > 1):
-            print_tree_helper(root[c], depth+1, max_depth=max_depth, complete=complete)
+            print_tree_helper(root[c], c, depth+1, max_depth=max_depth, complete=complete)
 
 def print_tree(tree, max_depth=None, complete=False):
-    print_tree_helper(tree, 0, max_depth=max_depth, complete=complete)
+    print_tree_helper(tree, "", 0, max_depth=max_depth, complete=complete)
 
 def print_preferred_actions(tree, max_depth=None):
     print_preferred_actions_helper(tree, 0, max_depth=max_depth)
@@ -91,8 +108,8 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
             equally_good.append(c)
 
     if best_child is not None and root[best_child] is not None:
-        if hasattr(root[best_child], "action"):
-            print("  %s  %s" % (str(root[best_child].action), str(equally_good)))
+        if isinstance(root[best_child], QNode):
+            print("  %s  %s" % (str(best_child), str(equally_good)))
         print_preferred_actions_helper(root[best_child], depth+1, max_depth=max_depth)            
 
 class ActionPrior(ABC):
@@ -159,12 +176,14 @@ class POMCP(Planner):
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
         
-        return self._search(self._agent.history,
-                            action_prior_args=action_prior_args)
+        return self._search(action_prior_args=action_prior_args)
 
     def update(self, agent, real_action, real_observation, action_prior_args={},
                state_transform_func=None, ):
         """
+        Assume that the agent's history has been updated after taking real_action
+        and receiving real_observation.
+
         `state_transform_func`: Used to add artificial transform to states during
             particle reinvigoration. Signature: s -> s_transformed
         """
@@ -176,7 +195,8 @@ class POMCP(Planner):
             return
         # Update the tree; Reinvigorate the tree's belief and use it
         # as the updated belief for the agent.
-        self._agent.tree = self._agent.tree[real_action][real_observation]
+        self._agent.tree = RootVNode.from_vnode(self._agent.tree[real_action][real_observation],
+                                                self._agent.history)
         if self._agent.tree is None:
             # Never anticipated the real_observation. No reinvigoration can happen.
             raise ValueError("Particle deprivation.")
@@ -188,11 +208,11 @@ class POMCP(Planner):
                                                              state_transform_func=state_transform_func))
         if self._agent.tree is None:
             # observation was never encountered in simulation.
-            self._agent.tree = VNode(self._num_visits_init,
-                                     self._value_init,
-                                     copy.deepcopy(agent.belief),
-                                     self._agent.history)
-            self._expand_vnode(self._agent.tree,
+            self._agent.tree = RootVNode(self._num_visits_init,
+                                         self._value_init,
+                                         copy.deepcopy(agent.belief),
+                                         self._agent.history)
+            self._expand_vnode(self._agent.tree, self._agent.history,
                                action_prior_args=action_prior_args)
         else:
             self._agent.tree.belief = copy.deepcopy(self._agent.belief)
@@ -222,38 +242,36 @@ class POMCP(Planner):
             new_particles.add(next_state)
         return new_particles
 
-    def _expand_vnode(self, vnode, state=None, action_prior_args={}):
+    def _expand_vnode(self, vnode, history, state=None, action_prior_args={}):
         if self._action_prior is not None:
             # Using action prior; special values are set.
             for action, num_vists_init, value_init\
                 in self._agent.policy_model.get_preferred_actions(state=state,
-                                                                  history=vnode.history,
+                                                                  history=history,
                                                                   belief=vnode.belief,
                                                                   **action_prior_args):
                 if vnode[action] is None:
-                    history_action_node = QNode(action,
-                                                num_visits_init,
+                    history_action_node = QNode(num_visits_init,
                                                 value_init)
                     vnode[action] = history_action_node
         else:
             for action in self._agent.all_actions:
                 if vnode[action] is None:
-                    history_action_node = QNode(action,
-                                                self._num_visits_init,
+                    history_action_node = QNode(self._num_visits_init,
                                                 self._value_init)
                     vnode[action] = history_action_node
 
-    def _search(self, history, action_prior_args={}):
+    def _search(self, action_prior_args={}):
         # Initialize the tree, if previously empty.
         if self._agent.tree is None:
-            self._agent.tree = VNode(self._num_visits_init,
-                                     self._value_init,
-                                     copy.deepcopy(self._agent.belief),
-                                     self._agent.history)
-            self._expand_vnode(self._agent.tree,
+            self._agent.tree = RootVNode(self._num_visits_init,
+                                         self._value_init,
+                                         copy.deepcopy(self._agent.belief),
+                                         self._agent.history)
+            self._expand_vnode(self._agent.tree, self._agent.history,
                                action_prior_args=action_prior_args)
         # Locate the tree node with given history
-        result = self._verify_history(history)
+        result = self._verify_history(self._agent.history)
         if not result:
             raise ValueError("Unable to plan for the given history.")
         tree, parent = result
@@ -263,7 +281,7 @@ class POMCP(Planner):
             ## Note: the tree node with () history will have
             ## the init belief given to the agent.
             state = tree.belief.random()
-            self._simulate(state, history, tree, parent, None, 0,
+            self._simulate(state, self._agent.history, tree, parent, None, 0,
                            action_prior_args=action_prior_args)
             
         best_action, best_value = None, float('-inf')            
@@ -309,11 +327,10 @@ class POMCP(Planner):
         if root is None:
             root = VNode(self._num_visits_init,
                          self._value_init,
-                         Particles([]),
-                         history)
+                         Particles([]))
             if parent is not None:
                 parent[observation] = root            
-            self._expand_vnode(root, state=state, action_prior_args=action_prior_args)
+            self._expand_vnode(root, history, state=state, action_prior_args=action_prior_args)
             rollout_reward = self._rollout(state, history, root, depth)
             return rollout_reward
         action = self._ucb(root)
@@ -331,7 +348,7 @@ class POMCP(Planner):
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 
-    def _rollout(self, state, history, root, depth):
+    def _rollout(self, state, history, root, depth, action_prior_args={}):
         if depth > self._max_depth:
             return 0
         action = self._rollout_policy(root, state=state)
@@ -342,9 +359,8 @@ class POMCP(Planner):
         if observation not in root[action]:
             root[action][observation] = VNode(self._num_visits_init,
                                               self._value_init,
-                                              Particles([]),
-                                              history + ((action, observation)))
-            self._expand_vnode(root[action][observation])
+                                              Particles([]))
+            self._expand_vnode(root[action][observation], history, action_prior_args=action_prior_args)
         return reward + self._discount_factor * self._rollout(next_state,
                                                               history + ((action, observation)),
                                                               root[action][observation],
