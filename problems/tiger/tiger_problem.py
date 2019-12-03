@@ -187,76 +187,113 @@ class TigerProblem:
             return TigerProblem.ACTIONS
 
 
-def test_planner(tiger_problem, planner):
-    action = planner.plan(tiger_problem.agent)
-    print("==== Step 1 ====")
-    print("True state: %s" % tiger_problem.env.state)
-    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
-    print("Action: %s" % str(action))
-    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+def test_planner(tiger_problem, planner, nsteps=3):
+    for i in range(nsteps):
+        action = planner.plan(tiger_problem.agent)
+        print("==== Step %d ====" % (i+1))
+        print("True state: %s" % tiger_problem.env.state)
+        print("Belief: %s" % str(tiger_problem.agent.cur_belief))
+        print("Action: %s" % str(action))
+        print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
 
-    # Let's create some simulated real observation; Update the belief (a bit hacky)
-    real_observation = tiger_problem.env.state
-    print(">> Observation: %s" % real_observation)
-    tiger_problem.agent.update_history(action, real_observation)
-    if planner.update_agent_belief:
-        planner.update(tiger_problem.agent, action, real_observation)
-    else:
-        if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
-            new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
-                                                          action, real_observation,
-                                                          tiger_problem.agent.observation_model,
-                                                          tiger_problem.agent.transition_model)
-            tiger_problem.agent.set_belief(new_belief)
+        # Let's create some simulated real observation; Update the belief (a bit hacky)
+        real_observation = tiger_problem.env.state
+        print(">> Observation: %s" % real_observation)
+        tiger_problem.agent.update_history(action, real_observation)
+        if planner.update_agent_belief:
+            planner.update(tiger_problem.agent, action, real_observation)
+        else:
+            if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
+                new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
+                                                              action, real_observation,
+                                                              tiger_problem.agent.observation_model,
+                                                              tiger_problem.agent.transition_model)
+                tiger_problem.agent.set_belief(new_belief)
             
-    action = planner.plan(tiger_problem.agent)
-    print("==== Step 2 ====")
-    print("True state: %s" % tiger_problem.env.state)
-    print("Belief: %s" % str(tiger_problem.agent.cur_belief))
-    print("Action: %s" % str(action))
-    print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))    
-
 if __name__ == '__main__':
-    # The values are set according to the paper.
-    obs_probs = {  # next_state -> action -> observation
-        "tiger-left":{ 
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
+    ## Setting 1:
+    ## The values are set according to the paper.
+    setting1 = {
+        "obs_probs": {  # next_state -> action -> observation
+            "tiger-left":{ 
+                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
+            },
+            "tiger-right":{
+                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
+            }
         },
-        "tiger-right":{
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
-        }
-    }
-    
-    trans_probs = {  # state -> action -> next_state
-        "tiger-left":{ 
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
-        },
-        "tiger-right":{
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
+        
+        "trans_probs": {  # state -> action -> next_state
+            "tiger-left":{ 
+                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
+            },
+            "tiger-right":{
+                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
+                "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
+            }
         }
     }
 
-    init_true_state = "tiger-right" #random.choice(list(TigerProblem.STATES))
+    ## Setting 2:
+    ## Based on my understanding of T and O; Treat the state as given.
+    setting2 = {
+        "obs_probs": {  # next_state -> action -> observation
+            "tiger-left":{ 
+                "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
+                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
+                "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
+            },
+            "tiger-right":{
+                "open-left": {"tiger-left": 0.0, "tiger-right": 1.0},
+                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
+                "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
+            }
+        },
+        
+        "trans_probs": {  # state -> action -> next_state
+            "tiger-left":{ 
+                "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
+                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
+                "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
+            },
+            "tiger-right":{
+                "open-left": {"tiger-left": 0.0, "tiger-right": 1.0},
+                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
+                "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
+            }
+        }
+    }
+
+    # setting1 resets the problem after the agent chooses open-left or open-right;
+    # It's reasonable - when the agent opens one door and sees a tiger, it gets
+    # killed; when the agent sees a treasure, it will take some of the treasure
+    # and leave. Thus, the agent will have no incentive to close the door and do
+    # this again. The setting2 is the case where the agent is a robot, and only
+    # cares about getting higher reward.
+    setting = setting1
+
+    init_true_state = random.choice(list(TigerProblem.STATES))
     init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
-    tiger_problem = TigerProblem(obs_probs, trans_probs, init_true_state, init_belief)
+    tiger_problem = TigerProblem(setting['obs_probs'],
+                                 setting['trans_probs'],
+                                 init_true_state, init_belief)
 
     # Value iteration
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    test_planner(tiger_problem, vi)
+    test_planner(tiger_problem, vi, nsteps=5)
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=2., exploration_const=110)
-    test_planner(tiger_problem, pomcp)
+    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pomcp, nsteps=5)
