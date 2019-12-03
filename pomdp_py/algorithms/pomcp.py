@@ -163,17 +163,24 @@ class POMCP(Planner):
                             action_prior_args=action_prior_args)
 
     def update(self, agent, real_action, real_observation, action_prior_args={},
-               state_transform_func=None):
+               state_transform_func=None, ):
+        """
+        `state_transform_func`: Used to add artificial transform to states during
+            particle reinvigoration. Signature: s -> s_transformed
+        """
         if not isinstance(agent.belief, Particles):
             raise TypeError("Agent's belief is not represented in particles.\n"\
                             "POMCP not usable. Please convert it to particles.")
         if not hasattr(self._agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
+        # Update the tree; Reinvigorate the tree's belief and use it
+        # as the updated belief for the agent.
         self._agent.tree = self._agent.tree[real_action][real_observation]
-        tree_belief = self._agent.tree.belief
         if self._agent.tree is None:
-            tree_belief = Particles([])
+            # Never anticipated the real_observation. No reinvigoration can happen.
+            raise ValueError("Particle deprivation.")
+        tree_belief = self._agent.tree.belief
         self._agent.set_belief(self._particle_reinvigoration(tree_belief,
                                                              real_action,
                                                              real_observation,
