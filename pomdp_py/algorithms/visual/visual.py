@@ -2,7 +2,7 @@ import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 import matplotlib.pyplot as plt
 import pomdp_py.util as util
-from pomdp_py.algorithms.pomcp import QNode, VNode
+from pomdp_py.algorithms.pomcp import QNode, VNode, RootVNode
 
 # ---- POMCP Visualization ---- #
 
@@ -97,7 +97,10 @@ def visualize_pomcp_search_tree(root, max_depth=1,
         node_labels = {}
         color_map = []
         for node in G.nodes():
-            if isinstance(node, VNode):
+            if isinstance(node, RootVNode):
+                color_map.append("cyan")
+                node_labels[node] = "R(%d,%.2f,%d)" % (node.num_visits, node.value, len(node.belief))
+            elif isinstance(node, VNode):
                 color_map.append("yellow")
                 node_labels[node] = "V(%d,%.2f,%d)" % (node.num_visits, node.value, len(node.belief))
             else:

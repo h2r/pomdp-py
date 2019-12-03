@@ -279,7 +279,7 @@ if __name__ == '__main__':
     # cares about getting higher reward.
     setting = setting2
 
-    init_true_state = "tiger-left"#random.choice(list(TigerProblem.STATES))
+    init_true_state = random.choice(list(TigerProblem.STATES))
     init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
     tiger_problem = TigerProblem(setting['obs_probs'],
                                  setting['trans_probs'],
@@ -295,8 +295,8 @@ if __name__ == '__main__':
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=.5, exploration_const=110)
-    test_planner(tiger_problem, pomcp, nsteps=10)
-
-    # pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
-    #                                             max_depth=4, anonymize=True)
+    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.99, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pomcp, nsteps=1)
+    
+    pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
+                                                max_depth=10, anonymize=True)
