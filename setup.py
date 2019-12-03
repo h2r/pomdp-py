@@ -10,7 +10,9 @@ setup(name='pomdp-py',
           'numpy',
           'matplotlib',
           'pygame',        # for some tests
-          'opencv-python'  # for some tests
+          'opencv-python',  # for some tests
+          'networkx',
+          'pygraphviz
       ],
       author='Kaiyu Zheng',
       author_email='kaiyutony@gmail.com',

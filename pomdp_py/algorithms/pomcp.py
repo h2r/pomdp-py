@@ -52,7 +52,7 @@ class QNode(TreeNode):
         self.value = value
         self.children = {}  # o -> VNode
     def __str__(self):
-        return "QNode(%.3f, %.3f | %s)->%s" % (self.num_visits, self.value, str(self.children.keys()))
+        return "QNode(%.3f, %.3f | %s)" % (self.num_visits, self.value, str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
 
@@ -193,13 +193,14 @@ class POMCP(Planner):
         if not hasattr(self._agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
+        
+        if self._agent.tree[real_action][real_observation] is None:
+            # Never anticipated the real_observation. No reinvigoration can happen.
+            raise ValueError("Particle deprivation.")
         # Update the tree; Reinvigorate the tree's belief and use it
         # as the updated belief for the agent.
         self._agent.tree = RootVNode.from_vnode(self._agent.tree[real_action][real_observation],
                                                 self._agent.history)
-        if self._agent.tree is None:
-            # Never anticipated the real_observation. No reinvigoration can happen.
-            raise ValueError("Particle deprivation.")
         tree_belief = self._agent.tree.belief
         self._agent.set_belief(self._particle_reinvigoration(tree_belief,
                                                              real_action,
@@ -345,6 +346,7 @@ class POMCP(Planner):
             root.belief.add(state)  # belief update happens as simulation goes.
         root.num_visits += 1
         root[action].num_visits += 1
+        root.value = root.value + (total_reward - root.value) / (root.num_visits)
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 

@@ -288,12 +288,15 @@ if __name__ == '__main__':
     # Value iteration
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    test_planner(tiger_problem, vi, nsteps=5)
+    test_planner(tiger_problem, vi, nsteps=1)
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=.5, exploration_const=110)
-    test_planner(tiger_problem, pomcp, nsteps=5)
+    pomcp = pomdp_py.POMCP(max_depth=5, discount_factor=0.99, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pomcp, nsteps=2)
+
+    pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
+                                                max_depth=4, anonymize=True)
