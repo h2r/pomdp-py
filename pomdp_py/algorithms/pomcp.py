@@ -1,8 +1,7 @@
 # We implement POMCP as described in the original paper
 # Monte-Carlo Planning in Large POMDPs
 # https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps
-
-
+#
 # One thing to note is that, in this algorithm, belief
 # update happens as the simulation progresses. The new
 # belief is stored in the vnodes at the level after

@@ -247,12 +247,12 @@ if __name__ == '__main__':
         "obs_probs": {  # next_state -> action -> observation
             "tiger-left":{ 
                 "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
-                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
+                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
                 "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
             },
             "tiger-right":{
                 "open-left": {"tiger-left": 0.0, "tiger-right": 1.0},
-                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
+                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
                 "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
             }
         },
@@ -277,9 +277,9 @@ if __name__ == '__main__':
     # and leave. Thus, the agent will have no incentive to close the door and do
     # this again. The setting2 is the case where the agent is a robot, and only
     # cares about getting higher reward.
-    setting = setting1
+    setting = setting2
 
-    init_true_state = random.choice(list(TigerProblem.STATES))
+    init_true_state = "tiger-left"#random.choice(list(TigerProblem.STATES))
     init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
     tiger_problem = TigerProblem(setting['obs_probs'],
                                  setting['trans_probs'],
@@ -295,8 +295,8 @@ if __name__ == '__main__':
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=5, discount_factor=0.99, planning_time=.5, exploration_const=110)
-    test_planner(tiger_problem, pomcp, nsteps=2)
+    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.99, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pomcp, nsteps=10)
 
-    pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
-                                                max_depth=4, anonymize=True)
+    # pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
+    #                                             max_depth=4, anonymize=True)
