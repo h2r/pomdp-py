@@ -40,6 +40,3 @@ class Environment:
 
     def provide_observation(self, observation_model, action, **kwargs):
         return observation_model.sample(self.state, action, **kwargs)
-
-    
-    

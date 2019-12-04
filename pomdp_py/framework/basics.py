@@ -6,20 +6,15 @@ class Distribution(ABC):
     from variable value to a real value.
     """
     @abstractmethod
-    def __getitem__(self, var):
+    def __getitem__(self, varval):
         raise NotImplemented
     @abstractmethod    
-    def __setitem__(self, var, value):
+    def __setitem__(self, varval, value):
         raise NotImplemented
-    @abstractmethod    
     def __hash__(self):
-        raise NotImplemented
-    @abstractmethod    
+        return id(self)
     def __eq__(self, other):
-        raise NotImplemented
-    @abstractmethod    
-    def __str__(self):
-        raise NotImplemented
+        return id(self) == id(other)
     def __iter__(self):
         """Initialization of iterator over the values in this distribution"""
         raise NotImplemented
@@ -39,17 +34,16 @@ class GenerativeDistribution(Distribution):
 
 class ObservationModel(ABC):
     @abstractmethod
-    def probability(self, observation, next_state, action, normalized=False, **kwargs):
+    def probability(self, observation, next_state, action, **kwargs):
         raise NotImplemented
     @abstractmethod    
-    def sample(self, next_state, action, normalized=False, **kwargs):
+    def sample(self, next_state, action, **kwargs):
         """Returns observation"""
         raise NotImplemented
     @abstractmethod
-    def argmax(self, next_state, action, normalized=False, **kwargs):
+    def argmax(self, next_state, action, **kwargs):
         """Returns the most likely observation"""
         raise NotImplemented
-    @abstractmethod    
     def get_distribution(self, next_state, action, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
@@ -59,17 +53,16 @@ class ObservationModel(ABC):
     
 class TransitionModel(ABC):
     @abstractmethod
-    def probability(self, next_state, state, action, normalized=False, **kwargs):
+    def probability(self, next_state, state, action, **kwargs):
         raise NotImplemented
     @abstractmethod    
-    def sample(self, state, action, normalized=False, **kwargs):
+    def sample(self, state, action, **kwargs):
         """Returns next_state"""
         raise NotImplemented
     @abstractmethod
-    def argmax(self, state, action, normalized=False, **kwargs):
+    def argmax(self, state, action, **kwargs):
         """Returns the most likely next state"""
         raise NotImplemented
-    @abstractmethod    
     def get_distribution(self, state, action, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
@@ -79,14 +72,14 @@ class TransitionModel(ABC):
 
 class RewardModel(ABC):
     @abstractmethod
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+    def probability(self, reward, state, action, next_state, **kwargs):
         raise NotImplemented
     @abstractmethod    
-    def sample(self, state, action, next_state, normalized=False, **kwargs):
+    def sample(self, state, action, next_state, **kwargs):
         """Returns a reward"""
         raise NotImplemented
     @abstractmethod
-    def argmax(self, state, action, next_state, normalized=False, **kwargs):
+    def argmax(self, state, action, next_state, **kwargs):
         """Returns the most likely reward"""
         raise NotImplemented
     @abstractmethod    
@@ -96,11 +89,11 @@ class RewardModel(ABC):
 
 class BlackboxModel(ABC):
     @abstractmethod
-    def sample(self, state, action, normalized=False, **kwargs):
+    def sample(self, state, action, **kwargs):
         """Sample (s',o,r) ~ G(s',o,r)"""
         raise NotImplemented
     @abstractmethod
-    def argmax(self, state, action, normalized=False, **kwargs):
+    def argmax(self, state, action, **kwargs):
         """Returns the most likely (s',o,r)"""
         raise NotImplemented
 
@@ -109,17 +102,16 @@ class PolicyModel(ABC):
     with very large action spaces, and the available actions may vary
     depending on the state (that is, certain actions have probabilty=0)"""
     @abstractmethod
-    def probability(self, action, state, normalized=False, **kwargs):
+    def probability(self, action, state, **kwargs):
         raise NotImplemented
     @abstractmethod    
-    def sample(self, state, normalized=False, **kwargs):
+    def sample(self, state, **kwargs):
         """Returns an action"""
         raise NotImplemented
     @abstractmethod
-    def argmax(self, state, normalized=False, **kwargs):
+    def argmax(self, state, **kwargs):
         """Returns the most likely reward"""
         raise NotImplemented
-    @abstractmethod    
     def get_distribution(self, state, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
