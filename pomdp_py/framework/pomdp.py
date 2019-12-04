@@ -9,13 +9,13 @@ action, or observation are valid."""
 class POMDP(ABC):
 
     @abstractmethod
-    def verify_state(cls, state, **kwargs):
+    def verify_state(self, state, **kwargs):
         pass
 
     @abstractmethod
-    def verify_action(cls, action, **kwargs):
+    def verify_action(self, action, **kwargs):
         pass
 
     @abstractmethod
-    def verify_observation(cls, observation, **kwargs):
+    def verify_observation(self, observation, **kwargs):
         pass    
