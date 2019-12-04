@@ -99,13 +99,13 @@ def visualize_pomcp_search_tree(root, max_depth=1,
         for node in G.nodes():
             if isinstance(node, RootVNode):
                 color_map.append("cyan")
-                node_labels[node] = "R(%d,%.2f,%d)" % (node.num_visits, node.value, len(node.belief))
+                node_labels[node] = "R(%d | %.2f | %d)" % (node.num_visits, node.value, len(node.belief))
             elif isinstance(node, VNode):
                 color_map.append("yellow")
-                node_labels[node] = "V(%d,%.2f,%d)" % (node.num_visits, node.value, len(node.belief))
+                node_labels[node] = "V(%d | %.2f | %d)" % (node.num_visits, node.value, len(node.belief))
             else:
                 color_map.append("orange")
-                node_labels[node] = "Q(%d,%.2f)" % (node.num_visits, node.value)
+                node_labels[node] = "Q(%d | %.2f)" % (node.num_visits, node.value)
         edge_labels = {(edge[0],edge[1]): edge[2]["label"] for edge in G.edges(data=True)}
         edge_widths = [edge[2]["weight"] for edge in G.edges(data=True)]
         
