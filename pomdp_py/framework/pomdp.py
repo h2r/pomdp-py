@@ -8,17 +8,14 @@ action, or observation are valid."""
 
 class POMDP(ABC):
 
-    @classmethod
     @abstractmethod
     def verify_state(cls, state, **kwargs):
         pass
 
-    @classmethod
     @abstractmethod
     def verify_action(cls, action, **kwargs):
         pass
 
-    @classmethod
     @abstractmethod
     def verify_observation(cls, observation, **kwargs):
         pass    

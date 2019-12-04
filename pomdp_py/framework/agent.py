@@ -1,12 +1,11 @@
 class Agent:
 
-    def __init__(self, pomdp, init_belief,
+    def __init__(self, init_belief,
                  policy_model,
                  transition_model=None,
                  observation_model=None,
                  reward_model=None,
                  blackbox_model=None):
-        self._pomdp = pomdp
         self._init_belief = init_belief
         self._policy_model = policy_model
         
@@ -49,10 +48,6 @@ class Agent:
         if prior:
             self._init_belief = belief
 
-    @property
-    def pomdp(self):
-        return self._pomdp
-    
     @property
     def observation_model(self):
         return self._observation_model

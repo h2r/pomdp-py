@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from pomdp_py.framework.pomdp import POMDP
 
 """
 The addition of OOPOMDP versus POMDP is that states must be
@@ -8,41 +9,59 @@ of OOPOMDP_ObjectState. This makes the "verify_state" function
 explicitly defined for OOPOMDP, given attributes and domains.
 """
 
-class OOPOMDP(ABC):
+class OOPOMDP(POMDP):
 
-    def verify_state(cls, attributes, domains, state, verbose=True):
+    def __init__(self, attributes, domains):
+        self._attributes = attributes
+        self._domains = domains
+
+    def verify_state(self, state, **kwargs):
+        if not isinstance(state, OOState):
+            return False
+        return self._verify_oostate(self._attributes, self._domains, state)
+
+    def verify_object_state(self, object_state, **kwargs):
+        objclass = object_state.objclass
+        if objclass not in self._attributes:
+            if verbose:
+                print("Object class %s does not have specified attriubtes!" % objclass)
+            return False
+        attrs = object_state.attributes
+        for attr in attrs:
+            if attr not in self._attributes[objclass]:
+                if verbose:
+                    print("Attribute %s is not specified for class %s!" % (attr, objclass))
+                return False
+            attr_value = object_states[attr]
+            if not domains[(objclass, attr)](attr_value):
+                if verbose:
+                    print("Attribute value %s not in domain (%s, %s)" % (attr_value, objclass, attr))
+                return False
+        return True
+
+    def _verify_oostate(self, attributes, domains, state, verbose=True):
         """Returns true if state (OOPOMDP_State) is valid."""
         assert isinstance(state, OOPOMDP_State)
         object_states = state.object_states
         for objid in object_states:
-            objclass = object_states[objid].objclass
-            if objclass not in attributes:
-                if verbose:
-                    print("Object class %s does not have specified attriubtes!" % objclass)
+            if not self.verify_object_state(object_states[objid]):
                 return False
-            attrs = object_states[objid].attributes
-            for attr in attrs:
-                if attr not in attributes[objclass]:
-                    if verbose:
-                        print("Attribute %s is not specified for class %s!" % (attr, objclass))
-                    return False
-                attr_value = object_states[objid][attr]
-                if not domains[(objclass, attr)](attr_value):
-                    if verbose:
-                        print("Attribute value %s not in domain (%s, %s)" % (attr_value, objclass, attr))
-                    return False
         return True    
 
-    @classmethod
     @abstractmethod
-    def verify_action(cls, action, **kwargs):
+    def verify_action(self, action, **kwargs):
         pass
 
-    @classmethod
     @abstractmethod
-    def verify_observation(cls, observation, **kwargs):
-        pass    
+    def verify_observation(self, observation, **kwargs):
+        pass
 
+    @abstractmethod    
+    def verify_factored_observation(self, observation, **kwargs):
+        """Since in OOPOMDP, observation function is factored by objects,
+        or other entities (e.g. pixel or voxel), there could be observation
+        per such entity."""
+        pass    
 
 class ObjectState(ABC):
     def __init__(self, objclass, attributes):

@@ -8,11 +8,9 @@ class Environment:
 
     The Environment is passive. It never observes nor acts.
     """
-    def __init__(self, pomdp,
-                 init_state,
+    def __init__(self, init_state,
                  transition_model,
                  reward_model):
-        self._pomdp = pomdp
         self._init_state = init_state
         self._transition_model = transition_model
         self._reward_model = reward_model
@@ -25,10 +23,6 @@ class Environment:
     @property
     def cur_state(self):
         return self._cur_state
-
-    @property
-    def pomdp(self):
-        return self._pomdp
 
     @property
     def transition_model(self):

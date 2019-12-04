@@ -24,13 +24,18 @@
 # Rewards: +10 for opening treasure door. -100 for opening tiger door.
 #          -1 for listening.
 # Observations: You can hear either "tiger-left", or "tiger-right".
+#
+# Note that in this example, the TigerProblem is a POMDP that
+# also contains the agent and the environment as its fields. In
+# general this doesn't need to be the case. (Refer to more complicated
+# examples.)
 
 import pomdp_py
 import random
 import numpy as np
 import sys
 
-class TigerProblem:
+class TigerProblem(pomdp_py.POMDP):
 
     STATES = {"tiger-left", "tiger-right"}
     ACTIONS = {"open-left", "open-right", "listen"}
@@ -40,31 +45,25 @@ class TigerProblem:
         """init_belief is a Distribution."""
         self._obs_probs = obs_probs
         self._trans_probs = trans_probs
-        assert TigerProblem.POMDP.verify_state(init_true_state)
-        agent = pomdp_py.Agent(TigerProblem.POMDP, init_belief,
+        agent = pomdp_py.Agent(init_belief,
                                TigerProblem.PolicyModel(),
                                TigerProblem.TransitionModel(self._trans_probs),
                                TigerProblem.ObservationModel(self._obs_probs),
                                TigerProblem.RewardModel())
-        env = pomdp_py.Environment(TigerProblem.POMDP,
-                                   init_true_state,
+        env = pomdp_py.Environment(init_true_state,
                                    TigerProblem.TransitionModel(self._trans_probs),
                                    TigerProblem.RewardModel())
         self.agent = agent
         self.env = env
 
-    class POMDP(pomdp_py.POMDP):
-        @classmethod
-        def verify_state(cls, state):
-            return state in TigerProblem.STATES
+    def verify_state(self, state):
+        return state in TigerProblem.STATES
 
-        @classmethod
-        def verify_action(cls, action):
-            return action in TigerProblem.ACTIONS
+    def verify_action(self, action):
+        return action in TigerProblem.ACTIONS
 
-        @classmethod
-        def verify_observation(cls, observation):
-            return observation in TigerProblem.OBSERVATIONS
+    def verify_observation(self, observation):
+        return observation in TigerProblem.OBSERVATIONS
         
     # Observation model
     class ObservationModel(pomdp_py.ObservationModel):
@@ -277,7 +276,7 @@ if __name__ == '__main__':
     # and leave. Thus, the agent will have no incentive to close the door and do
     # this again. The setting2 is the case where the agent is a robot, and only
     # cares about getting higher reward.
-    setting = setting2
+    setting = setting1
 
     init_true_state = random.choice(list(TigerProblem.STATES))
     init_belief = pomdp_py.Histogram({"tiger-left": 0.5, "tiger-right": 0.5})
@@ -295,8 +294,8 @@ if __name__ == '__main__':
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.99, planning_time=.5, exploration_const=110)
-    test_planner(tiger_problem, pomcp, nsteps=1)
+    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pomcp, nsteps=10)
     
     pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
-                                                max_depth=10, anonymize=True)
+                                                max_depth=3, anonymize=True)
