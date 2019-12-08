@@ -1,6 +1,7 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from pomdp_py.framework.pomdp import POMDP
 from pomdp_py.framework.basics import TransitionModel, ObservationModel, GenerativeDistribution
+import pprint
 
 """
 The addition of OOPOMDP versus POMDP is that states must be
@@ -64,7 +65,7 @@ class OOPOMDP(POMDP):
         per such entity."""
         pass    
 
-class ObjectState(ABC):
+class ObjectState:
     def __init__(self, objclass, attributes):
         """
         class: "class",
@@ -80,10 +81,10 @@ class ObjectState(ABC):
     def __repr__(self):
         return self.__str__()
 
-    @abstractmethod
     def __str__(self):
-        return 'OOPOMDP_ObjectState::(%s,%s)' % (str(self.objclass),
-                                                 str(self.attributes))
+        return '%s::(%s,%s)' % (str(self.__class__.__name__),
+                                str(self.objclass),
+                                str(self.attributes))
     
     def __hash__(self):
         return hash(self._to_hash)
@@ -105,7 +106,7 @@ class ObjectState(ABC):
         return OOPOMDP_ObjectState(self.objclass, copy.deepcopy(self.attributes))
     
 
-class OOState(ABC):
+class OOState:
 
     def __init__(self, object_states):
         """
@@ -115,11 +116,10 @@ class OOState(ABC):
         # internally, objects are sorted by ID.
         self.object_states = object_states
         self._to_hash = pprint.pformat(self.object_states)  # automatically sorted by keys
-        super().__init__(object_states)
 
-    @abstractmethod        
     def __str__(self):
-        return 'OOPOMDP_State::[%s]' % str(self.object_states)
+        return '%s::[%s]' % (str(self.__class__.__name__),
+                             str(self.object_states))
 
     def __repr__(self):
         return self.__str__()
@@ -130,11 +130,9 @@ class OOState(ABC):
     def __hash__(self):
         return hash(self._to_hash)
     
-    @abstractmethod
     def __getitem__(self, index):
         raise NotImplemented
-    
-    @abstractmethod    
+
     def __len__(self):
         raise NotImplemented
 
@@ -208,9 +206,7 @@ class OOObservationModel(ObservationModel):
     O(z | s', a) = Pi T(zi' | s', a)
     """    
 
-    def __init__(self, observation_models,
-                 factor_observation_func,
-                 merge_observations_func):
+    def __init__(self, observation_models):
         """
         observation_models (dict) objid -> observation_model
         factor_observation_func: (observation, objid, next_state, action) -> {objid->observations}
@@ -224,30 +220,27 @@ class OOObservationModel(ObservationModel):
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         obsrv_prob = 1.0
+        factored_observations = self._factor_observation_func(observation, next_state, action)
         for objid in next_state.object_states:
-            factored_observation = self._factor_observation_func(observation, objid, next_state, action)
-            obsrv_prob = obsrv_prob * self._observation_models[objid].probability(factored_observation,
+            obsrv_prob = obsrv_prob * self._observation_models[objid].probability(factored_observations[objid],
                                                                                   next_state, action, **kwargs)
         return obsrv_prob
 
-    def sample(self, next_state, action, **kwargs):
+    def sample(self, next_state, action, argmax=False, **kwargs):
         """Returns observation"""
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         factored_observations = {}
         for objid in next_state.object_states:
-            observation = self._observation_models[objid].sample(next_state,
-                                                                 action, **kwargs)
+            if not argmax:
+                observation = self._observation_models[objid].sample(next_state,
+                                                                     action, **kwargs)
+            else:
+                observation = self._observation_models[objid].argmax(next_state,
+                                                                     action, **kwargs)                
             factored_observations[objid] = observation
         return self._merge_observations_func(factored_observations, next_state, action)
 
-    def argmax(self, state, action, normalized=False, **kwargs):
+    def argmax(self, next_state, action, **kwargs):
         """Returns observation"""
-        if not isinstance(next_state, OOState):
-            raise ValueError("state must be OOState")
-        factored_observations = {}
-        for objid in next_state.object_states:
-            observation = self._observation_models[objid].argmax(next_state,
-                                                                 action, **kwargs)
-            factored_observations[objid] = observation
-        return self.merge_observations(factored_observations, next_state, action)        
+        return self.sample(next_state, action, argmax=True)
