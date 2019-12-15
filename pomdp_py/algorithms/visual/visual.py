@@ -2,7 +2,7 @@ import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 import matplotlib.pyplot as plt
 import pomdp_py.util as util
-from pomdp_py.algorithms.pomcp import QNode, VNode, RootVNode
+from pomdp_py.algorithms.po_uct import QNode, VNode, RootVNode
 
 # ---- POMCP Visualization ---- #
 
@@ -58,7 +58,7 @@ def _build_relabel_dict(root, conn, depth, actions, observations, max_depth=None
         if root[c].num_visits > visit_threshold:
             _build_relabel_dict(root[c], c,  depth+1, actions, observations, max_depth=max_depth, visit_threshold=visit_threshold)
 
-def visualize_pomcp_search_tree(root, max_depth=1,
+def visualize_pouct_search_tree(root, max_depth=1,
                                 visit_threshold=1, anonymize=False,
                                 output_file=None, use_dot=False):
     """
@@ -97,12 +97,15 @@ def visualize_pomcp_search_tree(root, max_depth=1,
         node_labels = {}
         color_map = []
         for node in G.nodes():
+            belief_str = ""
+            if hasattr(node, "belief"):
+                belief_str = " | %d" % len(node.belief)
             if isinstance(node, RootVNode):
                 color_map.append("cyan")
-                node_labels[node] = "R(%d | %.2f | %d)" % (node.num_visits, node.value, len(node.belief))
+                node_labels[node] = "R(%d | %.2f%s)" % (node.num_visits, node.value, belief_str)
             elif isinstance(node, VNode):
                 color_map.append("yellow")
-                node_labels[node] = "V(%d | %.2f | %d)" % (node.num_visits, node.value, len(node.belief))
+                node_labels[node] = "V(%d | %.2f%s)" % (node.num_visits, node.value, belief_str)
             else:
                 color_map.append("orange")
                 node_labels[node] = "Q(%d | %.2f)" % (node.num_visits, node.value)

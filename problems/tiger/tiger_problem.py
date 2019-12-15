@@ -199,15 +199,14 @@ def test_planner(tiger_problem, planner, nsteps=3):
         real_observation = tiger_problem.env.state
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
-        if planner.update_agent_belief:
-            planner.update(tiger_problem.agent, action, real_observation)
-        else:
-            if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
-                new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
-                                                              action, real_observation,
-                                                              tiger_problem.agent.observation_model,
-                                                              tiger_problem.agent.transition_model)
-                tiger_problem.agent.set_belief(new_belief)
+        
+        planner.update(tiger_problem.agent, action, real_observation)
+        if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
+            new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
+                                                          action, real_observation,
+                                                          tiger_problem.agent.observation_model,
+                                                          tiger_problem.agent.transition_model)
+            tiger_problem.agent.set_belief(new_belief)
             
 if __name__ == '__main__':
     ## Setting 1:
@@ -287,15 +286,26 @@ if __name__ == '__main__':
     # Value iteration
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    test_planner(tiger_problem, vi, nsteps=1)
+    test_planner(tiger_problem, vi, nsteps=10)
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
+    print("** Testing POUCT **")
+    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
+    test_planner(tiger_problem, pouct, nsteps=10)
+
+    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
+                                                max_depth=3, anonymize=True)
+
+    # Reset agent belief    
+    tiger_problem.agent.set_belief(init_belief, prior=True)
+    tiger_problem.agent.tree = None
+    
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
     pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
     test_planner(tiger_problem, pomcp, nsteps=10)
     
-    pomdp_py.visual.visualize_pomcp_search_tree(tiger_problem.agent.tree,
+    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
                                                 max_depth=3, anonymize=True)

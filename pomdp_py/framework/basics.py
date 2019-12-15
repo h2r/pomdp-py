@@ -23,9 +23,9 @@ class Distribution(ABC):
         raise NotImplemented
 
 class GenerativeDistribution(Distribution):
-    def mpe(self):
+    def mpe(self, **kwargs):
         raise NotImplemented
-    def random(self):
+    def random(self, **kwargs):
         # Sample a state based on the underlying belief distribution
         raise NotImplemented
     def get_histogram(self):

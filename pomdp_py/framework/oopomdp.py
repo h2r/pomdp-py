@@ -1,7 +1,6 @@
 from abc import abstractmethod
 from pomdp_py.framework.pomdp import POMDP
 from pomdp_py.framework.basics import TransitionModel, ObservationModel, GenerativeDistribution
-import pprint
 
 """
 The addition of OOPOMDP versus POMDP is that states must be
@@ -70,13 +69,14 @@ class ObjectState:
         """
         class: "class",
         attributes: {
-            "attr1": value,
+            "attr1": value,  # value should be hashable
             ...
         }
         """
         self.objclass = objclass
         self.attributes = attributes
-        self._to_hash = pprint.pformat(self.attributes)   # automatically sorted by keys
+        self._to_hash = tuple((attr, hash(self.attributes[attr]))
+                              for attr in self.attributes)
 
     def __repr__(self):
         return self.__str__()
@@ -115,7 +115,9 @@ class OOState:
         """
         # internally, objects are sorted by ID.
         self.object_states = object_states
-        self._to_hash = pprint.pformat(self.object_states)  # automatically sorted by keys
+        self._to_hash = tuple((objid, hash(self.object_states[objid]))
+                              for objid in self.object_states)
+        # self._to_hash = pprint.pformat(self.object_states)  # automatically sorted by keys
 
     def __str__(self):
         return '%s::[%s]' % (str(self.__class__.__name__),

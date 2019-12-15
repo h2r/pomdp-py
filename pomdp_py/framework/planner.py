@@ -16,7 +16,7 @@ class Planner(ABC):
         pass
 
     @property
-    def update_agent_belief(self):
+    def updates_agent_belief(self):
         """True if planner's update function also updates agent's
         belief."""
         return False
