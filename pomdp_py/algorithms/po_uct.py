@@ -213,7 +213,7 @@ class POUCT(Planner):
                     vnode[action] = history_action_node
 
     def _sample_belief(self, agent):
-        return self._agent.belief.random()
+        return agent.belief.random()
 
     def _search(self, action_prior_args={}):
         # Initialize the tree, if previously empty.

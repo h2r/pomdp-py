@@ -158,7 +158,7 @@ class POMCP(POUCT):
                             action_prior_args={"belief": vnode.belief})
 
     def _sample_belief(self, agent):
-        return self._agent.tree.belief.random()                    
+        return agent.tree.belief.random()                    
 
     def _simulate(self, state, history, root, parent, observation, depth, action_prior_args={}):
         total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth, action_prior_args={})
