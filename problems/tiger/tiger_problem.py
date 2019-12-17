@@ -200,7 +200,9 @@ def test_planner(tiger_problem, planner, nsteps=3):
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
         
-        planner.update(tiger_problem.agent, action, real_observation)
+        planner.update(action, real_observation)
+        if isinstance(planner, pomdp_py.POUCT):
+            print("Num sims: %d" % planner.last_num_sims)
         if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
             new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
                                                           action, real_observation,
@@ -286,7 +288,7 @@ if __name__ == '__main__':
     # Value iteration
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    test_planner(tiger_problem, vi, nsteps=10)
+    test_planner(tiger_problem, vi, nsteps=3)
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)

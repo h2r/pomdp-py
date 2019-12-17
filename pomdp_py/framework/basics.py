@@ -21,6 +21,8 @@ class Distribution(ABC):
     def __next__(self):
         """Returns the next value of the iterator"""
         raise NotImplemented
+    def probability(self, varval):
+        return self[varval]
 
 class GenerativeDistribution(Distribution):
     def mpe(self, **kwargs):
@@ -82,7 +84,6 @@ class RewardModel(ABC):
     def argmax(self, state, action, next_state, **kwargs):
         """Returns the most likely reward"""
         raise NotImplemented
-    @abstractmethod    
     def get_distribution(self, state, action, next_state, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented    

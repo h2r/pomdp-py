@@ -8,7 +8,7 @@ class Planner(ABC):
            Bt, ht, O,T,R/G, pi, necessary for planning"""
         raise NotImplemented
 
-    def update(self, agent, real_action, real_observation):
+    def update(self, real_action, real_observation):
         """Updates the planner based on real action and observation.
         Updates the agent accordingly if necessary. If the agent's
         belief is also updated here, the `update_agent_belief`

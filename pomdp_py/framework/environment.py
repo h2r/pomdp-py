@@ -35,8 +35,10 @@ class Environment:
     def state_transition(self, action, execute=True, **kwargs):
         """Modifies current state of the environment"""
         next_state = self.transition_model.sample(self.state, action, **kwargs)
+        reward = self.reward_model.sample(self.state, action, next_state)
         if execute:
             self._cur_state = next_state
+        return reward
 
     def provide_observation(self, observation_model, action, **kwargs):
         return observation_model.sample(self.state, action, **kwargs)

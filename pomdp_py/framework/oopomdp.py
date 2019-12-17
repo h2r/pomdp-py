@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from pomdp_py.framework.pomdp import POMDP
 from pomdp_py.framework.basics import TransitionModel, ObservationModel, GenerativeDistribution
+import collections
 
 """
 The addition of OOPOMDP versus POMDP is that states must be
@@ -76,7 +77,8 @@ class ObjectState:
         self.objclass = objclass
         self.attributes = attributes
         self._to_hash = tuple((attr, hash(self.attributes[attr]))
-                              for attr in self.attributes)
+                              for attr in self.attributes
+                              if isinstance(self.attributes[attr], collections.Hashable))
 
     def __repr__(self):
         return self.__str__()
@@ -153,8 +155,6 @@ class OOState:
     def copy(self):
         return OOPOMDP_State(copy.deepcopy(self.object_states))
 
-
-
 class OOTransitionModel(TransitionModel):
 
     """
@@ -201,6 +201,9 @@ class OOTransitionModel(TransitionModel):
             object_states[objid] = next_object_state
         return OOState(object_states)
 
+    def __getitem__(self, objid):
+        return self._transition_models[objid]    
+
 
 class OOObservationModel(ObservationModel):
 
@@ -208,7 +211,7 @@ class OOObservationModel(ObservationModel):
     O(z | s', a) = Pi T(zi' | s', a)
     """    
 
-    def __init__(self, observation_models):
+    def __init__(self, observation_models, factor_observation_func, merge_observations_func):
         """
         observation_models (dict) objid -> observation_model
         factor_observation_func: (observation, objid, next_state, action) -> {objid->observations}
@@ -222,7 +225,7 @@ class OOObservationModel(ObservationModel):
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         obsrv_prob = 1.0
-        factored_observations = self._factor_observation_func(observation, next_state, action)
+        factored_observations = self._factor_observation_func(observation, next_state)
         for objid in next_state.object_states:
             obsrv_prob = obsrv_prob * self._observation_models[objid].probability(factored_observations[objid],
                                                                                   next_state, action, **kwargs)
@@ -241,8 +244,49 @@ class OOObservationModel(ObservationModel):
                 observation = self._observation_models[objid].argmax(next_state,
                                                                      action, **kwargs)                
             factored_observations[objid] = observation
-        return self._merge_observations_func(factored_observations, next_state, action)
+        return self._merge_observations_func(factored_observations, next_state, **kwargs)
 
     def argmax(self, next_state, action, **kwargs):
         """Returns observation"""
-        return self.sample(next_state, action, argmax=True)
+        return self.sample(next_state, action, argmax=True, **kwargs)
+
+    def __getitem__(self, objid):
+        return self._observation_models[objid]
+
+
+class OOBelief(GenerativeDistribution):
+    def __init__(self, object_beliefs):
+        """
+        object_beliefs (objid -> GenerativeDistribution)
+        """
+        self._object_beliefs = object_beliefs
+
+    def __getitem__(self, state):
+        if not isinstance(state, OOState):
+            raise ValueError("state must be OOState")
+        belief_prob = 1.0
+        for objid in state.object_states:
+            object_state = state.object_states[objid]
+            belief_prob = belief_prob * self._object_beliefs[objid].probability(object_state)
+        return belief_prob
+
+    def mpe(self, **kwargs):
+        object_states = {}
+        for objid in self._object_beliefs:
+            object_states[objid] = self._object_beliefs[objid].mpe(**kwargs)
+        return OOState(object_states)
+    
+    def random(self, **kwargs):
+        object_states = {}
+        for objid in self._object_beliefs:
+            object_states[objid] = self._object_beliefs[objid].random(**kwargs)
+        return OOState(object_states)        
+    
+    def __setitem__(self, oostate, value):
+        raise NotImplemented
+        
+    def object_belief(self, objid):
+        return self._object_beliefs[objid]
+
+    def set_object_belief(self, objid, belief):
+        self._object_beliefs[objid] = belief

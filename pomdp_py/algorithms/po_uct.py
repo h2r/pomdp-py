@@ -159,40 +159,49 @@ class POUCT(Planner):
 
         # to simplify function calls; plan only for one agent at a time
         self._agent = None
+        self._last_num_sims = None        
 
     @property
     def updates_agent_belief(self):
         return False
 
+    @property
+    def last_num_sims(self):
+        """Returns the number of simulations ran for the last `plan` call."""
+        return self._last_num_sims
+
     def plan(self, agent, action_prior_args={}):
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
-
-        action = self._search(action_prior_args=action_prior_args)
-        self._agent = None  # forget about current agent so that can plan for another agent.
+        action, num_sims = self._search(action_prior_args=action_prior_args)
+        self._last_num_sims = num_sims
         return action            
 
-    def update(self, agent, real_action, real_observation, action_prior_args={}, **kwargs):
+    def update(self, real_action, real_observation, action_prior_args={}, **kwargs):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
         """
-        if not hasattr(agent, "tree"):
+        if not hasattr(self._agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
 
-        if agent.tree[real_action][real_observation] is not None:
+        if self._agent.tree[real_action][real_observation] is not None:
             # Update the tree (prune)
-            agent.tree = RootVNode.from_vnode(agent.tree[real_action][real_observation],
-                                              agent.history)
+            self._agent.tree = RootVNode.from_vnode(self._agent.tree[real_action][real_observation],
+                                              self._agent.history)
         else:
             # observation was never encountered in simulation.
-            agent.tree = RootVNode(self._num_visits_init,
+            self._agent.tree = RootVNode(self._num_visits_init,
                                    self._value_init,
-                                   agent.history)
-            self._expand_vnode(agent.tree, agent.history,
+                                   self._agent.history)
+            self._expand_vnode(self._agent.tree, self._agent.history,
                                action_prior_args=action_prior_args)
+
+    def clear_agent(self):
+        self._agent = None  # forget about current agent so that can plan for another agent.
+        self._last_num_sims = None
 
     def _expand_vnode(self, vnode, history, state=None, action_prior_args={}):
         if self._action_prior is not None:
@@ -226,12 +235,14 @@ class POUCT(Planner):
             raise ValueError("Unable to plan for the given history.")
 
         start_time = time.time()
+        num_sims = 0
         while time.time() - start_time < self._planning_time:
             ## Note: the tree node with () history will have
             ## the init belief given to the agent.
             state = self._sample_belief(self._agent)
             self._simulate(state, self._agent.history, self._agent.tree,
                            None, None, 0, action_prior_args=action_prior_args)
+            num_sims +=1
             
         best_action, best_value = None, float('-inf')            
         for action in self._agent.tree.children:
@@ -239,7 +250,7 @@ class POUCT(Planner):
                 best_value = self._agent.tree[action].value
                 best_action = action
             # print("action %s: %.3f" % (str(action), tree[action].value))
-        return best_action
+        return best_action, num_sims
 
     def _simulate(self, state, history, root, parent, observation, depth, action_prior_args={}):
         if depth > self._max_depth:
