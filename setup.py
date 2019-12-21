@@ -12,7 +12,7 @@ setup(name='pomdp-py',
           'pygame',        # for some tests
           'opencv-python',  # for some tests
           'networkx',
-          'pygraphviz
+          'pygraphviz'
       ],
       author='Kaiyu Zheng',
       author_email='kaiyutony@gmail.com',
