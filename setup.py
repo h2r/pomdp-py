@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
@@ -24,6 +24,8 @@ setup(name='pomdp-py',
                              'pomdp_py/algorithms/value_iteration.pyx',
                              'pomdp_py/framework/oopomdp.pyx',
                              'pomdp_py/framework/planner.pyx',
-                             'pomdp_py/framework/basics.pyx'])
+                             'pomdp_py/framework/basics.pyx',
+                             'pomdp_py/representations/distribution/particles.pyx',
+                             'pomdp_py/representations/distribution/histogram.pyx'],
+                            build_dir="build")
      )
-

@@ -1,4 +1,4 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 
 cdef class Particles(GenerativeDistribution):
-    cdef list particles
+    cdef list _particles
