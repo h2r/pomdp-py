@@ -213,7 +213,8 @@ cdef class POUCT(Planner):
         self._agent = None  # forget about current agent so that can plan for another agent.
         self._last_num_sims = -1
 
-    def _expand_vnode(self, vnode, history, state=None):
+    cpdef void _expand_vnode(self, VNode vnode, tuple history, State state=None):
+        cdef Action action    
         if self._action_prior is not None:
             # Using action prior; special values are set.
             for preference\
@@ -235,7 +236,7 @@ cdef class POUCT(Planner):
     def _sample_belief(self, agent):
         return agent.belief.random()
 
-    def _search(self):
+    cpdef _search(self):
         # Initialize the tree, if previously empty.
         if self._agent.tree is None:
             self._agent.tree = self._VNode(agent=self._agent, root=True)
@@ -244,8 +245,10 @@ cdef class POUCT(Planner):
         if self._agent.tree.history != self._agent.history:
             raise ValueError("Unable to plan for the given history.")
 
+        cdef State state
+        cdef int num_sims = 0
+        
         start_time = time.time()
-        num_sims = 0
         while time.time() - start_time < self._planning_time:
             ## Note: the tree node with () history will have
             ## the init belief given to the agent.
@@ -262,7 +265,9 @@ cdef class POUCT(Planner):
             # print("action %s: %.3f" % (str(action), tree[action].value))
         return best_action, num_sims
 
-    def _simulate(self, state, history, root, parent, observation, depth):
+    cpdef float _simulate(POUCT self,
+                          State state, tuple history, VNode root, QNode parent,
+                          Observation observation, int depth):
         if depth > self._max_depth:
             return 0
         if root is None:
@@ -286,10 +291,13 @@ cdef class POUCT(Planner):
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 
-    def _rollout(self, state, history, root, depth):
+    cpdef float _rollout(self, State state, tuple history, VNode root, int depth):
         if depth > self._max_depth:
             return 0
-        action = self._rollout_policy.rollout(root, state)
+        cdef Action action = self._rollout_policy.rollout(root, state)
+        cdef State next_state
+        cdef Observation observation
+        cdef float reward
         next_state, observation, reward = self._sample_generative_model(state, action)
         if root[action] is None:
             history_action_node = QNode(action, self._num_visits_init, self._value_init)
@@ -302,8 +310,10 @@ cdef class POUCT(Planner):
                                                               root[action][observation],
                                                               depth+1)
 
-    def _ucb(self, root):
+    cpdef Action _ucb(self, VNode root):
         """UCB1"""
+        cdef Action best_action
+        cdef float best_value
         best_action, best_value = None, float('-inf')
         for action in root.children:
             val = root[action].value + \
@@ -313,10 +323,14 @@ cdef class POUCT(Planner):
                 best_value = val
         return best_action
 
-    def _sample_generative_model(self, state, action):
+    cpdef tuple _sample_generative_model(self, State state, Action action):
         '''
         (s', o, r) ~ G(s, a)
         '''
+        cdef State next_state
+        cdef Observation observation
+        cdef float reward        
+        
         if self._agent.transition_model is None:
             next_state, observation, reward = self._agent.generative_model.sample(state, action)
         else:

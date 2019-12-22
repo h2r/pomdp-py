@@ -1,5 +1,5 @@
 from pomdp_py.framework.planner cimport Planner
-from pomdp_py.framework.basics cimport Agent, PolicyModel, Action, State
+from pomdp_py.framework.basics cimport Agent, PolicyModel, Action, State, Observation
 
 cdef class TreeNode:
     cdef public dict children
@@ -25,7 +25,17 @@ cdef class POUCT(Planner):
     cdef ActionPrior _action_prior
     cdef RolloutPolicy _rollout_policy
     cdef Agent _agent
-    cdef int _last_num_sims    
+    cdef int _last_num_sims
+
+    cpdef _search(self)
+    cpdef float _simulate(POUCT self,
+                          State state, tuple history, VNode root, QNode parent,
+                          Observation observation, int depth)
+
+    cpdef void _expand_vnode(self, VNode vnode, tuple history, State state=*)
+    cpdef float _rollout(self, State state, tuple history, VNode root, int depth)
+    cpdef Action _ucb(self, VNode root)
+    cpdef tuple _sample_generative_model(self, State state, Action action)
 
 cdef class RolloutPolicy(PolicyModel):
     cpdef public Action rollout(self, VNode vnode, State state)

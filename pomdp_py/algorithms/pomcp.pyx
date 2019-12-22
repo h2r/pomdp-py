@@ -18,9 +18,11 @@
 # hurt to do the belief update during MCTS, a feature
 # of using particle representation.
 
+from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
+    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
-from pomdp_py.algorithms.po_uct cimport VNode, RootVNode, POUCT, RandomRollout
+from pomdp_py.algorithms.po_uct cimport VNode, RootVNode, QNode, POUCT, RandomRollout
 import copy
 import time
 import random
@@ -88,8 +90,8 @@ cdef class POMCP(POUCT):
                             "POMCP not usable. Please convert it to particles.")
         return POUCT.plan(self, agent)
 
-    def update(self, real_action, real_observation,
-               state_transform_func=None):
+    cpdef void update(self, Action real_action, Observation real_observation,
+                      state_transform_func=None):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
@@ -155,7 +157,9 @@ cdef class POMCP(POUCT):
     def _sample_belief(self, agent):
         return agent.tree.belief.random()                    
 
-    def _simulate(self, state, history, root, parent, observation, depth):
+    cpdef float _simulate(POMCP self,
+                          State state, tuple history, VNode root, QNode parent,
+                          Observation observation, int depth):    
         total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth)
         if depth == 1 and root is not None:
             root.belief.add(state)  # belief update happens as simulation goes.
