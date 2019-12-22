@@ -1,4 +1,4 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 
 cdef class Histogram(GenerativeDistribution):
-    cdef dict histogram
+    cdef dict _histogram

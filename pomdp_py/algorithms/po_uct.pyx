@@ -115,7 +115,7 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
 cdef class ActionPrior:
     """A problem-specific object"""
     
-    def get_preferred_actions(self, state=None, history=None,
+    def get_preferred_actions(self, vnode, state=None, history=None,
                               belief=None, **kwargs):
         """
         This is to mimic the behavior of Simulator.Prior
@@ -136,13 +136,12 @@ cdef class ActionPrior:
         self.num_visits_init = nvi  # name it short to make cython compile work.
         self.value_init = vi
     
-
 cdef class RolloutPolicy(PolicyModel):
-    cpdef public str rollout(self, VNode vnode, str state):
+    cpdef public Action rollout(self, VNode vnode, State state):
         pass
     
 cdef class RandomRollout(RolloutPolicy):
-    cpdef public str rollout(self, VNode vnode, str state):
+    cpdef public Action rollout(self, VNode vnode, State state):
         return random.choice(list(vnode.children))
     
 cdef class POUCT(Planner):
@@ -218,7 +217,8 @@ cdef class POUCT(Planner):
         if self._action_prior is not None:
             # Using action prior; special values are set.
             for preference\
-                in self._agent.policy_model.get_preferred_actions(state=state,
+                in self._agent.policy_model.get_preferred_actions(vnode,
+                                                                  state=state,
                                                                   history=history):
                 action = preference.action
                 if vnode[action] is None:
@@ -289,7 +289,7 @@ cdef class POUCT(Planner):
     def _rollout(self, state, history, root, depth):
         if depth > self._max_depth:
             return 0
-        action = self._rollout_policy(root, state=state)
+        action = self._rollout_policy.rollout(root, state)
         next_state, observation, reward = self._sample_generative_model(state, action)
         if root[action] is None:
             history_action_node = QNode(action, self._num_visits_init, self._value_init)

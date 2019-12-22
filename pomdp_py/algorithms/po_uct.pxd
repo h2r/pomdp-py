@@ -1,7 +1,8 @@
 from pomdp_py.framework.planner cimport Planner
-from pomdp_py.framework.basics cimport Agent, PolicyModel
+from pomdp_py.framework.basics cimport Agent, PolicyModel, Action, State
 
 cdef class TreeNode:
+    cdef public dict children
     cdef public int num_visits
     cdef public float value
 
@@ -27,13 +28,13 @@ cdef class POUCT(Planner):
     cdef int _last_num_sims    
 
 cdef class RolloutPolicy(PolicyModel):
-    cpdef public str rollout(self, VNode vnode, str state)
+    cpdef public Action rollout(self, VNode vnode, State state)
 
 cdef class RandomRollout(RolloutPolicy):
     pass
     
 cdef class ActionPrior:
-    cdef str action
+    cdef Action action
     cdef int num_visits_init
     cdef float value_init
     
