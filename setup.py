@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
+from distutils.extension import Extension
+from Cython.Build import cythonize
 
 setup(name='pomdp-py',
       packages=['pomdp_py'],
@@ -17,5 +19,11 @@ setup(name='pomdp-py',
       author='Kaiyu Zheng',
       author_email='kaiyutony@gmail.com',
       keywords = ['Partially Observable Markov Decision Process', 'POMDP'],
+      ext_modules=cythonize(['pomdp_py/algorithms/po_uct.pyx',
+                             'pomdp_py/algorithms/pomcp.pyx',
+                             'pomdp_py/algorithms/value_iteration.pyx',
+                             'pomdp_py/framework/oopomdp.pyx',
+                             'pomdp_py/framework/planner.pyx',
+                             'pomdp_py/framework/basics.pyx'])
      )
 
