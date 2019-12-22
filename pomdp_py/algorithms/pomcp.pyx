@@ -18,17 +18,16 @@
 # hurt to do the belief update during MCTS, a feature
 # of using particle representation.
 
-from abc import ABC, abstractmethod 
-from pomdp_py.framework.planner import Planner
-from pomdp_py.representations.distribution.particles import Particles
-from pomdp_py.algorithms.po_uct import *
+from pomdp_py.framework.planner cimport Planner
+from pomdp_py.representations.distribution.particles cimport Particles
+from pomdp_py.algorithms.po_uct cimport VNode, RootVNode, POUCT, RandomRollout
 import copy
 import time
 import random
 import math
 
 
-class VNodeParticles(VNode):
+cdef class VNodeParticles(VNode):
     """POMCP's VNode maintains particle belief"""
     def __init__(self, num_visits, value, belief=Particles([])):
         self.num_visits = num_visits
@@ -41,7 +40,7 @@ class VNodeParticles(VNode):
     def __repr__(self):
         return self.__str__()
 
-class RootVNodeParticles(RootVNode, VNodeParticles):
+cdef class RootVNodeParticles(RootVNode):
     def __init__(self, num_visits, value, history, belief=Particles([])):
         VNodeParticles.__init__(self, num_visits, value, belief)
         self.history = history
@@ -51,7 +50,7 @@ class RootVNodeParticles(RootVNode, VNodeParticles):
         rootnode.children = vnode.children
         return rootnode
 
-class POMCP(POUCT):
+cdef class POMCP(POUCT):
 
     """This POMCP version only works for problems
     with action space that can be enumerated."""
@@ -60,7 +59,7 @@ class POMCP(POUCT):
                  max_depth=5, planning_time=1.,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=1, value_init=0,
-                 rollout_policy=random_rollout,
+                 rollout_policy=RandomRollout(),
                  action_prior=None):
         """
         rollout_policy(vnode, state=?) -> a; default random rollout.
@@ -86,7 +85,7 @@ class POMCP(POUCT):
         if not isinstance(agent.belief, Particles):
             raise TypeError("Agent's belief is not represented in particles.\n"\
                             "POMCP not usable. Please convert it to particles.")
-        return POUCT.plan(self, agent, action_prior_args=action_prior_args)
+        return POUCT.plan(self, agent)
 
     def update(self, agent, real_action, real_observation, action_prior_args={},
                state_transform_func=None):

@@ -1,7 +1,7 @@
-from abc import abstractmethod
-from pomdp_py.framework.pomdp import POMDP
-from pomdp_py.framework.basics import TransitionModel, ObservationModel, GenerativeDistribution
+from pomdp_py.framework.basics cimport POMDP, State,\
+    ObservationModel, TransitionModel, GenerativeDistribution
 import collections
+import copy
 
 """
 The addition of OOPOMDP versus POMDP is that states must be
@@ -11,61 +11,11 @@ of OOPOMDP_ObjectState. This makes the "verify_state" function
 explicitly defined for OOPOMDP, given attributes and domains.
 """
 
-class OOPOMDP(POMDP):
+cdef class OOPOMDP(POMDP):
+    def __init__(self, agent, env, name="OOPOMDP"):
+        super().__init__(agent, env, name=name)
 
-    def __init__(self, attributes, domains):
-        self._attributes = attributes
-        self._domains = domains
-
-    def verify_state(self, state, **kwargs):
-        if not isinstance(state, OOState):
-            return False
-        return self._verify_oostate(self._attributes, self._domains, state)
-
-    def verify_object_state(self, object_state, **kwargs):
-        objclass = object_state.objclass
-        if objclass not in self._attributes:
-            if verbose:
-                print("Object class %s does not have specified attriubtes!" % objclass)
-            return False
-        attrs = object_state.attributes
-        for attr in attrs:
-            if attr not in self._attributes[objclass]:
-                if verbose:
-                    print("Attribute %s is not specified for class %s!" % (attr, objclass))
-                return False
-            attr_value = object_states[attr]
-            if not domains[(objclass, attr)](attr_value):
-                if verbose:
-                    print("Attribute value %s not in domain (%s, %s)" % (attr_value, objclass, attr))
-                return False
-        return True
-
-    def _verify_oostate(self, attributes, domains, state, verbose=True):
-        """Returns true if state (OOPOMDP_State) is valid."""
-        assert isinstance(state, OOPOMDP_State)
-        object_states = state.object_states
-        for objid in object_states:
-            if not self.verify_object_state(object_states[objid]):
-                return False
-        return True    
-
-    @abstractmethod
-    def verify_action(self, action, **kwargs):
-        pass
-
-    @abstractmethod
-    def verify_observation(self, observation, **kwargs):
-        pass
-
-    @abstractmethod    
-    def verify_factored_observation(self, observation, **kwargs):
-        """Since in OOPOMDP, observation function is factored by objects,
-        or other entities (e.g. pixel or voxel), there could be observation
-        per such entity."""
-        pass    
-
-class ObjectState:
+cdef class ObjectState:
     def __init__(self, objclass, attributes):
         """
         class: "class",
@@ -105,10 +55,10 @@ class ObjectState:
         return len(self.attributes)
 
     def copy(self):
-        return OOPOMDP_ObjectState(self.objclass, copy.deepcopy(self.attributes))
+        return ObjectState(self.objclass, copy.deepcopy(self.attributes))
     
 
-class OOState:
+cdef class OOState:
 
     def __init__(self, object_states):
         """
@@ -153,9 +103,9 @@ class OOState:
         return self.object_states[objid][attr]
 
     def copy(self):
-        return OOPOMDP_State(copy.deepcopy(self.object_states))
+        return OOState(copy.deepcopy(self.object_states))
 
-class OOTransitionModel(TransitionModel):
+cdef class OOTransitionModel(TransitionModel):
 
     """
     T(s' | s, a) = Pi T(si' | s, a)
@@ -205,7 +155,7 @@ class OOTransitionModel(TransitionModel):
         return self._transition_models[objid]    
 
 
-class OOObservationModel(ObservationModel):
+cdef class OOObservationModel(ObservationModel):
 
     """
     O(z | s', a) = Pi T(zi' | s', a)
@@ -254,7 +204,7 @@ class OOObservationModel(ObservationModel):
         return self._observation_models[objid]
 
 
-class OOBelief(GenerativeDistribution):
+cdef class OOBelief(GenerativeDistribution):
     def __init__(self, object_beliefs):
         """
         object_beliefs (objid -> GenerativeDistribution)

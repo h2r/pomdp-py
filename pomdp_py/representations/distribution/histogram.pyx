@@ -1,9 +1,9 @@
-from pomdp_py import GenerativeDistribution
+from pomdp_py.framework.basics cimport GenerativeDistribution
 import sys
 import random
 import numpy as np
 
-class Histogram(GenerativeDistribution):
+cdef class Histogram(GenerativeDistribution):
     def __init__(self, histogram):
         """`histogram` is a dictionary mapping from variable value to probability"""
         if not (isinstance(histogram, dict)):
@@ -71,8 +71,8 @@ class Histogram(GenerativeDistribution):
         return self._histogram
     
     # Deprecated; it's assuming non-log probabilities
-    def is_normalized(self):
+    def is_normalized(self, epsilon=1e-9):
         """Returns true if this distribution is normalized"""
         prob_sum = sum(self._histogram[state] for state in self._histogram)
-        return abs(1.0-prob_sum) < EPSILON
+        return abs(1.0-prob_sum) < epsilon
 

@@ -1,7 +1,7 @@
-from pomdp_py import GenerativeDistribution
+from pomdp_py.framework.basics cimport GenerativeDistribution
 import random
 
-class Particles(GenerativeDistribution):
+cdef class Particles(GenerativeDistribution):
     def __init__(self, particles):
         self._particles = particles  # each particle is a value
         

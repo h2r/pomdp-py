@@ -1,21 +1,19 @@
-from abc import ABC, abstractmethod
+from pomdp_py.framework.basics cimport Action, Agent, Observation
 
-class Planner(ABC):
+cdef class Planner:
 
-    @abstractmethod
-    def plan(self, agent, **kwargs):
+    cpdef public Action plan(self, Agent agent):    
         """The agent carries the information:
-           Bt, ht, O,T,R/G, pi, necessary for planning"""
-        raise NotImplemented
+        Bt, ht, O,T,R/G, pi, necessary for planning"""
+        raise NotImplementedError
 
-    def update(self, real_action, real_observation):
+    cpdef public void update(self, Action real_action, Observation real_observation):
         """Updates the planner based on real action and observation.
         Updates the agent accordingly if necessary. If the agent's
         belief is also updated here, the `update_agent_belief`
         attribute should be set to True. By default, does nothing."""
-        pass
+        pass    
 
-    @property
     def updates_agent_belief(self):
         """True if planner's update function also updates agent's
         belief."""

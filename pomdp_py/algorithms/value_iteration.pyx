@@ -5,11 +5,19 @@
 #
 # Warning: No pruning - the number of policy trees explodes very fast.
 
-from pomdp_py.framework.planner import Planner
+from pomdp_py.framework.planner cimport Planner
+from pomdp_py.framework.basics cimport Agent, Action, State
 import numpy as np
 import itertools
 
-class PolicyTreeNode:
+cdef class PolicyTreeNode:
+
+    cdef public Action action
+    cdef public int depth
+    cdef public dict children, values
+    cdef Agent _agent
+    cdef float _discount_factor
+    
     def __init__(self, action, depth, agent, discount_factor, children={}):
         self.action = action
         self.depth = depth
@@ -50,11 +58,13 @@ class PolicyTreeNode:
         return self.__str__()
         
 
-class ValueIteration(Planner):
+cdef class ValueIteration(Planner):
     """
     This algorithm is only feasible for small problems where states, actions,
     and observations can be explicitly enumerated.
     """
+    cdef float _discount_factor, _epsilon
+    cdef int _planning_horizon    
 
     def __init__(self, horizon=float('inf'), discount_factor=0.9, epsilon=1e-6):
         """The horizon satisfies discount_factor**horizon > epsilon"""

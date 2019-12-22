@@ -20,15 +20,16 @@
 # [2] Sparse tree search optimality guarantees n POMDPs with
 #     continuous observation spaces, by M. Lim, C. Tomlin, Z. Sunberg.
 
-from abc import ABC, abstractmethod 
-from pomdp_py.framework.planner import Planner
-from pomdp_py.representations.distribution.particles import Particles
+from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
+    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
+from pomdp_py.framework.planner cimport Planner
+from pomdp_py.representations.distribution.particles cimport Particles
 import copy
 import time
 import random
 import math
 
-class TreeNode:
+cdef class TreeNode:
     def __init__(self):
         self.children = {}
     def __getitem__(self, key):
@@ -42,7 +43,7 @@ class TreeNode:
     def __eq__(self, other):
         return id(self) == id(other)
 
-class QNode(TreeNode):
+cdef class QNode(TreeNode):
     def __init__(self, num_visits, value):
         """
         `history_action`: a tuple ((a,o),(a,o),...(a,)). This is only
@@ -56,7 +57,7 @@ class QNode(TreeNode):
     def __repr__(self):
         return self.__str__()
 
-class VNode(TreeNode):
+cdef class VNode(TreeNode):
     def __init__(self, num_visits, value, **kwargs):
         self.num_visits = num_visits
         self.value = value
@@ -67,7 +68,7 @@ class VNode(TreeNode):
     def __repr__(self):
         return self.__str__()
 
-class RootVNode(VNode):
+cdef class RootVNode(VNode):
     def __init__(self, num_visits, value, history):
         VNode.__init__(self, num_visits, value)
         self.history = history
@@ -111,9 +112,9 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
             print("  %s  %s" % (str(best_child), str(equally_good)))
         print_preferred_actions_helper(root[best_child], depth+1, max_depth=max_depth)            
 
-class ActionPrior(ABC):
+cdef class ActionPrior:
     """A problem-specific object"""
-    @abstractmethod
+    
     def get_preferred_actions(self, state=None, history=None,
                               belief=None, **kwargs):
         """
@@ -128,12 +129,23 @@ class ActionPrior(ABC):
         For example, given certain state or history, only it
         is possible that only a subset of all actions is legal;
         This is particularly true in the RockSample problem."""
-        raise NotImplemented
+        raise NotImplementedError
+    
+    def __init__(self, action, nvi, vi):
+        self.action = action
+        self.num_visits_init = nvi  # name it short to make cython compile work.
+        self.value_init = vi
+    
 
-def random_rollout(vnode, state=None):
-    return random.choice(list(vnode.children))
-
-class POUCT(Planner):
+cdef class RolloutPolicy(PolicyModel):
+    cpdef public str rollout(self, VNode vnode, str state):
+        pass
+    
+cdef class RandomRollout(RolloutPolicy):
+    cpdef public str rollout(self, VNode vnode, str state):
+        return random.choice(list(vnode.children))
+    
+cdef class POUCT(Planner):
 
     """POUCT only works for problems with action space
     that can be enumerated."""
@@ -142,7 +154,7 @@ class POUCT(Planner):
                  max_depth=5, planning_time=1.,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=1, value_init=0,
-                 rollout_policy=random_rollout,
+                 rollout_policy=RandomRollout(),
                  action_prior=None):
         """
         rollout_policy(vnode, state=?) -> a; default random rollout.
@@ -159,7 +171,7 @@ class POUCT(Planner):
 
         # to simplify function calls; plan only for one agent at a time
         self._agent = None
-        self._last_num_sims = None        
+        self._last_num_sims = -1
 
     @property
     def updates_agent_belief(self):
@@ -170,15 +182,15 @@ class POUCT(Planner):
         """Returns the number of simulations ran for the last `plan` call."""
         return self._last_num_sims
 
-    def plan(self, agent, action_prior_args={}):
+    cpdef public Action plan(self, Agent agent):
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
-        action, num_sims = self._search(action_prior_args=action_prior_args)
+        action, num_sims = self._search()
         self._last_num_sims = num_sims
         return action            
 
-    def update(self, real_action, real_observation, action_prior_args={}, **kwargs):
+    cpdef public void update(self, Action real_action, Observation real_observation):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
@@ -196,23 +208,22 @@ class POUCT(Planner):
             self._agent.tree = RootVNode(self._num_visits_init,
                                    self._value_init,
                                    self._agent.history)
-            self._expand_vnode(self._agent.tree, self._agent.history,
-                               action_prior_args=action_prior_args)
+            self._expand_vnode(self._agent.tree, self._agent.history)
 
     def clear_agent(self):
         self._agent = None  # forget about current agent so that can plan for another agent.
-        self._last_num_sims = None
+        self._last_num_sims = -1
 
-    def _expand_vnode(self, vnode, history, state=None, action_prior_args={}):
+    def _expand_vnode(self, vnode, history, state=None):
         if self._action_prior is not None:
             # Using action prior; special values are set.
-            for action, num_vists_init, value_init\
+            for preference\
                 in self._agent.policy_model.get_preferred_actions(state=state,
-                                                                  history=history,
-                                                                  **action_prior_args):
+                                                                  history=history):
+                action = preference.action
                 if vnode[action] is None:
-                    history_action_node = QNode(num_visits_init,
-                                                value_init)
+                    history_action_node = QNode(preference.num_visits_init,
+                                                preference.value_init)
                     vnode[action] = history_action_node
         else:
             for action in self._agent.all_actions:
@@ -224,12 +235,11 @@ class POUCT(Planner):
     def _sample_belief(self, agent):
         return agent.belief.random()
 
-    def _search(self, action_prior_args={}):
+    def _search(self):
         # Initialize the tree, if previously empty.
         if self._agent.tree is None:
             self._agent.tree = self._VNode(agent=self._agent, root=True)
-            self._expand_vnode(self._agent.tree, self._agent.history,
-                               action_prior_args=action_prior_args)
+            self._expand_vnode(self._agent.tree, self._agent.history)
         # Verify history
         if self._agent.tree.history != self._agent.history:
             raise ValueError("Unable to plan for the given history.")
@@ -241,7 +251,7 @@ class POUCT(Planner):
             ## the init belief given to the agent.
             state = self._sample_belief(self._agent)
             self._simulate(state, self._agent.history, self._agent.tree,
-                           None, None, 0, action_prior_args=action_prior_args)
+                           None, None, 0)
             num_sims +=1
             
         best_action, best_value = None, float('-inf')            
@@ -252,14 +262,14 @@ class POUCT(Planner):
             # print("action %s: %.3f" % (str(action), tree[action].value))
         return best_action, num_sims
 
-    def _simulate(self, state, history, root, parent, observation, depth, action_prior_args={}):
+    def _simulate(self, state, history, root, parent, observation, depth):
         if depth > self._max_depth:
             return 0
         if root is None:
             root = self._VNode()
             if parent is not None:
                 parent[observation] = root            
-            self._expand_vnode(root, history, state=state, action_prior_args=action_prior_args)
+            self._expand_vnode(root, history, state=state)
             rollout_reward = self._rollout(state, history, root, depth)
             return rollout_reward
         action = self._ucb(root)
@@ -276,7 +286,7 @@ class POUCT(Planner):
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 
-    def _rollout(self, state, history, root, depth, action_prior_args={}):
+    def _rollout(self, state, history, root, depth):
         if depth > self._max_depth:
             return 0
         action = self._rollout_policy(root, state=state)
@@ -286,7 +296,7 @@ class POUCT(Planner):
             root[action] = history_action_node
         if observation not in root[action]:
             root[action][observation] = self._VNode()
-            self._expand_vnode(root[action][observation], history, action_prior_args=action_prior_args)
+            self._expand_vnode(root[action][observation], history)
         return reward + self._discount_factor * self._rollout(next_state,
                                                               history + ((action, observation)),
                                                               root[action][observation],
