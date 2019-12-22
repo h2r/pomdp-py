@@ -247,6 +247,8 @@ cdef class POUCT(Planner):
 
         cdef State state
         cdef int num_sims = 0
+        cdef Action best_action
+        cdef float best_value
         
         start_time = time.time()
         while time.time() - start_time < self._planning_time:

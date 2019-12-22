@@ -1,4 +1,4 @@
-from pomdp_py.framework.basics cimport POMDP, State,\
+from pomdp_py.framework.basics cimport POMDP, State, Action, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution
 import collections
 import copy
@@ -26,9 +26,7 @@ cdef class ObjectState:
         """
         self.objclass = objclass
         self.attributes = attributes
-        self._to_hash = tuple((attr, hash(self.attributes[attr]))
-                              for attr in self.attributes
-                              if isinstance(self.attributes[attr], collections.Hashable))
+        self._hashcode = hash(frozenset(self.attributes.items()))
 
     def __repr__(self):
         return self.__str__()
@@ -39,7 +37,7 @@ cdef class ObjectState:
                                 str(self.attributes))
     
     def __hash__(self):
-        return hash(self._to_hash)
+        return self._hashcode
 
     def __eq__(self, other):
         return self.objclass == other.objclass\
@@ -67,8 +65,8 @@ cdef class OOState:
         """
         # internally, objects are sorted by ID.
         self.object_states = object_states
-        self._to_hash = tuple((objid, hash(self.object_states[objid]))
-                              for objid in self.object_states)
+        self._hashcode = hash(tuple((objid, hash(self.object_states[objid]))
+                                    for objid in self.object_states))
         # self._to_hash = pprint.pformat(self.object_states)  # automatically sorted by keys
 
     def __str__(self):
@@ -79,10 +77,11 @@ cdef class OOState:
         return self.__str__()
     
     def __eq__(self, other):
-        return self.object_states == other.object_states
+        return isinstance(other, OOState)\
+            and self.object_states == other.object_states
 
     def __hash__(self):
-        return hash(self._to_hash)
+        return self._hashcode
     
     def __getitem__(self, index):
         raise NotImplemented
