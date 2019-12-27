@@ -27,5 +27,5 @@ setup(name='pomdp-py',
                              'pomdp_py/framework/basics.pyx',
                              'pomdp_py/representations/distribution/particles.pyx',
                              'pomdp_py/representations/distribution/histogram.pyx'],
-                            build_dir="build")
+                            build_dir="build", compiler_directives={'language_level' : "3"})
      )

@@ -364,7 +364,7 @@ if __name__ == '__main__':
     tiger_problem.agent.tree = None
     
     print("** Testing POMCP **")
-    tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=1000), prior=True)
+    tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
     pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
     test_planner(tiger_problem, pomcp, nsteps=10)
     

@@ -281,7 +281,7 @@ cdef class POUCT(Planner):
         action = self._ucb(root)
         next_state, observation, reward = self._sample_generative_model(state, action)
         total_reward = reward + self._discount_factor*self._simulate(next_state,
-                                                                     history + ((action, observation)),
+                                                                     history + ((action, observation),),
                                                                      root[action][observation],
                                                                      root[action],
                                                                      observation,
@@ -301,13 +301,13 @@ cdef class POUCT(Planner):
         cdef float reward
         next_state, observation, reward = self._sample_generative_model(state, action)
         if root[action] is None:
-            history_action_node = QNode(action, self._num_visits_init, self._value_init)
+            history_action_node = QNode(self._num_visits_init, self._value_init)
             root[action] = history_action_node
         if observation not in root[action]:
             root[action][observation] = self._VNode()
             self._expand_vnode(root[action][observation], history)
         return reward + self._discount_factor * self._rollout(next_state,
-                                                              history + ((action, observation)),
+                                                              history + ((action, observation),),
                                                               root[action][observation],
                                                               depth+1)
 
