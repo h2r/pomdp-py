@@ -11,10 +11,14 @@ cdef class ObjectState(State):
     
 cdef class OOState(State):
     cdef public dict object_states
+    cdef frozenset _situation
     cdef int _hashcode
 
 cdef class OOTransitionModel(TransitionModel):
     cdef dict _transition_models
+
+cdef class OOObservation(Observation):
+    pass
 
 cdef class OOObservationModel(ObservationModel):
     cdef dict _observation_models

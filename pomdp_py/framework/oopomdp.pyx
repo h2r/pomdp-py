@@ -65,9 +65,12 @@ cdef class OOState:
         """
         # internally, objects are sorted by ID.
         self.object_states = object_states
-        self._hashcode = hash(tuple((objid, hash(self.object_states[objid]))
-                                    for objid in self.object_states))
-        # self._to_hash = pprint.pformat(self.object_states)  # automatically sorted by keys
+        self._situation = frozenset(self.object_states.items())
+        self._hashcode = hash(self._situation)
+
+    @property
+    def situation(self):
+        return self._situation
 
     def __str__(self):
         return '%s::[%s]' % (str(self.__class__.__name__),
@@ -151,8 +154,14 @@ cdef class OOTransitionModel(TransitionModel):
         return OOState(object_states)
 
     def __getitem__(self, objid):
-        return self._transition_models[objid]    
+        return self._transition_models[objid]
 
+cdef class OOObservation(Observation):
+    def factor(self, next_state, action, **kwargs):
+        raise NotImplemented
+    @classmethod
+    def merge(cls, object_observations, next_state, action, **kwargs):
+        raise NotImplemented
 
 cdef class OOObservationModel(ObservationModel):
 
@@ -160,21 +169,21 @@ cdef class OOObservationModel(ObservationModel):
     O(z | s', a) = Pi T(zi' | s', a)
     """    
 
-    def __init__(self, observation_models, factor_observation_func, merge_observations_func):
+    def __init__(self, observation_models, merge_func=None):#, factor_observation_func, merge_observations_func):
         """
         observation_models (dict) objid -> observation_model
         factor_observation_func: (observation, objid, next_state, action) -> {objid->observations}
         merge_observations_func: (factored_observations, next_state, action) -> observation
         """
         self._observation_models = observation_models
-        self._factor_observation_func = factor_observation_func
-        self._merge_observations_func = merge_observations_func
+        self._merge_func = merge_func
+
     
     def probability(self, observation, next_state, action, **kwargs):
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         obsrv_prob = 1.0
-        factored_observations = self._factor_observation_func(observation, next_state)
+        factored_observations = observation.factor(next_state, action) #self._factor_observation_func(observation, next_state)
         for objid in next_state.object_states:
             obsrv_prob = obsrv_prob * self._observation_models[objid].probability(factored_observations[objid],
                                                                                   next_state, action, **kwargs)
@@ -193,7 +202,10 @@ cdef class OOObservationModel(ObservationModel):
                 observation = self._observation_models[objid].argmax(next_state,
                                                                      action, **kwargs)                
             factored_observations[objid] = observation
-        return self._merge_observations_func(factored_observations, next_state, **kwargs)
+        if self._merge_func is None:
+            return factored_observations
+        else:
+            return self._merge_func(factored_observations, next_state, **kwargs)
 
     def argmax(self, next_state, action, **kwargs):
         """Returns observation"""
@@ -239,3 +251,7 @@ cdef class OOBelief(GenerativeDistribution):
 
     def set_object_belief(self, objid, belief):
         self._object_beliefs[objid] = belief
+
+    @property
+    def object_beliefs(self):
+        return self._object_beliefs

@@ -111,7 +111,7 @@ cdef class PolicyModel:
     def get_distribution(self, state, **kwargs):
         """Returns the underlying distribution of the model"""
         raise NotImplemented
-    def get_all_actions(self):
+    def get_all_actions(self, *args, **kwargs):
         """Returns a set of all possible actions, if feasible."""
         raise NotImplemented
     
