@@ -181,7 +181,7 @@ cdef class POUCT(Planner):
         """Returns the number of simulations ran for the last `plan` call."""
         return self._last_num_sims
 
-    cpdef public Action plan(self, Agent agent):
+    cpdef public plan(self, Agent agent):
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
@@ -189,7 +189,7 @@ cdef class POUCT(Planner):
         self._last_num_sims = num_sims
         return action            
 
-    cpdef public void update(self, Action real_action, Observation real_observation):
+    cpdef public update(self, Action real_action, Observation real_observation):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.

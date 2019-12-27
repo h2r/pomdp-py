@@ -190,7 +190,7 @@ cdef class Agent:
         return self._history
 
     def update_history(self, real_action, real_observation):
-        self._history += tuple((real_action, real_observation),)
+        self._history += ((real_action, real_observation),)
 
     @property
     def init_belief(self):

@@ -90,8 +90,8 @@ cdef class POMCP(POUCT):
                             "POMCP not usable. Please convert it to particles.")
         return POUCT.plan(self, agent)
 
-    cpdef void update(self, Action real_action, Observation real_observation,
-                      state_transform_func=None):
+    cpdef update(self, Action real_action, Observation real_observation,
+                 state_transform_func=None):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.

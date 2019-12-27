@@ -2,12 +2,12 @@ from pomdp_py.framework.basics cimport Action, Agent, Observation
 
 cdef class Planner:
 
-    cpdef public Action plan(self, Agent agent):    
+    cpdef public plan(self, Agent agent):    
         """The agent carries the information:
         Bt, ht, O,T,R/G, pi, necessary for planning"""
         raise NotImplementedError
 
-    cpdef public void update(self, Action real_action, Observation real_observation):
+    cpdef public update(self, Action real_action, Observation real_observation):
         """Updates the planner based on real action and observation.
         Updates the agent accordingly if necessary. If the agent's
         belief is also updated here, the `update_agent_belief`
