@@ -28,17 +28,17 @@ cdef class POUCT(Planner):
     cdef int _last_num_sims
 
     cpdef _search(self)
-    cpdef float _simulate(POUCT self,
+    cpdef _simulate(POUCT self,
                           State state, tuple history, VNode root, QNode parent,
                           Observation observation, int depth)
 
-    cpdef void _expand_vnode(self, VNode vnode, tuple history, State state=*)
-    cpdef float _rollout(self, State state, tuple history, VNode root, int depth)
+    cpdef _expand_vnode(self, VNode vnode, tuple history, State state=*)
+    cpdef _rollout(self, State state, tuple history, VNode root, int depth)
     cpdef Action _ucb(self, VNode root)
     cpdef tuple _sample_generative_model(self, State state, Action action)
 
 cdef class RolloutPolicy(PolicyModel):
-    cpdef public Action rollout(self, VNode vnode, State state)
+    cpdef Action rollout(self, VNode vnode, State state, tuple history=*)
 
 cdef class RandomRollout(RolloutPolicy):
     pass

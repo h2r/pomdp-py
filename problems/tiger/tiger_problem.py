@@ -224,7 +224,7 @@ class TigerProblem(pomdp_py.POMDP):
             """Returns the underlying distribution of the model"""
             return pomdp_py.Histogram(self._probs[state])
 
-        def get_all_actions(self):
+        def get_all_actions(self, **kwargs):
             return TigerProblem.ACTIONS
 
 

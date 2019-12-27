@@ -22,6 +22,8 @@ cdef class Distribution:
         return self[varval]
 
 cdef class GenerativeDistribution(Distribution):
+    def argmax(self, **kwargs):
+        return self.mpe(**kwargs)
     def mpe(self, **kwargs):
         raise NotImplemented
     def random(self, **kwargs):
@@ -114,6 +116,9 @@ cdef class PolicyModel:
     def get_all_actions(self, *args, **kwargs):
         """Returns a set of all possible actions, if feasible."""
         raise NotImplemented
+    def update(self, state, next_state, action, **kwargs):
+        """Policy model may be updated given a (s,a,s') pair."""
+        pass
     
 # Belief distribution is just a distribution. There's nothing special,
 # except that the update/abstraction function can be performed over them.
@@ -256,7 +261,10 @@ cdef class Agent:
     def all_observations(self):
         """Only available if the observation model implements
         `get_all_observations`."""
-        return self.observation_model.get_all_observations()    
+        return self.observation_model.get_all_observations()
+
+    def valid_actions(self, *args, **kwargs):
+        return self.policy_model.get_all_actions(*args, **kwargs)
 
 
 cdef class Environment:

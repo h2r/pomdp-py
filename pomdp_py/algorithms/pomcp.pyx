@@ -154,12 +154,9 @@ cdef class POMCP(POUCT):
             new_particles.add(next_state)
         return new_particles
 
-    def _sample_belief(self, agent):
-        return agent.tree.belief.random()                    
-
-    cpdef float _simulate(POMCP self,
-                          State state, tuple history, VNode root, QNode parent,
-                          Observation observation, int depth):    
+    cpdef _simulate(POMCP self,
+                    State state, tuple history, VNode root, QNode parent,
+                    Observation observation, int depth):    
         total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth)
         if depth == 1 and root is not None:
             root.belief.add(state)  # belief update happens as simulation goes.

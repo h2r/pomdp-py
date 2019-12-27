@@ -137,11 +137,11 @@ cdef class ActionPrior:
         self.value_init = vi
     
 cdef class RolloutPolicy(PolicyModel):
-    cpdef public Action rollout(self, VNode vnode, State state):
+    cpdef Action rollout(self, VNode vnode, State state, tuple history=None):
         pass
     
 cdef class RandomRollout(RolloutPolicy):
-    cpdef public Action rollout(self, VNode vnode, State state):
+    cpdef Action rollout(self, VNode vnode, State state, tuple history=None):
         return random.choice(list(vnode.children))
     
 cdef class POUCT(Planner):
@@ -200,8 +200,9 @@ cdef class POUCT(Planner):
 
         if self._agent.tree[real_action][real_observation] is not None:
             # Update the tree (prune)
-            self._agent.tree = RootVNode.from_vnode(self._agent.tree[real_action][real_observation],
-                                              self._agent.history)
+            self._agent.tree = RootVNode.from_vnode(
+                self._agent.tree[real_action][real_observation],
+                self._agent.history)
         else:
             # observation was never encountered in simulation.
             self._agent.tree = RootVNode(self._num_visits_init,
@@ -213,7 +214,7 @@ cdef class POUCT(Planner):
         self._agent = None  # forget about current agent so that can plan for another agent.
         self._last_num_sims = -1
 
-    cpdef void _expand_vnode(self, VNode vnode, tuple history, State state=None):
+    cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
         cdef Action action    
         if self._action_prior is not None:
             # Using action prior; special values are set.
@@ -227,7 +228,7 @@ cdef class POUCT(Planner):
                                                 preference.value_init)
                     vnode[action] = history_action_node
         else:
-            for action in self._agent.all_actions:
+            for action in self._agent.valid_actions(state=state, history=history):
                 if vnode[action] is None:
                     history_action_node = QNode(self._num_visits_init,
                                                 self._value_init)
@@ -237,14 +238,6 @@ cdef class POUCT(Planner):
         return agent.belief.random()
 
     cpdef _search(self):
-        # Initialize the tree, if previously empty.
-        if self._agent.tree is None:
-            self._agent.tree = self._VNode(agent=self._agent, root=True)
-            self._expand_vnode(self._agent.tree, self._agent.history)
-        # Verify history
-        if self._agent.tree.history != self._agent.history:
-            raise ValueError("Unable to plan for the given history.")
-
         cdef State state
         cdef int num_sims = 0
         cdef Action best_action
@@ -267,13 +260,19 @@ cdef class POUCT(Planner):
             # print("action %s: %.3f" % (str(action), tree[action].value))
         return best_action, num_sims
 
-    cpdef float _simulate(POUCT self,
-                          State state, tuple history, VNode root, QNode parent,
-                          Observation observation, int depth):
+    cpdef _simulate(POUCT self,
+                    State state, tuple history, VNode root, QNode parent,
+                    Observation observation, int depth):
         if depth > self._max_depth:
             return 0
         if root is None:
-            root = self._VNode()
+            if self._agent.tree is None:
+                root = self._VNode(agent=self._agent, root=True)
+                self._agent.tree = root
+                if self._agent.tree.history != self._agent.history:
+                    raise ValueError("Unable to plan for the given history.")
+            else:
+                root = self._VNode()
             if parent is not None:
                 parent[observation] = root            
             self._expand_vnode(root, history, state=state)
@@ -293,7 +292,7 @@ cdef class POUCT(Planner):
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 
-    cpdef float _rollout(self, State state, tuple history, VNode root, int depth):
+    cpdef _rollout(self, State state, tuple history, VNode root, int depth):
         if depth > self._max_depth:
             return 0
         cdef Action action = self._rollout_policy.rollout(root, state)
