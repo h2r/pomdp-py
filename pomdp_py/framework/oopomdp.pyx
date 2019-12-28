@@ -205,7 +205,7 @@ cdef class OOObservationModel(ObservationModel):
         if self._merge_func is None:
             return factored_observations
         else:
-            return self._merge_func(factored_observations, next_state, **kwargs)
+            return self._merge_func(factored_observations, next_state, action, **kwargs)
 
     def argmax(self, next_state, action, **kwargs):
         """Returns observation"""
