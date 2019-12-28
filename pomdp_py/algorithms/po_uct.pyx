@@ -38,10 +38,6 @@ cdef class TreeNode:
         self.children[key] = value
     def __contains__(self, key):
         return key in self.children
-    def __hash__(self):
-        return hash(id(self))
-    def __eq__(self, other):
-        return id(self) == id(other)
 
 cdef class QNode(TreeNode):
     def __init__(self, num_visits, value):
@@ -67,6 +63,7 @@ cdef class VNode(TreeNode):
                                            str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
+    
 
 cdef class RootVNode(VNode):
     def __init__(self, num_visits, value, history):
@@ -103,9 +100,10 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
             best_child = c
             best_value = root[c].value
     equally_good = []
-    for c in root.children:
-        if c != best_child and root[c].value == best_value:
-            equally_good.append(c)
+    if isinstance(root, VNode):
+        for c in root.children:
+            if c != best_child and root[c].value == best_value:
+                equally_good.append(c)
 
     if best_child is not None and root[best_child] is not None:
         if isinstance(root[best_child], QNode):
@@ -257,7 +255,7 @@ cdef class POUCT(Planner):
             if self._agent.tree[action].value > best_value:
                 best_value = self._agent.tree[action].value
                 best_action = action
-            # print("action %s: %.3f" % (str(action), tree[action].value))
+            print("   action %s: %.3f" % (str(action), self._agent.tree[action].value))
         return best_action, num_sims
 
     cpdef _simulate(POUCT self,
@@ -274,7 +272,7 @@ cdef class POUCT(Planner):
             else:
                 root = self._VNode()
             if parent is not None:
-                parent[observation] = root            
+                parent[observation] = root
             self._expand_vnode(root, history, state=state)
             rollout_reward = self._rollout(state, history, root, depth)
             return rollout_reward

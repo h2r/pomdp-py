@@ -2,6 +2,9 @@ import numpy as np
 import random
 
 def remap(oldvalue, oldmin, oldmax, newmin, newmax):
+    if oldmax - oldmin == 0:
+        print("Warning in remap: the old range has size 0")
+        oldmax = oldmin + oldvalue
     return (((oldvalue - oldmin) * (newmax - newmin)) / (oldmax - oldmin)) + newmin
 
 # Plotting
