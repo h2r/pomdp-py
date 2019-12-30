@@ -334,9 +334,23 @@ class RockSampleProblem(pomdp_py.POMDP):
         return init_state, rock_locs
 
     def print_state(self):
-        string = ""
+        string = "\n______ID______\n"
         rover_position = self.env.state.position
         rocktypes = self.env.state.rocktypes
+        # Rock id map
+        for y in range(self._n):
+            for x in range(self._n+1):
+                char = "."
+                if x == self._n:
+                    char = ">"             
+                if (x,y) in self._rock_locs:
+                    char = str(self._rock_locs[(x,y)])
+                if (x,y) == rover_position:
+                    char = "R"
+                string += char
+            string += "\n"
+        string += "_____G/B_____\n"
+        # Good/bad map
         for y in range(self._n):
             for x in range(self._n+1):
                 char = "."
