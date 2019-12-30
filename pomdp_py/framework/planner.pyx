@@ -1,4 +1,4 @@
-from pomdp_py.framework.basics cimport Action, Agent, Observation
+from pomdp_py.framework.basics cimport Action, Agent, Observation, State
 
 cdef class Planner:
 
@@ -18,3 +18,19 @@ cdef class Planner:
         """True if planner's update function also updates agent's
         belief."""
         return False
+
+cpdef sample_generative_model(Agent agent, State state, Action action):
+    '''
+    (s', o, r) ~ G(s, a)
+    '''
+    cdef State next_state
+    cdef Observation observation
+    cdef float reward        
+
+    if agent.transition_model is None:
+        next_state, observation, reward = agent.generative_model.sample(state, action)
+    else:
+        next_state = agent.transition_model.sample(state, action)
+        observation = agent.observation_model.sample(next_state, action)
+        reward = agent.reward_model.sample(state, action, next_state)
+    return next_state, observation, reward

@@ -388,11 +388,9 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     for i in range(nsteps):
         print("==== Step %d ====" % (i+1))
         action = planner.plan(rocksample.agent)
-
+        
         # pomdp_py.visual.visualize_pouct_search_tree(rocksample.agent.tree,
         #                                             max_depth=5, anonymize=False)
-
-
         
         true_state = copy.deepcopy(rocksample.env.state)
         env_reward = rocksample.env.state_transition(action, execute=True)
@@ -411,7 +409,8 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         print("Reward: %s" % str(env_reward))
         print("Reward (Cumulative): %s" % str(total_reward))
         print("Reward (Cumulative Discounted): %s" % str(total_discounted_reward))
-        print("__num_sims__: %d" % planner.last_num_sims)
+        if isinstance(planner, pomdp_py.POUCT):
+            print("__num_sims__: %d" % planner.last_num_sims)
         print("World:")
         rocksample.print_state()
 
@@ -445,10 +444,19 @@ if __name__ == '__main__':
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
     rocksample.print_state()
 
-    print("*** Testing POMCP ***")
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
-                           planning_time=1., exploration_const=20)
-    tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
+    # print("*** Testing POMCP ***")
+    # pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
+    #                        planning_time=1., exploration_const=20,
+    #                        rollout_policy=rocksample.agent.policy_model)
+    # tt, ttd = test_planner(rocksample, pomcp, nsteps=10, discount=0.95)
+
+    print("*** Testing PO-rollout ***")
+    poroll = pomdp_py.PORollout(max_depth=10, discount_factor=0.95,
+                                num_simulations=2500,
+                                particles=True,
+                                rollout_policy=rocksample.agent.policy_model)
+    tt, ttd = test_planner(rocksample, poroll, nsteps=10, discount=0.95)
+    
 
     # Some notes:
     # When the world is too small, the robot seems to just prefer

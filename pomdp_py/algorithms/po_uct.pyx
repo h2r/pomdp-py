@@ -22,7 +22,7 @@
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
-from pomdp_py.framework.planner cimport Planner
+from pomdp_py.framework.planner cimport Planner, sample_generative_model
 from pomdp_py.representations.distribution.particles cimport Particles
 import copy
 import time
@@ -139,12 +139,12 @@ cdef class ActionPrior:
         self.value_init = vi
     
 cdef class RolloutPolicy(PolicyModel):
-    cpdef Action rollout(self, VNode vnode, State state, tuple history=None):
+    cpdef Action rollout(self, State state, tuple history=None):
         pass
     
 cdef class RandomRollout(RolloutPolicy):
-    cpdef Action rollout(self, VNode vnode, State state, tuple history=None):
-        return random.choice(list(vnode.children))
+    cpdef Action rollout(self, State state, tuple history=None):
+        return random.choice(self.get_all_actions(state=state, history=history))
     
 cdef class POUCT(Planner):
 
@@ -280,7 +280,7 @@ cdef class POUCT(Planner):
             rollout_reward = self._rollout(state, history, root, depth)
             return rollout_reward
         action = self._ucb(root)
-        next_state, observation, reward = self._sample_generative_model(state, action)
+        next_state, observation, reward = sample_generative_model(self._agent, state, action)
         total_reward = reward + self._discount_factor*self._simulate(next_state,
                                                                      history + ((action, observation),),
                                                                      root[action][observation],
@@ -294,23 +294,28 @@ cdef class POUCT(Planner):
         return total_reward
 
     cpdef _rollout(self, State state, tuple history, VNode root, int depth):
-        if depth > self._max_depth:
-            return 0
-        cdef Action action = self._rollout_policy.rollout(root, state)
+        cdef Action action
+        cdef float discount = 1.0
+        cdef float total_discounted_reward = 0
         cdef State next_state
         cdef Observation observation
         cdef float reward
-        next_state, observation, reward = self._sample_generative_model(state, action)
-        if root[action] is None:
-            history_action_node = QNode(self._num_visits_init, self._value_init)
-            root[action] = history_action_node
-        if observation not in root[action]:
-            root[action][observation] = self._VNode()
-            self._expand_vnode(root[action][observation], history)
-        return reward + self._discount_factor * self._rollout(next_state,
-                                                              history + ((action, observation),),
-                                                              root[action][observation],
-                                                              depth+1)
+        
+        while depth <= self._max_depth:
+            action = self._rollout_policy.rollout(state, history=history)
+            next_state, observation, reward = sample_generative_model(self._agent, state, action)            
+            if root[action] is None:
+                history_action_node = QNode(self._num_visits_init, self._value_init)
+                root[action] = history_action_node
+            if observation not in root[action]:
+                root[action][observation] = self._VNode()
+                self._expand_vnode(root[action][observation], history)
+            history = history + ((action, observation),)
+            depth += 1
+            total_discounted_reward += reward * discount
+            discount *= self._discount_factor
+            state = next_state
+        return total_discounted_reward
 
     cpdef Action _ucb(self, VNode root):
         """UCB1"""
