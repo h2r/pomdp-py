@@ -63,6 +63,10 @@ cdef class VNode(TreeNode):
                                            str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
+
+    def print_children_value(self):
+        for action in self.children:
+            print("   action %s: %.3f" % (str(action), self[action].value))
     
 
 cdef class RootVNode(VNode):
@@ -255,7 +259,6 @@ cdef class POUCT(Planner):
             if self._agent.tree[action].value > best_value:
                 best_value = self._agent.tree[action].value
                 best_action = action
-            print("   action %s: %.3f" % (str(action), self._agent.tree[action].value))
         return best_action, num_sims
 
     cpdef _simulate(POUCT self,

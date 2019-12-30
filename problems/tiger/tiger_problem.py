@@ -235,7 +235,7 @@ def test_planner(tiger_problem, planner, nsteps=3):
         print("True state: %s" % tiger_problem.env.state)
         print("Belief: %s" % str(tiger_problem.agent.cur_belief))
         print("Action: %s" % str(action))
-        print("Reward: %s" % str(tiger_problem.env.reward_model.sample(init_true_state, action, None)))
+        print("Reward: %s" % str(tiger_problem.env.reward_model.sample(tiger_problem.env.state, action, None)))
 
         # Let's create some simulated real observation; Update the belief (a bit hacky)
         real_observation = Observation(tiger_problem.env.state.name)
@@ -357,7 +357,7 @@ if __name__ == '__main__':
     test_planner(tiger_problem, pouct, nsteps=10)
 
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=3, anonymize=True)
+                                                max_depth=5, anonymize=False)
 
     # Reset agent belief    
     tiger_problem.agent.set_belief(init_belief, prior=True)
@@ -369,6 +369,6 @@ if __name__ == '__main__':
     test_planner(tiger_problem, pomcp, nsteps=10)
     
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=3, anonymize=True)
+                                                max_depth=5, anonymize=False)
 
 
