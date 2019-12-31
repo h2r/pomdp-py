@@ -444,11 +444,11 @@ if __name__ == '__main__':
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
     rocksample.print_state()
 
-    # print("*** Testing POMCP ***")
-    # pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
-    #                        planning_time=1., exploration_const=20,
-    #                        rollout_policy=rocksample.agent.policy_model)
-    # tt, ttd = test_planner(rocksample, pomcp, nsteps=10, discount=0.95)
+    print("*** Testing POMCP ***")
+    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
+                           planning_time=1., exploration_const=20,
+                           rollout_policy=rocksample.agent.policy_model)
+    tt, ttd = test_planner(rocksample, pomcp, nsteps=10, discount=0.95)
 
     print("*** Testing PO-rollout ***")
     poroll = pomdp_py.PORollout(max_depth=10, discount_factor=0.95,

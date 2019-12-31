@@ -15,7 +15,7 @@ cdef class OOPOMDP(POMDP):
     def __init__(self, agent, env, name="OOPOMDP"):
         super().__init__(agent, env, name=name)
 
-cdef class ObjectState:
+cdef class ObjectState(State):
     def __init__(self, objclass, attributes):
         """
         class: "class",
@@ -56,7 +56,7 @@ cdef class ObjectState:
         return ObjectState(self.objclass, copy.deepcopy(self.attributes))
     
 
-cdef class OOState:
+cdef class OOState(State):
 
     def __init__(self, object_states):
         """
@@ -127,31 +127,32 @@ cdef class OOTransitionModel(TransitionModel):
         if next_state.object_states.keys() != state.object_states.keys():
             raise ValueError("object types modified between states")
         trans_prob = 1.0
-        for objid in state.object_states:
+        for objid in self._transition_models:
             object_state = state.object_states[objid]
             next_object_state = next_state.object_states[objid]
             trans_prob = trans_prob * self._transition_models[objid].probability(next_object_state, state, action, **kwargs)
         return trans_prob
 
-    def sample(self, state, action, **kwargs):
+    def sample(self, state, action, argmax=False, **kwargs):
         """Returns next_state"""
         if not isinstance(state, OOState):
             raise ValueError("state must be OOState")
         object_states = {}
         for objid in state.object_states:
-            next_object_state = self._transition_models[objid].sample(state, action, **kwargs)
+            if objid not in self._transition_models:
+                # no transition model provided for this object. Then no transition happens.
+                object_states[objid] = copy.deepcopy(state.object_states[objid])
+                continue
+            if argmax:
+                next_object_state = self._transition_models[objid].argmax(state, action, **kwargs)
+            else:
+                next_object_state = self._transition_models[objid].sample(state, action, **kwargs)
             object_states[objid] = next_object_state
         return OOState(object_states)
 
-    def argmax(self, state, action, normalized=False, **kwargs):
+    def argmax(self, state, action, **kwargs):
         """Returns the most likely next state"""
-        if not isinstance(state, OOState):
-            raise ValueError("state must be OOState")
-        object_states = {}
-        for objid in state.object_states:
-            next_object_state = self._transition_models[objid].argmax(state, action, **kwargs)
-            object_states[objid] = next_object_state
-        return OOState(object_states)
+        return self.sample(state, action, argmax=True, **kwargs)
 
     def __getitem__(self, objid):
         return self._transition_models[objid]
@@ -194,7 +195,7 @@ cdef class OOObservationModel(ObservationModel):
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         factored_observations = {}
-        for objid in next_state.object_states:
+        for objid in self._observation_models:
             if not argmax:
                 observation = self._observation_models[objid].sample(next_state,
                                                                      action, **kwargs)
@@ -226,7 +227,7 @@ cdef class OOBelief(GenerativeDistribution):
         if not isinstance(state, OOState):
             raise ValueError("state must be OOState")
         belief_prob = 1.0
-        for objid in state.object_states:
+        for objid in self._object_beliefs:
             object_state = state.object_states[objid]
             belief_prob = belief_prob * self._object_beliefs[objid].probability(object_state)
         return belief_prob
