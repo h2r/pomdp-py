@@ -378,7 +378,7 @@ class RockSampleProblem(pomdp_py.POMDP):
                                    RSTransitionModel(n, rock_locs, self.in_exit_area),
                                    RSRewardModel(rock_locs, self.in_exit_area))
         self._rock_locs = rock_locs
-        super().__init__(agent, env, name="TigerProblem")
+        super().__init__(agent, env, name="RockSampleProblem")
 
 
 def test_planner(rocksample, planner, nsteps=3, discount=0.95):
@@ -411,6 +411,8 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         print("Reward (Cumulative Discounted): %s" % str(total_discounted_reward))
         if isinstance(planner, pomdp_py.POUCT):
             print("__num_sims__: %d" % planner.last_num_sims)
+        if isinstance(planner, pomdp_py.PORollout):
+            print("__best_reward__: %d" % planner.last_best_reward)
         print("World:")
         rocksample.print_state()
 
@@ -419,15 +421,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     return total_reward, total_discounted_reward
         
 
-
-if __name__ == '__main__':
-    n, k = 5, 7
-    init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
-
-    belief = "uniform"
-
-    # init belief (uniform), represented in particles;
-    # We don't factor the state here; We are also not doing any action prior.
+def init_particles_belief(num_particles, init_state, belief="uniform"):
     num_particles = 200
     particles = []
     for _ in range(num_particles):
@@ -440,22 +434,41 @@ if __name__ == '__main__':
             rocktypes = copy.deepcopy(init_state.rocktypes)
         particles.append(State(init_state.position, rocktypes, False))
     init_belief = pomdp_py.Particles(particles)
+    return init_belief
+    
 
+if __name__ == '__main__':
+    n, k = 5, 5
+    init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
+    init_state_copy = copy.deepcopy(init_state)
+
+    belief = "uniform"
+
+    # init belief (uniform), represented in particles;
+    # We don't factor the state here; We are also not doing any action prior.
+    init_belief = init_particles_belief(200, init_state, belief=belief)
+    
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
+    pomcp = pomdp_py.POMCP(max_depth=20, discount_factor=0.95,
                            planning_time=1., exploration_const=20,
                            rollout_policy=rocksample.agent.policy_model)
-    tt, ttd = test_planner(rocksample, pomcp, nsteps=10, discount=0.95)
+    tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
+    
+    rocksample.env.state.position = init_state_copy.position
+    rocksample.env.state.rocktypes = init_state_copy.rocktypes
+    rocksample.env.state.terminal = False
+    init_belief = init_particles_belief(200, rocksample.env.state, belief=belief)
+    rocksample.agent.set_belief(init_belief)
 
     print("*** Testing PO-rollout ***")
-    poroll = pomdp_py.PORollout(max_depth=10, discount_factor=0.95,
+    poroll = pomdp_py.PORollout(max_depth=20, discount_factor=0.95,
                                 num_simulations=2500,
                                 particles=True,
                                 rollout_policy=rocksample.agent.policy_model)
-    tt, ttd = test_planner(rocksample, poroll, nsteps=10, discount=0.95)
+    tt, ttd = test_planner(rocksample, poroll, nsteps=50, discount=0.95)
     
 
     # Some notes:
