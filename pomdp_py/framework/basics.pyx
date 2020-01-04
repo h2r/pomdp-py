@@ -39,7 +39,6 @@ cdef class ObservationModel:
     def sample(self, next_state, action, **kwargs):
         """Returns observation"""
         raise NotImplemented
-    
     def argmax(self, next_state, action, **kwargs):
         """Returns the most likely observation"""
         raise NotImplemented
@@ -58,7 +57,6 @@ cdef class TransitionModel:
     def sample(self, state, action, **kwargs):
         """Returns next_state"""
         raise NotImplemented
-    
     def argmax(self, state, action, **kwargs):
         """Returns the most likely next state"""
         raise NotImplemented
@@ -67,7 +65,7 @@ cdef class TransitionModel:
         raise NotImplemented
     def get_all_states(self):
         """Returns a set of all possible states, if feasible."""
-        raise NotImplemented    
+        raise NotImplemented
 
 cdef class RewardModel:
     
@@ -141,13 +139,9 @@ cdef class POMDP:
 
 cdef class Action:
     def __eq__(self, other):
-        if isinstance(other, Action):
-            return self.name == other.name
-        else:
-            return False
+        raise NotImplemented
     def __hash__(self):
-        return hash(self.name)
-
+        raise NotImplemented        
 cdef class State:
     def __eq__(self, other):
         raise NotImplemented
@@ -303,12 +297,110 @@ cdef class Environment:
     
     def state_transition(self, action, execute=True, **kwargs):
         """Modifies current state of the environment"""
-        next_state = self.transition_model.sample(self.state, action, **kwargs)
-        reward = self.reward_model.sample(self.state, action, next_state)
+        next_state, reward = sample_explict_models(self.transition_model, None, self.reward_model,
+                                                   self.state, action,
+                                                   discount_factor=kwargs.get("discount_factor", 1.0))
         if execute:
             self._cur_state = next_state
         return reward
 
     def provide_observation(self, observation_model, action, **kwargs):
         return observation_model.sample(self.state, action, **kwargs)
+    
+    
+cdef class Option(Action):
+    """An option is a temporally abstracted action that
+    is defined by (I, pi, B), where I is a initiation set,
+    pi is a policy, and B is a termination condition
+
+    Described in ``Between MDPs and semi-MDPs:
+    A framework for temporal abstraction in reinforcement learning''
+    """
+    def initiation(self, state, **kwargs):
+        """Returns True if the given parameters satisfy the initiation set"""
+        raise NotImplemented
+
+    def termination(self, state, **kwargs):
+        """Returns a boolean of whether state satisfies
+        the termination condition"""
+        raise NotImplemented
+
+    @property
+    def policy(self):
+        """Returns the policy model (PolicyModel) of this option."""
+        raise NotImplemented
+
+    def sample(self, state, **kwargs):
+        """Samples an action from this option's policy.
+        Convenience function; Can be overriden if don't
+        feel like writing a PolicyModel class"""
+        return self.policy.sample(state, **kwargs)
+    
+    def __eq__(self, other):
+        raise NotImplemented
+    
+    def __hash__(self):
+        raise NotImplemented
+
+    # Remark in Sutton etal'99:
+    # Note that even if a policy is Markov and all of the options
+    # it selects are Markov, the corresponding flat policy is unlikely to be
+    # Markov if any of the options are multi-step (temporally extended).
+    #    --> that's why planning with options defined over an MDP
+    #        results in a semi-MDP.
+
+
+cpdef sample_generative_model(Agent agent, State state, Action action, float discount_factor=1.0):
+    """
+    (s', o, r) ~ G(s, a)
+    """
+    cdef State next_state
+    cdef Observation observation
+    cdef float reward
+
+    if agent.transition_model is None:
+        next_state, observation, reward = agent.generative_model.sample(state, action)
+    else:
+        next_state, observation, reward = sample_explict_models(agent.transition_model,
+                                                                agent.observation_model,
+                                                                agent.reward_model,
+                                                                state,
+                                                                action,
+                                                                discount_factor)
+    return next_state, observation, reward
+
+
+cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R,
+                            State state, Action action, float discount_factor=1.0):
+    cdef State next_state
+    cdef Observation observation
+    cdef float reward
+    cdef Option option
+    
+    if isinstance(action, Option):
+        # The action is an option; simulate a rollout of the option
+        option = action
+        if not option.initiation(state):
+            # state is not in the initiation set of the option. Cannot sample.
+            raise ValueError("State is not in initiation set of option.")
+
+        reward = 0
+        step_discount_factor = 1.0
+        while not option.termination(state):
+            action = option.sample(state)
+            next_state = T.sample(state, action)
+            # For now, we don't care about intermediate observations (future work?).
+            reward += step_discount_factor * R.sample(state, action, next_state)
+            step_discount_factor *= discount_factor
+            state = next_state
+        # sample observation at the end, where action is the last action.
+        # (doesn't quite make sense to just use option as the action at this point.)
+    else:
+        next_state = T.sample(state, action)
+        reward = R.sample(state, action, next_state)
+    if O is not None:
+        observation = O.sample(next_state, action)
+        return next_state, observation, reward        
+    else:
+        return next_state, reward
     

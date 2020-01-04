@@ -11,8 +11,9 @@
 # it will do the rollouts and action selection as described.
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
-    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
-from pomdp_py.framework.planner cimport Planner, sample_generative_model
+    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
+    sample_generative_model
+from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
 from pomdp_py.representations.belief.particles cimport particle_reinvigoration
 from pomdp_py.algorithms.po_uct cimport RandomRollout

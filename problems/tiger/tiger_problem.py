@@ -195,7 +195,7 @@ class TigerProblem(pomdp_py.POMDP):
             return pomdp_py.Histogram({reward:1.0})
 
     # Policy Model
-    class PolicyModel(pomdp_py.PolicyModel):
+    class PolicyModel(pomdp_py.RandomRollout):
         """This is an extremely dumb policy model; To keep consistent
         with the framework."""
         def __init__(self, prior=None):
@@ -353,7 +353,9 @@ if __name__ == '__main__':
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
     print("** Testing POUCT **")
-    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
+    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95,
+                           planning_time=.5, exploration_const=110,
+                           rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pouct, nsteps=10)
 
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
@@ -365,7 +367,9 @@ if __name__ == '__main__':
     
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95, planning_time=.5, exploration_const=110)
+    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
+                           planning_time=.5, exploration_const=110,
+                           rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pomcp, nsteps=10)
     
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,

@@ -43,3 +43,9 @@ cdef class Environment:
     cdef TransitionModel _transition_model
     cdef RewardModel _reward_model
     cdef State _cur_state
+
+cdef class Option(Action):
+    pass
+
+cpdef sample_generative_model(Agent agent, State state, Action action, float discount_factor=*)
+cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R, State state, Action a, float discount_factor=*)

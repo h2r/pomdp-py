@@ -21,8 +21,9 @@
 #     continuous observation spaces, by M. Lim, C. Tomlin, Z. Sunberg.
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
-    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
-from pomdp_py.framework.planner cimport Planner, sample_generative_model
+    ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
+    sample_generative_model
+from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
 import copy
 import time
@@ -144,7 +145,7 @@ cdef class RolloutPolicy(PolicyModel):
     
 cdef class RandomRollout(RolloutPolicy):
     cpdef Action rollout(self, State state, tuple history=None):
-        return random.choice(self.get_all_actions(state=state, history=history))
+        return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
     
 cdef class POUCT(Planner):
 
@@ -309,7 +310,7 @@ cdef class POUCT(Planner):
                 root[action] = history_action_node
             if observation not in root[action]:
                 root[action][observation] = self._VNode()
-                self._expand_vnode(root[action][observation], history)
+                self._expand_vnode(root[action][observation], history, state=next_state)
             history = history + ((action, observation),)
             depth += 1
             total_discounted_reward += reward * discount
