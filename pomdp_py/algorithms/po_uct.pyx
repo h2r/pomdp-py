@@ -283,7 +283,8 @@ cdef class POUCT(Planner):
         if nsteps == 0:
             # This indicates the provided action didn't lead to transition
             # Perhaps the action is not allowed to be performed for the given state
-            # (for example, the state is not in the initiation set of the option)
+            # (for example, the state is not in the initiation set of the option,
+            # or the state is a terminal state)
             return reward
 
         total_reward = reward + (self._discount_factor**nsteps)*self._simulate(next_state,

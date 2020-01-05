@@ -15,7 +15,7 @@ cdef class OOState(State):
     cdef int _hashcode
 
 cdef class OOTransitionModel(TransitionModel):
-    cdef dict _transition_models
+    cpdef dict _transition_models
 
 cdef class OOObservation(Observation):
     pass

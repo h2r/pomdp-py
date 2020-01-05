@@ -377,7 +377,7 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
     cdef float reward
     cdef Option option
     cdef int nsteps = 0
-    
+
     if isinstance(action, Option):
         # The action is an option; simulate a rollout of the option
         option = action

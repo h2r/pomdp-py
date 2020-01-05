@@ -157,6 +157,10 @@ cdef class OOTransitionModel(TransitionModel):
     def __getitem__(self, objid):
         return self._transition_models[objid]
 
+    @property
+    def transition_models(self):
+        return self._transition_models
+
 cdef class OOObservation(Observation):
     def factor(self, next_state, action, **kwargs):
         raise NotImplemented
@@ -214,6 +218,10 @@ cdef class OOObservationModel(ObservationModel):
 
     def __getitem__(self, objid):
         return self._observation_models[objid]
+
+    @property
+    def observation_models(self):
+        return self._observation_models
 
 
 cdef class OOBelief(GenerativeDistribution):

@@ -79,11 +79,12 @@ cdef class PORollout(Planner):
         cdef State next_state
         cdef Observation observation
         cdef float reward
+        cdef int nsteps
         cdef tuple history = self._agent.history
         
         while depth <= self._max_depth:
             action = self._rollout_policy.rollout(state, history=history)
-            next_state, observation, reward = sample_generative_model(self._agent, state, action)
+            next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
             history = history + ((action, observation),)
             depth += 1
             total_discounted_reward += reward * discount
@@ -95,14 +96,15 @@ cdef class PORollout(Planner):
                  state_transform_func=None):
         # If particles is true, then perform Monte Carlo belief update.
         # Otherwise, do nothing
+        cdef int nsteps
         if self._particles:
             cur_belief = self._agent.belief
             new_belief = Particles([])
             if not isinstance(cur_belief, Particles):
                 raise ValueError("Agent's belief is not in particles.")
             for state in cur_belief.particles:
-                next_state, observation, reward = sample_generative_model(self._agent, state,
-                                                                          real_action)
+                next_state, observation, reward, nsteps = sample_generative_model(self._agent, state,
+                                                                                  real_action)
                 if observation == real_observation:
                     new_belief.add(next_state)
             # Particle reinvigoration
