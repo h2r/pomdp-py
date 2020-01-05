@@ -208,10 +208,7 @@ cdef class POUCT(Planner):
                 self._agent.history)
         else:
             # observation was never encountered in simulation.
-            self._agent.tree = RootVNode(self._num_visits_init,
-                                   self._value_init,
-                                   self._agent.history)
-            self._expand_vnode(self._agent.tree, self._agent.history)
+            self._agent.tree = None
 
     def clear_agent(self):
         self._agent = None  # forget about current agent so that can plan for another agent.
@@ -280,14 +277,21 @@ cdef class POUCT(Planner):
             self._expand_vnode(root, history, state=state)
             rollout_reward = self._rollout(state, history, root, depth)
             return rollout_reward
+        cdef int nsteps
         action = self._ucb(root)
-        next_state, observation, reward = sample_generative_model(self._agent, state, action)
-        total_reward = reward + self._discount_factor*self._simulate(next_state,
-                                                                     history + ((action, observation),),
-                                                                     root[action][observation],
-                                                                     root[action],
-                                                                     observation,
-                                                                     depth+1)
+        next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
+        if nsteps == 0:
+            # This indicates the provided action didn't lead to transition
+            # Perhaps the action is not allowed to be performed for the given state
+            # (for example, the state is not in the initiation set of the option)
+            return reward
+
+        total_reward = reward + (self._discount_factor**nsteps)*self._simulate(next_state,
+                                                                               history + ((action, observation),),
+                                                                               root[action][observation],
+                                                                               root[action],
+                                                                               observation,
+                                                                               depth+nsteps)
         root.num_visits += 1
         root[action].num_visits += 1
         root.value = root.value + (total_reward - root.value) / (root.num_visits)
@@ -304,7 +308,7 @@ cdef class POUCT(Planner):
         
         while depth <= self._max_depth:
             action = self._rollout_policy.rollout(state, history=history)
-            next_state, observation, reward = sample_generative_model(self._agent, state, action)            
+            next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
             if root[action] is None:
                 history_action_node = QNode(self._num_visits_init, self._value_init)
                 root[action] = history_action_node
@@ -312,10 +316,11 @@ cdef class POUCT(Planner):
                 root[action][observation] = self._VNode()
                 self._expand_vnode(root[action][observation], history, state=next_state)
             history = history + ((action, observation),)
-            depth += 1
+            depth += nsteps
             total_discounted_reward += reward * discount
-            discount *= self._discount_factor
+            discount *= (self._discount_factor**nsteps)
             state = next_state
+            root = root[action][observation]
         return total_discounted_reward
 
     cpdef Action _ucb(self, VNode root):

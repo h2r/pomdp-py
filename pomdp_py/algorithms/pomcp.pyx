@@ -118,14 +118,9 @@ cdef class POMCP(POUCT):
         self._agent.set_belief(particle_reinvigoration(tree_belief,
                                                        len(self._agent.init_belief.particles),
                                                        state_transform_func=state_transform_func))
-        if self._agent.tree is None:
-            # observation was never encountered in simulation.
-            self._agent.tree = RootVNodeParticles(self._num_visits_init,
-                                            self._value_init,
-                                            copy.deepcopy(self._agent.belief),
-                                            self._agent.history)
-            self._expand_vnode(self._agent.tree, self._agent.history)
-        else:
+        # If observation was never encountered in simulation, then tree will be None;
+        # particle reinvigoration will occur.
+        if self._agent.tree is not None:
             self._agent.tree.belief = copy.deepcopy(self._agent.belief)
 
     cpdef _simulate(POMCP self,

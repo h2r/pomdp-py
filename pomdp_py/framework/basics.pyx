@@ -297,9 +297,9 @@ cdef class Environment:
     
     def state_transition(self, action, execute=True, **kwargs):
         """Modifies current state of the environment"""
-        next_state, reward = sample_explict_models(self.transition_model, None, self.reward_model,
-                                                   self.state, action,
-                                                   discount_factor=kwargs.get("discount_factor", 1.0))
+        next_state, reward, _ = sample_explict_models(self.transition_model, None, self.reward_model,
+                                                      self.state, action,
+                                                      discount_factor=kwargs.get("discount_factor", 1.0))
         if execute:
             self._cur_state = next_state
         return reward
@@ -353,21 +353,21 @@ cdef class Option(Action):
 cpdef sample_generative_model(Agent agent, State state, Action action, float discount_factor=1.0):
     """
     (s', o, r) ~ G(s, a)
+
+    Returns (s', o, r, n_steps)
     """
-    cdef State next_state
-    cdef Observation observation
-    cdef float reward
+    cdef tuple result
 
     if agent.transition_model is None:
-        next_state, observation, reward = agent.generative_model.sample(state, action)
+        result = agent.generative_model.sample(state, action)
     else:
-        next_state, observation, reward = sample_explict_models(agent.transition_model,
-                                                                agent.observation_model,
-                                                                agent.reward_model,
-                                                                state,
-                                                                action,
-                                                                discount_factor)
-    return next_state, observation, reward
+        result = sample_explict_models(agent.transition_model,
+                                       agent.observation_model,
+                                       agent.reward_model,
+                                       state,
+                                       action,
+                                       discount_factor)
+    return result
 
 
 cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R,
@@ -376,13 +376,23 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
     cdef Observation observation
     cdef float reward
     cdef Option option
+    cdef int nsteps = 0
     
     if isinstance(action, Option):
         # The action is an option; simulate a rollout of the option
         option = action
         if not option.initiation(state):
-            # state is not in the initiation set of the option. Cannot sample.
-            raise ValueError("State is not in initiation set of option.")
+            # state is not in the initiation set of the option. This is
+            # similar to the case when you are in a particular (e.g. terminal)
+            # state and certain action cannot be performed, which will still
+            # be added to the PO-MCTS tree because some other state with the
+            # same history will allow this action. In this case, that certain
+            # action will lead to no state change, no observation, and 0 reward,
+            # because nothing happened.
+            if O is not None:
+                return state, None, 0, 0
+            else:
+                return state, 0, 0
 
         reward = 0
         step_discount_factor = 1.0
@@ -393,14 +403,16 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
             reward += step_discount_factor * R.sample(state, action, next_state)
             step_discount_factor *= discount_factor
             state = next_state
+            nsteps += 1
         # sample observation at the end, where action is the last action.
         # (doesn't quite make sense to just use option as the action at this point.)
     else:
         next_state = T.sample(state, action)
         reward = R.sample(state, action, next_state)
+        nsteps += 1
     if O is not None:
         observation = O.sample(next_state, action)
-        return next_state, observation, reward        
+        return next_state, observation, reward, nsteps
     else:
-        return next_state, reward
+        return next_state, reward, nsteps
     
