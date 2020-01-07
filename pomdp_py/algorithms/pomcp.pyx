@@ -91,7 +91,7 @@ cdef class POMCP(POUCT):
                             "POMCP not usable. Please convert it to particles.")
         return POUCT.plan(self, agent)
 
-    cpdef update(self, Action real_action, Observation real_observation,
+    cpdef update(self, Agent agent, Action real_action, Observation real_observation,
                  state_transform_func=None):
         """
         Assume that the agent's history has been updated after taking real_action
@@ -100,28 +100,28 @@ cdef class POMCP(POUCT):
         `state_transform_func`: Used to add artificial transform to states during
             particle reinvigoration. Signature: s -> s_transformed
         """
-        if not isinstance(self._agent.belief, Particles):
-            raise TypeError("Self._Agent's belief is not represented in particles.\n"\
+        if not isinstance(agent.belief, Particles):
+            raise TypeError("agent's belief is not represented in particles.\n"\
                             "POMCP not usable. Please convert it to particles.")
-        if not hasattr(self._agent, "tree"):
-            print("Warning: self._agent does not have tree. Have you planned yet?")
+        if not hasattr(agent, "tree"):
+            print("Warning: agent does not have tree. Have you planned yet?")
             return
         
-        if self._agent.tree[real_action][real_observation] is None:
+        if agent.tree[real_action][real_observation] is None:
             # Never anticipated the real_observation. No reinvigoration can happen.
             raise ValueError("Particle deprivation.")
         # Update the tree; Reinvigorate the tree's belief and use it
-        # as the updated belief for the self._agent.
-        self._agent.tree = RootVNodeParticles.from_vnode(self._agent.tree[real_action][real_observation],
-                                                   self._agent.history)
-        tree_belief = self._agent.tree.belief
-        self._agent.set_belief(particle_reinvigoration(tree_belief,
-                                                       len(self._agent.init_belief.particles),
-                                                       state_transform_func=state_transform_func))
+        # as the updated belief for the agent.
+        agent.tree = RootVNodeParticles.from_vnode(agent.tree[real_action][real_observation],
+                                                   agent.history)
+        tree_belief = agent.tree.belief
+        agent.set_belief(particle_reinvigoration(tree_belief,
+                                                 len(agent.init_belief.particles),
+                                                 state_transform_func=state_transform_func))
         # If observation was never encountered in simulation, then tree will be None;
         # particle reinvigoration will occur.
-        if self._agent.tree is not None:
-            self._agent.tree.belief = copy.deepcopy(self._agent.belief)
+        if agent.tree is not None:
+            agent.tree.belief = copy.deepcopy(agent.belief)
 
     cpdef _simulate(POMCP self,
                     State state, tuple history, VNode root, QNode parent,

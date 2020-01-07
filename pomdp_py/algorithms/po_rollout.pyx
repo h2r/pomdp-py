@@ -92,25 +92,25 @@ cdef class PORollout(Planner):
             state = next_state
         return total_discounted_reward
 
-    cpdef update(self, Action real_action, Observation real_observation,
+    cpdef update(self, Agent agent, Action real_action, Observation real_observation,
                  state_transform_func=None):
         # If particles is true, then perform Monte Carlo belief update.
         # Otherwise, do nothing
         cdef int nsteps
         if self._particles:
-            cur_belief = self._agent.belief
+            cur_belief = agent.belief
             new_belief = Particles([])
             if not isinstance(cur_belief, Particles):
                 raise ValueError("Agent's belief is not in particles.")
             for state in cur_belief.particles:
-                next_state, observation, reward, nsteps = sample_generative_model(self._agent, state,
+                next_state, observation, reward, nsteps = sample_generative_model(agent, state,
                                                                                   real_action)
                 if observation == real_observation:
                     new_belief.add(next_state)
             # Particle reinvigoration
-            self._agent.set_belief(particle_reinvigoration(new_belief,
-                                                           len(self._agent.init_belief.particles),
-                                                           state_transform_func=state_transform_func))
+            agent.set_belief(particle_reinvigoration(new_belief,
+                                                     len(agent.init_belief.particles),
+                                                     state_transform_func=state_transform_func))
             
     @property
     def update_agent_belief(self):

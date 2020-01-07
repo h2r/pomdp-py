@@ -203,6 +203,9 @@ cdef class Agent:
         if prior:
             self._init_belief = belief
 
+    def sample_belief(self):
+        return self._cur_belief.random()
+
     @property
     def observation_model(self):
         return self._observation_model

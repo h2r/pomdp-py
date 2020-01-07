@@ -15,5 +15,5 @@ cdef class PORollout(Planner):
 
     cpdef _search(self)
     cpdef _rollout(self, State state, int depth)
-    cpdef update(self, Action real_action, Observation real_observation,
+    cpdef update(self, Agent agent, Action real_action, Observation real_observation,
                  state_transform_func=*)    

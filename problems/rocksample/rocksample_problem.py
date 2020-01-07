@@ -399,7 +399,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         real_observation = rocksample.env.provide_observation(rocksample.agent.observation_model,
                                                               action)
         rocksample.agent.update_history(action, real_observation)
-        planner.update(action, real_observation)
+        planner.update(rocksample.agent, action, real_observation)
         total_reward += env_reward
         total_discounted_reward += env_reward * gamma
         gamma *= discount

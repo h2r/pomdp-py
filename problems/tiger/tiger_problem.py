@@ -242,7 +242,7 @@ def test_planner(tiger_problem, planner, nsteps=3):
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
         
-        planner.update(action, real_observation)
+        planner.update(tiger_problem.agent, action, real_observation)
         if isinstance(planner, pomdp_py.POUCT):
             print("Num sims: %d" % planner.last_num_sims)
         if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):

@@ -34,6 +34,12 @@ cdef class TreeNode:
     def __init__(self):
         self.children = {}
     def __getitem__(self, key):
+        if key not in self.children and type(key) == int:
+            clist = list(self.children)
+            if key >= 0 and key < len(clist):
+                return self.children[clist[key]]
+            else:
+                return None
         return self.children.get(key,None)
     def __setitem__(self, key, value):
         self.children[key] = value
@@ -87,7 +93,10 @@ def print_tree_helper(root, parent_edge, depth, max_depth=None, complete=False):
     print("%s-%s" % ("    "*depth, str(root)))
     for c in root.children:
         if complete or (root[c].num_visits > 1):
-            print_tree_helper(root[c], c, depth+1, max_depth=max_depth, complete=complete)
+            if isinstance(root[c], QNode):
+                print_tree_helper(root[c], c, depth+1, max_depth=max_depth, complete=complete)
+            else:
+                print_tree_helper(root[c], c, depth, max_depth=max_depth, complete=complete)
 
 def print_tree(tree, max_depth=None, complete=False):
     print_tree_helper(tree, "", 0, max_depth=max_depth, complete=complete)
@@ -107,13 +116,43 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
     equally_good = []
     if isinstance(root, VNode):
         for c in root.children:
-            if c != best_child and root[c].value == best_value:
+            if not(c == best_child) and root[c].value == best_value:
                 equally_good.append(c)
 
     if best_child is not None and root[best_child] is not None:
         if isinstance(root[best_child], QNode):
             print("  %s  %s" % (str(best_child), str(equally_good)))
-        print_preferred_actions_helper(root[best_child], depth+1, max_depth=max_depth)            
+        print_preferred_actions_helper(root[best_child], depth+1, max_depth=max_depth)
+
+def tree_stats(root, max_depth=None):
+    stats = {
+        'total_vnodes': 0,
+        'total_qnodes': 0,
+        'total_vnodes_children': 0,
+        'total_qnodes_children': 0,
+        'max_vnodes_children': 0,
+        'max_qnodes_children': 0
+    }
+    tree_stats_helper(root, 0, stats, max_depth=max_depth)
+    stats['num_visits'] = root.num_visits
+    stats['value'] = root.value
+    return stats
+
+def tree_stats_helper(root, depth, stats, max_depth=None):
+    if max_depth is not None and depth >= max_depth:
+        return
+    else:
+        if isinstance(root, VNode):
+            stats['total_vnodes'] += 1
+            stats['total_vnodes_children'] += len(root.children)
+            stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
+        else:
+            stats['total_qnodes'] += 1
+            stats['total_qnodes_children'] += len(root.children)
+            stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
+        
+        for c in root.children:
+            tree_stats_helper(root[c], depth+1, stats, max_depth=max_depth)
 
 cdef class ActionPrior:
     """A problem-specific object"""
@@ -192,23 +231,25 @@ cdef class POUCT(Planner):
         self._last_num_sims = num_sims
         return action            
 
-    cpdef public update(self, Action real_action, Observation real_observation):
+    cpdef public update(self, Agent agent, Action real_action, Observation real_observation):
         """
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
         """
-        if not hasattr(self._agent, "tree"):
+        if not hasattr(agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
 
-        if self._agent.tree[real_action][real_observation] is not None:
+        if real_action not in agent.tree\
+           or real_observation not in agent.tree[real_action]:
+            agent.tree = None  # replan, if real action or observation differs from all branches
+        elif agent.tree[real_action][real_observation] is not None:
             # Update the tree (prune)
-            self._agent.tree = RootVNode.from_vnode(
-                self._agent.tree[real_action][real_observation],
-                self._agent.history)
+            agent.tree = RootVNode.from_vnode(
+                agent.tree[real_action][real_observation],
+                agent.history)
         else:
-            # observation was never encountered in simulation.
-            self._agent.tree = None
+            raise ValueError("Unexpected state; child should not be None")
 
     def clear_agent(self):
         self._agent = None  # forget about current agent so that can plan for another agent.
@@ -234,20 +275,17 @@ cdef class POUCT(Planner):
                                                 self._value_init)
                     vnode[action] = history_action_node
 
-    def _sample_belief(self, agent):
-        return agent.belief.random()
-
     cpdef _search(self):
         cdef State state
         cdef int num_sims = 0
         cdef Action best_action
         cdef float best_value
-        
+
         start_time = time.time()
         while time.time() - start_time < self._planning_time:
             ## Note: the tree node with () history will have
             ## the init belief given to the agent.
-            state = self._sample_belief(self._agent)
+            state = self._agent.sample_belief()
             self._simulate(state, self._agent.history, self._agent.tree,
                            None, None, 0)
             num_sims +=1
@@ -257,6 +295,7 @@ cdef class POUCT(Planner):
             if self._agent.tree[action].value > best_value:
                 best_value = self._agent.tree[action].value
                 best_action = action
+                
         return best_action, num_sims
 
     cpdef _simulate(POUCT self,
@@ -307,7 +346,7 @@ cdef class POUCT(Planner):
         cdef Observation observation
         cdef float reward
         
-        while depth <= self._max_depth:
+        while depth < self._max_depth:
             action = self._rollout_policy.rollout(state, history=history)
             next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
             if root[action] is None:
