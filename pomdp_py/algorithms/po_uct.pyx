@@ -16,9 +16,24 @@
 # exactly for particle belief update, while POWSS uses weighted
 # particles depending on the observation distribution.
 #
+# A note on the exploration constant. Quote from [3]:
+#   | "This constant should reflect the agent’s prior knowledge regarding
+#   | the amount of exploration required."
+# In the POMCP paper [4], they set this constant following:
+#   | "The exploration constant for POMCP was set to c = Rhi - Rlo,
+#   | where Rhi was the highest return achieved during sample runs of POMCP
+#   | with c = 0, and Rlo was the lowest return achieved during sample rollouts"
+# It is then clear that the POMCP paper is indeed setting this constant
+# based on prior knowledge. Note the difference between ``sample runs'' and
+# ``sample rollouts''. But, this is certainly not the only way to obtainx1
+# the prior knowledge.
+#
 # [1] Bandit based Monte-Carlo Planning, by L. Kocsis and C. Szepesv´ari
 # [2] Sparse tree search optimality guarantees n POMDPs with
 #     continuous observation spaces, by M. Lim, C. Tomlin, Z. Sunberg.
+# [3] Towards Generalizing the Success of Monte-Carlo
+#     Tree Search beyond the Game of Go
+# [4] Monte-Carlo Planning in Large POMDPs
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
@@ -91,6 +106,8 @@ def print_tree_helper(root, parent_edge, depth, max_depth=None, complete=False):
         return
     print("%s%s" % ("    "*depth, str(parent_edge)))
     print("%s-%s" % ("    "*depth, str(root)))
+    if root is None:
+        return
     for c in root.children:
         if complete or (root[c].num_visits > 1):
             if isinstance(root[c], QNode):
@@ -109,6 +126,8 @@ def print_preferred_actions_helper(root, depth, max_depth=None):
         return
     best_child = None
     best_value = float('-inf')
+    if root is None:
+        return
     for c in root.children:
         if root[c].value > best_value:
             best_child = c
@@ -236,7 +255,7 @@ cdef class POUCT(Planner):
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
         """
-        if not hasattr(agent, "tree"):
+        if not hasattr(agent, "tree") or agent.tree is None:
             print("Warning: agent does not have tree. Have you planned yet?")
             return
 
