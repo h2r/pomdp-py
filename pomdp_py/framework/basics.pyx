@@ -305,7 +305,9 @@ cdef class Environment:
                                                       discount_factor=kwargs.get("discount_factor", 1.0))
         if execute:
             self._cur_state = next_state
-        return reward
+            return reward
+        else:
+            return next_state, reward
 
     def provide_observation(self, observation_model, action, **kwargs):
         return observation_model.sample(self.state, action, **kwargs)
