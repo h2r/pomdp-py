@@ -15,7 +15,7 @@ POMDP stands for **P**\ artially **O**\ bservable **M**\ arkov **D**\ ecision **
 
 Design Principles
 #################
-1. **Distributions are the fundamental building blocks of a POMDP**.
+1. Distributions are the fundamental building blocks of a POMDP.
 
    Essentially, a POMDP describes the interaction between an `agent` and the
    `environment`.  The interaction is formally encapsulated by a few important
@@ -23,10 +23,54 @@ Design Principles
    this understanding. The interfaces in :py:mod:`pomdp_py.framework.basics`
    convey this idea.
 
-   * :class:`~pomdp_py.framework.basics.Distribution` represents :math:`\Pr:X\rightarrow[0,1]`.
-   * :class:`~pomdp_py.framework.basics.GenerativeDistribution` should support computing  :math:`argmax_x\Pr(x)` (i.e. MPE) or random sampling :math:`x\sim Pr(x)`.
-   * :class:`~pomdp_py.framework.basics.TransitionModel` 
+--
 
+2. POMDP = agent + environment
+
+   Like above, the gist of a POMDP is captured by the generative probability
+   distributions including the
+   :class:`~pomdp_py.framework.basics.TransitionModel`,
+   :class:`~pomdp_py.framework.basics.ObservationModel`,
+   :class:`~pomdp_py.framework.basics.RewardModel`. Because, generally, T, R, O
+   may be different for the agent versus the environment (to support learning),
+   it does not make much sense to have the POMDP class to hold this information;
+   instead, Agent should have its own T, R, O, pi and the Environment should
+   have its own T, R. The job of a POMDP is only to verify whether a given
+   state, action, or observation are valid. See :class:`~pomdp_py.framework.basics.Agent`
+   and :class:`~pomdp_py.framework.basics.Environment`.
+
+Existing POMDP Solvers
+######################
+The library currently contains an implementation of `POMCP`, `POUCT`, and basic `ValueIteration`.
+
+Natural Extensions
+##################
+The interfaces provided by pomdp_py should support projects in these directions (and more):
+
+1. POMDP for RL (Reinforcement Learning)
+
+   - Learn a :class:`~pomdp_py.framework.basics.PolicyModel` (model-free)
+
+   - Learn a :class:`~pomdp_py.framework.basics.TransitionModel` and
+     :class:`~pomdp_py.framework.basics.ObservationModel` (model-based)
+
+2. Multi-Agent POMDPs
+
+   - Define multiple :class:`~pomdp_py.framework.basics.Agent` classes.
+
+3. Object-Oriented POMDPs
+
+   - The Object-Oriented POMDP (OO-POMDP) already has its interfaces implemented
+     in :py:mod:`~pomdp_py.framework.oopomdp`.
+
+3. Task Transfer or Transfer Learning
+
+   - Define multiple :class:`~pomdp_py.framework.basics.Agent` classes.
+
+3. Planning Algorithm Research
+
+   - Use existing POMCP or POUCT as baslines.
+   
 
 Full API Reference
 ##################  
