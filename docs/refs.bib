@@ -1,0 +1,419 @@
+@article{McGeer01041990,
+  author = {McGeer, Tad}, 
+  title = {\href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic Walking}}, 
+  volume = {9}, 
+  number = {2}, 
+  pages = {62-82}, 
+  year = {1990}, 
+  doi = {10.1177/027836499000900206}, 
+  URL = {http://ijr.sagepub.com/content/9/2/62.abstract}, 
+  eprint = {http://ijr.sagepub.com/content/9/2/62.full.pdf+html}, 
+  journal = {The International Journal of Robotics Research}
+}
+
+@article{kalman1960new,
+  title={A new approach to linear filtering and prediction problems},
+  author={Kalman, R.E.},
+  journal={Journal of Basic Engineering},
+  volume={82},
+  number={1},
+  pages={35--45},
+  year={1960},
+  publisher={Citeseer}
+}
+
+
+% Active visual object search in unknown environments using uncertain semantics. This paper has extraordinary literature review on the problem of object search. Their approach is based on semantic prior knowledge, but also includes a POMDP approach.
+@article{aydemir2013avo,
+  author =       {Aydemir, Alper and Pronobis, Andrzej and G{\"o}belbecker, Moritz and Jensfelt, Patric},
+  title =        {Active Visual Object Search in Unknown Environments Using Uncertain Semantics},
+  journal =      {IEEE Transactions on Robotics (T-RO)},
+  year =         2013,
+  volume =       29,
+  number =       4,
+  month =        aug,
+  pages =        {986-1002},
+  doi =          {10.1109/TRO.2013.2256686},
+  url =          {http://www.pronobis.pro/publications/aydemir2013tro}
+}
+%% This paper is cited by Aydemir. 
+@inproceedings{kollar2009utilizing,
+  title={Utilizing object-object and object-scene context when planning to find things},
+  author={Kollar, Thomas and Roy, Nicholas},
+  booktitle={2009 IEEE International Conference on Robotics and Automation},
+  pages={2168--2173},
+  year={2009},
+  organization={IEEE}
+}
+
+% This is also a POMDP. But they are not solving object search, but solving a problem of observing a scene; Also they choose a sequence of views to observe a single object. They RESTRICT the motion of the sensor to a sphere! Their observation model is the result of object detection method called VP-Tree
+@article{atanasov2014nonmyopic,
+  author = {N. Atanasov and B. Sankaran and J. Le Ny and G. Pappas and K. Daniilidis},
+  title = {Nonmyopic View Planning for Active Object Classification and Pose Estimation},
+  journal = {IEEE Trans. on Robotics (TRO)},
+  year = {2014},
+  volume = {30},
+  number = {5},
+  pages = {1078-1090},
+  doi = {https://www.doi.org/10.1109/TRO.2014.2320795}
+}
+
+% This is Yuchen Xiao's ICRA 19 paper. Before getting into the differences, they mention in the related work that previous work ``reduce'' the target search problem to an active visual search problem. What does it mean by ``reduce''? Is active visual search easier at all?
+% According to this page http://www.cse.yorku.ca/~tsotsos/Active_Vision/Active_Visual_Search.html,
+% Our work doesn't consider grasping objects. All they did is to parameterized the action space by belief. This is not helpful for large problems in our case. Their motivation is that: ``However, running a rollout policy is a time-consuming operation, and the variance of the rollout estimator is also high due to the stochasticity of the environment, which we want to avoid.'' BUT, we simply used random rollout and it was fine. Also, we don't make assumptions about the search region that the target objects are aggregated in one location and the robot just have 2 viewpoints to look at the scene.
+@InProceedings{xiao_icra_2019,
+author = "Xiao, Yuchen and Katt, Sammie and ten Pas, Andreas and Chen, Shengjian and Amato, Christopher",
+title = "Online Planning for Target Object Search in Clutter under Partial Observability",
+booktitle = "Proceedings of the International Conference on Robotics and Automation",
+year = "2019"
+}
+
+% The following two papers are about showing object search is a NP-Complete problem; The first one proves its NP-completeness, and the second one proposes a heuristic method which is about reducing possible sensor actions to consider. Their method is ``one-step look ahead'', while POMDP can do more than that. So POMDP is probably better suited.
+%
+% Quote from their paper:
+% | "Since the calculation of the detection probability for a given operation is time consuming,
+% | it is not practical to use complex strategies."
+% So that's their bottleneck! That's not an issue for our direct concern.
+%
+% Another difference is that they consider the field of view to be changeable, thus making the action space very large, but we don't. The robot doesn't actively change its field of view size; But it just moves around. This is probably the approximation we are doing for our paper.
+@inproceedings{ye1996sensor,
+  title={Sensor planning in 3d object search: its formulation and complexity},
+  author={Ye, Yiming and Tsotsos, John K},
+  booktitle={The 4th International Symposium on Artificial Intelligence and Mathematics, Florida, USA},
+  year={1996},
+  organization={Citeseer}
+}
+@article{Ye1997SensorPF,
+  title={Sensor Planning for 3D Object Search,},
+  author={Yiming Ye and John K. Tsotsos},
+  journal={Computer Vision and Image Understanding},
+  year={1997},
+  volume={73},
+  pages={145-168}
+}
+
+% This paper reduces the search space to 2D polygons. This is an example of the art gallary approach.
+@inproceedings{sarmiento2003efficient,
+  title={An efficient strategy for rapidly finding an object in a polygonal world},
+  author={Sarmiento, Alejandro and Murrieta, Rafael and Hutchinson, Seth A},
+  booktitle={Proceedings 2003 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS 2003)(Cat. No. 03CH37453)},
+  volume={2},
+  pages={1153--1158},
+  year={2003},
+  organization={IEEE}
+}
+
+% This is the mechanical search paper. Together with other such work that require interaction with objects, we distinguish by saying such interaction may be costly or prohibitive. This paper doesn't move the camera.
+@inproceedings{danielczuk2019mechanical,
+title={Mechanical Search: Multi-Step Retrieval of a Target Object Occluded by Clutter},
+author={Danielczuk, Michael and Kurenkov, Andrey and Balakrishna, Ashwin and Matl, Matthew,  and Wang, David and Martín-Martín, Robert and Garg, Animesh and Savarese, Silvio and Goldberg, Ken},
+booktitle={Proc. IEEE Int. Conf. Robotics and Automation (ICRA)},
+year={2019}
+}
+%% Again, object search requiring manipulation. This one in particular,
+% as pointed out by Stefanie, the camera pose is assumed to be fixed.  In order to reveal the unseen area, they deliberately move some objects using the manipulator, but do not actively movethe camera as in our proposed work.
+@article{dogar2014object,
+  title={Object search by manipulation},
+  author={Dogar, Mehmet R and Koval, Michael C and Tallavajhula, Abhijeet and Srinivasa, Siddhartha S},
+  journal={Autonomous Robots},
+  volume={36},
+  number={1-2},
+  pages={153--167},
+  year={2014},
+  publisher={Springer}
+}
+
+% This paper actually has both active sensor and manipulation. They mounted a camera on the end-effector. But the problem is that they used a guided shaped reward function, instead of the sparse reward as in our case. It's a very specifically designed reward that balances exploration vs. exploitation. In our case, this is taken care of by PO-UCT planning.
+@article{novkovic2019object,
+  title={Object Finding in Cluttered Scenes Using Interactive Perception},
+  author={Novkovic, Tonci and Pautrat, Remi and Furrer, Fadri and Breyer, Michel and Siegwart, Roland and Nieto, Juan},
+  journal={arXiv preprint arXiv:1911.07482},
+  year={2019}
+}
+
+% There are a couple of weaknesses in this paper, compared to ours.
+@inproceedings{li2016act,
+  title={Act to see and see to act: POMDP planning for objects search in clutter},
+  author={Li, Jue Kun and Hsu, David and Lee, Wee Sun},
+  booktitle={2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={5701--5707},
+  year={2016},
+  organization={IEEE}
+}
+
+%Planning on searching occluded target object with a mobile robot manipulator. Based on their abstract, this work has no observation uncertainty as handled in POMDP.
+@inproceedings{lin2015planning,
+  title={Planning on searching occluded target object with a mobile robot manipulator},
+  author={Lin, Yu-Chi and Wei, Shao-Ting and Yang, Shih-An and Fu, Li-Chen},
+  booktitle={2015 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={3110--3115},
+  year={2015},
+  organization={IEEE}
+}
+
+%Searching for Physical Objects in Partially Known Environments. I have pointed out their issues: 2D search space with boxes. Interestingly, they say, quote:
+% | "In our domain, observations are drawn from
+% | a continuous space of object poses, so making this search
+% | tractable requires the construction of abstract observation
+% | models, which reduce the effective branching factor and
+% | number of state samples needed to represent beliefs."
+% They mentioned ``abstract observation models''. Actually their way of describing ``target-based observation model'' resembles our observation model. However, clearly they don't consider volumetric observaiton space. In addition, their observation model does not consider uncertainty, as handled by a POMDP observation model (this is probably a more crucial point).
+@inproceedings{nie2016searching,
+  title={Searching for physical objects in partially known environments},
+  author={Nie, Xinkun and Wong, Lawson LS and Kaelbling, Leslie Pack},
+  booktitle={2016 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={5403--5410},
+  year={2016},
+  organization={IEEE}
+}
+
+%Manipulation-based Active Search for Occluded Objects. As pointed out by Stefanie: they permanently removes objects fromthe scene during searching. In fact, Yuchen Xiao's paper does this too
+@inproceedings{wong2013manipulation,
+  title={Manipulation-based active search for occluded objects},
+  author={Wong, Lawson LS and Kaelbling, Leslie Pack and Lozano-P{\'e}rez, Tom{\'a}s},
+  booktitle={2013 IEEE International Conference on Robotics and Automation},
+  pages={2814--2819},
+  year={2013},
+  organization={IEEE}
+}
+
+% The fact that we are considering volumetric observation is different
+% from everybody. Our belief representation is brand new. Our hierarchical planning algorithm based on abstractions is new.
+
+
+% This is the 2D oo-pomdp paper. you know what to say.
+@inproceedings{wandzel2019multi,
+  title={Multi-Object Search using Object-Oriented POMDPs},
+  author={Wandzel, Arthur and Oh, Yoonseon and Fishman, Michael and Kumar, Nishanth and Tellex, Stefanie},
+  booktitle={2019 International Conference on Robotics and Automation (ICRA)},
+  pages={7194--7200},
+  year={2019},
+  organization={IEEE}
+}
+
+
+%%%%%%%% NEXT BEST VIEW Literature %%%%%%%%
+% This is a planning problem in computer vision.
+% The problem of finding a view pose which provides information for a task is known as the Next-Best-View (NBV) problem and was introduced by Connolly [Con85]. In this work, the exploration and object recognition tasks are formulated as NBV problems and solved with a local  optimization algorithm. (ref. https://ipvs.informatik.uni-stuttgart.de/mlr/papers/16-zielke-Dipl.pdf)
+%
+% The Connolly paper is ``The Determination of next best views.''
+% Interestingly,
+% | "This paper describes two algorithms which use partial octree models to determine the "best" next view to take."
+% But octree in their context means object geometry information.
+%
+% In computer vision, they are more interested in object reconstruction.
+% Check this reference http://www.graphics.stanford.edu/~olaf/nbv.html;
+% Clearly, the next-best-view problem is:
+% | "This paper reviews the development of algorithms which compute the best location for range scanning device relative to a real world object, in order to obtain the next in a series of automatic scans. "
+% 
+% There has been exploration paper in robotics, "Receding Horizon “Next–Best–View” Planner for 3D Exploration" which constructs a tree into the future and selects the first edge for execution. But this is not really a next-best view problem.
+%
+% NBV also used for scene reconstruction (naturally).
+%
+% This paper is just a different problem. Forget it. I think NBV literature doesn't really affect us. At most mention very briefly.
+@article{genova2017learning,
+  title={Learning Where to Look: Data-Driven Viewpoint Set Selection for 3D Scenes},
+  author={Genova, Kyle and Savva, Manolis and Chang, Angel X and Funkhouser, Thomas},
+  journal={arXiv preprint arXiv:1704.02393},
+  year={2017}
+}
+
+
+% classic POMDP Paper
+@article{kaelbling1998planning,
+  title={Planning and acting in partially observable stochastic domains},
+  author={Kaelbling, Leslie Pack and Littman, Michael L and Cassandra, Anthony R},
+  journal={Artificial intelligence},
+  volume={101},
+  number={1-2},
+  pages={99--134},
+  year={1998},
+  publisher={Elsevier}
+}
+
+% POMDPs are intractable
+@article{madani2003undecidability,
+  title={On the undecidability of probabilistic planning and related stochastic optimization problems},
+  author={Madani, Omid and Hanks, Steve and Condon, Anne},
+  journal={Artificial Intelligence},
+  volume={147},
+  number={1-2},
+  pages={5--34},
+  year={2003},
+  publisher={Elsevier}
+}
+
+% THE POMCP PAPER
+@inproceedings{silver2010monte,
+  title={Monte-Carlo planning in large POMDPs},
+  author={Silver, David and Veness, Joel},
+  booktitle={Advances in neural information processing systems},
+  pages={2164--2172},
+  year={2010}
+}
+
+% The state abstraction theory
+@inproceedings{li2006towards,
+  title={Towards a Unified Theory of State Abstraction for MDPs.},
+  author={Li, Lihong and Walsh, Thomas J and Littman, Michael L},
+  booktitle={ISAIM},
+  year={2006}
+}
+
+% State and action abstraction, involving some POMDP stuff; Hierarchical MCTS.
+@inproceedings{bai2016markovian,
+  title={Markovian State and Action Abstractions for MDPs via Hierarchical MCTS.},
+  author={Bai, Aijun and Srivastava, Siddharth and Russell, Stuart J},
+  booktitle={IJCAI},
+  pages={3029--3039},
+  year={2016}
+}
+
+% Interactive perception
+@article{bohg2017interactive,
+  title={Interactive perception: Leveraging action in perception and perception in action},
+  author={Bohg, Jeannette and Hausman, Karol and Sankaran, Bharath and Brock, Oliver and Kragic, Danica and Schaal, Stefan and Sukhatme, Gaurav S},
+  journal={IEEE Transactions on Robotics},
+  volume={33},
+  number={6},
+  pages={1273--1291},
+  year={2017},
+  publisher={IEEE}
+}
+
+
+% I use this for this argument: Offline POMDP solvers are often not applicable to large POMDP problems due to the time requirement to compute a policy
+@article{ross2008online,
+  title={Online planning algorithms for POMDPs},
+  author={Ross, St{\'e}phane and Pineau, Joelle and Paquet, S{\'e}bastien and Chaib-Draa, Brahim},
+  journal={Journal of Artificial Intelligence Research},
+  volume={32},
+  pages={663--704},
+  year={2008}
+}
+
+@inproceedings{sunberg2018online,
+  title={Online algorithms for POMDPs with continuous state, action, and observation spaces},
+  author={Sunberg, Zachary N and Kochenderfer, Mykel J},
+  booktitle={Twenty-Eighth International Conference on Automated Planning and Scheduling},
+  year={2018}
+}
+
+%% DESPOT
+@inproceedings{somani2013despot,
+  title={DESPOT: Online POMDP planning with regularization},
+  author={Somani, Adhiraj and Ye, Nan and Hsu, David and Lee, Wee Sun},
+  booktitle={Advances in neural information processing systems},
+  pages={1772--1780},
+  year={2013}
+}
+@article{ye2017despot,
+  title={Despot: Online pomdp planning with regularization},
+  author={Ye, Nan and Somani, Adhiraj and Hsu, David and Lee, Wee Sun},
+  journal={Journal of Artificial Intelligence Research},
+  volume={58},
+  pages={231--266},
+  year={2017}
+}
+@inproceedings{garg2019despot,
+  title={DESPOT-$\alpha$: Online POMDP Planning With Large State And Observation Spaces},
+  author={Garg, Neha P and Hsu, David and Lee, Wee Sun},
+  booktitle={Robotics: Science and Systems},
+  year={2019}
+}
+
+@inproceedings{kocsis2006bandit,
+  title={Bandit based monte-carlo planning},
+  author={Kocsis, Levente and Szepesv{\'a}ri, Csaba},
+  booktitle={European conference on machine learning},
+  pages={282--293},
+  year={2006},
+  organization={Springer}
+}
+
+
+
+@article{platt2010belief,
+  title={Belief space planning assuming maximum likelihood observations},
+  author={Platt Jr, Robert and Tedrake, Russ and Kaelbling, Leslie and Lozano-Perez, Tomas},
+  year={2010}
+}
+
+@article{burks2019optimal,
+  title={Optimal Continuous State POMDP Planning with Semantic Observations: A Variational Approach},
+  author={Burks, Luke and Loefgren, Ian and Ahmed, Nisar R},
+  journal={IEEE Transactions on Robotics},
+  year={2019},
+  publisher={IEEE}
+}
+
+
+% This paper assumes a 2D map and semantic prior knowledge.
+@article{wang2018efficient,
+  title={Efficient object search with belief road map using mobile robot},
+  author={Wang, Chaoqun and Cheng, Jiyu and Wang, Jiankun and Li, Xintong and Meng, Max Q-H},
+  journal={IEEE Robotics and Automation Letters},
+  volume={3},
+  number={4},
+  pages={3081--3088},
+  year={2018},
+  publisher={IEEE}
+}
+
+% OOMDP
+@inproceedings{diuk2008object,
+  title={An object-oriented representation for efficient reinforcement learning},
+  author={Diuk, Carlos and Cohen, Andre and Littman, Michael L},
+  booktitle={Proceedings of the 25th international conference on Machine learning},
+  pages={240--247},
+  year={2008}
+}
+
+@inproceedings{bandyopadhyay2013intention,
+  title={Intention-aware pedestrian avoidance},
+  author={Bandyopadhyay, Tirthankar and Jie, Chong Zhuang and Hsu, David and Ang, Marcelo H and Rus, Daniela and Frazzoli, Emilio},
+  booktitle={Experimental Robotics},
+  pages={963--977},
+  year={2013},
+  organization={Springer}
+}
+
+%% Shape distribution
+@article{osada2002shape,
+  title={Shape distributions},
+  author={Osada, Robert and Funkhouser, Thomas and Chazelle, Bernard and Dobkin, David},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={21},
+  number={4},
+  pages={807--832},
+  year={2002},
+  publisher={Acm New York, NY, USA}
+}
+
+@inproceedings{park2019deepsdf,
+  title={Deepsdf: Learning continuous signed distance functions for shape representation},
+  author={Park, Jeong Joon and Florence, Peter and Straub, Julian and Newcombe, Richard and Lovegrove, Steven},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={165--174},
+  year={2019}
+}
+
+% a reference of occupancy probability
+@book{kaviany2014heat,
+  title={Heat transfer physics},
+  author={Kaviany, Massoud},
+  year={2014},
+  publisher={Cambridge University Press}
+}
+
+% Options framework
+@article{sutton1999between,
+  title={Between MDPs and semi-MDPs: A framework for temporal abstraction in reinforcement learning},
+  author={Sutton, Richard S and Precup, Doina and Singh, Satinder},
+  journal={Artificial intelligence},
+  volume={112},
+  number={1-2},
+  pages={181--211},
+  year={1999},
+  publisher={Elsevier}
+}
