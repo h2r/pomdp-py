@@ -16,7 +16,7 @@ def update_histogram_belief(current_histogram, real_action, real_observation,
                             oargs={}, targs={}, normalize=True):
     """
     This update is based on the equation:
-    B_new(s') = n * O(z|s',a) sum_s T(s'|s,a)B(s).
+    :math:`B_{new}(s') = n O(z|s',a) \sum_s T(s'|s,a)B(s)`.
 
     `current_histogram` is the Histogram that represents current belief.
 

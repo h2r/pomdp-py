@@ -47,6 +47,6 @@ pomdp\_py.algorithms.value\_iteration module
    :show-inheritance:
 
 
-.. bibliography:: refs.bib
+.. bibliography:: ../refs.bib
    :filter: docname in docnames
    :style: unsrt

@@ -1,16 +1,16 @@
-# Implementation of the basic policy tree based
-# value iteration as explained in section 4.1 of
-# Planning and acting in partially observable stochastic domains
-# https://people.csail.mit.edu/lpk/papers/aij98-pomdp.pdf
-#
-# Warning: No pruning - the number of policy trees explodes very fast.
+"""Implementation of the basic policy tree based value iteration as explained
+in section 4.1 of `Planning and acting in partially observable stochastic
+domains` :cite:`kaelbling1998planning`
+
+Warning: No pruning - the number of policy trees explodes very fast.
+"""
 
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.framework.basics cimport Agent, Action, State
 import numpy as np
 import itertools
 
-cdef class PolicyTreeNode:
+cdef class _PolicyTreeNode:
 
     cdef public Action action
     cdef public int depth
@@ -53,7 +53,7 @@ cdef class PolicyTreeNode:
         return values
 
     def __str__(self):
-        return "PolicyTreeNode(%s, %d){%s}" % (self.action, self.depth, str(list(self.children.keys())))
+        return "_PolicyTreeNode(%s, %d){%s}" % (self.action, self.depth, str(list(self.children.keys())))
     def __repr__(self):
         return self.__str__()
         
@@ -62,12 +62,15 @@ cdef class ValueIteration(Planner):
     """
     This algorithm is only feasible for small problems where states, actions,
     and observations can be explicitly enumerated.
+
+    __init__(self, horizon=float('inf'), discount_factor=0.9, epsilon=1e-6)
     """
     cdef float _discount_factor, _epsilon
     cdef int _planning_horizon    
 
     def __init__(self, horizon=float('inf'), discount_factor=0.9, epsilon=1e-6):
-        """The horizon satisfies discount_factor**horizon > epsilon"""
+        """
+        The horizon satisfies discount_factor**horizon > epsilon"""
         self._discount_factor = discount_factor
         self._epsilon = epsilon
         self._planning_horizon = horizon
@@ -105,7 +108,7 @@ cdef class ValueIteration(Planner):
         states = agent.all_states
 
         if depth >= self._planning_horizon or self._discount_factor**depth < self._epsilon:
-            return [PolicyTreeNode(a, depth, agent, self._discount_factor) for a in actions]
+            return [_PolicyTreeNode(a, depth, agent, self._discount_factor) for a in actions]
         else:
             # Every observation can lead to K possible sub policy trees,
             # which is exactly the output of _build_policy_trees. Then,
@@ -130,7 +133,7 @@ cdef class ValueIteration(Planner):
                     children = {o:groups[o][i]
                                 for o in observations}
                     for a in actions:
-                        policy_tree_node = PolicyTreeNode(a, depth, agent, self._discount_factor)
+                        policy_tree_node = _PolicyTreeNode(a, depth, agent, self._discount_factor)
                         policy_tree_node.children = children
                         policy_trees.append(policy_tree_node)
             return policy_trees
