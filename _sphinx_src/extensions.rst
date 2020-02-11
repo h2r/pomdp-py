@@ -1,5 +1,6 @@
 Use Case Extensions
-*******************
+===================
+
 The interfaces provided by pomdp_py should support projects in these directions (and more):
 
 1. POMDP for RL (Reinforcement Learning)

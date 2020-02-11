@@ -24,8 +24,10 @@ Further
 * :doc:`extensions`
 
 .. toctree::
+   :maxdepth: 2
    :hidden:
 
+   self
    getting_started
 
 API References
@@ -46,6 +48,7 @@ Tools
    :style: unsrt
 
 .. image:: images/brown_logo.png
+   :target: http://bigai.cs.brown.edu/
    :scale: 25 %
    :alt: Brown University AI
    :align: center

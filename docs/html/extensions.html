@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Use Case Extensions &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pomdp_py" href="api/modules.html" />
+    <link rel="prev" title="Existing POMDP Solvers" href="existing_solvers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">pomdp_py Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html#further">Further</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Use Case Extensions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp_py.html">pomdp_py package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.algorithms.html">pomdp_py.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.framework.html">pomdp_py.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.representations.html">pomdp_py.representations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="getting_started.html">Getting Started</a><ul>
+      <li>Previous: <a href="existing_solvers.html" title="previous chapter">Existing POMDP Solvers</a></li>
+      <li>Next: <a href="api/modules.html" title="next chapter">pomdp_py</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="use-case-extensions">
+<h1>Use Case Extensions<a class="headerlink" href="#use-case-extensions" title="Permalink to this headline">¶</a></h1>
+<p>The interfaces provided by pomdp_py should support projects in these directions (and more):</p>
+<ol class="arabic simple">
+<li><p>POMDP for RL (Reinforcement Learning)</p>
+<ul class="simple">
+<li><p>Learn a <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolicyModel</span></code></a> (model-free)</p></li>
+<li><p>Learn a <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a> and
+<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a> (model-based)</p></li>
+</ul>
+</li>
+<li><p>Multi-Agent POMDPs</p>
+<ul class="simple">
+<li><p>Define multiple <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a> classes.</p></li>
+</ul>
+</li>
+<li><p>Object-Oriented POMDPs</p>
+<ul class="simple">
+<li><p>The Object-Oriented POMDP (OO-POMDP) already has its interfaces implemented
+in <a class="reference internal" href="api/pomdp_py.framework.html#module-pomdp_py.framework.oopomdp" title="pomdp_py.framework.oopomdp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oopomdp</span></code></a>.</p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>Task Transfer or Transfer Learning</p>
+<ul class="simple">
+<li><p>Define multiple <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a> classes.</p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>Planning Algorithm Research</p>
+<ul class="simple">
+<li><p>Use existing POMCP or POUCT as baslines.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/extensions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

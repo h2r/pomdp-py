@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.algorithms package &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_py.framework package" href="pomdp_py.framework.html" />
+    <link rel="prev" title="pomdp_py package" href="pomdp_py.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pomdp_py.algorithms package</a><ul>
+<li><a class="reference internal" href="#module-pomdp_py.algorithms.po_rollout">pomdp_py.algorithms.po_rollout module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.algorithms.po_uct">pomdp_py.algorithms.po_uct module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">pomdp_py Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#further">Further</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_py</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pomdp_py.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html">pomdp_py.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.html">pomdp_py.representations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pomdp_py</a><ul>
+  <li><a href="pomdp_py.html">pomdp_py package</a><ul>
+      <li>Previous: <a href="pomdp_py.html" title="previous chapter">pomdp_py package</a></li>
+      <li>Next: <a href="pomdp_py.framework.html" title="next chapter">pomdp_py.framework package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pomdp-py-algorithms-package">
+<h1>pomdp_py.algorithms package<a class="headerlink" href="#pomdp-py-algorithms-package" title="Permalink to this headline">¶</a></h1>
+<p>Existing POMDP Solvers:</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.algorithms.po_rollout.PORollout" title="pomdp_py.algorithms.po_rollout.PORollout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PORollout</span></code></a></p></td>
+<td><p>PO-rollout: Baseline algorithm in the POMCP paper</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POUCT</span></code></a></p></td>
+<td><p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="#silver2010monte" id="id1">[1]</a> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></td>
+<td><p>This POMCP version only works for problems with action space that can be enumerated.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pomdp_py.algorithms.value_iteration.ValueIteration" title="pomdp_py.algorithms.value_iteration.ValueIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueIteration</span></code></a></p></td>
+<td><p>This algorithm is only feasible for small problems where states, actions, and observations can be explicitly enumerated.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="module-pomdp_py.algorithms.po_rollout">
+<span id="pomdp-py-algorithms-po-rollout-module"></span><h2>pomdp_py.algorithms.po_rollout module<a class="headerlink" href="#module-pomdp_py.algorithms.po_rollout" title="Permalink to this headline">¶</a></h2>
+<p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="#silver2010monte" id="id2">[1]</a>.</p>
+<p>Quote from the POMCP paper:</p>
+<blockquote>
+<div><p>To provide a performance benchmark in these cases, we evaluated the
+performance of simple Monte-Carlo simulation without any tree.
+The PO-rollout algorithm used Monte-Carlo belief state updates,
+as described in section 3.2. It then simulated <span class="math notranslate nohighlight">\(n/|A|\)</span> rollouts for
+each legal action, and selected the action with highest average return.</p>
+</div></blockquote>
+<p>We don’t require Monte-Carlo belief update (it’s an option). But
+it will do the rollouts and action selection as described.</p>
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_rollout.</code><code class="sig-name descname">PORollout</code><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
+<p>PO-rollout: Baseline algorithm in the POMCP paper</p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout.clear_agent">
+<code class="sig-name descname">clear_agent</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout.clear_agent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout.last_best_reward">
+<code class="sig-name descname">last_best_reward</code><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout.last_best_reward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout.plan">
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The agent carries the information:
+Bt, ht, O,T,R/G, pi, necessary for planning</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em>, <em class="sig-param">Action real_action</em>, <em class="sig-param">Observation real_observation</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the planner based on real action and observation.
+Updates the agent accordingly if necessary. If the agent’s
+belief is also updated here, the <cite>update_agent_belief</cite>
+attribute should be set to True. By default, does nothing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_rollout.PORollout.update_agent_belief">
+<code class="sig-name descname">update_agent_belief</code><a class="headerlink" href="#pomdp_py.algorithms.po_rollout.PORollout.update_agent_belief" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if planner’s update function also updates agent’s
+belief.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_py.algorithms.po_uct">
+<span id="pomdp-py-algorithms-po-uct-module"></span><h2>pomdp_py.algorithms.po_uct module<a class="headerlink" href="#module-pomdp_py.algorithms.po_uct" title="Permalink to this headline">¶</a></h2>
+<p>This algorithm is PO-UCT (Partially Observable UCT). It is
+presented in the POMCP paper <a class="bibtex reference internal" href="#silver2010monte" id="id3">[1]</a> as an extension to the UCT
+algorithm <a class="bibtex reference internal" href="#kocsis2006bandit" id="id4">[2]</a> that combines MCTS and UCB1
+for action selection.</p>
+<p>In other words, this is just POMCP without particle belief,
+but arbitrary belief representation.</p>
+<p>This planning strategy, based on MCTS with belief sampling may be referred to as
+“belief sparse sampling”; Partially Observable Sparse Sampling (POSS) is
+introduced in a recent paper <a class="bibtex reference internal" href="#lim2019sparse" id="id5">[3]</a> as an extension of sparse sampling
+for MDP by <a class="bibtex reference internal" href="#kearns2002sparse" id="id6">[4]</a>; It proposes an extension of POSS
+called POWSS (partially observable weighted sparse sampling).  However, this
+line of work (POSS, POWSS) is based solely on particle belief
+representation. POSS still requires comparing observations exactly for particle
+belief update, while POWSS uses weighted particles depending on the observation
+distribution.</p>
+<p>A note on the exploration constant. Quote from <a class="bibtex reference internal" href="#gusmao2012towards" id="id7">[5]</a>:</p>
+<blockquote>
+<div><p>“This constant should reflect the agent’s prior knowledge regarding
+the amount of exploration required.”</p>
+</div></blockquote>
+<p>In the POMCP paper, they set this constant following:</p>
+<blockquote>
+<div><p>“The exploration constant for POMCP was set to c = Rhi - Rlo,
+where Rhi was the highest return achieved during sample runs of POMCP
+with c = 0, and Rlo was the lowest return achieved during sample rollouts”</p>
+</div></blockquote>
+<p>It is then clear that the POMCP paper is indeed setting this constant
+based on prior knowledge. Note the difference between <cite>sample runs</cite> and
+<cite>sample rollouts</cite>. But, this is certainly not the only way to obtainx1
+the prior knowledge.</p>
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.ActionPrior">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">ActionPrior</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.ActionPrior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A problem-specific object</p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions">
+<code class="sig-name descname">get_preferred_actions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">vnode</em>, <em class="sig-param">state=None</em>, <em class="sig-param">history=None</em>, <em class="sig-param">belief=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is to mimic the behavior of Simulator.Prior
+and GenerateLegal/GeneratePreferred in David Silver’s
+POMCP code.</p>
+<p>Returns a set of preferred actions and associated
+num_visits_init and value_init, given arguments.
+In POMCP, this acts as a history-based prior policy,
+and in DESPOT, this acts as a belief-based prior policy.
+For example, given certain state or history, only it
+is possible that only a subset of all actions is legal;
+This is particularly true in the RockSample problem.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.POUCT">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">POUCT</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
+<p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="#silver2010monte" id="id8">[1]</a> is presented in the POMCP
+paper as an extension of the UCT algorithm to partially-observable domains
+that combines MCTS and UCB1 for action selection.</p>
+<p>POUCT only works for problems with action space that can be enumerated.</p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.clear_agent">
+<code class="sig-name descname">clear_agent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.clear_agent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.last_num_sims">
+<code class="sig-name descname">last_num_sims</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.last_num_sims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of simulations ran for the last <cite>plan</cite> call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.plan">
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The agent carries the information:
+Bt, ht, O,T,R/G, pi, necessary for planning</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em>, <em class="sig-param">Action real_action</em>, <em class="sig-param">Observation real_observation</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assume that the agent’s history has been updated after taking real_action
+and receiving real_observation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.updates_agent_belief">
+<code class="sig-name descname">updates_agent_belief</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.updates_agent_belief" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if planner’s update function also updates agent’s
+belief.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.QNode">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">QNode</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.QNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.TreeNode" title="pomdp_py.algorithms.po_uct.TreeNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.TreeNode</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.RandomRollout">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">RandomRollout</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RandomRollout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RolloutPolicy</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.RandomRollout.rollout">
+<code class="sig-name descname">rollout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">State state</em>, <em class="sig-param">tuple history=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RandomRollout.rollout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.RolloutPolicy">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">RolloutPolicy</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RolloutPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.PolicyModel</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.RolloutPolicy.rollout">
+<code class="sig-name descname">rollout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">State state</em>, <em class="sig-param">tuple history=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RolloutPolicy.rollout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.RootVNode">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">RootVNode</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RootVNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.VNode" title="pomdp_py.algorithms.po_uct.VNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.VNode</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.RootVNode.from_vnode">
+<code class="sig-name descname">from_vnode</code><span class="sig-paren">(</span><em class="sig-param">cls</em>, <em class="sig-param">vnode</em>, <em class="sig-param">history</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RootVNode.from_vnode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.RootVNode.history">
+<code class="sig-name descname">history</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RootVNode.history" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.TreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">TreeNode</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.TreeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.TreeNode.children">
+<code class="sig-name descname">children</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.TreeNode.children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.TreeNode.num_visits">
+<code class="sig-name descname">num_visits</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.TreeNode.num_visits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.TreeNode.value">
+<code class="sig-name descname">value</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.TreeNode.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.po_uct.VNode">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">VNode</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.VNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.TreeNode" title="pomdp_py.algorithms.po_uct.TreeNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.TreeNode</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.VNode.print_children_value">
+<code class="sig-name descname">print_children_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.VNode.print_children_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.print_preferred_actions">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_preferred_actions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_preferred_actions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.print_preferred_actions_helper">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_preferred_actions_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_preferred_actions_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.print_tree">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_tree</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.print_tree_helper">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_tree_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_tree_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.tree_stats">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">tree_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.tree_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_py.algorithms.po_uct.tree_stats_helper">
+<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">tree_stats_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.tree_stats_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_py.algorithms.pomcp">
+<span id="pomdp-py-algorithms-pomcp-module"></span><h2>pomdp_py.algorithms.pomcp module<a class="headerlink" href="#module-pomdp_py.algorithms.pomcp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pomdp_py.algorithms.pomcp.POMCP">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.pomcp.</code><code class="sig-name descname">POMCP</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.POMCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.POUCT</span></code></a></p>
+<p>This POMCP version only works for problems
+with action space that can be enumerated.</p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.pomcp.POMCP.plan">
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.pomcp.POMCP.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The agent carries the information:
+Bt, ht, O,T,R/G, pi, necessary for planning</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.pomcp.POMCP.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.pomcp.POMCP.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assume that the agent’s history has been updated after taking real_action
+and receiving real_observation.</p>
+<dl class="simple">
+<dt><cite>state_transform_func</cite>: Used to add artificial transform to states during</dt><dd><p>particle reinvigoration. Signature: s -&gt; s_transformed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.pomcp.POMCP.update_agent_belief">
+<code class="sig-name descname">update_agent_belief</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.POMCP.update_agent_belief" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if planner’s update function also updates agent’s
+belief.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.pomcp.RootVNodeParticles">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.pomcp.</code><code class="sig-name descname">RootVNodeParticles</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.RootVNodeParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.RootVNode" title="pomdp_py.algorithms.po_uct.RootVNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RootVNode</span></code></a></p>
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.pomcp.RootVNodeParticles.belief">
+<code class="sig-name descname">belief</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.RootVNodeParticles.belief" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.pomcp.RootVNodeParticles.from_vnode">
+<code class="sig-name descname">from_vnode</code><span class="sig-paren">(</span><em class="sig-param">cls</em>, <em class="sig-param">vnode</em>, <em class="sig-param">history</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.pomcp.RootVNodeParticles.from_vnode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.algorithms.pomcp.VNodeParticles">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.pomcp.</code><code class="sig-name descname">VNodeParticles</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.VNodeParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.VNode" title="pomdp_py.algorithms.po_uct.VNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.VNode</span></code></a></p>
+<p>POMCP’s VNode maintains particle belief</p>
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.pomcp.VNodeParticles.belief">
+<code class="sig-name descname">belief</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.VNodeParticles.belief" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_py.algorithms.value_iteration">
+<span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the basic policy tree based value iteration as explained
+in section 4.1 of <cite>Planning and acting in partially observable stochastic
+domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id9">[6]</a></p>
+<p>Warning: No pruning - the number of policy trees explodes very fast.</p>
+<dl class="class">
+<dt id="pomdp_py.algorithms.value_iteration.ValueIteration">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.value_iteration.</code><code class="sig-name descname">ValueIteration</code><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
+<p>This algorithm is only feasible for small problems where states, actions,
+and observations can be explicitly enumerated.</p>
+<p>__init__(self, horizon=float(‘inf’), discount_factor=0.9, epsilon=1e-6)</p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.value_iteration.ValueIteration.plan">
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The agent carries the information:
+Bt, ht, O,T,R/G, pi, necessary for planning</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="bibtex-bibliography-api/pomdp_py.algorithms-0"><dl class="citation">
+<dt class="bibtex label" id="silver2010monte"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id3">3</a>,<a href="#id8">4</a>)</span></dt>
+<dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
+</dd>
+<dt class="bibtex label" id="kocsis2006bandit"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dd><p>Levente Kocsis and Csaba Szepesvári. Bandit based monte-carlo planning. In <em>European conference on machine learning</em>, 282–293. Springer, 2006.</p>
+</dd>
+<dt class="bibtex label" id="lim2019sparse"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>Michael H Lim, Claire J Tomlin, and Zachary N Sunberg. Sparse tree search optimality guarantees in pomdps with continuous observation spaces. <em>arXiv preprint arXiv:1910.04332</em>, 2019.</p>
+</dd>
+<dt class="bibtex label" id="kearns2002sparse"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dd><p>Michael Kearns, Yishay Mansour, and Andrew Y Ng. A sparse sampling algorithm for near-optimal planning in large markov decision processes. <em>Machine learning</em>, 49(2-3):193–208, 2002.</p>
+</dd>
+<dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
+<dd><p>António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In <em>ECAI</em>, 384–389. 2012.</p>
+</dd>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id9">6</a></span></dt>
+<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
+</dd>
+</dl>
+</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/pomdp_py.algorithms.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

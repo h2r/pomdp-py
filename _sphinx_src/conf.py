@@ -79,6 +79,8 @@ html_theme_options = {
     'fixed_sidebar': True,
 }
 
+html_favicon = "images/favicon.ico"
+
 # Do not sort automodule classes alphebatically but by how they appear in source.
 autodoc_member_order = 'bysource'
 

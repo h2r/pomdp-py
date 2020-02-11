@@ -88,6 +88,10 @@ MANIFEST
 # sphinx build folder
 _build
 
+# sphinx html generation in docs/
+docs/doctrees
+docs/html/.buildinfo
+
 # Compiled source #
 ###################
 *.com
@@ -125,3 +129,4 @@ Thumbs.db
 
 # Editor backup files #
 #######################
+

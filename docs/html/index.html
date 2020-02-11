@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py Documentation &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pomdp_py Documentation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#further">Further</a></li>
+<li><a class="reference internal" href="#api-references">API References</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pomdp_py Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#further">Further</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp_py.html">pomdp_py package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.algorithms.html">pomdp_py.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.framework.html">pomdp_py.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.representations.html">pomdp_py.representations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="getting_started.html" title="next chapter">Getting Started</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pomdp-py-documentation">
+<h1>pomdp_py Documentation<a class="headerlink" href="#pomdp-py-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>pomdp_py is a <strong>general purpose POMDP library</strong> written in Python and Cython. It features simple and comprehensive interfaces to describe POMDP or MDP problems. Originally written to support POMDP planning research, the interfaces also allow extensions to model-free or model-based learning in (PO)MDPs, multi-agent POMDP planning/learning, and task transfer or transfer learning.</p>
+<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[6]</a>.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a></p></li>
+<li><p><a class="reference internal" href="examples.html"><span class="doc">Examples</span></a></p></li>
+<li><p><a class="reference internal" href="simple_rl_integration.html"><span class="doc">Integration with simple_rl</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="further">
+<h2>Further<a class="headerlink" href="#further" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="design_principles.html"><span class="doc">Design Principles</span></a></p></li>
+<li><p><a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a></p></li>
+<li><p><a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a></p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="api-references">
+<h2>API References<a class="headerlink" href="#api-references" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp_py.html">pomdp_py package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.algorithms.html">pomdp_py.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.framework.html">pomdp_py.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.representations.html">pomdp_py.representations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<p id="bibtex-bibliography-index-0"><dl class="citation">
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">6</a></span></dt>
+<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
+</dd>
+</dl>
+</p>
+<a class="reference external image-reference" href="http://bigai.cs.brown.edu/"><img alt="Brown University AI" class="align-center" src="_images/brown_logo.png" style="width: 110.75px; height: 57.5px;" /></a>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

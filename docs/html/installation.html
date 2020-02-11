@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Installation &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">pomdp_py Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#further">Further</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pomdp_py.html">pomdp_py package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.algorithms.html">pomdp_py.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.framework.html">pomdp_py.framework package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.representations.html">pomdp_py.representations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="getting_started.html">Getting Started</a><ul>
+      <li>Previous: <a href="getting_started.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic" start="0">
+<li><p>Install Python 3.7+ from <a class="reference external" href="https://www.python.org/downloads/">official website</a>.</p></li>
+<li><p>Install Cython.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">Cython</span>
+</pre></div>
+</div>
+</li>
+<li><p>Download <cite>pomdp_py</cite> latest release <a class="reference external" href="https://github.com/h2r/pomdp-py/releases">on github</a>.</p></li>
+<li><p>Go to the package root directory. Install as a developer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>This will install <cite>pomdp_py</cite> package and compile the Cython code in place.</p>
+</li>
+<li><p>Verify that Tiger problem and RockSample problem work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">problems</span><span class="o">/</span><span class="n">tiger</span><span class="o">/</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">py</span>
+<span class="n">python</span> <span class="n">problems</span><span class="o">/</span><span class="n">rocksample</span><span class="o">/</span><span class="n">rocksample_problem</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>For the Tiger problem, you should see output like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span> <span class="n">Testing</span> <span class="n">value</span> <span class="n">iteration</span> <span class="o">**</span>
+<span class="o">====</span> <span class="n">Step</span> <span class="mi">1</span> <span class="o">====</span>
+<span class="kc">True</span> <span class="n">state</span><span class="p">:</span> <span class="n">tiger</span><span class="o">-</span><span class="n">left</span>
+<span class="n">Belief</span><span class="p">:</span> <span class="p">[(</span><span class="n">State</span><span class="p">(</span><span class="n">tiger</span><span class="o">-</span><span class="n">right</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="n">State</span><span class="p">(</span><span class="n">tiger</span><span class="o">-</span><span class="n">left</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">)]</span>
+<span class="n">Action</span><span class="p">:</span> <span class="n">listen</span>
+<span class="n">Reward</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+<span class="o">&gt;&gt;</span> <span class="n">Observation</span><span class="p">:</span> <span class="n">tiger</span><span class="o">-</span><span class="n">left</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>There will be plots that visualize the MCTS trees displayed,</p>
+<p>For the RockSample problem, you should see something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*** Testing POMCP ***
+==== Step 1 ====
+Particle reinvigoration for 66 particles
+True state: State((0, 4) | (&#39;bad&#39;, &#39;good&#39;, &#39;bad&#39;, &#39;good&#39;, &#39;good&#39;) | False)
+Action: sample
+Observation: None
+Reward: 0.0
+Reward (Cumulative): 0.0
+Reward (Cumulative Discounted): 0.0
+__num_sims__: 1217
+World:
+
+______ID______
+.....&gt;
+4....&gt;
+..210&gt;
+.3...&gt;
+R....&gt;
+_____G/B_____
+.....&gt;
+$....&gt;
+..x$x&gt;
+.$...&gt;
+R....&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
