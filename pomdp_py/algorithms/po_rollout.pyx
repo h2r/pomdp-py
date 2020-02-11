@@ -1,14 +1,17 @@
-# PO-rollout: Baseline algorithm in the POMCP paper
-#
-# Quote from the paper:
-# To provide a performance benchmark in these cases, we evaluated the
-# performance of simple Monte-Carlo simulation without any tree.
-# The PO-rollout algorithm used Monte-Carlo belief state updates,
-# as described in section 3.2. It then simulated n/|A| rollouts for
-# each legal action, and selected the action with highest average return.
-#
-# We don't require Monte-Carlo belief update (it's an option). But
-# it will do the rollouts and action selection as described.
+"""
+PO-rollout: Baseline algorithm in the POMCP paper :cite:`silver2010monte`.
+
+Quote from the POMCP paper:
+
+    To provide a performance benchmark in these cases, we evaluated the
+    performance of simple Monte-Carlo simulation without any tree.
+    The PO-rollout algorithm used Monte-Carlo belief state updates,
+    as described in section 3.2. It then simulated :math:`n/|A|` rollouts for
+    each legal action, and selected the action with highest average return.
+
+We don't require Monte-Carlo belief update (it's an option). But
+it will do the rollouts and action selection as described.
+"""
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
@@ -24,6 +27,10 @@ import random
 import math
 
 cdef class PORollout(Planner):
+
+    """
+    PO-rollout: Baseline algorithm in the POMCP paper
+    """
 
     def __init__(self,
                  num_simulations=100,
@@ -119,5 +126,6 @@ cdef class PORollout(Planner):
         return self._particles
 
     def clear_agent(self):
+        """clear_agent(self)"""
         self._agent = None  # forget about current agent so that can plan for another agent.
         self._last_best_reward = float('-inf')

@@ -1,8 +1,17 @@
 pomdp\_py.algorithms package
 ============================
 
-Submodules
-----------
+Existing POMDP Solvers:
+
+.. autosummary::
+   :nosignatures:
+
+   ~pomdp_py.algorithms.po_rollout.PORollout
+   ~pomdp_py.algorithms.po_uct.POUCT
+   ~pomdp_py.algorithms.pomcp.POMCP
+   ~pomdp_py.algorithms.value_iteration.ValueIteration
+
+
 
 pomdp\_py.algorithms.po\_rollout module
 ---------------------------------------
@@ -36,3 +45,7 @@ pomdp\_py.algorithms.value\_iteration module
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+.. bibliography:: refs.bib
+   :style: unsrt

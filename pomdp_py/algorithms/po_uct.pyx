@@ -1,39 +1,37 @@
-# This algorithm is PO-UCT (Partially Observable UCT). It is
-# presented in the POMCP paper as an extension to the UCT
-# algorithm [1] that combines MCTS and UCB1 for action selection.
-#     
-# In other words, this is just POMCP without particle belief,
-# but arbitrary belief representation.
-#
-# This planning strategy, based on MCTS with belief sampling
-# may be referred to as "belief sparse sampling"; Partially
-# Observable Sparse Sampling (POSS) is introduced in a
-# recent paper [2] as an extension of sparse sampling for MDP by
-# (Kearns et al. 2002); [2] proposes an extension of POSS
-# called POWSS (partially observable weighted sparse sampling).
-# However, this line of work (POSS, POWSS) is based solely on particle
-# belief representation. POSS still requires comparing observations
-# exactly for particle belief update, while POWSS uses weighted
-# particles depending on the observation distribution.
-#
-# A note on the exploration constant. Quote from [3]:
-#   | "This constant should reflect the agent’s prior knowledge regarding
-#   | the amount of exploration required."
-# In the POMCP paper [4], they set this constant following:
-#   | "The exploration constant for POMCP was set to c = Rhi - Rlo,
-#   | where Rhi was the highest return achieved during sample runs of POMCP
-#   | with c = 0, and Rlo was the lowest return achieved during sample rollouts"
-# It is then clear that the POMCP paper is indeed setting this constant
-# based on prior knowledge. Note the difference between ``sample runs'' and
-# ``sample rollouts''. But, this is certainly not the only way to obtainx1
-# the prior knowledge.
-#
-# [1] Bandit based Monte-Carlo Planning, by L. Kocsis and C. Szepesv´ari
-# [2] Sparse tree search optimality guarantees n POMDPs with
-#     continuous observation spaces, by M. Lim, C. Tomlin, Z. Sunberg.
-# [3] Towards Generalizing the Success of Monte-Carlo
-#     Tree Search beyond the Game of Go
-# [4] Monte-Carlo Planning in Large POMDPs
+"""This algorithm is PO-UCT (Partially Observable UCT). It is
+presented in the POMCP paper :cite:`silver2010monte` as an extension to the UCT
+algorithm :cite:`kocsis2006bandit` that combines MCTS and UCB1
+for action selection.
+    
+In other words, this is just POMCP without particle belief,
+but arbitrary belief representation.
+
+This planning strategy, based on MCTS with belief sampling may be referred to as
+"belief sparse sampling"; Partially Observable Sparse Sampling (POSS) is
+introduced in a recent paper :cite:`lim2019sparse` as an extension of sparse sampling
+for MDP by :cite:`kearns2002sparse`; It proposes an extension of POSS
+called POWSS (partially observable weighted sparse sampling).  However, this
+line of work (POSS, POWSS) is based solely on particle belief
+representation. POSS still requires comparing observations exactly for particle
+belief update, while POWSS uses weighted particles depending on the observation
+distribution.
+
+A note on the exploration constant. Quote from :cite:`gusmao2012towards`:
+
+    "This constant should reflect the agent’s prior knowledge regarding
+    the amount of exploration required."
+  
+In the POMCP paper, they set this constant following:
+
+    "The exploration constant for POMCP was set to c = Rhi - Rlo,
+    where Rhi was the highest return achieved during sample runs of POMCP
+    with c = 0, and Rlo was the lowest return achieved during sample rollouts"
+
+It is then clear that the POMCP paper is indeed setting this constant
+based on prior knowledge. Note the difference between `sample runs` and
+`sample rollouts`. But, this is certainly not the only way to obtainx1
+the prior knowledge.
+"""
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
@@ -97,6 +95,7 @@ cdef class RootVNode(VNode):
         self.history = history
     @classmethod
     def from_vnode(cls, vnode, history):
+        """from_vnode(cls, vnode, history)"""
         rootnode = RootVNode(vnode.num_visits, vnode.value, history)
         rootnode.children = vnode.children
         return rootnode
@@ -179,6 +178,7 @@ cdef class ActionPrior:
     def get_preferred_actions(self, vnode, state=None, history=None,
                               belief=None, **kwargs):
         """
+        get_preferred_actions(self, vnode, state=None, history=None, belief=None, **kwargs)
         This is to mimic the behavior of Simulator.Prior
         and GenerateLegal/GeneratePreferred in David Silver's
         POMCP code.
@@ -199,16 +199,21 @@ cdef class ActionPrior:
     
 cdef class RolloutPolicy(PolicyModel):
     cpdef Action rollout(self, State state, tuple history=None):
+        """rollout(self, State state, tuple history=None)"""
         pass
     
 cdef class RandomRollout(RolloutPolicy):
     cpdef Action rollout(self, State state, tuple history=None):
+        """rollout(self, State state, tuple history=None)"""
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
     
 cdef class POUCT(Planner):
 
-    """POUCT only works for problems with action space
-    that can be enumerated."""
+    """ POUCT (Partially Observable UCT) :cite:`silver2010monte` is presented in the POMCP
+    paper as an extension of the UCT algorithm to partially-observable domains
+    that combines MCTS and UCB1 for action selection.
+
+    POUCT only works for problems with action space that can be enumerated."""
 
     def __init__(self,
                  max_depth=5, planning_time=1.,
@@ -252,6 +257,7 @@ cdef class POUCT(Planner):
 
     cpdef public update(self, Agent agent, Action real_action, Observation real_observation):
         """
+        update(self, Agent agent, Action real_action, Observation real_observation)
         Assume that the agent's history has been updated after taking real_action
         and receiving real_observation.
         """

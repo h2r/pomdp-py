@@ -53,7 +53,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme = 'alabaster'
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -61,5 +60,25 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_sidebars = {
+    '**': [
+        'about.html',
+        'localtoc.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+    ]
+}
+
+html_theme_options = {
+    'logo': 'logo.png',
+    'github_user': 'h2r',
+    'github_repo': 'pomdp_py',
+    'github_type': 'star',
+    'sidebar_collapse': False,
+    'fixed_sidebar': True
+}
+
 # Do not sort automodule classes alphebatically but by how they appear in source.
 autodoc_member_order = 'bysource'
+

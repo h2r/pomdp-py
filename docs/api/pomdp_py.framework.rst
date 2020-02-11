@@ -16,6 +16,10 @@ Important classes in :py:mod:`pomdp_py.framework.basics`:
    ~pomdp_py.framework.basics.Agent
    ~pomdp_py.framework.basics.Environment
    ~pomdp_py.framework.basics.POMDP
+   ~pomdp_py.framework.basics.State
+   ~pomdp_py.framework.basics.Action
+   ~pomdp_py.framework.basics.Observation
+   ~pomdp_py.framework.basics.Option
 
 
 
