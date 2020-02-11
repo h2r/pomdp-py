@@ -48,4 +48,5 @@ pomdp\_py.algorithms.value\_iteration module
 
 
 .. bibliography:: refs.bib
+   :filter: docname in docnames
    :style: unsrt

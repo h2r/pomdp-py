@@ -73,10 +73,10 @@ html_sidebars = {
 html_theme_options = {
     'logo': 'logo.png',
     'github_user': 'h2r',
-    'github_repo': 'pomdp_py',
+    'github_repo': 'pomdp-py',
     'github_type': 'star',
     'sidebar_collapse': False,
-    'fixed_sidebar': True
+    'fixed_sidebar': True,
 }
 
 # Do not sort automodule classes alphebatically but by how they appear in source.

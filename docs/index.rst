@@ -9,20 +9,30 @@ pomdp_py is a **general purpose POMDP library** written in Python and Cython. It
 
 POMDP stands for **P**\ artially **O**\ bservable **M**\ arkov **D**\ ecision **P**\ rocess :cite:`kaelbling1998planning`.
 
+
+Getting Started
+---------------
+* :doc:`installation`
+* :doc:`examples`
+* :doc:`simple_rl_integration`
+
+
 Further
 -------
 * :doc:`design_principles`
 * :doc:`existing_solvers`
 * :doc:`extensions`
 
+.. toctree::
+   :hidden:
+
+   getting_started
+
 API References
 --------------
 .. toctree::
    :maxdepth: 3
 
-   design_principles
-   existing_solvers
-   extensions
    api/modules
 
 Tools
@@ -32,7 +42,10 @@ Tools
 * :ref:`search`
 
 .. bibliography:: refs.bib
+   :filter: docname in docnames
    :style: unsrt
 
-
-
+.. image:: images/brown_logo.png
+   :scale: 25 %
+   :alt: Brown University AI
+   :align: center
