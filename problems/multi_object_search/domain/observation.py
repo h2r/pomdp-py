@@ -37,7 +37,7 @@ class MosOOObservation(pomdp_py.OOObservation):
     thus this is an OOObservation."""
     def __init__(self, objposes):
         """
-        objposes (dict): map from objid to 2d pose or NULL.
+        objposes (dict): map from objid to 2d pose or NULL (not ObjectObservation!).
         """
         self._hashcode = hash(frozenset(objposes.items()))
         self._objposes = objposes
@@ -54,7 +54,7 @@ class MosOOObservation(pomdp_py.OOObservation):
     def factor(self, next_state, *params, **kwargs):
         """Factor this OO-observation by objects"""
         return {objid: ObjectObservation(objid, self._objposes[objid])
-                for objid in self._objposes
+                for objid in next_state.object_states
                 if objid != next_state.robot_id}
     
     @classmethod

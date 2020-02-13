@@ -27,15 +27,16 @@ from ..domain.observation import *
 class MosObservationModel(pomdp_py.OOObservationModel):
     """Object-oriented transition model"""
     def __init__(self,
-                 gridworld,
+                 dim,
+                 sensor,
+                 object_ids,
                  sigma=0,
                  epsilon=1):
-        self._gridworld = gridworld
         self.sigma = sigma
         self.epsilon = epsilon
-        observation_models = {objid: ObjectObservationModel(objid, gridworld,
+        observation_models = {objid: ObjectObservationModel(objid, sensor,
                                                             sigma=sigma, epsilon=epsilon)
-                              for objid in self._gridworld.target_objects}
+                              for objid in object_ids}
         pomdp_py.OOObservationModel.__init__(self, observation_models)
 
     def sample(self, next_state, action, argmax=False, **kwargs):
@@ -46,10 +47,12 @@ class MosObservationModel(pomdp_py.OOObservationModel):
         return MosObservation.merge(factored_observations, next_state)
 
 class ObjectObservationModel(pomdp_py.ObservationModel):
-    def __init__(self, objid, gridworld, sigma=0, epsilon=1):
-        """sigma and epsilon are parameters of the observation model (see paper)"""
+    def __init__(self, objid, sensor, dim, sigma=0, epsilon=1):
+        """
+        sigma and epsilon are parameters of the observation model (see paper),
+        dim (tuple): a tuple (width, length) for the dimension of the world"""
         self._objid = objid
-        self._gridworld = gridworld  # needed to sample observation
+        self._sensor = sensor
         self.sigma = sigma
         self.epsilon = epsilon
 
@@ -90,11 +93,10 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
                                                     [0, self.sigma**2]]))
             return gaussian[zi] * alpha
         elif event_occured == "B":
-            return (1.0 / self._gridworld.sensing_region_size) * beta
+            return (1.0 / self._sensor.sensing_region_size) * beta
 
         else: # event_occured == "C":
             return 1.0 * gamma
-
 
     def sample(self, next_state, action, **kwargs):
         """Returns observation"""
@@ -102,9 +104,11 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             # Not a look action. So no observation
             return ObjectObservation(self._objid, ObjectObservation.NULL)
 
+        robot_pose = next_state.pose(self._sensor.robot_id)
+        object_pose = next_state.pose(self._objid)
+
         # Obtain observation according to distribution. 
-        alpha, beta, gamma = self._compute_params(
-            self._gridworld.object_in_sensing_region(next_state.object_pose(self._objid)))
+        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))
 
         # Requires Python >= 3.6
         event_occured = random.choices(["A", "B", "C"], weights=[alpha, beta, gamma], k=1)[0]
@@ -113,9 +117,8 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         return ObjectObservation(self._objid, zi)
 
     def argmax(self, next_state, action, **kwargs):
-        # Obtain observation according to distribution. 
-        alpha, beta, gamma = self._compute_params(
-            self._gridworld.object_in_sensing_region(next_state.object_pose(self._objid)))
+        # Obtain observation according to distribution.
+        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))        
 
         event_probs = {"A": alpha,
                        "B": beta,
@@ -131,9 +134,10 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
                                           np.array([[self.sigma**2, 0],
                                                     [0, self.sigma**2]]))
             if not argmax:
-                zi = self._gridworld.discretize(gaussian.random())
+                zi = gaussian.random()
             else:
-                zi = self._gridworld.discretize(gaussian.mpe())
+                zi = gaussian.mpe()
+            zi = (int(round(zi[0])), int(round(zi[1])))
                 
         elif event_occured == "B":
             zi = (random.randint(0, self._gridworld.width),   # x axis
