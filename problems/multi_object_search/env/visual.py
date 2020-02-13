@@ -145,13 +145,11 @@ class MosViz:
             elif event.key == pygame.K_RETURN:
                 action = FindAction
 
-            print(action)
-                
             if self._controllable:
                 if isinstance(action, MotionAction):
                     reward = self._env.state_transition(action, execute=True, robot_id=robot_id)
                     z = None
-                elif isinstance(action, LookAction) or isinstance(action, Findction):
+                elif isinstance(action, LookAction) or isinstance(action, FindAction):
                     robot_pose = self._env.state.pose(robot_id)
                     z = self._env.sensors[robot_id].observe(robot_pose,
                                                             self._env.state)
@@ -206,8 +204,8 @@ class MosViz:
 
 world1 = \
 """
-rx...
-.x.xT
+r....
+...xT
 .....
 ***
 r: laser fov=90 min_range=1 max_range=5

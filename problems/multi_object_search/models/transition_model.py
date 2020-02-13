@@ -99,7 +99,6 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
         if not isinstance(action, MotionAction):
             raise ValueError("Cannot move robot with %s action" % str(type(action)))
 
-        print(state)
         robot_pose = state.pose(self._robot_id)
         rx, ry, rth = robot_pose
         if action.scheme == "xy":
@@ -112,12 +111,9 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
             forward, angle = action.motion
             rth += angle  # angle (radian)
             rx = int(round(rx + forward*math.cos(rth)))
-            ry = int(round(ry + forward*math.cos(rth)))
+            ry = int(round(ry + forward*math.sin(rth)))
             rth = rth % (2*math.pi)
 
-        print("<forward> %s" % (str(forward)))
-        print("<ry> %s" % int(round(ry + forward*math.cos(rth))))
-        print("<TESTING> %s" % (str((rx,ry,rth))))
         if valid_pose((rx, ry, rth),
                       self._dim[0], self._dim[1],
                       state=state,

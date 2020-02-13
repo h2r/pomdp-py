@@ -65,14 +65,13 @@ class Laser2DSensor:
         self._beams = {round(th, 2)
                        for th in np.linspace(self._fov_left[0],
                                              self._fov_left[1],
-                                             (self._fov_left[1] - self._fov_left[0]) / self.angle_increment)}\
+                                             int(round((self._fov_left[1] - self._fov_left[0]) / self.angle_increment)))}\
                     | {round(th, 2)
                        for th in np.linspace(self._fov_right[0],
                                              self._fov_right[1],
-                                             (self._fov_right[1] - self._fov_right[0]) / self.angle_increment)}
+                                             int(round((self._fov_right[1] - self._fov_right[0]) / self.angle_increment)))}
         # The size of the sensing region here is the area covered by the fan
         self._sensing_region_size = fov / (2*math.pi) * math.pi * (max_range - min_range)**2
-        
 
     def in_field_of_view(th, view_angles):
         """Determines if the beame at angle `th` is in a field of view of size `view_angles`.

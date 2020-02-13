@@ -30,10 +30,10 @@ class Action(pomdp_py.Action):
 MOTION_SCHEME="xy"  # can be either xy or vw
 class MotionAction(Action):
     # scheme 1 (vx,vy,th)
-    EAST = (1, 0, 0)  # x is horizontal; x+ is right. y is vertical; y+ is up.
+    EAST = (1, 0, 0)  # x is horizontal; x+ is right. y is vertical; y+ is down.
     WEST = (-1, 0, math.pi)
-    NORTH = (0, 1, math.pi/2)
-    SOUTH = (0, -1, 3*math.pi/2)
+    NORTH = (0, -1, 3*math.pi/2)
+    SOUTH = (0, 1, math.pi/2)
     # scheme 2 (vt, vw) translational, rotational velocities.
     FORWARD = (1, 0)
     BACKWARD = (-1, 0)
