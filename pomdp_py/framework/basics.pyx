@@ -509,10 +509,17 @@ cdef class Environment:
                                                       self.state, action,
                                                       discount_factor=kwargs.get("discount_factor", 1.0))
         if execute:
-            self._cur_state = next_state
+            self.apply_transition(next_state)
             return reward
         else:
             return next_state, reward
+
+    def apply_transition(self, next_state):
+        """
+        apply_transition(self, next_state)
+        Apply the transition, that is, assign current state to
+        be the `next_state`."""
+        self._cur_state = next_state
 
     def provide_observation(self, observation_model, action, **kwargs):
         """

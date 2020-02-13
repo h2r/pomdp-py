@@ -38,7 +38,7 @@ class MotionAction(Action):
     FORWARD = (1, 0)
     BACKWARD = (-1, 0)
     LEFT = (0, -math.pi/4)  # left 45 deg
-    RIGHT = (0, -math.pi/4) # right 45 deg
+    RIGHT = (0, math.pi/4) # right 45 deg
 
     def __init__(self, motion, scheme=MOTION_SCHEME, distance_cost=1):
         """

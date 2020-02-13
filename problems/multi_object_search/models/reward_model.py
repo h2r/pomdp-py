@@ -4,35 +4,40 @@ import pomdp_py
 from ..domain.action import *
 
 class MosRewardModel(pomdp_py.RewardModel):
-    def __init__(self, gridworld, big=1000, small=1):
+    def __init__(self, target_objects, big=1000, small=1):
+        """
+        target_objects (set): a set of objids for target objects.
+        """
         self.big = big
         self.small = small
-        self._gridworld = gridworld
+        self._target_objects = target_objects
         
     def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
         if reward == self._reward_func(state, action):
             return 1.0
         else:
             return 0.0
-    def sample(self, state, action, next_state, normalized=False, **kwargs):
+        
+    def sample(self, state, action, next_state,
+               normalized=False, robot_id=None):
         # deterministic
-        return self._reward_func(state, action, next_state)
-    def argmax(self, state, action, next_state, normalized=False, **kwargs):
+        return self._reward_func(state, action, next_state, robot_id=robot_id)
+    
+    def argmax(self, state, action, next_state, normalized=False, robot_id=None):
         """Returns the most likely reward"""
-        return self._reward_func(state, action, next_state)
+        return self._reward_func(state, action, next_state, robot_id=robot_id)
 
-class GoalRewardModel(M3RewardModel):
+class GoalRewardModel(MosRewardModel):
     """
     This is a reward where the agent gets reward only for detect-related actions.
     """
-    def __init__(self, gridworld, big=1000, small=1):
-        super().__init__(gridworld, big=big, small=small, discount_factor=discount_factor)
-        
-    def _reward_func(self, state, action, next_state):
+    def _reward_func(self, state, action, next_state, robot_id=None):
+        assert robot_id is not None, "Reward assignment should happen for a specific robot"
         reward = 0
 
         # If the robot has detected all objects
-        if len(state.robot_state['objects_found']) == len(self._gridworld.target_objects):
+        if len(state.object_states[robot_id]['objects_found'])\
+           == len(self._target_objects):
             return 0  # no reward or penalty; the task is finished.
         
         if isinstance(action, MotionAction):

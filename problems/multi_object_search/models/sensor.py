@@ -47,7 +47,7 @@ class Laser2DSensor:
         max_range (int or float)
         angle_increment (float): angular distance between measurements (rad).
         """
-        self._robot_id = robot_id
+        self.robot_id = robot_id
         self.fov = fov
         self.min_range = min_range
         self.max_range = max_range
@@ -58,14 +58,18 @@ class Laser2DSensor:
         # For example, the fov=pi, means the range scanner scans 180 degrees
         # in front of the robot. By our angle convention, 180 degrees maps to [0,90] and [270, 360]."""
         self._fov_left = (0, fov / 2)
-        self._fov_right = (2*math.pi - view_angles/2, 2*math.pi)
+        self._fov_right = (2*math.pi - fov/2, 2*math.pi)
 
         # beams that are actually within the fov (set of angles)
+        print(self._fov_left)
         self._beams = {round(th, 2)
-                       for th in np.linspace(self._fov_left,
-                                             self._fov_right,
-                                             2*math.pi/self.angle_increment)}
-
+                       for th in np.linspace(self._fov_left[0],
+                                             self._fov_left[1],
+                                             (self._fov_left[1] - self._fov_left[0]) / self.angle_increment)}\
+                    | {round(th, 2)
+                       for th in np.linspace(self._fov_right[0],
+                                             self._fov_right[1],
+                                             (self._fov_right[1] - self._fov_right[0]) / self.angle_increment)}
         # The size of the sensing region here is the area covered by the fan
         self._sensing_region_size = fov / (2*math.pi) * math.pi * (max_range - min_range)**2
         

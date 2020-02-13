@@ -41,6 +41,9 @@ class MosOOObservation(pomdp_py.OOObservation):
         """
         self._hashcode = hash(frozenset(objposes.items()))
         self._objposes = objposes
+
+    def for_obj(self, objid):
+        return ObjectObservation(objid, self._objposes[objid])
         
     def __hash__(self):
         return self._hashcode

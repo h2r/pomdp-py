@@ -1,10 +1,71 @@
 import pomdp_py
 import cv2
+import copy
 from ..models.transition_model import *
 from ..models.reward_model import *
+from ..models.sensor import *
+
+class MosEnvironment(pomdp_py.Environment):
+    """"""
+    def __init__(self, dim, init_state, sensors, obstacles=set({})):
+        """
+        sensors (dict): Map from robot_id to sensor (Sensor);
+                        Sensors equipped on robots; Used to determine
+                        which objects should be marked as found.
+        obstacles (set): set of object ids that are obstacles;
+                            The set difference of all object ids then
+                            yields the target object ids."""
+        self.width, self.length = dim
+        self.sensors = sensors
+        transition_model = MosTransitionModel(dim,
+                                              sensors,
+                                              set(init_state.object_states.keys()))
+        target_objects = {objid
+                          for objid in init_state.object_states
+                          if init_state.object_states[objid].objclass == "target"}
+        reward_model = GoalRewardModel(target_objects)
+        super().__init__(init_state,
+                         transition_model,
+                         reward_model)
+        
+    @property
+    def robot_ids(self):
+        return set(self.sensors.keys())
+
+    def state_transition(self, action, execute=True, robot_id=None):
+        """state_transition(self, action, execute=True, **kwargs)
+
+        Overriding parent class function.
+        Simulates a state transition given `action`. If `execute` is set to True,
+        then the resulting state will be the new current state of the environment.
+
+        Args:
+            action (Action): action that triggers the state transition
+            execute (bool): If True, the resulting state of the transition will become the current state.
+
+        Returns:
+            float or tuple: reward as a result of `action` and state
+            transition, if `execute` is True (next_state, reward) if `execute`
+            is False.
+
+        """
+        assert robot_id is not None, "state transition should happen for a specific robot"
+
+        next_state = copy.deepcopy(self.state)
+        next_state.object_states[robot_id] =\
+            self.transition_model[robot_id].sample(self.state, action)
+        
+        reward = self.reward_model.sample(self.state, action, next_state,
+                                          robot_id=robot_id)
+        if execute:
+            self.apply_transition(next_state)
+            return reward
+        else:
+            return next_state, reward
+    
 
 #### Interpret string as an initial world state ####
-def interpret(self, worldstr, sensor_type, sensor_params):
+def interpret(worldstr):
     """
     worldstr (str) a string that describes the initial state of the world.
         For example: This string
@@ -13,7 +74,7 @@ def interpret(self, worldstr, sensor_type, sensor_params):
             .x.xT
             .....
             ***
-            r: laser fov-90 min_range-1 max_range-10
+            r: laser fov=90 min_range=1 max_range=10
 
         describes a 3 by 5 world where x indicates obsticles and T indicates
         the "target object". T could be replaced by any upper-case letter A-Z
@@ -23,21 +84,19 @@ def interpret(self, worldstr, sensor_type, sensor_params):
         After the world, the "***" signals description of the sensor for each robot.
         For example "r laser 90 1 10" means that robot `r` will have a Laser2Dsensor
         with fov 90, min_range 1.0, and max_range of 10.0.
-
-    sensor_type (str): "laser" or "proximity",
-    sensor_params (dict): {"..." parameters}
     """
     worldlines = []
     sensorlines = []
     mode = "world"
     for line in worldstr.splitlines():
-        if line == "***":
-            mode = "sensor"
-            continue
-        if mode == "world":
-            worldlines.append(line)
-        if mode == "sensor":
-            sensorlines.append(line)
+        if len(line) > 0:
+            if line == "***":
+                mode = "sensor"
+                continue
+            if mode == "world":
+                worldlines.append(line)
+            if mode == "sensor":
+                sensorlines.append(line)
     
     lines = [line for line in worldlines
              if len(line) > 0]
@@ -53,7 +112,7 @@ def interpret(self, worldstr, sensor_type, sensor_params):
         if len(line) != w:
             raise ValueError("World size inconsistent."\
                              "Expected width: %d; Actual Width: %d"
-                             % (w, len(l)))
+                             % (w, len(line)))
         for x, c in enumerate(line):
             if c == "x":
                 # obstacle
@@ -63,13 +122,13 @@ def interpret(self, worldstr, sensor_type, sensor_params):
                 
             elif c.isupper():
                 # target object
-                objid = ord(c)
+                objid = len(objects)
                 objects[objid] = ObjectState(objid, "target", (x,y))
                 
             elif c.islower():
                 # robot
                 robot_id = -ord(c)
-                robots[robot_id] = RobotState(robot_id, (x,y,0), set({}), None)
+                robots[robot_id] = RobotState(robot_id, (x,y,0), (), None)
 
             else:
                 assert c == ".", "Unrecognized character %s in worldstr" % c
@@ -80,6 +139,8 @@ def interpret(self, worldstr, sensor_type, sensor_params):
 
     # Parse sensors
     for line in sensorlines:
+        if "," in line:
+            raise ValueError("Wrong Fromat. SHould not have ','. Separate tokens with space.")
         robot_name = line.split(":")[0].strip()
         robot_id = -ord(robot_name)
         assert robot_id in robots, "Sensor specified for unknown robot %s" % (robot_name)
@@ -88,39 +149,20 @@ def interpret(self, worldstr, sensor_type, sensor_params):
         sensor_type = sensor_setting.split(" ")[0].strip()
         sensor_params = {}
         for token in sensor_setting.split(" ")[1:]:
-            param_name = token.split("-")[0].strip()
-            param_value = eval(token.split("-")[1].strip())
+            param_name = token.split("=")[0].strip()
+            param_value = eval(token.split("=")[1].strip())
             sensor_params[param_name] = param_value
         
         if sensor_type == "laser":
-            sensor = Laser2DSensor(**sensor_params)
+            sensor = Laser2DSensor(robot_id, **sensor_params)
         elif sensor_type == "proximity":
-            sensor = ProximitySensor(**sensor_params)
+            sensor = ProximitySensor(robot_id, **sensor_params)
         else:
             raise ValueError("Unknown sensor type %s" % sensor_type)
         sensors[robot_id] = sensor
 
     # Make init state
     init_state = MosOOState({**objects, **robots})
-    return init_state, sensors, obstacle, (w,l)
-
-
-class MosEnvironment(pomdp_py.Environment):
-    """"""
-    def __init__(self, dim, init_state, obstacles=set({})):
-        """
-        sensors (dict): Map from robot_id to sensor (Sensor);
-                        Sensors equipped on robots; Used to determine
-                        which objects should be marked as found.
-        obstacles (set): set of object ids that are obstacles;
-                            The set difference of all object ids then
-                            yields the target object ids."""
-        self.width, self.length = dim
-        transition_model = MosTransitionModel(dim, )
-        super().__init__(init_state, 
-
-
-#### Visualization through pygame ####
-class MosViz:
-
-    def __init__(self, env):
+    return MosEnvironment((w,l),
+                          init_state, sensors,
+                          obstacles=obstacles)
