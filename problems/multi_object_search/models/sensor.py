@@ -3,6 +3,14 @@ import numpy as np
 from ..domain.action import *
 from ..domain.observation import *
 
+# Note that the occlusion of an object is implemented based on
+# whether a beam will hit an obstacle or some other object before
+# that object. Because the world is discretized, this leads to
+# some strange pattern of the field of view. But what's for sure
+# is that, when occlusion is enabled, the sensor will definitely
+# not receive observation for some regions in the field of view
+# making it a more challenging situation to deal with.
+
 # Utility functions
 def euclidean_dist(p1, p2):
     return math.sqrt(sum([(a - b)** 2 for a, b in zip(p1, p2)]))
@@ -116,6 +124,7 @@ class Laser2DSensor:
             # see if this beame is closer
             if dist < beam_map[bearing_key][0]:
                 # point is closer; Update beam map
+                print("HEY")
                 beam_map[bearing_key] = (dist, point)
             else:
                 # point is farther than current hit
@@ -177,9 +186,13 @@ class ProximitySensor(Laser2DSensor):
         # This is in fact just a specific kind of Laser2DSensor
         # that has a 360 field of view, min_range = 0.1 and
         # max_range = radius
+        if occlusion_enabled:
+            angle_increment = 5
+        else:
+            angle_increment = 0.25
         super().__init__(robot_id,
                          fov=360,
                          min_range=0.1,
                          max_range=radius,
-                         angle_increment=0.25,
+                         angle_increment=angle_increment,
                          occlusion_enabled=occlusion_enabled)

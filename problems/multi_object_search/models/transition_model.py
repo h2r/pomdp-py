@@ -26,6 +26,7 @@
 import pomdp_py
 import copy
 from ..domain.state import *
+from ..domain.observation import *
 from ..domain.action import *
 
 ####### Transition Model #######
@@ -148,12 +149,12 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
             next_robot_state['camera_direction'] = action.name
         elif isinstance(action, FindAction):
             robot_pose = state.pose(self._robot_id)
-            objposes = self._sensor.observe(robot_pose,
-                                            state)
+            z = self._sensor.observe(robot_pose, state)
             # Update "objects_found" set for target objects
             observed_target_objects = {objid
-                                       for objid in objposes
-                                       if state.object_states[objid].objclass == "target"}
+                                       for objid in z.objposes
+                                       if (state.object_states[objid].objclass == "target"\
+                                           and z.objposes[objid] != ObjectObservation.NULL)}
             next_robot_state["objects_found"] = tuple(set(next_robot_state['objects_found'])\
                                                       | set(observed_target_objects))
         return next_robot_state

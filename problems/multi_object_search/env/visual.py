@@ -14,7 +14,7 @@ import random
 from .env import *
 from ..domain.observation import *
 from ..domain.action import *
-from ..world_examples import *
+from ..example_worlds import *
 
 #### Visualization through pygame ####
 class MosViz:
@@ -158,7 +158,8 @@ class MosViz:
                     z = self._env.sensors[robot_id].observe(robot_pose,
                                                             self._env.state)
                     self._last_observation[robot_id] = z
-                    reward = self._env.state_transition(action, execute=True, robot_id=robot_id)                    
+                    reward = self._env.state_transition(action, execute=True, robot_id=robot_id)
+                print("robot state: %s" % str(self._env.state.object_states[robot_id]))
                 print("     action: %s" % str(action.name))
                 print("     observation: %s" % str(z))
                 print("     reward: %s" % str(reward))
@@ -208,9 +209,19 @@ class MosViz:
         pygame.surfarray.blit_array(display_surf, img)
 
 def unittest():
-    laserstr = make_laser_sensor(90, (1, 8), 0.5, True)
-    proxstr = make_proximity_sensor(3, True)
-    worldstr = equip_sensors(world3, {"r": proxstr})
+    # If you don't want occlusion, use this:
+    laserstr = make_laser_sensor(90, (1, 8), 0.5, False)
+    # If you want occlusion, use this
+    # (the difference is mainly in angle_increment; this
+    #  is due to the discretization - discretization may
+    #  cause "strange" behavior when checking occlusion
+    #  but the model is actually doing the right thing.)
+    laserstr_occ = make_laser_sensor(360, (1, 8), 0.5, True)
+    # Proximity sensor
+    proxstr = make_proximity_sensor(1.5, False)
+    proxstr_occ = make_proximity_sensor(1.5, True)
+    
+    worldstr = equip_sensors(world3, {"r": laserstr})
     env = interpret(worldstr)
     viz = MosViz(env, controllable=True)
     viz.on_execute()
