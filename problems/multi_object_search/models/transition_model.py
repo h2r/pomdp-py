@@ -142,7 +142,7 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
             # motion action
             next_robot_state['pose'] = self._if_move_by(state, action)
         elif isinstance(action, LookAction):
-            if action.motion is not None:
+            if hasattr(action, "motion") and action.motion is not None:
                 # rotate the robot
                 next_robot_state['pose'] = self._if_move_by(state, action)
             next_robot_state['camera_direction'] = action.name
@@ -172,14 +172,15 @@ def valid_pose(pose, width, length, state=None, check_collision=True, pose_objid
     """
     x, y = pose[:2]
 
-    # Check collision
+    # Check collision with obstacles
     if check_collision and state is not None:
         object_poses = state.object_poses
         for objid in object_poses:
-            if objid == pose_objid:
-                continue
-            if (x,y) == object_poses[objid]:
-                return False
+            if state.object_states[objid].objclass.startswith("obstacle"):
+                if objid == pose_objid:
+                    continue
+                if (x,y) == object_poses[objid]:
+                    return False
     return in_boundary(pose, width, length)
 
 

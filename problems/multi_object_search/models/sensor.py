@@ -39,29 +39,28 @@ class Laser2DSensor:
 
     def __init__(self, robot_id,
                  fov=90, min_range=1, max_range=5,
-                 angle_increment=to_rad(5),
+                 angle_increment=5,
                  occlusion_enabled=False):
         """
-        fov (float): angle between the start and end beams of one scan (rad).
+        fov (float): angle between the start and end beams of one scan (degree).
         min_range (int or float)
         max_range (int or float)
         angle_increment (float): angular distance between measurements (rad).
         """
         self.robot_id = robot_id
-        self.fov = fov
+        self.fov = to_rad(fov)  # convert to radian
         self.min_range = min_range
         self.max_range = max_range
-        self.angle_increment = angle_increment
+        self.angle_increment = to_rad(angle_increment)
         self._occlusion_enabled = occlusion_enabled
 
         # determines the range of angles;
         # For example, the fov=pi, means the range scanner scans 180 degrees
         # in front of the robot. By our angle convention, 180 degrees maps to [0,90] and [270, 360]."""
-        self._fov_left = (0, fov / 2)
-        self._fov_right = (2*math.pi - fov/2, 2*math.pi)
+        self._fov_left = (0, self.fov / 2)
+        self._fov_right = (2*math.pi - self.fov/2, 2*math.pi)
 
         # beams that are actually within the fov (set of angles)
-        print(self._fov_left)
         self._beams = {round(th, 2)
                        for th in np.linspace(self._fov_left[0],
                                              self._fov_left[1],
@@ -71,7 +70,7 @@ class Laser2DSensor:
                                              self._fov_right[1],
                                              int(round((self._fov_right[1] - self._fov_right[0]) / self.angle_increment)))}
         # The size of the sensing region here is the area covered by the fan
-        self._sensing_region_size = fov / (2*math.pi) * math.pi * (max_range - min_range)**2
+        self._sensing_region_size = self.fov / (2*math.pi) * math.pi * (max_range - min_range)**2
 
     def in_field_of_view(th, view_angles):
         """Determines if the beame at angle `th` is in a field of view of size `view_angles`.
@@ -102,13 +101,15 @@ class Laser2DSensor:
         """Returns true beam length (i.e. `dist`) is within range and its angle
         `bearing` is valid, that is, it is within the fov range and in
         accordance with the angle increment."""
-        return dist < self.min_range or dist > self.max_range\
+        return dist >= self.min_range and dist <= self.max_range\
             and round(bearing, 2) in self._beams
 
     def _build_beam_map(self, beam, point, beam_map={}):
         """beam_map (dict): Maps from bearing to (dist, point)"""
         dist, bearing = beam
-        valid = self.valid_beam((dist, bearing))
+        valid = self.valid_beam(dist, bearing)
+        if not valid:
+            return
         bearing_key = round(bearing,2)
         if bearing_key in beam_map:
             # There's an object covered by this beame already.
@@ -116,13 +117,11 @@ class Laser2DSensor:
             if dist < beam_map[bearing_key][0]:
                 # point is closer; Update beam map
                 beam_map[bearing_key] = (dist, point)
-                return True
             else:
                 # point is farther than current hit
-                return False
+                pass
         else:
             beam_map[bearing_key] = (dist, point)
-            return True
 
     def observe(self, robot_pose, env_state):
         """
@@ -134,6 +133,7 @@ class Laser2DSensor:
         objposes = {}
         beam_map = {}
         for objid in env_state.object_states:
+            objposes[objid] = ObjectObservation.NULL
             object_pose = env_state.object_states[objid]["pose"]
             beam = self.shoot_beam(robot_pose, object_pose)
 
@@ -154,16 +154,32 @@ class Laser2DSensor:
                 ly = ry + int(round(d * math.sin(rth + bearing_key)))
                 objposes[objid] = (lx, ly)
 
-        return MosObservation(objposes)
+        return MosOOObservation(objposes)
 
     @property
     def sensing_region_size(self):
         raise NotImplemented
     
 
+class ProximitySensor(Laser2DSensor):
+    """This is a simple sensor; Observes a region centered
+    at the robot."""
+    def __init__(self, robot_id,
+                 radius=5,
+                 occlusion_enabled=False):
+        """
+        radius (int or float) radius of the sensing region.
+        """
+        self.robot_id = robot_id
+        self.radius = radius
+        self._occlusion_enabled = occlusion_enabled
 
-
-
-
-class ProximitySensor:
-    pass
+        # This is in fact just a specific kind of Laser2DSensor
+        # that has a 360 field of view, min_range = 0.1 and
+        # max_range = radius
+        super().__init__(robot_id,
+                         fov=360,
+                         min_range=0.1,
+                         max_range=radius,
+                         angle_increment=0.25,
+                         occlusion_enabled=occlusion_enabled)

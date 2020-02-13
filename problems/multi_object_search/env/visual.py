@@ -11,9 +11,10 @@ import cv2
 import math
 import numpy as np
 import random
-from .env import MosEnvironment, interpret
+from .env import *
 from ..domain.observation import *
 from ..domain.action import *
+from ..world_examples import *
 
 #### Visualization through pygame ####
 class MosViz:
@@ -24,7 +25,7 @@ class MosViz:
 
         self._res = res
         self._img = self._make_gridworld_image(res)
-        self._last_observation = {}
+        self._last_observation = {}  # map from robot id to MosOOObservation
         
         self._controllable = controllable
         self._running = False
@@ -91,7 +92,7 @@ class MosViz:
     def draw_observation(img, z, rx, ry, rth, r, size, color=(12,12,255)):
         assert type(z) == MosOOObservation, "%s != MosOOObservation" % (str(type(z)))
         radius = int(round(r / 2))
-        for objid in z:
+        for objid in z.objposes:
             if z.for_obj(objid).pose != ObjectObservation.NULL:
                 lx, ly = z.for_obj(objid).pose
                 cv2.circle(img, (ly*r+radius,
@@ -141,9 +142,12 @@ class MosViz:
             elif event.key == pygame.K_w:
                 action = MoveNorth
             elif event.key == pygame.K_SPACE:
-                action = LookAction
+                action = LookAction()
             elif event.key == pygame.K_RETURN:
-                action = FindAction
+                action = FindAction()
+
+            if action is None:
+                return
 
             if self._controllable:
                 if isinstance(action, MotionAction):
@@ -153,6 +157,8 @@ class MosViz:
                     robot_pose = self._env.state.pose(robot_id)
                     z = self._env.sensors[robot_id].observe(robot_pose,
                                                             self._env.state)
+                    self._last_observation[robot_id] = z
+                    reward = self._env.state_transition(action, execute=True, robot_id=robot_id)                    
                 print("     action: %s" % str(action.name))
                 print("     observation: %s" % str(z))
                 print("     reward: %s" % str(reward))
@@ -201,18 +207,11 @@ class MosViz:
             MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(255*(0.8*(i+1)), 12, 12))
         pygame.surfarray.blit_array(display_surf, img)
 
-
-world1 = \
-"""
-r....
-...xT
-.....
-***
-r: laser fov=90 min_range=1 max_range=5
-""" 
-
 def unittest():
-    env = interpret(world1)
+    laserstr = make_laser_sensor(90, (1, 8), 0.5, True)
+    proxstr = make_proximity_sensor(3, True)
+    worldstr = equip_sensors(world3, {"r": proxstr})
+    env = interpret(worldstr)
     viz = MosViz(env, controllable=True)
     viz.on_execute()
 

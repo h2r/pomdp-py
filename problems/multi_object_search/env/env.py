@@ -166,3 +166,37 @@ def interpret(worldstr):
     return MosEnvironment((w,l),
                           init_state, sensors,
                           obstacles=obstacles)
+
+
+#### Utility functions for building the worldstr ####
+def equip_sensors(worldstr, sensors):
+    """sensors (dict) a map from robot character representation (e.g. 'r') to a
+    string that describes its sensor (e.g. 'laser fov=90 min_range=1 max_range=5
+    angle_increment=5')
+    """
+    worldstr += "\n***\n"
+    for robot_char in sensors:
+        worldstr += "%s: %s\n" % (robot_char, sensors[robot_char])
+    return worldstr
+
+def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
+    """
+    fov (int or float): angle between the start and end beams of one scan (degree).
+    dist_range (tuple): (min_range, max_range)
+    angle_increment (int or float): angular distance between measurements (rad).
+    occlusion (bool): True if consider occlusion
+    """
+    fovstr = "fov=%s" % str(fov)
+    rangestr = "min_range=%s max_range=%s" % (str(dist_range[0]), str(dist_range[1]))
+    angicstr = "angle_increment=%s" % (str(angle_increment))
+    occstr = "occlusion_enabled=%s" % str(occlusion)
+    return "laser %s %s %s %s" % (fovstr, rangestr, angicstr, occstr)
+
+def make_proximity_sensor(radius, occlusion):
+    """
+    radius (int or float)
+    occlusion (bool): True if consider occlusion
+    """
+    radiustr = "radius=%s" % str(radius)
+    occstr = "occlusion_enabled=%s" % str(occlusion)
+    return "proximity %s %s" % (radiustr, occstr)
