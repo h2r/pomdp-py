@@ -43,7 +43,10 @@ class MosOOObservation(pomdp_py.OOObservation):
         self.objposes = objposes
 
     def for_obj(self, objid):
-        return ObjectObservation(objid, self.objposes[objid])
+        if objid in self.objposes:
+            return ObjectObservation(objid, self.objposes[objid])
+        else:
+            return ObjectObservation(objid, ObjectObservation.NULL)
         
     def __hash__(self):
         return self._hashcode
@@ -73,4 +76,4 @@ class MosOOObservation(pomdp_py.OOObservation):
         object_observation (dict): Maps from objid to ObjectObservation"""
         return MosOOObservation({objid: object_observations[objid].pose
                                  for objid in object_observations
-                                 if objid != next_state.robot_id})
+                                 if objid != next_state.object_states[objid].objclass != "robot"})

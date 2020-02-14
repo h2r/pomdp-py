@@ -5,8 +5,8 @@ import numpy as np
 import importlib
 scipy_spec = importlib.util.find_spec("scipy")
 if scipy_spec is not None:
-    import scipy.linalg.sqrtm
-    import scipy.stats.multivariate_normal
+    import scipy
+    import scipy.stats
 else:
     raise ImportError("scipy not found."\
                       "Requires scipy.stats.multivariate_normal to use Gaussian")
@@ -42,6 +42,9 @@ cdef class Gaussian(GenerativeDistribution):
         return self.covariance
 
     def __getitem__(self, value):
+        print(value)
+        print(np.array(self._mean))
+        print(np.array(self._cov))
         return scipy.stats.multivariate_normal(value,
                                                np.array(self._mean),
                                                np.array(self._cov))

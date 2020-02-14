@@ -18,6 +18,9 @@ def euclidean_dist(p1, p2):
 def to_rad(deg):
     return deg * math.pi / 180.0
 
+def in_range(val, rang):
+    return val >= rang[0] and val < rang[1]
+
 #### Sensors ####
 class Sensor:
     LASER = "laser"
@@ -93,7 +96,7 @@ class Laser2DSensor:
         dist, bearing = self.shoot_beam(robot_pose, point)
         if dist < self.min_range or dist > self.max_range:
             return False
-        if bearing < self._fov_left or bearing > self._fov_right:
+        if in_range(bearing, self._fov_left) or in_range(bearing, self._fov_right):
             return False        
         return True
 

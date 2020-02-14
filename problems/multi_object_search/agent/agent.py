@@ -4,7 +4,11 @@
 # makes use of the belief initialization
 # functions in belief.py
 import pomdp_py
-from belief import *
+from .belief import *
+from ..models.transition_model import *
+from ..models.observation_model import *
+from ..models.reward_model import *
+from ..models.policy_model import *
 
 class MosAgent(pomdp_py.Agent):
     """One agent is one robot."""
@@ -25,16 +29,16 @@ class MosAgent(pomdp_py.Agent):
 
         # since the robot observes its own pose perfectly, it will have 100% prior
         # on this pose.
-        rx, ry, rth = init_pose
-        prior[robot_id] = {init_robot_state: 1.0}
+        prior[robot_id] = {init_robot_state.pose: 1.0}
+        rth = init_robot_state.pose[2]
 
         # initialize belief
         init_belief = initialize_belief(dim,
-                                        set({self.robot_id}),
+                                        self.robot_id,
                                         self._object_ids,
                                         prior=prior,
                                         representation=belief_rep,
-                                        robot_orientation={self.robot_id:rth},
+                                        robot_orientations={self.robot_id:rth},
                                         num_particles=num_particles)
         transition_model = MosTransitionModel(dim,
                                               {self.robot_id: self.sensor},
@@ -42,11 +46,16 @@ class MosAgent(pomdp_py.Agent):
         observation_model = MosObservationModel(dim,
                                                 self.sensor,
                                                 self._object_ids,
-                                                sigma=self.sigma,
-                                                epsilon=self.epsilon)
-        reward_model = MosRewardModel(self._object_ids)
+                                                sigma=sigma,
+                                                epsilon=epsilon)
+        reward_model = GoalRewardModel(self._object_ids, robot_id=self.robot_id)
         policy_model = PolicyModel()
         super().__init__(init_belief, policy_model,
                          transition_model=transition_model,
                          observation_model=observation_model,
                          reward_model=reward_model)
+
+    def clear_history(self):
+        """Custum function; clear history"""
+        self._history = None
+        

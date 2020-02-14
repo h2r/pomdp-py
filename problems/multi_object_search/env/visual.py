@@ -27,6 +27,7 @@ class MosViz:
         self._res = res
         self._img = self._make_gridworld_image(res)
         self._last_observation = {}  # map from robot id to MosOOObservation
+        self._last_viz_observation = {}  # map from robot id to MosOOObservation        
         self._last_action = {}  # map from robot id to Action
         self._last_belief = {}  # map from robot id to OOBelief
         
@@ -37,7 +38,7 @@ class MosViz:
 
         # Generate some colors, one per target object
         colors = {}
-        for objid in range(env.target_objects):
+        for objid in env.target_objects:
             colors[objid] = (random.randint(50, 255),
                              random.randint(50, 255),
                              random.randint(50, 255))
@@ -87,9 +88,19 @@ class MosViz:
     def last_observation(self):
         return self._last_observation
     
-    def update(self, robot_id, action, observation, belief):
+    def update(self, robot_id, action, observation, viz_observation, belief):
+        """
+        Update the visualization after there is new real action and observation
+        and updated belief.
+
+        Args:
+            observation (MosOOObservation): Real observation
+            viz_observation (MosOOObservation): An observation used to visualize
+                                                the sensing region.
+        """
         self._last_action[robot_id] = action
         self._last_observation[robot_id] = observation
+        self._last_viz_observation[robot_id] = viz_observation
         self._last_belief[robot_id] = belief
         
     @staticmethod
@@ -109,7 +120,7 @@ class MosViz:
             if z.for_obj(objid).pose != ObjectObservation.NULL:
                 lx, ly = z.for_obj(objid).pose
                 cv2.circle(img, (ly*r+radius,
-                                 lx*r+radius), size, (12, 12, 255), thickness=-1)
+                                 lx*r+radius), size, color, thickness=-1)
 
     @staticmethod
     def draw_belief(img, belief, r, size, target_colors):
@@ -187,9 +198,9 @@ class MosViz:
             elif event.key == pygame.K_w:
                 action = MoveNorth
             elif event.key == pygame.K_SPACE:
-                action = LookAction()
+                action = Look
             elif event.key == pygame.K_RETURN:
-                action = FindAction()
+                action = Find
 
             if action is None:
                 return
@@ -203,6 +214,7 @@ class MosViz:
                     z = self._env.sensors[robot_id].observe(robot_pose,
                                                             self._env.state)
                     self._last_observation[robot_id] = z
+                    self._last_viz_observation[robot_id] = z                    
                     reward = self._env.state_transition(action, execute=True, robot_id=robot_id)
                 print("robot state: %s" % str(self._env.state.object_states[robot_id]))
                 print("     action: %s" % str(action.name))
@@ -247,12 +259,17 @@ class MosViz:
             rx, ry, rth = self._env.state.pose(robot_id)
             r = self._res  # Not radius!
             last_observation = self._last_observation.get(robot_id, None)
+            last_viz_observation = self._last_viz_observation.get(robot_id, None)
             last_belief = self._last_belief.get(robot_id, None)
             if last_belief is not None:
-                MultiTargetEnvironment.draw_belief(img, last_belief, r, r//3, self._target_colors)
+                MultiTargetEnvironment.draw_belief(img, last_belief, r, r//2, self._target_colors)
+            if last_viz_observation is not None:
+                MosViz.draw_observation(img, last_viz_observation,
+                                        rx, ry, rth, r, r//2, color=(100*(i+1),100*(i+1),255))
             if last_observation is not None:
                 MosViz.draw_observation(img, last_observation,
-                                        rx, ry, rth, r, r//4, color=(12,12,255*(0.8*(i+1))))
+                                        rx, ry, rth, r, r//5, color=(12*(i+1),12*(i+1),255))
+                
             MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(255*(0.8*(i+1)), 12, 12))
         pygame.surfarray.blit_array(display_surf, img)
 
@@ -268,8 +285,9 @@ def unittest():
     # Proximity sensor
     proxstr = make_proximity_sensor(1.5, False)
     proxstr_occ = make_proximity_sensor(1.5, True)
-    
-    worldstr = equip_sensors(world3, {"r": laserstr})
+
+    worldmap, robot = world3
+    worldstr = equip_sensors(worldmap, {robot: laserstr})
     env = interpret(worldstr)
     viz = MosViz(env, controllable=True)
     viz.on_execute()

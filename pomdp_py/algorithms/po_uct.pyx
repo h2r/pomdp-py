@@ -281,13 +281,13 @@ cdef class POUCT(Planner):
         self._last_num_sims = -1
 
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
-        cdef Action action    
+        cdef Action action
         if self._action_prior is not None:
-            # Using action prior; special values are set.
-            for preference\
-                in self._agent.policy_model.get_preferred_actions(vnode,
-                                                                  state=state,
-                                                                  history=history):
+            # Using action prior; special values are set;
+            for preference in \
+                self._action_prior.get_preferred_actions(vnode,
+                                                         state=state,
+                                                         history=history):
                 action = preference.action
                 if vnode[action] is None:
                     history_action_node = QNode(preference.num_visits_init,

@@ -56,11 +56,11 @@ class MosTransitionModel(pomdp_py.OOTransitionModel):
 
     def sample(self, state, action, **kwargs):
         oostate = pomdp_py.OOTransitionModel.sample(self, state, action, **kwargs)
-        return M3OOState(oostate.object_states)
+        return MosOOState(oostate.object_states)
 
     def argmax(self, state, action, normalized=False, **kwargs):
         oostate = pomdp_py.OOTransitionModel.argmax(self, state, action, **kwargs)
-        return M3OOState(oostate.object_states)
+        return MosOOState(oostate.object_states)
 
 class StaticObjectTransitionModel(pomdp_py.TransitionModel):
     """This model assumes the object is static."""

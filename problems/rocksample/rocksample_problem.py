@@ -100,7 +100,8 @@ class Action(pomdp_py.Action):
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Action(%s)" % self.name            
+        return "Action(%s)" % self.name
+
 
 class MoveAction(Action):
     EAST = (1, 0)  # x is horizontal; x+ is right. y is vertical; y+ is up.

@@ -82,8 +82,12 @@ class FindAction(Action):
     def __init__(self):
         super().__init__("find")
 
-if MOTION_SCHEME == "xy":
-    ALL_ACTIONS = {MoveEast, MoveWest, MoveNorth, MoveSouth, LookAction, FindAction}
-elif MOTION_SCHEME == "vw":
-    ALL_ACTIONS = {MoveForward, MoveBackward, MoveLeft, MoveRight, LookAction, FindAction}    
+Look = LookAction()
+Find = FindAction()
 
+if MOTION_SCHEME == "xy":
+    ALL_ACTIONS = {MoveEast, MoveWest, MoveNorth, MoveSouth, Look, Find}
+elif MOTION_SCHEME == "vw":
+    ALL_ACTIONS = {MoveForward, MoveBackward, MoveLeft, MoveRight, Look, Find}
+else:
+    raise ValueError("motion scheme '%s' is invalid" % MOTION_SCHEME)

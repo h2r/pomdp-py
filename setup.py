@@ -10,6 +10,7 @@ setup(name='pomdp-py',
       description='Python POMDP Library.',
       install_requires=[
           'numpy',
+          'scipy',
           'matplotlib',
           'pygame',        # for some tests
           'opencv-python',  # for some tests

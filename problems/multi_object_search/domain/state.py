@@ -24,7 +24,7 @@ class ObjectState(pomdp_py.ObjectState):
                              "Got %s" % objclass)
         super().__init__(objclass, {"pose":pose, "id":objid})
     def __str__(self):
-        return '%s%s' % (str(self.objclass), str(self.pose))
+        return 'ObjectState(%s,%s)' % (str(self.objclass), str(self.pose))
     @property
     def pose(self):
         return self.attributes['pose']
@@ -41,7 +41,7 @@ class RobotState(pomdp_py.ObjectState):
                                    "objects_found": objects_found,
                                    "camera_direction": camera_direction})
     def __str__(self):
-        return 'RobotState(%s%s|%s)' % (str(self.objclass), str(self.pose), str(self.objects_found))
+        return 'RobotState(%s,%s|%s)' % (str(self.objclass), str(self.pose), str(self.objects_found))
     def __repr__(self):
         return str(self)
     @property

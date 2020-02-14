@@ -2,11 +2,11 @@
 # to actually define the POMDP problem for multi-object search.
 # Then, solve it using POUCT or POMCP.
 import pomdp_py
-from env.env import *
-from env.visual import *
-from agent.agent import *
-from example_worlds import *
-from domain.observation import *
+from .env.env import *
+from .env.visual import *
+from .agent.agent import *
+from .example_worlds import *
+from .domain.observation import *
 import argparse
 import time
 import random
@@ -98,7 +98,7 @@ def belief_update(agent, real_action, real_observation, next_robot_state, planne
         # Update belief for every object
         for objid in agent.cur_belief.object_beliefs:
             belief_obj = agent.cur_belief.object_belief(objid)
-            if belief_rep == "histogram":
+            if isinstance(belief_obj, pomdp_py.Histogram):
                 if objid == agent.robot_id:
                     # Assuming the agent can observe its own state:
                     new_belief = pomdp_py.Histogram({next_robot_state: 1.0})
@@ -166,7 +166,7 @@ def solve(problem,
     """
 
     random_objid = random.sample(problem.env.target_objects, 1)[0]
-    random_object_belief = problem.agent.belief.object_belief[random_objid]
+    random_object_belief = problem.agent.belief.object_beliefs[random_objid]
     if isinstance(random_object_belief, pomdp_py.Histogram):
         # Use POUCT
         belief_rep = "histogram"
@@ -185,9 +185,9 @@ def solve(problem,
                                  rollout_policy=problem.agent.policy_model)  # Random by default
     else:
         raise ValueError("Unsupported object belief type %s" % str(type(random_object_belief)))
-    
+
     if visualize:
-        viz = MosViz(env, controllable=False)  # controllable=False means no keyboard control.
+        viz = MosViz(problem.env, controllable=False)  # controllable=False means no keyboard control.
         if viz.on_init() == False:
             raise Exception("Environment failed to initialize")
         viz.on_render()
@@ -195,6 +195,7 @@ def solve(problem,
     _time_used = 0
     _find_actions_count = 0
     _total_reward = 0  # total, undiscounted reward
+    robot_id = problem.agent.robot_id
     for i in range(max_steps):
         # Plan action
         _start = time.time()
@@ -204,17 +205,22 @@ def solve(problem,
             break  # no more time to update.
 
         # Execute action
-        reward = problem.env.state_transition(real_action, execute=True)
+        reward = problem.env.state_transition(real_action, execute=True,
+                                              robot_id=robot_id)
 
         # Receive observation
         _start = time.time()
-        real_observation = env.provide_observation(problem.agent.observation_model, real_action)
+        real_observation = \
+            problem.env.provide_observation(problem.agent.observation_model, real_action)
 
         # Updates
-        agent.clear_history()  # truncate history
-        agent.update_history(real_action, real_observation)
-        belief_update(problem.agent, real_action, real_observation)
-        _time_used += time.time() - start
+        problem.agent.clear_history()  # truncate history
+        problem.agent.update_history(real_action, real_observation)
+        belief_update(problem.agent, real_action, real_observation,
+                      problem.env.state.object_states[robot_id],
+                      planner)
+        import pdb; pdb.set_trace()
+        _time_used += time.time() - _start
 
         # Info and render
         _total_reward += reward
@@ -231,8 +237,16 @@ def solve(problem,
             print("__num_sims__: %d" % planner.last_num_sims)
             
         if visualize:
-            viz.update(problem.agent.robot_id,
-                       real_action, real_observation, problem.agent.cur_belief)
+            # This is used to show the sensing range; Not sampled
+            # according to observation model.
+            robot_pose = problem.env.state.object_states[robot_id].pose
+            viz_observation = problem.env.sensors[robot_id].observe(robot_pose,
+                                                                    problem.env.state)
+            viz.update(robot_id,
+                       real_action,
+                       real_observation,
+                       viz_observation,
+                       problem.agent.cur_belief)
             viz.on_loop()
             viz.on_render()
             

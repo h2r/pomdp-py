@@ -4,10 +4,13 @@ import pomdp_py
 from ..domain.action import *
 
 class MosRewardModel(pomdp_py.RewardModel):
-    def __init__(self, target_objects, big=1000, small=1):
+    def __init__(self, target_objects, big=1000, small=1, robot_id=None):
         """
+        robot_id (int): This model is the reward for one agent (i.e. robot),
+                        If None, then this model could be for the environment.
         target_objects (set): a set of objids for target objects.
         """
+        self._robot_id = robot_id
         self.big = big
         self.small = small
         self._target_objects = target_objects
@@ -32,7 +35,11 @@ class GoalRewardModel(MosRewardModel):
     This is a reward where the agent gets reward only for detect-related actions.
     """
     def _reward_func(self, state, action, next_state, robot_id=None):
-        assert robot_id is not None, "Reward assignment should happen for a specific robot"
+        if robot_id is None:
+            assert self._robot_id is not None,\
+                "Reward must be computed with respect to one robot."
+            robot_id = self._robot_id
+            
         reward = 0
 
         # If the robot has detected all objects

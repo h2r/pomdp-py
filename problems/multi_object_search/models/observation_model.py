@@ -20,6 +20,7 @@ import pomdp_py
 import math
 import random
 import numpy as np
+from ..domain.state import *
 from ..domain.action import *
 from ..domain.observation import *
 
@@ -34,17 +35,20 @@ class MosObservationModel(pomdp_py.OOObservationModel):
                  epsilon=1):
         self.sigma = sigma
         self.epsilon = epsilon
-        observation_models = {objid: ObjectObservationModel(objid, sensor,
+        observation_models = {objid: ObjectObservationModel(objid, sensor, dim,
                                                             sigma=sigma, epsilon=epsilon)
                               for objid in object_ids}
         pomdp_py.OOObservationModel.__init__(self, observation_models)
 
     def sample(self, next_state, action, argmax=False, **kwargs):
         if not isinstance(action, LookAction):
-            return OOObservation({}, None)
+            return MosOOObservation({})
+            # return MosOOObservation({objid: ObjectObservationModel.NULL
+            #                          for objid in next_state.object_states
+            #                          if objid != next_state.object_states[objid].objclass != "robot"})
             
         factored_observations = super().sample(next_state, action, argmax=argmax)
-        return MosObservation.merge(factored_observations, next_state)
+        return MosOOObservation.merge(factored_observations, next_state)
 
 class ObjectObservationModel(pomdp_py.ObservationModel):
     def __init__(self, objid, sensor, dim, sigma=0, epsilon=1):
@@ -86,7 +90,7 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         if next_robot_state is not None:
             assert next_robot_state["id"] == self._sensor.robot_id,\
                 "Robot id of observation model mismatch with given state"
-            robot_pose = next_robot_state
+            robot_pose = next_robot_state.pose
             
             if isinstance(next_state, ObjectState):
                 assert next_state["id"] == self._objid,\
@@ -105,10 +109,16 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         event_occured = random.choices(["A", "B", "C"], weights=[alpha, beta, gamma], k=1)[0]
         if event_occured == "A":
             # object in sensing region and observation comes from object i
-            gaussian = pomdp_py.Gaussian(list(object_pose),
-                                         np.array([[self.sigma**2, 0],
-                                                   [0, self.sigma**2]]))
-            return gaussian[zi] * alpha
+            if zi == ObjectObservation.NULL:
+                # Even though event A occurred, the observation is NULL.
+                # This has 0.0 probability.
+                return 0.0 * alpha
+            else:
+                gaussian = pomdp_py.Gaussian(list(object_pose),
+                                             [[self.sigma**2, 0],
+                                              [0, self.sigma**2]])
+                import pdb; pdb.set_trace()
+                return gaussian[zi] * alpha
         elif event_occured == "B":
             return (1.0 / self._sensor.sensing_region_size) * beta
 
@@ -147,18 +157,18 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         return ObjectObservation(self._objid, zi)
 
     def _sample_zi(self, event, next_state, argmax=False):
-        if event_occured == "A":
+        if event == "A":
             object_true_pose = next_state.object_pose(self._objid)
             gaussian =  pomdp_py.Gaussian(list(object_true_pose),
-                                          np.array([[self.sigma**2, 0],
-                                                    [0, self.sigma**2]]))
+                                          [[self.sigma**2, 0],
+                                           [0, self.sigma**2]])
             if not argmax:
                 zi = gaussian.random()
             else:
                 zi = gaussian.mpe()
             zi = (int(round(zi[0])), int(round(zi[1])))
                 
-        elif event_occured == "B":
+        elif event == "B":
             zi = (random.randint(0, self._gridworld.width),   # x axis
                   random.randint(0, self._gridworld.height))  # y axis
         else: # event == C

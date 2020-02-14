@@ -10,7 +10,7 @@ class PolicyModel(pomdp_py.RolloutPolicy):
     def __init__(self):
         """FindAction can only be taken after LookAction"""
         self._all_actions = set(ALL_ACTIONS)
-        self._all_except_detect = self._all_actions - set({FindAction})
+        self._all_except_detect = self._all_actions - set({Find})
 
     def sample(self, state, **kwargs):
         return random.sample(self._get_all_actions(**kwargs), 1)[0]

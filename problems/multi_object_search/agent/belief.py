@@ -14,7 +14,26 @@ import random
 import copy
 from ..domain.state import *
 
-def initialize_belief(dim, robot_ids, object_ids, prior={},
+class MosOOBelief(pomdp_py.OOBelief):
+    """This is needed to make sure the belief is sampling the right
+    type of State for this problem."""
+    def __init__(self, robot_id, object_beliefs):
+        """
+        robot_id (int): The id of the robot that has this belief.
+        object_beliefs (objid -> GenerativeDistribution)
+            (includes robot)
+        """
+        self.robot_id = robot_id
+        super().__init__(object_beliefs)
+
+    def mpe(self, **kwargs):
+        return MosOOState(pomdp_py.OOBelief.mpe(self, **kwargs).object_states)
+
+    def random(self, **kwargs):
+        return MosOOState(pomdp_py.OOBelief.random(self, **kwargs).object_states)
+
+
+def initialize_belief(dim, robot_id, object_ids, prior={},
                       representation="histogram", robot_orientations={}, num_particles=100):
     """
     Returns a GenerativeDistribution that is the belief representation for
@@ -22,7 +41,7 @@ def initialize_belief(dim, robot_ids, object_ids, prior={},
 
     Args:
         dim (tuple): a tuple (width, length) of the search space gridworld.
-        robot_ids (set): a set of robot_ids.
+        robot_id (int): robot id that this belief is initialized for.
         object_ids (dict): a set of object ids that we want to model the belief distribution
                           over; They are `assumed` to be the target objects, not obstacles,
                           because the robot doesn't really care about obstacle locations and
@@ -39,47 +58,34 @@ def initialize_belief(dim, robot_ids, object_ids, prior={},
         GenerativeDistribution: the initial belief representation.
     """
     if representation == "histogram":
-        return _initialize_histogram_belief(dim, robot_ids, object_ids, prior, robot_orientations)
+        return _initialize_histogram_belief(dim, robot_id, object_ids, prior, robot_orientations)
     elif representation == "particles":
-        return _initialize_particles_belief(dim, robot_ids, object_ids,
+        return _initialize_particles_belief(dim, robot_id, object_ids,
                                             robot_orientations, num_particles=num_particles)
     else:
         raise ValueError("Unsupported belief representation %s" % representation)
 
     
-def _initialize_histogram_belief(dim, robot_ids, object_ids, prior, robot_orientations):
+def _initialize_histogram_belief(dim, robot_id, object_ids, prior, robot_orientations):
     """
     Returns the belief distribution represented as a histogram
     """
-    all_ids = {**{robot_id : "robot" for robot_id in robot_ids},
-               **{objid : "object" for objid in object_ids}}
     oo_hists = {}  # objid -> Histogram
     width, length = dim
-    for _id in all_ids:
+    for objid in object_ids:
         hist = {}  # pose -> prob
         total_prob = 0
-        if _id in prior:
+        if objid in prior:
             # prior knowledge provided. Just use the prior knowledge
-            for pose in prior[_id]:
-                if all_ids[_id] == "robot":
-                    state = RobotState(_id, pose, (), None)
-                else:  # object
-                    state = ObjectState(_id, "target", pose)
-                hist[state] = prior[_id][pose]
+            for pose in prior[objid]:
+                state = ObjectState(objid, "target", pose)
+                hist[state] = prior[objid][pose]
                 total_prob += hist[state]
         else:
             # no prior knowledge. So uniform.
             for x in range(width):
                 for y in range(length):
-                    if all_ids[_id] == "robot":
-                        if _id in robot_orientations:
-                            pose = (x,y,robot_orientations[_id])
-                        else:
-                            pose = (x,y,0)
-                        state = RobotState(_id, pose, (), None)
-                    else:  # object
-                        pose = (x,y)
-                        state = ObjectState(_id, "target", pose)
+                    state = ObjectState(objid, "target", (x,y))
                     hist[state] = 1.0
                     total_prob += hist[state]
 
@@ -88,11 +94,19 @@ def _initialize_histogram_belief(dim, robot_ids, object_ids, prior, robot_orient
             hist[state] /= total_prob
 
         hist_belief = pomdp_py.Histogram(hist)
-        oo_hists[_id] = hist_belief
-    return pomdp_py.OOBelief(oo_hists)
+        oo_hists[objid] = hist_belief
+
+    # For the robot, we assume it can observe its own state;
+    # Its pose must have been provided in the `prior`.
+    assert robot_id in prior, "Missing initial robot pose in prior."
+    init_robot_pose = list(prior[robot_id].keys())[0]
+    oo_hists[robot_id] =\
+        pomdp_py.Histogram({RobotState(robot_id, init_robot_pose, (), None): 1.0})
+        
+    return MosOOBelief(robot_id, oo_hists)
 
 
-def _initialize_particles_belief(dim, robot_ids, object_ids, prior,
+def _initialize_particles_belief(dim, robot_id, object_ids, prior,
                                  robot_orientations, num_particles=100):
     """This returns a single set of particles that represent the distribution over a
     joint state space of all objects.
@@ -105,21 +119,21 @@ def _initialize_particles_belief(dim, robot_ids, object_ids, prior,
     joint state is sampled randomly from these particle beliefs.
 
     """
-    all_ids = {**{robot_id : "robot" for robot_id in robot_ids},
-               **{objid : "object" for objid in object_ids}}
-    oo_particles = {}  # objid -> Particles
+    # For the robot, we assume it can observe its own state;
+    # Its pose must have been provided in the `prior`.
+    assert robot_id in prior, "Missing initial robot pose in prior."
+    init_robot_pose = list(prior[robot_id].keys())[0]
+    
+    oo_particles = {}  # objid -> Particageles
     width, length = dim
-    for _id in all_ids:
-        particles = []  # list of states
-        if _id in prior:
+    for objid in object_ids:
+        particles = [RobotState(robot_id, init_robot_pose, (), None)]  # list of states; Starting the observable robot state.
+        if objid in prior:
             # prior knowledge provided. Just use the prior knowledge
-            prior_sum = sum(prior[_id][pose] for pose in prior[_id])
-            for pose in prior[_id]:
-                if all_ids[_id] == "robot":
-                    state = RobotState(_id, pose, (), None)
-                else:  # object
-                    state = ObjectState(_id, "target", pose)
-                amount_to_add = (prior[_id][pose] / prior_sum) * num_particles
+            prior_sum = sum(prior[objid][pose] for pose in prior[objid])
+            for pose in prior[objid]:
+                state = ObjectState(objid, "target", pose)
+                amount_to_add = (prior[objid][pose] / prior_sum) * num_particles
                 for _ in range(amount_to_add):
                     particles.append(state)
         else:
@@ -127,27 +141,19 @@ def _initialize_particles_belief(dim, robot_ids, object_ids, prior,
             for _ in range(num_particles):
                 x = random.randrange(0, width)
                 y = random.randrange(0, length)
-                if all_ids[_id] == "robot":
-                    if _id in robot_orientations:
-                        pose = (x,y,robot_orientations[_id])
-                    else:
-                        pose = (x,y,0)
-                    state = RobotState(_id, pose, (), None)
-                else:  # object
-                    pose = (x,y)
-                    state = ObjectState(_id, "target", pose)
+                state = ObjectState(objid, "target", (x,y))
                 particles.append(state)
 
         particles_belief = pomdp_py.Particles(particles)
-        oo_particles[_id] = particles_belief
+        oo_particles[objid] = particles_belief
         
     # Return Particles distribution which contains particles
     # that represent joint object states
     particles = []
     for _ in range(num_particles):
         object_states = {}
-        for _id in oo_particles:
-            random_particle = random.sample(oo_particles[_id], 1)[0]
+        for objid in oo_particles:
+            random_particle = random.sample(oo_particles[objid], 1)[0]
             object_states[_id] = copy.deepcopy(random_particle)
         particles.append(MosOOState(object_states))
     return pomdp_py.Particles(particles)
@@ -156,7 +162,7 @@ def _initialize_particles_belief(dim, robot_ids, object_ids, prior,
 """If `object oriented` is True, then just like histograms, there will be
 one set of particles per object; Otherwise, there is a single set
 of particles that represent the distribution over a joint state space
-of all objects.
+of all <objects.
 
 When updating the particle belief, Monte Carlo simulation is used instead of
 computing the probabilities using T/O models. This means one must sample
