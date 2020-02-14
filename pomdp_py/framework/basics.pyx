@@ -327,7 +327,7 @@ cdef class Agent:
              observation_model=None,
              reward_model=None,
              blackbox_model=None)
-"""
+    """
     def __init__(self, init_belief,
                  policy_model,
                  transition_model=None,

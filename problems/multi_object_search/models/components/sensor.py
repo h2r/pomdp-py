@@ -1,7 +1,7 @@
 import math
 import numpy as np
-from ..domain.action import *
-from ..domain.observation import *
+from ...domain.action import *
+from ...domain.observation import *
 
 # Note that the occlusion of an object is implemented based on
 # whether a beam will hit an obstacle or some other object before

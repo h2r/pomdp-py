@@ -3,27 +3,26 @@ import cv2
 import copy
 from ..models.transition_model import *
 from ..models.reward_model import *
-from ..models.sensor import *
+from ..models.components.sensor import *
 
 class MosEnvironment(pomdp_py.Environment):
     """"""
     def __init__(self, dim, init_state, sensors, obstacles=set({})):
         """
-        sensors (dict): Map from robot_id to sensor (Sensor);
-                        Sensors equipped on robots; Used to determine
-                        which objects should be marked as found.
-        obstacles (set): set of object ids that are obstacles;
-                            The set difference of all object ids then
-                            yields the target object ids."""
+        Args:
+            sensors (dict): Map from robot_id to sensor (Sensor);
+                            Sensors equipped on robots; Used to determine
+                            which objects should be marked as found.
+            obstacles (set): set of object ids that are obstacles;
+                                The set difference of all object ids then
+                                yields the target object ids."""
         self.width, self.length = dim
         self.sensors = sensors
         transition_model = MosTransitionModel(dim,
                                               sensors,
                                               set(init_state.object_states.keys()))
-        target_objects = {objid
-                          for objid in init_state.object_states
-                          if init_state.object_states[objid].objclass == "target"}
-        reward_model = GoalRewardModel(target_objects)
+        self.target_objects = set(init_state.object_states.keys()) - obstacles
+        reward_model = GoalRewardModel(self.target_objects)
         super().__init__(init_state,
                          transition_model,
                          reward_model)
@@ -142,7 +141,7 @@ def interpret(worldstr):
         if "," in line:
             raise ValueError("Wrong Fromat. SHould not have ','. Separate tokens with space.")
         robot_name = line.split(":")[0].strip()
-        robot_id = -ord(robot_name)
+        robot_id = interpret_robot_id(robot_name)
         assert robot_id in robots, "Sensor specified for unknown robot %s" % (robot_name)
         
         sensor_setting = line.split(":")[1].strip()
@@ -166,6 +165,9 @@ def interpret(worldstr):
     return MosEnvironment((w,l),
                           init_state, sensors,
                           obstacles=obstacles)
+
+def interpret_robot_id(robot_name):
+    return -ord(robot_name)
 
 
 #### Utility functions for building the worldstr ####

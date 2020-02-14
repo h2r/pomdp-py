@@ -4,14 +4,14 @@
 # See env.py:interpret for definition of
 # the format
 
-world0 = \
+world0 = (
 """
 rx...
 .x.xT
 .....
-""" 
+""", "r")
 
-world1 = \
+world1 = (
 """
 rx.....
 .x..T..
@@ -20,10 +20,10 @@ rx.....
 .xxx...
 .xxx.T.
 .......
-"""
+""", "r")
 
 # Used to test the shape of the sensor
-world2 = \
+world2 = (
 """
 .................
 .................
@@ -46,10 +46,10 @@ world2 = \
 ..xxxxxxxxxxxxx..
 .................
 .................
-"""    
+""", "r")    
 
 # Used to test sensor occlusion
-world3 = \
+world3 = (
 """
 .................
 .................
@@ -72,4 +72,4 @@ world3 = \
 ..xxxxxxxxxxxxx..
 .................
 .................
-"""    
+""", "r")

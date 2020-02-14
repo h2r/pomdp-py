@@ -26,6 +26,8 @@ class MosViz:
         self._res = res
         self._img = self._make_gridworld_image(res)
         self._last_observation = {}  # map from robot id to MosOOObservation
+        self._last_action = {}  # map from robot id to Action
+        self._last_belief = {}  # map from robot id to OOBelief
         
         self._controllable = controllable
         self._running = False
@@ -76,8 +78,10 @@ class MosViz:
     def last_observation(self):
         return self._last_observation
     
-    def update_observation(self, observation):
-        self._last_observation = observation
+    def update(self, robot_id, action, observation, belief):
+        self._last_action[robot_id] = action
+        self._last_observation[robot_id] = observation
+        self._last_belief[robot_id] = belief
         
     @staticmethod
     def draw_robot(img, x, y, th, size, color=(255,12,12)):
@@ -172,7 +176,7 @@ class MosViz:
     def on_render(self):
         # self._display_surf.blit(self._background, (0, 0))
         self.render_env(self._display_surf)
-        robot_id = list(self._env.robot_ids)[0]  # Just pick the first one.        
+        robot_id = list(self._env.robot_ids)[0]  # Just pick the first one.
         rx, ry, rth = self._env.state.pose(robot_id)
         fps_text = "FPS: {0:.2f}".format(self._clock.get_fps())
         pygame.display.set_caption("Robot%d(%.2f,%.2f,%.2f) | %s | %s"
