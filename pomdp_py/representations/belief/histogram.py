@@ -12,15 +12,33 @@ def abstraction_over_histogram(current_histogram, state_mapper):
     return hist
 
 def update_histogram_belief(current_histogram, real_action, real_observation,
-                            observation_model, transition_model,
-                            oargs={}, targs={}, normalize=True):
+                            observation_model, transition_model, oargs={},
+                            targs={}, normalize=True, static_transition=False):
     """
+    update_histogram_belief(current_histogram, real_action, real_observation,
+                            observation_model, transition_model, oargs={},
+                            targs={}, normalize=True, deterministic=False)
     This update is based on the equation:
     :math:`B_{new}(s') = n O(z|s',a) \sum_s T(s'|s,a)B(s)`.
 
-    `current_histogram` is the Histogram that represents current belief.
+    Args:
+        current_histogram (Histogram) is the Histogram that represents current belief.
+        real_action (Action)
+        real_observation (Observation)
+        observation_model (ObservationModel)
+        transition_model (TransitionModel)
+        oargs (dict) Additional parameters for observation_model (default {})
+        targs (dict) Additional parameters for transition_model (default {})
+        normalize (bool) True if the updated belief should be normalized
+        static_transition (bool) True if the transition_model is treated as static;
+            This basically means Pr(s'|s,a) = Indicator(s' == s). This then means
+            that sum_s Pr(s'|s,a)*B(s) = B(s'), since s' and s have the same state space.
+            This thus helps reduce the computation cost by avoiding the nested iteration
+            over the state space; But still, updating histogram belief requires
+            iteration of the state space, which may already be prohibitive.
 
-    Returns the histogram distribution as a result of the update
+    Returns:
+        Histogram: the histogram distribution as a result of the update
     """
     new_histogram = {}  # state space still the same.
     total_prob = 0
@@ -29,12 +47,16 @@ def update_histogram_belief(current_histogram, real_action, real_observation,
                                                          next_state,
                                                          real_action,
                                                          **oargs)
-        transition_prob = 0
-        for state in current_histogram:
-            transition_prob += transition_model.probability(next_state,
-                                                            state,
-                                                            real_action,
-                                                            **targs) * current_histogram[state]
+        if not static_transition:
+            transition_prob = 0
+            for state in current_histogram:
+                transition_prob += transition_model.probability(next_state,
+                                                                state,
+                                                                real_action,
+                                                                **targs) * current_histogram[state]
+        else:
+            transition_prob = current_histogram[next_state]
+            
         new_histogram[next_state] = observation_prob * transition_prob
         total_prob += new_histogram[next_state]
 

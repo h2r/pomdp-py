@@ -12,4 +12,4 @@ from pomdp_py.algorithms.po_uct import POUCT, QNode, VNode, RootVNode,\
 import pomdp_py.algorithms.visual.visual as visual
 
 from pomdp_py.representations.belief.histogram import update_histogram_belief
-
+from pomdp_py.representations.belief.particles import update_particles_belief

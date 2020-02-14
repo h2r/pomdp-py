@@ -69,34 +69,53 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             gamma = self.epsilon
         return alpha, beta, gamma
         
-
     def probability(self, observation, next_state, action, **kwargs):
         """
         Returns the probability of Pr (observation | next_state, action).
 
-        observation (ObjectObservation)
+        Args:
+            observation (ObjectObservation)
+            next_state (State)
+            action (Action)
         """
         if observation.objid != self._objid:
-            # The observation is not about the same object
-            return 0
+            raise ValueError("The observation is not about the same object")
 
+        # The (funny) business of allowing histogram belief update using O(oi|si',sr',a).
+        next_robot_state = kwargs.get("next_robot_state", None)
+        if next_robot_state is not None:
+            assert next_robot_state["id"] == self._sensor.robot_id,\
+                "Robot id of observation model mismatch with given state"
+            robot_pose = next_robot_state
+            
+            if isinstance(next_state, ObjectState):
+                assert next_state["id"] == self._objid,\
+                    "Object id of observation model mismatch with given state"
+                object_pose = next_state.pose
+            else:
+                object_pose = next_state.pose(self._objid)
+        else:
+            robot_pose = next_state.pose(self._sensor.robot_id)
+            object_pose = next_state.pose(self._objid)
+
+        # Compute the probability
         zi = observation.pose
-        alpha, beta, gamma = self._compute_params(zi == ObjectObservation.NULL)
-
+        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))
         # Requires Python >= 3.6
         event_occured = random.choices(["A", "B", "C"], weights=[alpha, beta, gamma], k=1)[0]
         if event_occured == "A":
             # object in sensing region and observation comes from object i
-            object_true_pose = next_state.object_pose(self._objid)
-            gaussian =  pomdp_py.Gaussian(list(object_true_pose),
-                                          np.array([[self.sigma**2, 0],
-                                                    [0, self.sigma**2]]))
+            gaussian = pomdp_py.Gaussian(list(object_pose),
+                                         np.array([[self.sigma**2, 0],
+                                                   [0, self.sigma**2]]))
             return gaussian[zi] * alpha
         elif event_occured == "B":
             return (1.0 / self._sensor.sensing_region_size) * beta
 
         else: # event_occured == "C":
-            return 1.0 * gamma
+            prob = 1.0 if zi == ObjectObservation.NULL else 0.0  # indicator zi == NULL
+            return prob * gamma
+            
 
     def sample(self, next_state, action, **kwargs):
         """Returns observation"""

@@ -11,6 +11,7 @@
 # We can directly make use of the Histogram and Particle classes in pomdp_py.
 import pomdp_py
 import random
+import copy
 from ..domain.state import *
 
 def initialize_belief(dim, robot_ids, object_ids, prior={},
@@ -91,7 +92,19 @@ def _initialize_histogram_belief(dim, robot_ids, object_ids, prior, robot_orient
     return pomdp_py.OOBelief(oo_hists)
 
 
-def _initialize_particles_belief(dim, robot_ids, object_ids, prior, robot_orientations, num_particles=100):
+def _initialize_particles_belief(dim, robot_ids, object_ids, prior,
+                                 robot_orientations, num_particles=100):
+    """This returns a single set of particles that represent the distribution over a
+    joint state space of all objects.
+
+    Since it is very difficult to provide a prior knowledge over the joint state
+    space when the number of objects scales, the prior (which is
+    object-oriented), is used to create particles separately for each object to
+    satisfy the prior; That is, particles beliefs are generated for each object
+    as if object_oriented=True. Then, `num_particles` number of particles with
+    joint state is sampled randomly from these particle beliefs.
+
+    """
     all_ids = {**{robot_id : "robot" for robot_id in robot_ids},
                **{objid : "object" for objid in object_ids}}
     oo_particles = {}  # objid -> Particles
@@ -127,4 +140,39 @@ def _initialize_particles_belief(dim, robot_ids, object_ids, prior, robot_orient
 
         particles_belief = pomdp_py.Particles(particles)
         oo_particles[_id] = particles_belief
-    return pomdp_py.OOBelief(oo_particles)
+        
+    # Return Particles distribution which contains particles
+    # that represent joint object states
+    particles = []
+    for _ in range(num_particles):
+        object_states = {}
+        for _id in oo_particles:
+            random_particle = random.sample(oo_particles[_id], 1)[0]
+            object_states[_id] = copy.deepcopy(random_particle)
+        particles.append(MosOOState(object_states))
+    return pomdp_py.Particles(particles)
+
+
+"""If `object oriented` is True, then just like histograms, there will be
+one set of particles per object; Otherwise, there is a single set
+of particles that represent the distribution over a joint state space
+of all objects.
+
+When updating the particle belief, Monte Carlo simulation is used instead of
+computing the probabilities using T/O models. This means one must sample
+(s',o,r) from G(s,a). If this belief representation if object oriented, then
+you have N particle sets for N objects. Thanks to the fact that in this
+particular domain, objects are static, you could have si' = si if i is an
+object. However, if robot state sr' needs to consider collision with other
+objects, then it can't be obtained just from sr. This means eventually you
+would have to build an s by sampling randomly from the particle set for each
+object.
+
+More details on the non-object-oriented case: Since it is extremely
+difficult to provide a prior knowledge over the joint state space when
+the number of objects scales, the prior (which is object-oriented),
+is used to create particles separately for each object to satisfy
+the prior; That is, particles beliefs are generated for each object
+as if object_oriented=True. Then, `num_particles` number of particles
+with joint state is sampled randomly from these particle beliefs.
+"""

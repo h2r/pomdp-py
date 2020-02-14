@@ -606,6 +606,7 @@ cpdef sample_generative_model(Agent agent, State state, Action action, float dis
     cdef tuple result
 
     if agent.transition_model is None:
+        # |TODO: not tested|
         result = agent.generative_model.sample(state, action)
     else:
         result = sample_explict_models(agent.transition_model,

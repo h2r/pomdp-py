@@ -11,6 +11,7 @@ import cv2
 import math
 import numpy as np
 import random
+import pomdp_py.util as util
 from .env import *
 from ..domain.observation import *
 from ..domain.action import *
@@ -33,6 +34,14 @@ class MosViz:
         self._running = False
         self._fps = fps
         self._playtime = 0.0
+
+        # Generate some colors, one per target object
+        colors = {}
+        for objid in range(env.target_objects):
+            colors[objid] = (random.randint(50, 255),
+                             random.randint(50, 255),
+                             random.randint(50, 255))
+        self._target_colors = colors        
 
     def _make_gridworld_image(self, r):
         # Preparing 2d array
@@ -101,6 +110,38 @@ class MosViz:
                 lx, ly = z.for_obj(objid).pose
                 cv2.circle(img, (ly*r+radius,
                                  lx*r+radius), size, (12, 12, 255), thickness=-1)
+
+    @staticmethod
+    def draw_belief(img, belief, r, size, target_colors):
+        """belief (OOBelief)"""
+        radius = int(round(r / 2))
+
+        circle_drawn = {}  # map from pose to number of times drawn
+
+        for objid in belief.object_beliefs:
+            hist = belief.object_belief(objid).get_histogram()
+            color = target_colors[objid]
+
+            last_val = -1
+            # just display top N objects
+            count = 0; N = 20
+            for state in reversed(sorted(hist, key=hist.get)):
+                if state.objclass == 'target':
+                    if last_val != -1:
+                        color = util.lighter(color, 1-hist[state]/last_val)
+                    if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.99:
+                        tx, ty = state['pose']
+                        if (tx,ty) not in circle_drawn:
+                            circle_drawn[(tx,ty)] = 0
+                        circle_drawn[(tx,ty)] += 1
+                        
+                        cv2.circle(img, (ty*r+radius,
+                                         tx*r+radius), size//circle_drawn[(tx,ty)], color, thickness=-1)
+                        last_val = hist[state]
+                        
+                        count +=1
+                        if count >= N:
+                            break
 
     # PyGame interface functions
     def on_init(self):
@@ -206,6 +247,9 @@ class MosViz:
             rx, ry, rth = self._env.state.pose(robot_id)
             r = self._res  # Not radius!
             last_observation = self._last_observation.get(robot_id, None)
+            last_belief = self._last_belief.get(robot_id, None)
+            if last_belief is not None:
+                MultiTargetEnvironment.draw_belief(img, last_belief, r, r//3, self._target_colors)
             if last_observation is not None:
                 MosViz.draw_observation(img, last_observation,
                                         rx, ry, rth, r, r//4, color=(12,12,255*(0.8*(i+1))))
