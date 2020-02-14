@@ -86,8 +86,8 @@ Look = LookAction()
 Find = FindAction()
 
 if MOTION_SCHEME == "xy":
-    ALL_ACTIONS = {MoveEast, MoveWest, MoveNorth, MoveSouth, Look, Find}
+    ALL_MOTION_ACTIONS = {MoveEast, MoveWest, MoveNorth, MoveSouth}
 elif MOTION_SCHEME == "vw":
-    ALL_ACTIONS = {MoveForward, MoveBackward, MoveLeft, MoveRight, Look, Find}
+    ALL_MOTION_ACTIONS = {MoveForward, MoveBackward, MoveLeft, MoveRight}
 else:
     raise ValueError("motion scheme '%s' is invalid" % MOTION_SCHEME)

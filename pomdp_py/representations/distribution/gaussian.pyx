@@ -45,7 +45,7 @@ cdef class Gaussian(GenerativeDistribution):
         print(value)
         print(np.array(self._mean))
         print(np.array(self._cov))
-        return scipy.stats.multivariate_normal(value,
+        return scipy.stats.multivariate_normal(np.array(value),
                                                np.array(self._mean),
                                                np.array(self._cov))
             

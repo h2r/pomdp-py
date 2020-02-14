@@ -7,10 +7,10 @@ from ..domain.action import *
 class PolicyModel(pomdp_py.RolloutPolicy):
     """Simple policy model. All actions are possible at any state."""
 
-    def __init__(self):
+    def __init__(self, robot_id, grid_map=None):
         """FindAction can only be taken after LookAction"""
-        self._all_actions = set(ALL_ACTIONS)
-        self._all_except_detect = self._all_actions - set({Find})
+        self.robot_id = robot_id
+        self._grid_map = grid_map
 
     def sample(self, state, **kwargs):
         return random.sample(self._get_all_actions(**kwargs), 1)[0]
@@ -23,13 +23,25 @@ class PolicyModel(pomdp_py.RolloutPolicy):
         raise NotImplemented
 
     def get_all_actions(self, state=None, history=None):
-        """note: detect can only happen after look."""
+        """note: find can only happen after look."""
+        can_find = False
         if history is not None and len(history) > 1:
             # last action
             last_action = history[-1][0]
             if isinstance(last_action, LookAction):
-                return self._all_actions
-        return self._all_except_detect
+                can_find = True
+        find_action = set({Find}) if can_find else set({})
+        if state is None:
+            return ALL_MOTION_ACTIONS | {Look} | find_action
+        else:
+            if self._grid_map is not None:
+                valid_motions =\
+                    self._grid_map.valid_motions(self.robot_id,
+                                                 state.pose(self.robot_id),
+                                                 ALL_MOTION_ACTIONS)
+                return valid_motions | {Look} | find_action
+            else:
+                return ALL_MOTION_ACTIONS | {Look} | find_action
 
     def rollout(self, state, history=None):
         return random.sample(self.get_all_actions(history=history), 1)[0]

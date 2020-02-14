@@ -82,6 +82,13 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             next_state (State)
             action (Action)
         """
+        if not isinstance(action, LookAction):
+            # No observation should be received
+            if observation.pose == ObjectObservation.NULL:
+                return 1.0
+            else:
+                return 0.0
+        
         if observation.objid != self._objid:
             raise ValueError("The observation is not about the same object")
 
@@ -117,7 +124,6 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
                 gaussian = pomdp_py.Gaussian(list(object_pose),
                                              [[self.sigma**2, 0],
                                               [0, self.sigma**2]])
-                import pdb; pdb.set_trace()
                 return gaussian[zi] * alpha
         elif event_occured == "B":
             return (1.0 / self._sensor.sensing_region_size) * beta

@@ -4,6 +4,7 @@ import copy
 from ..models.transition_model import *
 from ..models.reward_model import *
 from ..models.components.sensor import *
+from ..domain.state import *
 
 class MosEnvironment(pomdp_py.Environment):
     """"""
@@ -18,10 +19,15 @@ class MosEnvironment(pomdp_py.Environment):
                                 yields the target object ids."""
         self.width, self.length = dim
         self.sensors = sensors
+        self.obstacles = obstacles
         transition_model = MosTransitionModel(dim,
                                               sensors,
                                               set(init_state.object_states.keys()))
-        self.target_objects = set(init_state.object_states.keys()) - obstacles
+        # Target objects, a set of ids, are not robot nor obstacles
+        self.target_objects = \
+            {objid
+             for objid in set(init_state.object_states.keys()) - self.obstacles
+             if not isinstance(init_state.object_states[objid], RobotState)}
         reward_model = GoalRewardModel(self.target_objects)
         super().__init__(init_state,
                          transition_model,
@@ -40,7 +46,8 @@ class MosEnvironment(pomdp_py.Environment):
 
         Args:
             action (Action): action that triggers the state transition
-            execute (bool): If True, the resulting state of the transition will become the current state.
+            execute (bool): If True, the resulting state of the transition will
+                            become the current state.
 
         Returns:
             float or tuple: reward as a result of `action` and state
@@ -60,8 +67,7 @@ class MosEnvironment(pomdp_py.Environment):
             self.apply_transition(next_state)
             return reward
         else:
-            return next_state, reward
-    
+            return next_state, reward        
 
 #### Interpret string as an initial world state ####
 def interpret(worldstr):

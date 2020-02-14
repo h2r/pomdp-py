@@ -7,6 +7,7 @@ from .env.visual import *
 from .agent.agent import *
 from .example_worlds import *
 from .domain.observation import *
+from .models.components.grid_map import *
 import argparse
 import time
 import random
@@ -27,7 +28,8 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
     """
     def __init__(self, robot_id, env=None, grid_map=None,
                  sensors=None, sigma=0, epsilon=1,
-                 belief_rep="histogram", prior={}, num_particles=100):
+                 belief_rep="histogram", prior={}, num_particles=100,
+                 agent_has_map=False):
         """
         Args:
             robot_id (int or str): the id of the agent that will solve this MosOOPOMDP.
@@ -43,6 +45,10 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
                 For example: {'r': 'laser fov=90 min_range=1 max_range=5
                                     angle_increment=5'}
                 Ignored if env is not None
+            agent_has_map (bool): If True, we assume the agent is given the occupancy
+                                  grid map of the world. Then, the agent can use this
+                                  map to avoid planning invalid actions (bumping into things).
+                                  But this map does not help the agent's prior belief directly.
 
             sigma, epsilon: observation model paramters
             belief_rep (str): belief representation. Either histogram or particles.
@@ -72,6 +78,9 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
         # only defined over a single agent. Perhaps, MultiAgent is just a kind
         # of Agent, which will make the implementation of multi-agent POMDP cleaner.
         robot_id = robot_id if type(robot_id) == int else interpret_robot_id(robot_id)
+        grid_map = GridMap(env.width, env.length,
+                           {objid: env.state.pose(objid)
+                            for objid in env.obstacles}) if agent_has_map else None
         agent = MosAgent(robot_id,
                          env.state.object_states[robot_id],
                          env.target_objects,
@@ -81,7 +90,8 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
                          epsilon=epsilon,
                          belief_rep=belief_rep,
                          prior=prior,
-                         num_particles=num_particles)
+                         num_particles=num_particles,
+                         grid_map=grid_map)
         super().__init__(agent, env,
                          name="MOS(%d,%d,%d)" % (env.width, env.length, len(env.target_objects)))
 
@@ -186,16 +196,21 @@ def solve(problem,
     else:
         raise ValueError("Unsupported object belief type %s" % str(type(random_object_belief)))
 
+    robot_id = problem.agent.robot_id    
     if visualize:
         viz = MosViz(problem.env, controllable=False)  # controllable=False means no keyboard control.
         if viz.on_init() == False:
             raise Exception("Environment failed to initialize")
+        viz.update(robot_id,
+                   None,
+                   None,
+                   None,
+                   problem.agent.cur_belief)        
         viz.on_render()
 
     _time_used = 0
     _find_actions_count = 0
     _total_reward = 0  # total, undiscounted reward
-    robot_id = problem.agent.robot_id
     for i in range(max_steps):
         # Plan action
         _start = time.time()
@@ -219,20 +234,18 @@ def solve(problem,
         belief_update(problem.agent, real_action, real_observation,
                       problem.env.state.object_states[robot_id],
                       planner)
-        import pdb; pdb.set_trace()
         _time_used += time.time() - _start
 
         # Info and render
         _total_reward += reward
+        if isinstance(real_action, FindAction):
+            _find_actions_count += 1
         print("==== Step %d ====" % (i+1))
         print("Action: %s" % str(real_action))
-        print("Observation: %s"
-              % str({objid: real_observation.objposes[objid].pose
-                     for objid in real_observation.objposes
-                     if (real_observation.objposes[objid].pose != ObjectObservation.NULL\
-                         and objid in problem.env.target_objects)}))
+        print("Observation: %s" % str(real_observation))
         print("Reward: %s" % str(reward))
-        print("Reward (Cumulative): %s" % str(total_reward))
+        print("Reward (Cumulative): %s" % str(_total_reward))
+        print("Find Actions Count: %d" %  _find_actions_count)
         if isinstance(planner, pomdp_py.POUCT):
             print("__num_sims__: %d" % planner.last_num_sims)
             
@@ -240,8 +253,10 @@ def solve(problem,
             # This is used to show the sensing range; Not sampled
             # according to observation model.
             robot_pose = problem.env.state.object_states[robot_id].pose
-            viz_observation = problem.env.sensors[robot_id].observe(robot_pose,
-                                                                    problem.env.state)
+            viz_observation = MosOOObservation({})
+            if isinstance(real_action, LookAction) or isinstance(real_action, FindAction):
+                viz_observation = problem.env.sensors[robot_id].observe(robot_pose,
+                                                                        problem.env.state)
             viz.update(robot_id,
                        real_action,
                        real_observation,
@@ -251,7 +266,7 @@ def solve(problem,
             viz.on_render()
             
         # Termination check
-        if _find_actions_count > len(env.target_objects):
+        if _find_actions_count >= len(problem.env.target_objects):
             print("FindAction limit reached.")
             break
         if _time_used > max_time:
@@ -260,12 +275,13 @@ def solve(problem,
             
 # Test
 def unittest():
-    grid_map, robot_char = world0
+    grid_map, robot_char = world1
     laserstr = make_laser_sensor(90, (1, 5), 0.5, False)
     problem = MosOOPOMDP(robot_char,  # r is the robot character
                          grid_map=grid_map,
                          sensors={robot_char: laserstr},
-                         prior="uniform")
+                         prior="uniform",
+                         agent_has_map=True)
     solve(problem,
           max_depth=10,
           discount_factor=0.99,

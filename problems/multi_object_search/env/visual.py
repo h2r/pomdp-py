@@ -15,7 +15,14 @@ import pomdp_py.util as util
 from .env import *
 from ..domain.observation import *
 from ..domain.action import *
+from ..domain.state import *
 from ..example_worlds import *
+
+# Deterministic way to get object color
+def object_color(objid):
+    return (217 + 217 % objid,
+            107 + 107 % objid,
+            107 + 107 % objid,)
 
 #### Visualization through pygame ####
 class MosViz:
@@ -39,9 +46,7 @@ class MosViz:
         # Generate some colors, one per target object
         colors = {}
         for objid in env.target_objects:
-            colors[objid] = (random.randint(50, 255),
-                             random.randint(50, 255),
-                             random.randint(50, 255))
+            colors[objid] = object_color(objid)
         self._target_colors = colors        
 
     def _make_gridworld_image(self, r):
@@ -130,12 +135,13 @@ class MosViz:
         circle_drawn = {}  # map from pose to number of times drawn
 
         for objid in belief.object_beliefs:
+            if isinstance(belief.object_belief(objid).random(), RobotState):
+                continue
             hist = belief.object_belief(objid).get_histogram()
             color = target_colors[objid]
 
             last_val = -1
-            # just display top N objects
-            count = 0; N = 20
+            count = 0
             for state in reversed(sorted(hist, key=hist.get)):
                 if state.objclass == 'target':
                     if last_val != -1:
@@ -151,7 +157,7 @@ class MosViz:
                         last_val = hist[state]
                         
                         count +=1
-                        if count >= N:
+                        if last_val <= 0:
                             break
 
     # PyGame interface functions
@@ -262,15 +268,15 @@ class MosViz:
             last_viz_observation = self._last_viz_observation.get(robot_id, None)
             last_belief = self._last_belief.get(robot_id, None)
             if last_belief is not None:
-                MultiTargetEnvironment.draw_belief(img, last_belief, r, r//2, self._target_colors)
+                MosViz.draw_belief(img, last_belief, r, r//3, self._target_colors)
             if last_viz_observation is not None:
                 MosViz.draw_observation(img, last_viz_observation,
-                                        rx, ry, rth, r, r//2, color=(100*(i+1),100*(i+1),255))
-            if last_observation is not None:
-                MosViz.draw_observation(img, last_observation,
-                                        rx, ry, rth, r, r//5, color=(12*(i+1),12*(i+1),255))
+                                        rx, ry, rth, r, r//4, color=(100*(i+1),100*(i+1),255))
+            # if last_observation is not None:
+            #     MosViz.draw_observation(img, last_observation,
+            #                             rx, ry, rth, r, r//4, color=(12*(i+1),12*(i+1),255))
                 
-            MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(255*(0.8*(i+1)), 12, 12))
+            MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(12, 255*(0.8*(i+1)), 12))
         pygame.surfarray.blit_array(display_surf, img)
 
 def unittest():
@@ -286,7 +292,7 @@ def unittest():
     proxstr = make_proximity_sensor(1.5, False)
     proxstr_occ = make_proximity_sensor(1.5, True)
 
-    worldmap, robot = world3
+    worldmap, robot = world1
     worldstr = equip_sensors(worldmap, {robot: laserstr})
     env = interpret(worldstr)
     viz = MosViz(env, controllable=True)

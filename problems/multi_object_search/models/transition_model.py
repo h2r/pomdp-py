@@ -94,13 +94,16 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
         self._robot_id = sensor.robot_id
         self._dim = dim
         self._epsilon = epsilon
-        
-    def _if_move_by(self, state, action, check_collision=True):
-        """Defines the dynamics of robot motion"""
+
+    @classmethod
+    def if_move_by(cls, robot_id, state, action, dim,
+                   check_collision=True):
+        """Defines the dynamics of robot motion;
+        dim (tuple): the width, length of the search world."""
         if not isinstance(action, MotionAction):
             raise ValueError("Cannot move robot with %s action" % str(type(action)))
 
-        robot_pose = state.pose(self._robot_id)
+        robot_pose = state.pose(robot_id)
         rx, ry, rth = robot_pose
         if action.scheme == "xy":
             dx, dy, th = action.motion
@@ -116,10 +119,10 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
             rth = rth % (2*math.pi)
 
         if valid_pose((rx, ry, rth),
-                      self._dim[0], self._dim[1],
+                      dim[0], dim[1],
                       state=state,
                       check_collision=check_collision,
-                      pose_objid=self._sensor.robot_id):
+                      pose_objid=robot_id):
             return (rx, ry, rth)
         else:
             return robot_pose  # no change because change results in invalid pose
@@ -136,16 +139,21 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
             robot_state = state
         else:
             robot_state = state.object_states[self._robot_id]
-        # using shallow copy because we don't expect object state to reference other objects.            
+
         next_robot_state = copy.deepcopy(robot_state)
-        next_robot_state['camera_direction'] = None  # camera direction is only not None when looking
+        # camera direction is only not None when looking        
+        next_robot_state['camera_direction'] = None 
         if isinstance(action, MotionAction):
             # motion action
-            next_robot_state['pose'] = self._if_move_by(state, action)
+            next_robot_state['pose'] = \
+                RobotTransitionModel.if_move_by(self._robot_id,
+                                                state, action, self._dim)
         elif isinstance(action, LookAction):
             if hasattr(action, "motion") and action.motion is not None:
                 # rotate the robot
-                next_robot_state['pose'] = self._if_move_by(state, action)
+                next_robot_state['pose'] = \
+                    self._if_move_by(self._robot_id,
+                                     state, action, self._dim)
             next_robot_state['camera_direction'] = action.name
         elif isinstance(action, FindAction):
             robot_pose = state.pose(self._robot_id)

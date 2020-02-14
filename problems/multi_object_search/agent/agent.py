@@ -22,7 +22,8 @@ class MosAgent(pomdp_py.Agent):
                  epsilon=1,   # parameter for observation model
                  belief_rep="histogram",  # belief representation, either "histogram" or "particles".
                  prior={},       # prior belief, as defined in belief.py:initialize_belief
-                 num_particles=100):   # used if the belief representation is particles
+                 num_particles=100,  # used if the belief representation is particles
+                 grid_map=None):  # GridMap used to avoid collision with obstacles (None if not provided)
         self.robot_id = robot_id
         self._object_ids = object_ids
         self.sensor = sensor
@@ -49,7 +50,7 @@ class MosAgent(pomdp_py.Agent):
                                                 sigma=sigma,
                                                 epsilon=epsilon)
         reward_model = GoalRewardModel(self._object_ids, robot_id=self.robot_id)
-        policy_model = PolicyModel()
+        policy_model = PolicyModel(self.robot_id, grid_map=grid_map)
         super().__init__(init_belief, policy_model,
                          transition_model=transition_model,
                          observation_model=observation_model,
