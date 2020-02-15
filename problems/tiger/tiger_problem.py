@@ -56,6 +56,7 @@ class State(pomdp_py.State):
         return self.name
     def __repr__(self):
         return "State(%s)" % self.name
+    
 class Action(pomdp_py.Action):
     def __init__(self, name):
         self.name = name
@@ -69,7 +70,8 @@ class Action(pomdp_py.Action):
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Action(%s)" % self.name            
+        return "Action(%s)" % self.name
+    
 class Observation(pomdp_py.Observation):
     def __init__(self, name):
         self.name = name
@@ -83,7 +85,112 @@ class Observation(pomdp_py.Observation):
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Observation(%s)" % self.name            
+        return "Observation(%s)" % self.name
+
+# Observation model
+class ObservationModel(pomdp_py.ObservationModel):
+    """This problem is small enough for the probabilities to be directly given
+    externally"""
+    def __init__(self, probs):
+        self._probs = probs
+
+    def probability(self, observation, next_state, action, normalized=False, **kwargs):
+        return self._probs[next_state][action][observation]
+
+    def sample(self, next_state, action, normalized=False, **kwargs):
+        return self.get_distribution(next_state, action).random()
+
+    def argmax(self, next_state, action, normalized=False, **kwargs):
+        """Returns the most likely observation"""
+        return max(self._probs[next_state][action], key=self._probs[next_state][action].get)
+
+    def get_distribution(self, next_state, action, **kwargs):
+        """Returns the underlying distribution of the model; In this case, it's just a histogram"""
+        return pomdp_py.Histogram(self._probs[next_state][action])
+
+    def get_all_observations(self):
+        return TigerProblem.OBSERVATIONS
+
+# Transition Model
+class TransitionModel(pomdp_py.TransitionModel):
+    """This problem is small enough for the probabilities to be directly given
+            externally"""
+    def __init__(self, probs):
+        self._probs = probs
+
+    def probability(self, next_state, state, action, normalized=False, **kwargs):
+        return self._probs[state][action][next_state]
+
+    def sample(self, state, action, normalized=False, **kwargs):
+        return self.get_distribution(state, action).random()
+
+    def argmax(self, state, action, normalized=False, **kwargs):
+        """Returns the most likely next state"""
+        return max(self._probs[state][action], key=self._probs[state][action].get) 
+
+    def get_distribution(self, state, action, **kwargs):
+        """Returns the underlying distribution of the model"""
+        return pomdp_py.Histogram(self._probs[state][action])
+
+    def get_all_states(self):
+        return TigerProblem.STATES
+
+# Reward Model
+class RewardModel(pomdp_py.RewardModel):
+    def __init__(self, scale=1):
+        self._scale = scale
+    def _reward_func(self, state, action):
+        reward = 0
+        if action == "open-left":
+            if state== "tiger-right":
+                reward += 10 * self._scale
+            else:
+                reward -= 100 * self._scale
+        elif action == "open-right":
+            if state== "tiger-left":
+                reward += 10 * self._scale
+            else:
+                reward -= 100 * self._scale
+        elif action == "listen":
+            reward -= 1 * self._scale
+        return reward
+
+    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+        if reward == self._reward_func(state, action):
+            return 1.0
+        else:
+            return 0.0
+
+    def sample(self, state, action, next_state, normalized=False, **kwargs):
+        # deterministic
+        return self._reward_func(state, action)
+
+    def argmax(self, state, action, next_state, normalized=False, **kwargs):
+        """Returns the most likely reward"""
+        return self._reward_func(state, action)
+
+    def get_distribution(self, state, action, next_state, **kwargs):
+        """Returns the underlying distribution of the model"""
+        reward = self._reward_func(state, action)
+        return pomdp_py.Histogram({reward:1.0})
+
+# Policy Model
+class PolicyModel(pomdp_py.RandomRollout):
+    """This is an extremely dumb policy model; To keep consistent
+    with the framework."""
+    def probability(self, action, state, normalized=False, **kwargs):
+        raise NotImplemented  # Never used
+    
+    def sample(self, state, normalized=False, **kwargs):
+        return self.get_all_actions().random()
+    
+    def argmax(self, state, normalized=False, **kwargs):
+        """Returns the most likely reward"""
+        raise NotImplemented
+    
+    def get_all_actions(self, **kwargs):
+        return TigerProblem.ACTIONS
+
         
 class TigerProblem(pomdp_py.POMDP):
 
@@ -98,134 +205,14 @@ class TigerProblem(pomdp_py.POMDP):
 
         
         agent = pomdp_py.Agent(init_belief,
-                               TigerProblem.PolicyModel(),
-                               TigerProblem.TransitionModel(self._trans_probs),
-                               TigerProblem.ObservationModel(self._obs_probs),
-                               TigerProblem.RewardModel())
+                               PolicyModel(),
+                               TransitionModel(self._trans_probs),
+                               ObservationModel(self._obs_probs),
+                               RewardModel())
         env = pomdp_py.Environment(init_true_state,
-                                   TigerProblem.TransitionModel(self._trans_probs),
-                                   TigerProblem.RewardModel())
+                                   TransitionModel(self._trans_probs),
+                                   RewardModel())
         super().__init__(agent, env, name="TigerProblem")
-
-    # Observation model
-    class ObservationModel(pomdp_py.ObservationModel):
-        """This problem is small enough for the probabilities to be directly given
-        externally"""
-        def __init__(self, probs):
-            self._probs = probs
-
-        def probability(self, observation, next_state, action, normalized=False, **kwargs):
-            return self._probs[next_state][action][observation]
-
-        def sample(self, next_state, action, normalized=False, **kwargs):
-            return self.get_distribution(next_state, action).random()
-
-        def argmax(self, next_state, action, normalized=False, **kwargs):
-            """Returns the most likely observation"""
-            return max(self._probs[next_state][action], key=self._probs[next_state][action].get)
-
-        def get_distribution(self, next_state, action, **kwargs):
-            """Returns the underlying distribution of the model; In this case, it's just a histogram"""
-            return pomdp_py.Histogram(self._probs[next_state][action])
-
-        def get_all_observations(self):
-            return TigerProblem.OBSERVATIONS
-        
-    # Transition Model
-    class TransitionModel(pomdp_py.TransitionModel):
-        """This problem is small enough for the probabilities to be directly given
-                externally"""
-        def __init__(self, probs):
-            self._probs = probs
-
-        def probability(self, next_state, state, action, normalized=False, **kwargs):
-            return self._probs[state][action][next_state]
-
-        def sample(self, state, action, normalized=False, **kwargs):
-            return self.get_distribution(state, action).random()
-            
-        def argmax(self, state, action, normalized=False, **kwargs):
-            """Returns the most likely next state"""
-            return max(self._probs[state][action], key=self._probs[state][action].get) 
-
-        def get_distribution(self, state, action, **kwargs):
-            """Returns the underlying distribution of the model"""
-            return pomdp_py.Histogram(self._probs[state][action])
-        
-        def get_all_states(self):
-            return TigerProblem.STATES
-
-    # Reward Model
-    class RewardModel(pomdp_py.RewardModel):
-        def __init__(self, scale=1):
-            self._scale = scale
-        def _reward_func(self, state, action):
-            reward = 0
-            if action == "open-left":
-                if state== "tiger-right":
-                    reward += 10 * self._scale
-                else:
-                    reward -= 100 * self._scale
-            elif action == "open-right":
-                if state== "tiger-left":
-                    reward += 10 * self._scale
-                else:
-                    reward -= 100 * self._scale
-            elif action == "listen":
-                reward -= 1 * self._scale
-            return reward
-
-        def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
-            if reward == self._reward_func(state, action):
-                return 1.0
-            else:
-                return 0.0
-            
-        def sample(self, state, action, next_state, normalized=False, **kwargs):
-            # deterministic
-            return self._reward_func(state, action)
-        
-        def argmax(self, state, action, next_state, normalized=False, **kwargs):
-            """Returns the most likely reward"""
-            return self._reward_func(state, action)
-        
-        def get_distribution(self, state, action, next_state, **kwargs):
-            """Returns the underlying distribution of the model"""
-            reward = self._reward_func(state, action)
-            return pomdp_py.Histogram({reward:1.0})
-
-    # Policy Model
-    class PolicyModel(pomdp_py.RandomRollout):
-        """This is an extremely dumb policy model; To keep consistent
-        with the framework."""
-        def __init__(self, prior=None):
-            self._prior = {}
-            self._probs = {}
-            if prior is not None:
-                self._prior = prior
-                
-        def probability(self, action, state, normalized=False, **kwargs):
-            if state not in self._probs:
-                if action in self._prior:
-                    return self._prior[action]
-                else:
-                    return 1.0/len(TigerProblem.ACTIONS)
-            else:
-                return self._probs[state][action]
-        
-        def sample(self, state, normalized=False, **kwargs):
-            return self.get_distribution(state).random()
-
-        def argmax(self, state, normalized=False, **kwargs):
-            """Returns the most likely reward"""
-            raise NotImplemented
-
-        def get_distribution(self, state, **kwargs):
-            """Returns the underlying distribution of the model"""
-            return pomdp_py.Histogram(self._probs[state])
-
-        def get_all_actions(self, **kwargs):
-            return TigerProblem.ACTIONS
 
 
 def test_planner(tiger_problem, planner, nsteps=3):
