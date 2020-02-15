@@ -19,7 +19,8 @@ def to_rad(deg):
     return deg * math.pi / 180.0
 
 def in_range(val, rang):
-    return val >= rang[0] and val < rang[1]
+    # Returns True if val is in range (a,b); Inclusive.
+    return val >= rang[0] and val <= rang[1]
 
 #### Sensors ####
 class Sensor:
@@ -94,9 +95,10 @@ class Laser2DSensor:
         """Returns true if the point is within range of the sensor; but the point might not
         actually be visible due to occlusion or "gap" between beams"""
         dist, bearing = self.shoot_beam(robot_pose, point)
-        if dist < self.min_range or dist > self.max_range:
+        if not in_range(dist, (self.min_range, self.max_range)):
             return False
-        if in_range(bearing, self._fov_left) or in_range(bearing, self._fov_right):
+        if (not in_range(bearing, self._fov_left))\
+           and (not in_range(bearing, self._fov_right)):
             return False        
         return True
 

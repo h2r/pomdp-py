@@ -94,6 +94,7 @@ def interpret(worldstr):
     sensorlines = []
     mode = "world"
     for line in worldstr.splitlines():
+        line = line.strip()
         if len(line) > 0:
             if line == "***":
                 mode = "sensor"
@@ -132,7 +133,7 @@ def interpret(worldstr):
                 
             elif c.islower():
                 # robot
-                robot_id = -ord(c)
+                robot_id = interpret_robot_id(c)
                 robots[robot_id] = RobotState(robot_id, (x,y,0), (), None)
 
             else:

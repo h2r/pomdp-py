@@ -20,9 +20,9 @@ from ..example_worlds import *
 
 # Deterministic way to get object color
 def object_color(objid):
-    return (217 + 217 % objid,
-            107 + 107 % objid,
-            107 + 107 % objid,)
+    return (217 + 217 % (objid+1),
+            107 + 107 % (objid+1),
+            107 + 107 % (objid+1),)
 
 #### Visualization through pygame ####
 class MosViz:
@@ -271,10 +271,10 @@ class MosViz:
                 MosViz.draw_belief(img, last_belief, r, r//3, self._target_colors)
             if last_viz_observation is not None:
                 MosViz.draw_observation(img, last_viz_observation,
-                                        rx, ry, rth, r, r//4, color=(100*(i+1),100*(i+1),255))
-            # if last_observation is not None:
-            #     MosViz.draw_observation(img, last_observation,
-            #                             rx, ry, rth, r, r//4, color=(12*(i+1),12*(i+1),255))
+                                        rx, ry, rth, r, r//4, color=(200, 200, 12))
+            if last_observation is not None:
+                MosViz.draw_observation(img, last_observation,
+                                        rx, ry, rth, r, r//8, color=(20, 20, 180))
                 
             MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(12, 255*(0.8*(i+1)), 12))
         pygame.surfarray.blit_array(display_surf, img)

@@ -5,8 +5,8 @@ import numpy as np
 import importlib
 scipy_spec = importlib.util.find_spec("scipy")
 if scipy_spec is not None:
-    import scipy
-    import scipy.stats
+    from scipy.linalg import sqrtm
+    from scipy.stats import multivariate_normal
 else:
     raise ImportError("scipy not found."\
                       "Requires scipy.stats.multivariate_normal to use Gaussian")
@@ -42,12 +42,10 @@ cdef class Gaussian(GenerativeDistribution):
         return self.covariance
 
     def __getitem__(self, value):
-        print(value)
-        print(np.array(self._mean))
-        print(np.array(self._cov))
-        return scipy.stats.multivariate_normal(np.array(value),
-                                               np.array(self._mean),
-                                               np.array(self._cov))
+        return multivariate_normal.pdf(np.array(value),
+                                       np.array(self._mean),
+                                       np.array(self._cov))
+        
             
     def __setitem__(self, value, prob):
         # It isn't supported to arbitrarily change a value in
@@ -71,7 +69,7 @@ cdef class Gaussian(GenerativeDistribution):
     def random(self, n=1):
         d = len(self._mean)
         Xstd = np.random.randn(n, d)
-        X = np.dot(Xstd, scipy.linalg.sqrtm(self._cov)) + self._mean
+        X = np.dot(Xstd, sqrtm(self._cov)) + self._mean
         if n == 1:
             return X.tolist()[0]
         else:

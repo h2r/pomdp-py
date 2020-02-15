@@ -27,7 +27,7 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
     the object poses.
     """
     def __init__(self, robot_id, env=None, grid_map=None,
-                 sensors=None, sigma=0, epsilon=1,
+                 sensors=None, sigma=0.01, epsilon=1,
                  belief_rep="histogram", prior={}, num_particles=100,
                  agent_has_map=False):
         """
@@ -255,8 +255,9 @@ def solve(problem,
             robot_pose = problem.env.state.object_states[robot_id].pose
             viz_observation = MosOOObservation({})
             if isinstance(real_action, LookAction) or isinstance(real_action, FindAction):
-                viz_observation = problem.env.sensors[robot_id].observe(robot_pose,
-                                                                        problem.env.state)
+                viz_observation = \
+                    problem.env.sensors[robot_id].observe(robot_pose,
+                                                          problem.env.state)
             viz.update(robot_id,
                        real_action,
                        real_observation,
@@ -266,6 +267,10 @@ def solve(problem,
             viz.on_render()
             
         # Termination check
+        if set(problem.env.state.object_states[robot_id].objects_found)\
+           == problem.env.target_objects:
+            print("Done!")
+            break
         if _find_actions_count >= len(problem.env.target_objects):
             print("FindAction limit reached.")
             break
@@ -278,6 +283,8 @@ def unittest():
     grid_map, robot_char = world1
     laserstr = make_laser_sensor(90, (1, 5), 0.5, False)
     problem = MosOOPOMDP(robot_char,  # r is the robot character
+                         sigma=0.01,  # observation model parameter
+                         epsilon=1.0, # observation model parameter
                          grid_map=grid_map,
                          sensors={robot_char: laserstr},
                          prior="uniform",
