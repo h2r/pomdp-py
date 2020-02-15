@@ -27,7 +27,7 @@ class Action(pomdp_py.Action):
     def __repr__(self):
         return "Action(%s)" % self.name
 
-MOTION_SCHEME="xy"  # can be either xy or vw
+MOTION_SCHEME="vw"  # can be either xy or vw
 class MotionAction(Action):
     # scheme 1 (vx,vy,th)
     EAST = (1, 0, 0)  # x is horizontal; x+ is right. y is vertical; y+ is down.
@@ -40,7 +40,9 @@ class MotionAction(Action):
     LEFT = (0, -math.pi/4)  # left 45 deg
     RIGHT = (0, math.pi/4) # right 45 deg
 
-    def __init__(self, motion, scheme=MOTION_SCHEME, distance_cost=1):
+    def __init__(self, motion,
+                 scheme=MOTION_SCHEME, distance_cost=1,
+                 motion_name=None):
         """
         motion (tuple): a tuple of floats that describes the motion;
         scheme (str): description of the motion scheme; Either
@@ -61,17 +63,19 @@ class MotionAction(Action):
         self.motion = motion
         self.scheme = scheme
         self.distance_cost = distance_cost
-        super().__init__("move-%s-%s" % (scheme, str(motion)))
+        if motion_name is None:
+            motion_name = str(motion)
+        super().__init__("move-%s-%s" % (scheme, motion_name))
         
 # Define some constant actions
-MoveEast = MotionAction(MotionAction.EAST, scheme="xy")
-MoveWest = MotionAction(MotionAction.WEST, scheme="xy")
-MoveNorth = MotionAction(MotionAction.NORTH, scheme="xy")
-MoveSouth = MotionAction(MotionAction.SOUTH, scheme="xy")
-MoveForward = MotionAction(MotionAction.FORWARD, scheme="vw")
-MoveBackward = MotionAction(MotionAction.BACKWARD, scheme="vw")
-MoveLeft = MotionAction(MotionAction.LEFT, scheme="vw")
-MoveRight = MotionAction(MotionAction.RIGHT, scheme="vw")
+MoveEast = MotionAction(MotionAction.EAST, scheme="xy", motion_name="East")
+MoveWest = MotionAction(MotionAction.WEST, scheme="xy", motion_name="West")
+MoveNorth = MotionAction(MotionAction.NORTH, scheme="xy", motion_name="North")
+MoveSouth = MotionAction(MotionAction.SOUTH, scheme="xy", motion_name="South")
+MoveForward = MotionAction(MotionAction.FORWARD, scheme="vw", motion_name="Forward")
+MoveBackward = MotionAction(MotionAction.BACKWARD, scheme="vw", motion_name="Backward")
+MoveLeft = MotionAction(MotionAction.LEFT, scheme="vw", motion_name="TurnLeft")
+MoveRight = MotionAction(MotionAction.RIGHT, scheme="vw", motion_name="TurnRight")
 
 class LookAction(Action):
     # For simplicity, this LookAction is not parameterized by direction

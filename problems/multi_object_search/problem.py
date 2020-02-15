@@ -69,9 +69,10 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
             if prior == "uniform":
                 prior = {}
             elif prior == "informed":
-                for objid in env.target_states:
+                prior = {}
+                for objid in env.target_objects:
                     groundtruth_pose = env.state.pose(objid)
-                    prior[groundtruth_pose] = 1.0
+                    prior[objid] = {groundtruth_pose: 1.0}
 
         # Potential extension: a multi-agent POMDP. For now, the environment
         # can keep track of the states of multiple agents, but a POMDP is still
@@ -280,13 +281,14 @@ def solve(problem,
             
 # Test
 def unittest():
-    grid_map, robot_char = world1
+    grid_map, robot_char = world_rand50
     laserstr = make_laser_sensor(90, (1, 5), 0.5, False)
+    proxstr = make_proximity_sensor(5, False)    
     problem = MosOOPOMDP(robot_char,  # r is the robot character
                          sigma=0.01,  # observation model parameter
                          epsilon=1.0, # observation model parameter
                          grid_map=grid_map,
-                         sensors={robot_char: laserstr},
+                         sensors={robot_char: proxstr},
                          prior="uniform",
                          agent_has_map=True)
     solve(problem,

@@ -1,4 +1,5 @@
 # This file has some examples of world string.
+import random
 
 ############# Example Worlds ###########
 # See env.py:interpret for definition of
@@ -57,12 +58,12 @@ world3 = (
 ..xxxxxxxxxxxxx..
 ..xxxxxxxxxxxxx..
 ..xxxxxxxxxxxxx..
-..xxxxxxxxxxxxx..
+..xxxTxxxxxxxxx..
 ..xxxxxxxxxxxxx..
 ..xxxx...xxxxxx..
-..xxxx..xxTxxxx..
-..xxxx..rTTxxxx..
-..xxxx..xxTxxxx..
+..xxxx..xx.xxxx..
+..xxxx..r.Txxxx..
+..xxxx..xx.xxxx..
 ..xxxxxx..xxxxx..
 ..xxxxTx..xxxxx..
 ..xxxxxxxxxxxxx..
@@ -73,3 +74,42 @@ world3 = (
 .................
 .................
 """, "r")
+
+def random_world(width, length, num_obj, num_obstacles,
+                 robot_char="r"):
+    worldstr = [[ "." for i in range(width)] for j in range(length)]
+    # First place obstacles
+    num_obstacles_placed = 0
+    while num_obstacles_placed < num_obstacles:
+        x = random.randrange(0, width)
+        y = random.randrange(0, length)
+        if worldstr[y][x] == ".":
+            worldstr[y][x] = "x"
+            num_obstacles_placed += 1
+            
+    num_obj_placed = 0
+    while num_obj_placed < num_obj:
+        x = random.randrange(0, width)
+        y = random.randrange(0, length)
+        if worldstr[y][x] == ".":
+            worldstr[y][x] = "T"
+            num_obj_placed += 1
+
+    # Finally place the robot
+    while True:
+        x = random.randrange(0, width)
+        y = random.randrange(0, length)
+        if worldstr[y][x] == ".":
+            worldstr[y][x] = robot_char
+            break
+
+    # Create the string.
+    finalstr = []
+    for row_chars in worldstr:
+        finalstr.append("".join(row_chars))
+    finalstr = "\n".join(finalstr)
+
+    print("Random world:\n %s" % finalstr)
+    return (finalstr, "r")
+
+world_rand50 = random_world(20, 20, 5, 20)

@@ -238,10 +238,12 @@ class MosViz:
         robot_id = list(self._env.robot_ids)[0]  # Just pick the first one.
         rx, ry, rth = self._env.state.pose(robot_id)
         fps_text = "FPS: {0:.2f}".format(self._clock.get_fps())
-        pygame.display.set_caption("Robot%d(%.2f,%.2f,%.2f) | %s | %s"
-                                   % (robot_id, rx, ry, rth*180/math.pi,
-                                      str(self._env.state.object_states[robot_id]["objects_found"]),
-                                      fps_text))
+        last_action = self._last_action.get(robot_id, None)
+        last_action_str = "no_action" if last_action is None else str(last_action)
+        pygame.display.set_caption("%s | Robot%d(%.2f,%.2f,%.2f) | %s | %s" %
+                                   (last_action_str, robot_id, rx, ry, rth*180/math.pi,
+                                    str(self._env.state.object_states[robot_id]["objects_found"]),
+                                    fps_text))
         pygame.display.flip() 
  
     def on_cleanup(self):
