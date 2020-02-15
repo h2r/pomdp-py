@@ -179,14 +179,14 @@ class PolicyModel(pomdp_py.RandomRollout):
     """This is an extremely dumb policy model; To keep consistent
     with the framework."""
     def probability(self, action, state, normalized=False, **kwargs):
-        raise NotImplemented  # Never used
+        raise NotImplementedError  # Never used
     
     def sample(self, state, normalized=False, **kwargs):
         return self.get_all_actions().random()
     
     def argmax(self, state, normalized=False, **kwargs):
         """Returns the most likely reward"""
-        raise NotImplemented
+        raise NotImplementedError
     
     def get_all_actions(self, **kwargs):
         return TigerProblem.ACTIONS

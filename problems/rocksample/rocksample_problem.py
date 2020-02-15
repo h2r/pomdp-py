@@ -272,10 +272,10 @@ class RSRewardModel(pomdp_py.RewardModel):
         return 0
 
     def argmax(self, state, action, next_state, normalized=False, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError
     
     def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError
         
 
 class RSPolicyModel(pomdp_py.RolloutPolicy):
@@ -289,11 +289,11 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
         return random.sample(self._all_actions, 1)[0]
     
     def probability(self, action, state, normalized=False, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError
 
     def argmax(self, state, normalized=False, **kwargs):
         """Returns the most likely reward"""
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_all_actions(self, **kwargs):
         return self._all_actions

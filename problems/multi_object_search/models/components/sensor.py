@@ -30,7 +30,7 @@ class Sensor:
         """
         Returns an Observation with this sensor model.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def within_range(self, robot_pose, point):
         """Returns true if the point is within range of the sensor; but the point might not
@@ -172,7 +172,7 @@ class Laser2DSensor:
 
     @property
     def sensing_region_size(self):
-        raise NotImplemented
+        raise NotImplementedError
     
 
 class ProximitySensor(Laser2DSensor):

@@ -1,8 +1,7 @@
 import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 import matplotlib.pyplot as plt
-import pomdp_py.util as util
-from pomdp_py import QNode, VNode, RootVNode
+from pomdp_py import QNode, VNode, RootVNode, util
 
 # ---- POMCP Visualization ---- #
 

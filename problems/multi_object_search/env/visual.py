@@ -11,7 +11,7 @@ import cv2
 import math
 import numpy as np
 import random
-import pomdp_py.util as util
+from pomdp_py import util
 from .env import *
 from ..domain.observation import *
 from ..domain.action import *

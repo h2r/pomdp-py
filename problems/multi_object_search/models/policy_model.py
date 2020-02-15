@@ -16,11 +16,11 @@ class PolicyModel(pomdp_py.RolloutPolicy):
         return random.sample(self._get_all_actions(**kwargs), 1)[0]
     
     def probability(self, action, state, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError
 
     def argmax(self, state, **kwargs):
         """Returns the most likely action"""
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_all_actions(self, state=None, history=None):
         """note: find can only happen after look."""

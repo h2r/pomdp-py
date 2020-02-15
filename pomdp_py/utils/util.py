@@ -1,3 +1,6 @@
+# Assorted convenient functions
+#
+# Kaiyu Zheng
 import numpy as np
 import random
 

@@ -9,23 +9,23 @@ cdef class Distribution:
         __getitem__(self, varval)
         Probability evaulation.
         Returns the probability of :math:`Pr(X=varval)`."""
-        raise NotImplemented
+        raise NotImplementedError
     def __setitem__(self, varval, value):
         """
         __setitem__(self, varval, value)
         Sets the probability of :math:`X=varval` to be `value`.
         """
-        raise NotImplemented
+        raise NotImplementedError
     def __hash__(self):
         return id(self)
     def __eq__(self, other):
         return id(self) == id(other)
     def __iter__(self):
         """Initialization of iterator over the values in this distribution"""
-        raise NotImplemented
+        raise NotImplementedError
     def __next__(self):
         """Returns the next value of the iterator"""
-        raise NotImplemented
+        raise NotImplementedError
     def probability(self, varval):
         return self[varval]
 
@@ -44,15 +44,15 @@ cdef class GenerativeDistribution(Distribution):
         mpe(self, **kwargs)
         Returns the value of the variable that has the highest probability.
         """
-        raise NotImplemented
+        raise NotImplementedError
     def random(self, **kwargs):
         # Sample a state based on the underlying belief distribution
-        raise NotImplemented
+        raise NotImplementedError
     def get_histogram(self):
         """
         get_histogram(self)
         Returns a dictionary from state to probability"""
-        raise NotImplemented
+        raise NotImplementedError
 
 cdef class ObservationModel:
     """
@@ -70,7 +70,7 @@ cdef class ObservationModel:
         Returns:
             float: the probability :math:`\Pr(o|s',a)`
         """
-        raise NotImplemented
+        raise NotImplementedError
     def sample(self, next_state, action, **kwargs):
         """sample(self, next_state, action, **kwargs)
         Returns observation randomly sampled according to the
@@ -82,22 +82,22 @@ cdef class ObservationModel:
         Returns:
             Observation: the observation :math:`o`
         """
-        raise NotImplemented
+        raise NotImplementedError
     def argmax(self, next_state, action, **kwargs):
         """
         argmax(self, next_state, action, **kwargs)
         Returns the most likely observation"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_distribution(self, next_state, action, **kwargs):
         """
         get_distribution(self, next_state, action, **kwargs)
         Returns the underlying distribution of the model"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_all_observations(self):
         """
         get_all_observations(self)
         Returns a set of all possible observations, if feasible."""
-        raise NotImplemented        
+        raise NotImplementedError        
     
 cdef class TransitionModel:
     """
@@ -116,7 +116,7 @@ cdef class TransitionModel:
         Returns:
             float: the probability :math:`\Pr(s'|s,a)`
         """        
-        raise NotImplemented
+        raise NotImplementedError
         
     def sample(self, state, action, **kwargs):
         """sample(self, state, action, **kwargs)
@@ -129,22 +129,22 @@ cdef class TransitionModel:
         Returns:
             State: the next state :math:`s'`
         """
-        raise NotImplemented
+        raise NotImplementedError
     def argmax(self, state, action, **kwargs):
         """
         argmax(self, state, action, **kwargs)
         Returns the most likely next state"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_distribution(self, state, action, **kwargs):
         """
         get_distribution(self, state, action, **kwargs)
         Returns the underlying distribution of the model"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_all_states(self):
         """
         get_all_states(self)
         Returns a set of all possible states, if feasible."""
-        raise NotImplemented
+        raise NotImplementedError
 
 cdef class RewardModel:
     """A RewardModel models the distribution :math:`\Pr(r|s,a,s')` where
@@ -163,7 +163,7 @@ cdef class RewardModel:
         Returns:
             float: the probability :math:`\Pr(r|s,a,s')`
         """        
-        raise NotImplemented
+        raise NotImplementedError
         
     def sample(self, state, action, next_state, **kwargs):
         """sample(self, state, action, next_state, **kwargs)
@@ -177,17 +177,17 @@ cdef class RewardModel:
         Returns:
             float: the reward :math:`r`
         """
-        raise NotImplemented
+        raise NotImplementedError
     
     def argmax(self, state, action, next_state, **kwargs):
         """
         argmax(self, state, action, next_state, **kwargs)
         Returns the most likely reward"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_distribution(self, state, action, next_state, **kwargs):
         """get_distribution(self, state, action, next_state, **kwargs)
         Returns the underlying distribution of the model"""
-        raise NotImplemented    
+        raise NotImplementedError    
 
 cdef class BlackboxModel:
     """
@@ -198,13 +198,13 @@ cdef class BlackboxModel:
         """
         sample(self, state, action, **kwargs)
         Sample (s',o,r) ~ G(s',o,r)"""
-        raise NotImplemented
+        raise NotImplementedError
     
     def argmax(self, state, action, **kwargs):
         """
         argmax(self, state, action, **kwargs)
         Returns the most likely (s',o,r)"""
-        raise NotImplemented
+        raise NotImplementedError
 
 cdef class PolicyModel:
     """
@@ -227,7 +227,7 @@ cdef class PolicyModel:
         Returns:
             float: the probability :math:`\pi(a|s)`
         """
-        raise NotImplemented
+        raise NotImplementedError
         
     def sample(self, state, **kwargs):
         """sample(self, state, **kwargs)
@@ -240,23 +240,23 @@ cdef class PolicyModel:
         Returns:
             Action: the action :math:`a`
         """
-        raise NotImplemented
+        raise NotImplementedError
     
     def argmax(self, state, **kwargs):
         """
         argmax(self, state, **kwargs)
         Returns the most likely reward"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_distribution(self, state, **kwargs):
         """
         get_distribution(self, state, **kwargs)
         Returns the underlying distribution of the model"""
-        raise NotImplemented
+        raise NotImplementedError
     def get_all_actions(self, *args, **kwargs):
         """
         get_all_actions(self, *args, **kwargs)
         Returns a set of all possible actions, if feasible."""
-        raise NotImplemented
+        raise NotImplementedError
     def update(self, state, next_state, action, **kwargs):
         """
         update(self, state, next_state, action, **kwargs)
@@ -292,26 +292,26 @@ cdef class Action:
     The Action class. Action must be `hashable`.
     """
     def __eq__(self, other):
-        raise NotImplemented
+        raise NotImplementedError
     def __hash__(self):
-        raise NotImplemented        
+        raise NotImplementedError        
 cdef class State:
     """
     The State class. State must be `hashable`.
     """
     def __eq__(self, other):
-        raise NotImplemented
+        raise NotImplementedError
     def __hash__(self):
-        raise NotImplemented        
+        raise NotImplementedError        
 
 cdef class Observation:
     """
     The Observation class. Observation must be `hashable`.
     """
     def __eq__(self, other):
-        raise NotImplemented
+        raise NotImplementedError
     def __hash__(self):
-        raise NotImplemented        
+        raise NotImplementedError        
 
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving
@@ -429,7 +429,7 @@ cdef class Agent:
         """
         update(self, real_action, real_observation, **kwargs)
         updates the history and performs belief update"""
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def all_states(self):
@@ -550,18 +550,18 @@ cdef class Option(Action):
         """
         initiation(self, state, **kwargs)
         Returns True if the given parameters satisfy the initiation set"""
-        raise NotImplemented
+        raise NotImplementedError
 
     def termination(self, state, **kwargs):
         """termination(self, state, **kwargs)
         Returns a boolean of whether state satisfies the termination
         condition; Technically returning a float between 0 and 1 is also allowed."""
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def policy(self):
         """Returns the policy model (PolicyModel) of this option."""
-        raise NotImplemented
+        raise NotImplementedError
 
     def sample(self, state, **kwargs):
         """
@@ -572,10 +572,10 @@ cdef class Option(Action):
         return self.policy.sample(state, **kwargs)
     
     def __eq__(self, other):
-        raise NotImplemented
+        raise NotImplementedError
     
     def __hash__(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     # Remark in Sutton etal'99:
     # Note that even if a policy is Markov and all of the options
