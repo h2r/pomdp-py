@@ -1,9 +1,8 @@
 # pomdp-py
 
-Python POMDP library.
+Python POMDP library with Cython algorithm implementation.
 
-Cython algorithm implementation.
-
+Refer to the [documentation](https://github.com/h2r/pomdp-py).
 
 ## Development
 
