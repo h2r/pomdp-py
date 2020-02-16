@@ -66,11 +66,6 @@
 </li>
 </ul>
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">API References</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
-</ul>
 <p class="caption"><span class="caption-text">Overview</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -83,14 +78,19 @@
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
 </ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+</ul>
 
 
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
-    
     <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
     
 </ul>
 <div class="relations">
@@ -140,7 +140,7 @@
             
   <div class="section" id="tiger-problem">
 <h1>Tiger Problem<a class="headerlink" href="#tiger-problem" title="Permalink to this headline">¶</a></h1>
-<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[1]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
+<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[6]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
 <p><cite>A tiger is put with equal probability behind one
@@ -154,7 +154,14 @@ you also have the option to wait and listen for tiger noises. But
 listening is neither free nor entirely accurate. You might hear the
 tiger behind the left door while it is actually behind the right
 door and vice versa.</cite></p>
-<p>This is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).</p>
+<p>Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).
+To define this POMDP:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>
+<li><p><a class="reference internal" href="#define-the-models"><span class="std std-ref">Define the models</span></a></p></li>
+<li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiating the POMDP</span></a></p></li>
+<li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solving the POMDP instance</span></a></p></li>
+</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For a simple POMDP like Tiger, it is encouraged to place the code for all components (e.g. state, action, observation and models) under the same Python module (i.e. the same <code class="code docutils literal notranslate"><span class="pre">.py</span></code> file).</p>
@@ -210,7 +217,7 @@ equivalent as defining classes that inherit
 <p>As mentioned before, the uncertainty of the models can be specified by a Python
 dictionary for Tiger problem. Let <code class="code docutils literal notranslate"><span class="pre">obs_probs</span></code> and <code class="code docutils literal notranslate"><span class="pre">trans_probs</span></code> be
 this dictionary for <span class="math notranslate nohighlight">\(O\)</span> and <span class="math notranslate nohighlight">\(T\)</span> respectively. For example, we can
-set the probabilities according to the paper <a class="bibtex reference internal" href="#kaelbling1998planning" id="id4">[1]</a>:</p>
+set the probabilities according to the paper <a class="bibtex reference internal" href="#kaelbling1998planning" id="id4">[6]</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obs_probs</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># next_state -&gt; action -&gt; observation</span>
      <span class="s2">&quot;tiger-left&quot;</span><span class="p">:{</span>
          <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
@@ -515,7 +522,7 @@ will result in the agent belief update as well. But for
 <dt class="bibtex label" id="silver2010monte"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id4">2</a>)</span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets">6</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id4">2</a>)</span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 <dt class="bibtex label" id="abel2015goal"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>

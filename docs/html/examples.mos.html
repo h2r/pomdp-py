@@ -63,11 +63,6 @@
 </li>
 </ul>
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">API References</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
-</ul>
 <p class="caption"><span class="caption-text">Overview</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -80,14 +75,19 @@
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
 </ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+</ul>
 
 
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
-    
     <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
     
 </ul>
 <div class="relations">
@@ -138,9 +138,14 @@
   <div class="section" id="multi-object-search-mos">
 <h1>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h1>
 <p>The purpose of this example is to <strong>introduce the conventions</strong> when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
-We will first introduce this task at relatively high level, then introduce the convention of the project structure, which can help you organize your project, make the code more readable, and share components between different POMDPs.</p>
+We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview"><span class="std std-ref">Problem overview</span></a></p></li>
+<li><p><a class="reference internal" href="#conventions"><span class="std std-ref">Implementing this POMDP: Conventions</span></a></p></li>
+<li><p><a class="reference internal" href="#try-it"><span class="std std-ref">Try it</span></a></p></li>
+</ul>
 <div class="section" id="problem-overview">
-<h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this headline">¶</a></h2>
+<span id="overview"></span><h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-default">
 <img alt="MOS illustration" src="_images/mos.png" />
 </div>
@@ -160,7 +165,7 @@ three categories of actions:</p>
 <p>In the figure above, screenshots of frames in a run of the MOS task implemented in <cite>pomdp_py</cite> are shown. The solver is <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a>. From the first to the second image, the robot takes <cite>Look</cite> action and projects a fan-shaped sensing region. This leads to belief update (i.e. clearing of the red circles). A perfect observation model is used in this example run. The third image shows a later frame.</p>
 </div>
 <div class="section" id="implementing-this-pomdp-conventions">
-<h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this headline">¶</a></h2>
+<span id="conventions"></span><h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this headline">¶</a></h2>
 <p>As described in the <a class="reference external" href="examples.tiger.html#Summary">Summary</a> section of
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger Problem</span></a>, the procedure of using <cite>pomdp_py</cite> to implement a POMDP problem is:</p>
 <ol class="arabic simple">
@@ -207,7 +212,7 @@ where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger Problem</span></a> for more detail).</p>
 </div>
 <div class="section" id="try-it">
-<h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
 <p>To try out the MOS example problem:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> pomdp_py/problems
 $ python -m multi_object_search.problem

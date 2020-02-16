@@ -2,7 +2,13 @@ Multi-Object Search (MOS)
 *************************
 
 The purpose of this example is to **introduce the conventions** when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
-We will first introduce this task at relatively high level, then introduce the convention of the project structure, which can help you organize your project, make the code more readable, and share components between different POMDPs.
+We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.  
+
+* :ref:`overview`
+* :ref:`conventions`
+* :ref:`try-it`
+
+.. _overview:
 
 Problem overview
 ----------------
@@ -29,6 +35,7 @@ The transition, observation and reward models are implemented according to the o
 
 In the figure above, screenshots of frames in a run of the MOS task implemented in `pomdp_py` are shown. The solver is :py:mod:`~pomdp_py.algorithms.po_uct.POUCT`. From the first to the second image, the robot takes `Look` action and projects a fan-shaped sensing region. This leads to belief update (i.e. clearing of the red circles). A perfect observation model is used in this example run. The third image shows a later frame.
 
+.. _conventions:
 
 Implementing this POMDP: Conventions
 ------------------------------------
@@ -82,6 +89,8 @@ As in the above package tree, files such as :code:`state.py` or
 where the logic of `action-feedback loop` is implemented (see
 :doc:`examples.tiger` for more detail).
 
+
+.. _try-it:
 
 Try it
 ------

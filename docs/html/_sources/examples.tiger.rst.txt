@@ -18,7 +18,13 @@ listening is neither free nor entirely accurate. You might hear the
 tiger behind the left door while it is actually behind the right
 door and vice versa.`
 
-This is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).
+Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).
+To define this POMDP:
+
+1. :ref:`define-the-domain`
+2. :ref:`define-the-models`
+3. :ref:`instantiate`
+4. :ref:`solve`
 
 .. note::
 
