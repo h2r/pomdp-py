@@ -2,7 +2,7 @@
 
 Python POMDP library with Cython algorithm implementation.
 
-Refer to the [documentation](https://github.com/h2r/pomdp-py).
+Refer to the [docs](https://h2r.github.io/pomdp-py/html/).
 
 ## Development
 
