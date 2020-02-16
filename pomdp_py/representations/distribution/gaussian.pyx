@@ -15,7 +15,9 @@ else:
 cdef class Gaussian(GenerativeDistribution):
 
     """Note that Gaussian distribution is defined over a vector of numerical variables,
-    but not a State variable."""
+    but not a State variable.
+
+    __init__(self, mean, cov)"""
 
     def __init__(self, mean, cov):
         """
@@ -42,14 +44,24 @@ cdef class Gaussian(GenerativeDistribution):
         return self.covariance
 
     def __getitem__(self, value):
+        """__getitem__(self, value)
+        Evaluate the probability of given value
+        
+        Args:
+            value (list or array like)
+        Returns:
+            float: The density of multivariate Gaussian."""
         return multivariate_normal.pdf(np.array(value),
                                        np.array(self._mean),
                                        np.array(self._cov))
         
             
     def __setitem__(self, value, prob):
-        # It isn't supported to arbitrarily change a value in
-        # a Gaussian distribution to have a given probability
+        """__setitem__(self, value, prob)
+        Not Implemented;
+        It isn't supported to arbitrarily change a value in
+        a Gaussian distribution to have a given probability.
+        """
         raise NotImplementedError("Gaussian does not support density assignment.")
 
     def __hash__(self):
@@ -63,10 +75,12 @@ cdef class Gaussian(GenerativeDistribution):
                 and self._cov == other.cov
 
     def mpe(self):
+        """mpe(self)"""
         # The mean is the MPE
         return self._mean
 
     def random(self, n=1):
+        """random(self, n=1)"""
         d = len(self._mean)
         Xstd = np.random.randn(n, d)
         X = np.dot(Xstd, sqrtm(self._cov)) + self._mean

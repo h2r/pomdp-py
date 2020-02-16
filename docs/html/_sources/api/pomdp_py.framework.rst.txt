@@ -37,6 +37,7 @@ pomdp\_py.framework.oopomdp module
 .. automodule:: pomdp_py.framework.oopomdp
    :members:
    :show-inheritance:
+   :special-members: __getitem__, __setitem__      
 
 pomdp\_py.framework.planner module
 ----------------------------------

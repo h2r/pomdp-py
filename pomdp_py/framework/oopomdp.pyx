@@ -1,21 +1,35 @@
+"""This module describes components of the
+OO-POMDP interface in `pomdp_py`.
+
+An OO-POMDP is a specific type of POMDP where
+the state and observation spaces are factored
+by objects. As a result, the transition, observation,
+and belief distributions are all factored by objects.
+A main benefit of using OO-POMDP is that the
+object factoring reduces the scaling of belief
+space from exponential to linear as the number
+of objects increases. See :cite:`wandzel2019multi`."""
+
 from pomdp_py.framework.basics cimport POMDP, State, Action, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution
 import collections
 import copy
 
-"""
-The addition of OOPOMDP versus POMDP is that states must be
-instance of OOPOMDP_State which contains a map of object ID
-to the corresponding object state, which must be an instance
-of OOPOMDP_ObjectState. This makes the "verify_state" function
-explicitly defined for OOPOMDP, given attributes and domains.
-"""
-
 cdef class OOPOMDP(POMDP):
+    """
+    An OO-POMDP is again defined by an agent and an environment.
+
+    __init__(self, agent, env, name="OOPOMDP")
+    """
     def __init__(self, agent, env, name="OOPOMDP"):
         super().__init__(agent, env, name=name)
 
 cdef class ObjectState(State):
+    """
+    This is the result of OOState factoring; A state
+    in an OO-POMDP is made up of ObjectState(s), each with
+    an `object class` (str) and a set of `attributes` (dict).
+    """
     def __init__(self, objclass, attributes):
         """
         class: "class",
@@ -44,19 +58,31 @@ cdef class ObjectState(State):
             and self.attributes == other.attributes
 
     def __getitem__(self, attr):
+        """__getitem__(self, attr)
+        Returns the attribute"""
         return self.attributes[attr]
 
     def __setitem__(self, attr, value):
+        """__setitem__(self, attr, value)
+        Sets the attribute `attr` to the given value."""
         self.attributes[attr] = value
     
     def __len__(self):
         return len(self.attributes)
 
     def copy(self):
+        """copy(self)
+        Copies this ObjectState."""
         return ObjectState(self.objclass, copy.deepcopy(self.attributes))
     
 
 cdef class OOState(State):
+
+    """
+    State that can be factored by objects, that is, to ObjectState(s).
+
+    __init__(self, object_states)
+    """
 
     def __init__(self, object_states):
         """
@@ -70,6 +96,9 @@ cdef class OOState(State):
 
     @property
     def situation(self):
+        """situation(self)
+        This is a `frozenset` which can be used to identify
+        the situation of this state since it supports hashing."""
         return self._situation
 
     def __str__(self):
@@ -93,24 +122,40 @@ cdef class OOState(State):
         raise NotImplemented
 
     def get_object_state(self, objid):
+        """get_object_state(self, objid)
+        Returns the ObjectState for given object."""
         return self.object_states[objid]
 
     def set_object_state(self, objid, object_state):
+        """set_object_state(self, objid, object_state)
+        Sets the state of the given
+        object to be the given object state (ObjectState)
+        """        
         self.object_states[objid] = object_state
 
     def get_object_class(self, objid):
+        """get_object_class(self, objid)
+        Returns the class of requested object"""
         return self.object_states[objid].objclass
 
     def get_object_attribute(self, objid, attr):
+        """get_object_attribute(self, objid, attr)
+        Returns the attributes of requested object"""        
         return self.object_states[objid][attr]
 
     def copy(self):
+        """copy(self)
+        Copies the state."""
         return OOState(copy.deepcopy(self.object_states))
 
 cdef class OOTransitionModel(TransitionModel):
 
     """
-    T(s' | s, a) = Pi T(si' | s, a)
+    :math:`T(s' | s, a) = \prod_i T(s_i' | s, a)`
+
+    __init__(self, transition_models):    
+    Args:
+        transition_models (dict) objid -> transition_model
     """
 
     def __init__(self, transition_models):
@@ -120,6 +165,9 @@ cdef class OOTransitionModel(TransitionModel):
         self._transition_models = transition_models
     
     def probability(self, next_state, state, action, **kwargs):
+        """probability(self, next_state, state, action, **kwargs)
+        Returns :math:`T(s' | s, a)
+        """
         if not isinstance(next_state, OOState):
             raise ValueError("next_state must be OOState")
         if not isinstance(state, OOState):
@@ -134,7 +182,9 @@ cdef class OOTransitionModel(TransitionModel):
         return trans_prob
 
     def sample(self, state, action, argmax=False, **kwargs):
-        """Returns next_state"""
+        """
+        sample(self, state, action, argmax=False, **kwargs)
+        Returns random next_state"""
         if not isinstance(state, OOState):
             raise ValueError("state must be OOState")
         object_states = {}
@@ -151,27 +201,57 @@ cdef class OOTransitionModel(TransitionModel):
         return OOState(object_states)
 
     def argmax(self, state, action, **kwargs):
-        """Returns the most likely next state"""
+        """
+        argmax(self, state, action, **kwargs)
+        Returns the most likely next state"""
         return self.sample(state, action, argmax=True, **kwargs)
 
     def __getitem__(self, objid):
+        """__getitem__(self, objid)
+        Returns transition model for given object"""        
         return self._transition_models[objid]
 
     @property
     def transition_models(self):
+        """transition_models(self)"""
         return self._transition_models
 
 cdef class OOObservation(Observation):
     def factor(self, next_state, action, **kwargs):
+        """factor(self, next_state, action, **kwargs)
+        Factors the observation by objects.
+        That is, :math:`z\mapsto z_1,\cdots,z_n`
+
+        Args:
+            next_state (OOState): given state
+            action (Action): given action
+        Returns:
+            dict: map from object id to a `pomdp_py.Observation`.
+        """
         raise NotImplemented
     @classmethod
     def merge(cls, object_observations, next_state, action, **kwargs):
+        """merge(cls, object_observations, next_state, action, **kwargs)
+        Merges the factored `object_observations` into a
+        single OOObservation.
+        
+        Args:
+            object_observations (dict): map from object id to a `pomdp_py.Observation`.
+            next_state (OOState): given state
+            action (Action): given action
+        Returns:
+            OOObservation: the merged observation.
+        """
         raise NotImplemented
 
 cdef class OOObservationModel(ObservationModel):
 
     """
-    O(z | s', a) = Pi T(zi' | s', a)
+    :math:`O(z | s', a) = \prod_i O(z_i' | s', a)`
+
+    __init__(self, observation_models):    
+    Args:
+        observation_models (dict) objid -> observation_model
     """    
 
     def __init__(self, observation_models, merge_func=None):#, factor_observation_func, merge_observations_func):
@@ -185,6 +265,10 @@ cdef class OOObservationModel(ObservationModel):
 
     
     def probability(self, observation, next_state, action, **kwargs):
+        """
+        probability(self, observation, next_state, action, **kwargs)
+        Returns :math:`O(z | s', a)`.
+        """
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         obsrv_prob = 1.0
@@ -195,7 +279,9 @@ cdef class OOObservationModel(ObservationModel):
         return obsrv_prob
 
     def sample(self, next_state, action, argmax=False, **kwargs):
-        """Returns observation"""
+        """
+        sample(self, next_state, action, argmax=False, **kwargs)
+        Returns random observation"""
         if not isinstance(next_state, OOState):
             raise ValueError("state must be OOState")
         factored_observations = {}
@@ -213,18 +299,26 @@ cdef class OOObservationModel(ObservationModel):
             return self._merge_func(factored_observations, next_state, action, **kwargs)
 
     def argmax(self, next_state, action, **kwargs):
-        """Returns observation"""
+        """
+        argmax(self, next_state, action, **kwargs)
+        Returns most likely observation"""
         return self.sample(next_state, action, argmax=True, **kwargs)
 
     def __getitem__(self, objid):
+        """__getitem__(self, objid)
+        Returns observation model for given object"""
         return self._observation_models[objid]
 
     @property
     def observation_models(self):
+        """observation_models(self)"""
         return self._observation_models
 
 
 cdef class OOBelief(GenerativeDistribution):
+    """
+    Belief factored by objects.
+    """
     def __init__(self, object_beliefs):
         """
         object_beliefs (objid -> GenerativeDistribution)
@@ -232,6 +326,8 @@ cdef class OOBelief(GenerativeDistribution):
         self._object_beliefs = object_beliefs
 
     def __getitem__(self, state):
+        """__getitem__(self, state)
+        Returns belief probability of given state"""
         if not isinstance(state, OOState):
             raise ValueError("state must be OOState")
         belief_prob = 1.0
@@ -241,26 +337,38 @@ cdef class OOBelief(GenerativeDistribution):
         return belief_prob
 
     def mpe(self, **kwargs):
+        """mpe(self, **kwargs)
+        Returns most likely state."""
         object_states = {}
         for objid in self._object_beliefs:
             object_states[objid] = self._object_beliefs[objid].mpe(**kwargs)
         return OOState(object_states)
     
     def random(self, **kwargs):
+        """random(self, **kwargs)
+        Returns a random state"""
         object_states = {}
         for objid in self._object_beliefs:
             object_states[objid] = self._object_beliefs[objid].random(**kwargs)
         return OOState(object_states)        
     
     def __setitem__(self, oostate, value):
+        """__setitem__(self, oostate, value)
+        Sets the probability of a given `oostate` to `value`.
+        Note always feasible."""
         raise NotImplemented
         
     def object_belief(self, objid):
+        """object_belief(self, objid)
+        Returns the belief (GenerativeDistribution) for the given object."""
         return self._object_beliefs[objid]
 
     def set_object_belief(self, objid, belief):
+        """set_object_belief(self, objid, belief)
+        Sets the belief of object to be the given `belief` (GenerativeDistribution)"""
         self._object_beliefs[objid] = belief
 
     @property
     def object_beliefs(self):
+        """object_beliefs(self)"""
         return self._object_beliefs

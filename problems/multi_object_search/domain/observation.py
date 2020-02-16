@@ -1,14 +1,16 @@
-# Defines the Observation for the 2D Multi-Object Search domain;
-#
-# Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
-# (extensions: action space changes,
-#              different sensor model,
-#              gridworld instead of topological graph)
-#
-# Observation: {objid : pose(x,y) or NULL}. The sensor model could vary;
-#              it could be a fan-shaped model as the original paper, or
-#              it could be something else. But the resulting observation
-#              should be a map from object id to observed pose or NULL (not observed).
+"""
+Defines the Observation for the 2D Multi-Object Search domain;
+
+Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
+(extensions: action space changes,
+             different sensor model,
+             gridworld instead of topological graph)
+
+Observation: {objid : pose(x,y) or NULL}. The sensor model could vary;
+             it could be a fan-shaped model as the original paper, or
+             it could be something else. But the resulting observation
+             should be a map from object id to observed pose or NULL (not observed).
+"""
 import pomdp_py
 
 ###### Observation ######

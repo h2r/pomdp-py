@@ -1,16 +1,18 @@
-# Defines the State for the 2D Multi-Object Search domain;
-#
-# Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
-# (extensions: action space changes,
-#              different sensor model,
-#              gridworld instead of topological graph)
-#
-# Description: Multi-Object Search in a 2D grid world.
-#
-# State space: S1 X S2 X ... Sn X Sr
-#              where Si (1<=i<=n) is the object state, with attribute "pose" (x,y)
-#              and Sr is the state of the robot, with attribute "pose" (x,y) and
-#              "objects_found" (set).
+"""
+Defines the State for the 2D Multi-Object Search domain;
+
+Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
+(extensions: action space changes,
+             different sensor model,
+             gridworld instead of topological graph)
+
+Description: Multi-Object Search in a 2D grid world.
+
+State space: S1 X S2 X ... Sn X Sr
+             where Si (1<=i<=n) is the object state, with attribute "pose" (x,y)
+             and Sr is the state of the robot, with attribute "pose" (x,y) and
+             "objects_found" (set).
+"""
 
 import pomdp_py
 import math

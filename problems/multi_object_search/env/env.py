@@ -1,3 +1,5 @@
+"""The Environment"""
+
 import pomdp_py
 import cv2
 import copy
@@ -72,23 +74,34 @@ class MosEnvironment(pomdp_py.Environment):
 #### Interpret string as an initial world state ####
 def interpret(worldstr):
     """
-    worldstr (str) a string that describes the initial state of the world.
-        For example: This string
+    Interprets a problem instance description in `worldstr`
+    and returns the corresponding MosEnvironment.
 
-            rx...
-            .x.xT
-            .....
-            ***
-            r: laser fov=90 min_range=1 max_range=10
+    For example: This string
+    
+    .. code-block:: text
 
-        describes a 3 by 5 world where x indicates obsticles and T indicates
-        the "target object". T could be replaced by any upper-case letter A-Z
-        which will serve as the object's id. Lower-case letters a-z (except for x)
-        serve as id for robot(s).
+        rx...
+        .x.xT
+        .....
+        ***
+        r: laser fov=90 min_range=1 max_range=10
+    
+    describes a 3 by 5 world where x indicates obsticles and T indicates
+    the "target object". T could be replaced by any upper-case letter A-Z
+    which will serve as the object's id. Lower-case letters a-z (except for x)
+    serve as id for robot(s).
 
-        After the world, the "***" signals description of the sensor for each robot.
-        For example "r laser 90 1 10" means that robot `r` will have a Laser2Dsensor
-        with fov 90, min_range 1.0, and max_range of 10.0.
+    After the world, the :code:`***` signals description of the sensor for each robot.
+    For example "r laser 90 1 10" means that robot `r` will have a Laser2Dsensor
+    with fov 90, min_range 1.0, and max_range of 10.0.    
+
+    Args:
+        worldstr (str): a string that describes the initial state of the world.
+
+    Returns:
+        MosEnvironment: the corresponding environment for the world description.
+            
     """
     worldlines = []
     sensorlines = []
@@ -178,22 +191,36 @@ def interpret_robot_id(robot_name):
 
 
 #### Utility functions for building the worldstr ####
-def equip_sensors(worldstr, sensors):
-    """sensors (dict) a map from robot character representation (e.g. 'r') to a
+def equip_sensors(worldmap, sensors):
+    """
+    Args:
+        worldmap (str): a string that describes the initial state of the world.
+        sensors (dict) a map from robot character representation (e.g. 'r') to a
     string that describes its sensor (e.g. 'laser fov=90 min_range=1 max_range=5
     angle_increment=5')
+
+    Returns:
+        str: A string that can be used as input to the `interpret` function
     """
-    worldstr += "\n***\n"
+    worldmap += "\n***\n"
     for robot_char in sensors:
-        worldstr += "%s: %s\n" % (robot_char, sensors[robot_char])
-    return worldstr
+        worldmap += "%s: %s\n" % (robot_char, sensors[robot_char])
+    return worldmap
 
 def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
     """
-    fov (int or float): angle between the start and end beams of one scan (degree).
-    dist_range (tuple): (min_range, max_range)
-    angle_increment (int or float): angular distance between measurements (rad).
-    occlusion (bool): True if consider occlusion
+    Returns string representation of the laser scanner configuration.
+    For example: 
+        laser fov=90 min_range=1 max_range=10
+
+    Args:
+        fov (int or float): angle between the start and end beams of one scan (degree).
+        dist_range (tuple): (min_range, max_range)
+        angle_increment (int or float): angular distance between measurements (rad).
+        occlusion (bool): True if consider occlusion
+
+    Returns:
+        str: String representation of the laser scanner configuration.
     """
     fovstr = "fov=%s" % str(fov)
     rangestr = "min_range=%s max_range=%s" % (str(dist_range[0]), str(dist_range[1]))
@@ -203,8 +230,15 @@ def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
 
 def make_proximity_sensor(radius, occlusion):
     """
-    radius (int or float)
-    occlusion (bool): True if consider occlusion
+    Returns string representation of the proximity sensor configuration.
+    For example: 
+        proximity radius=5 occlusion_enabled=False
+
+    Args:
+        radius (int or float)
+        occlusion (bool): True if consider occlusion
+    Returns:
+        str: String representation of the proximity sensor configuration.
     """
     radiustr = "radius=%s" % str(radius)
     occstr = "occlusion_enabled=%s" % str(occlusion)

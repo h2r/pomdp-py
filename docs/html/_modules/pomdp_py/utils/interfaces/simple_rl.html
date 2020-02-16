@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.utils.interfaces.simple_rl &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.utils.interfaces.simple_rl</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provides utility functions that interfaces with `simple_rl &lt;https://github.com/david-abel/simple_rl&gt;`_.</span>
+
+<span class="sd">Essentially, this will convert an agent in pomdp_py into a simple_rl.MDPClass</span>
+<span class="sd">or POMDPClass. Note that since creating these classes require enumerable</span>
+<span class="sd">aciton and observation spaces, this conversion is only feasible for agents</span>
+<span class="sd">whose ObservationModel and PolicyModel can return a list of all observations /</span>
+<span class="sd">actions.</span>
+
+<span class="sd">Note: simple_rl is a library for Reinforcement Learning developed and</span>
+<span class="sd">maintained by David Abel. It is also an early-stage library.</span>
+
+<span class="sd">Warning:</span>
+<span class="sd">simple_rl is simple_rl&#39;s POMDP functionality is currently relatively</span>
+<span class="sd">lacking. Providing this inteface is mostly to potentially leverage the MDP</span>
+<span class="sd">algorithms in simple_rl.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">simple_rl</span>
+
+<div class="viewcode-block" id="convert_to_MDPClass"><a class="viewcode-back" href="../../../../simple_rl_integration.html#pomdp_py.utils.interfaces.simple_rl.convert_to_MDPClass">[docs]</a><span class="k">def</span> <span class="nf">convert_to_MDPClass</span><span class="p">(</span><span class="n">pomdp</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">step_cost</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts the pomdp to the building block MDPClass of simple_rl.  There are a lot of</span>
+<span class="sd">    variants of MDPClass in simple_rl. It is up to the user to then convert this</span>
+<span class="sd">    MDPClass into those variants, if necessary.</span>
+
+<span class="sd">    Clearly, if this agent is partially observable, this conversion</span>
+<span class="sd">    will change the problem and make it no longer a POMDP.&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp</span><span class="o">.</span><span class="n">agent</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">pomdp</span><span class="o">.</span><span class="n">env</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_actions</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;This agent does not have enumerable action space.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Since we do not know how env.state is represented, we</span>
+    <span class="c1"># cannot turn it into a simple_rl State with &quot;features&quot;,</span>
+    <span class="c1"># since the features must be represented as a list; In</span>
+    <span class="c1"># any case, the user, with knowledge of the state</span>
+    <span class="c1"># representaion, could later convert it into the format</span>
+    <span class="c1"># that simple_rl is supposed to work with.</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">simple_rl</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">simple_rl</span><span class="o">.</span><span class="n">MDP</span><span class="p">(</span><span class="n">all_actions</span><span class="p">,</span>
+                         <span class="n">agent</span><span class="o">.</span><span class="n">transition_model</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                         <span class="n">agent</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                         <span class="n">gamma</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">,</span>
+                         <span class="n">step_cost</span><span class="o">=</span><span class="n">step_cost</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="convert_to_POMDPClass"><a class="viewcode-back" href="../../../../simple_rl_integration.html#pomdp_py.utils.interfaces.simple_rl.convert_to_POMDPClass">[docs]</a><span class="k">def</span> <span class="nf">convert_to_POMDPClass</span><span class="p">(</span><span class="n">pomdp</span><span class="p">,</span>
+                          <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">step_cost</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                          <span class="n">belief_updater_type</span><span class="o">=</span><span class="s2">&quot;discrete&quot;</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp</span><span class="o">.</span><span class="n">agent</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">pomdp</span><span class="o">.</span><span class="n">env</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_actions</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;This agent does not have enumerable action space.&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_observations</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="o">.</span><span class="n">get_all_observations</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;This agent does not have enumerable observation space.&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">belief_hist</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Agent belief cannot be converted into a histogram;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                         <span class="s2">&quot;thus cannot create POMDPClass.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">simple_rl</span><span class="o">.</span><span class="n">POMDP</span><span class="p">(</span><span class="n">all_actions</span><span class="p">,</span>
+                           <span class="n">all_observations</span><span class="p">,</span>
+                           <span class="n">agent</span><span class="o">.</span><span class="n">transition_model</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                           <span class="n">agent</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                           <span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                           <span class="n">belief_hist</span><span class="p">,</span>
+                           <span class="n">belief_updater_type</span><span class="o">=</span><span class="n">belief_updater_type</span><span class="p">,</span>
+                           <span class="n">gamma</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">,</span>
+                           <span class="n">step_cost</span><span class="o">=</span><span class="n">step_cost</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

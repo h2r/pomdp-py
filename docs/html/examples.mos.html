@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Multi-Object Search (MOS) &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Design Principles" href="design_principles.html" />
+    <link rel="prev" title="Tiger Problem" href="examples.tiger.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multi-Object Search (MOS)</a><ul>
+<li><a class="reference internal" href="#problem-overview">Problem overview</a></li>
+<li><a class="reference internal" href="#implementing-this-pomdp-conventions">Implementing this POMDP: Conventions</a></li>
+<li><a class="reference internal" href="#try-it">Try it</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html#tiger">Tiger</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="examples.html#multi-object-search-mos">Multi-Object Search (MOS)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="examples.html">Examples</a><ul>
+      <li>Previous: <a href="examples.tiger.html" title="previous chapter">Tiger Problem</a></li>
+      <li>Next: <a href="design_principles.html" title="next chapter">Design Principles</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="multi-object-search-mos">
+<h1>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this example is to <strong>introduce the conventions</strong> when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
+We will first introduce this task at relatively high level, then introduce the convention of the project structure, which can help you organize your project, make the code more readable, and share components between different POMDPs.</p>
+<div class="section" id="problem-overview">
+<h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default">
+<img alt="MOS illustration" src="_images/mos.png" />
+</div>
+<p>This task was introduced in Wandzel et al. <a class="bibtex reference internal" href="#wandzel2019multi" id="id1">[1]</a>. We provide a slightly different implementation without considering rooms or topological graph.</p>
+<p>The problem is formulated as an Object-Oriented POMDP (OO-POMDP). As in the paper, we implemented this task as an OO-POMDP; <cite>pomdp_py</cite> provides necessary interfaces to describe an OO-POMDP (see <a class="reference internal" href="api/pomdp_py.framework.html#module-pomdp_py.framework.oopomdp" title="pomdp_py.framework.oopomdp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp</span></code></a> module).</p>
+<p>In our implementation, an agent searches for <span class="math notranslate nohighlight">\(n\)</span> objects
+in a <span class="math notranslate nohighlight">\(W\)</span> by <span class="math notranslate nohighlight">\(L\)</span> gridworld. Both the agent and the
+objects are represented by single grid cells. The agent can take
+three categories of actions:</p>
+<ul class="simple">
+<li><p>Motion: moves the robot.</p></li>
+<li><p>Look: projects a sensing region and receives an observation.</p></li>
+<li><p>Find: marks objects within the sensing region as <cite>found</cite>.</p></li>
+</ul>
+<p>The sensing region has a fan-shape; Our implementation allows adjusting the angle of the fan as well as sensing range. It is implemented based on a laser scanner model. When the angle is set to 360 degrees, the sensor projects a disk-shape sensing region. Occlusion (i.e. blocking of laser scan beams) is implemented, but there are artifacts due to discretization of the search space.</p>
+<p>The transition, observation and reward models are implemented according to the original paper.</p>
+<p>In the figure above, screenshots of frames in a run of the MOS task implemented in <cite>pomdp_py</cite> are shown. The solver is <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a>. From the first to the second image, the robot takes <cite>Look</cite> action and projects a fan-shaped sensing region. This leads to belief update (i.e. clearing of the red circles). A perfect observation model is used in this example run. The third image shows a later frame.</p>
+</div>
+<div class="section" id="implementing-this-pomdp-conventions">
+<h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this headline">¶</a></h2>
+<p>As described in the <a class="reference external" href="examples.tiger.html#Summary">Summary</a> section of
+<a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger Problem</span></a>, the procedure of using <cite>pomdp_py</cite> to implement a POMDP problem is:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="examples.tiger.html#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>
+<li><p><a class="reference internal" href="examples.tiger.html#define-the-models"><span class="std std-ref">Define the models</span></a></p></li>
+<li><p><a class="reference internal" href="examples.tiger.html#instantiate"><span class="std std-ref">Instantiating the POMDP</span></a></p></li>
+<li><p><a class="reference internal" href="examples.tiger.html#solve"><span class="std std-ref">Solving the POMDP instance</span></a></p></li>
+</ol>
+<p>In a more complicated problem like MOS, it is not good for code maintenance if we squeeze everything into a single giant file. Also, we might want to extend this problem or reuse the models on a different POMDP. Thus, we should be more organized in the code base. Below we provide a recommendation of the package structure to use <cite>pomdp_py</cite> in this situation. You are free to do whatever you want, but following this convention may save you time.</p>
+<p>The package structure (for our MOS implementation) is as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="hll"> ├── domain
+</span> │   ├── state.py
+ │   ├── action.py
+ │   ├── observation.py
+ │   └── __init__.py
+<span class="hll"> ├── models
+</span> │   ├── transition_model.py
+ │   ├── observation_model.py
+ │   ├── reward_model.py
+ │   ├── policy_model.py
+ │   ├── components
+ │   │   ├── grid_map.py
+ │   │   └── sensor.py
+ │   └── __init__.py
+<span class="hll"> ├── agent
+</span> │   ├── agent.py
+ │   ├── belief.py
+ │   └── __init__.py
+<span class="hll"> ├── env
+</span> │   ├── env.py
+ │   ├── visual.py
+ │   └── __init__.py
+<span class="hll"> ├── problem.py
+</span> ├── example_worlds.py
+ └── __init__.py
+</pre></div>
+</div>
+<p>The recommendation is to separate code for <cite>domain</cite>, <cite>models</cite>, <cite>agent</cite> and <cite>environment</cite>, and have simple generic filenames.
+As in the above package tree, files such as <code class="code docutils literal notranslate"><span class="pre">state.py</span></code> or
+<code class="code docutils literal notranslate"><span class="pre">transition_model.py</span></code> are self-evident in their role. The
+<code class="code docutils literal notranslate"><span class="pre">problem.py</span></code> file is where the
+<a class="reference internal" href="problems/problems.multi_object_search.html#problems.multi_object_search.problem.MosOOPOMDP" title="problems.multi_object_search.problem.MosOOPOMDP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MosOOPOMDP</span></code></a> class is defined, and
+where the logic of <cite>action-feedback loop</cite> is implemented (see
+<a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger Problem</span></a> for more detail).</p>
+</div>
+<div class="section" id="try-it">
+<h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
+<p>To try out the MOS example problem:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> pomdp_py/problems
+$ python -m multi_object_search.problem
+</pre></div>
+</div>
+<p>A gridworld with randomly placed obstacles, targets and robot initial pose is generated; The robot is equipped with either a disk-shape sensor or a laser sensor <a class="reference external" href="_modules/problems/multi_object_search/problem.html#unittest">[source]</a>. A command-line interface is not yet provided; Check <a class="reference internal" href="problems/problems.multi_object_search.env.html#problems.multi_object_search.env.env.interpret" title="problems.multi_object_search.env.env.interpret"><code class="xref py py-mod docutils literal notranslate"><span class="pre">interpret</span></code></a>,
+<a class="reference internal" href="problems/problems.multi_object_search.env.html#problems.multi_object_search.env.env.equip_sensors" title="problems.multi_object_search.env.env.equip_sensors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">equip_sensors</span></code></a>,
+<a class="reference internal" href="problems/problems.multi_object_search.env.html#problems.multi_object_search.env.env.make_laser_sensor" title="problems.multi_object_search.env.env.make_laser_sensor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">make_laser_sensor</span></code></a>,
+<a class="reference internal" href="problems/problems.multi_object_search.env.html#problems.multi_object_search.env.env.make_proximity_sensor" title="problems.multi_object_search.env.env.make_proximity_sensor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">make_proximity_sensor</span></code></a>
+as well as previously linked source code
+for details about how to create your custom instance of the problem.</p>
+<p id="bibtex-bibliography-examples.mos-0"><dl class="citation">
+<dt class="bibtex label" id="wandzel2019multi"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In <em>2019 International Conference on Robotics and Automation (ICRA)</em>, 7194–7200. IEEE, 2019.</p>
+</dd>
+</dl>
+</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/examples.mos.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

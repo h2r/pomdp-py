@@ -7,12 +7,12 @@
     <title>pomdp_py.representations.belief package &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -38,11 +38,13 @@
 
 
 
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -54,41 +56,44 @@
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">pomdp_py.representations.belief package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.representations.belief.particles">pomdp_py.representations.belief.particles module</a></li>
 </ul>
 </li>
 </ul>
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">pomdp_py Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#further">Further</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
-</ul>
-</li>
-</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_py</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html">pomdp_py.algorithms package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html">pomdp_py.framework package</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="pomdp_py.representations.html">pomdp_py.representations package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html">pomdp_py.utils package</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
 </ul>
 
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+</ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -113,7 +118,23 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -124,23 +145,48 @@
             
   <div class="section" id="pomdp-py-representations-belief-package">
 <h1>pomdp_py.representations.belief package<a class="headerlink" href="#pomdp-py-representations-belief-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-pomdp_py.representations.belief.histogram">
 <span id="pomdp-py-representations-belief-histogram-module"></span><h2>pomdp_py.representations.belief.histogram module<a class="headerlink" href="#module-pomdp_py.representations.belief.histogram" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pomdp_py.representations.belief.histogram.abstraction_over_histogram">
-<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">abstraction_over_histogram</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">state_mapper</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.belief.histogram.abstraction_over_histogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">abstraction_over_histogram</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">state_mapper</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/representations/belief/histogram.html#abstraction_over_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.representations.belief.histogram.abstraction_over_histogram" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="pomdp_py.representations.belief.histogram.update_histogram_belief">
-<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">update_histogram_belief</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">real_action</em>, <em class="sig-param">real_observation</em>, <em class="sig-param">observation_model</em>, <em class="sig-param">transition_model</em>, <em class="sig-param">oargs={}</em>, <em class="sig-param">targs={}</em>, <em class="sig-param">normalize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.belief.histogram.update_histogram_belief" title="Permalink to this definition">¶</a></dt>
-<dd><p>This update is based on the equation:
+<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">update_histogram_belief</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">real_action</em>, <em class="sig-param">real_observation</em>, <em class="sig-param">observation_model</em>, <em class="sig-param">transition_model</em>, <em class="sig-param">oargs={}</em>, <em class="sig-param">targs={}</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">static_transition=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/representations/belief/histogram.html#update_histogram_belief"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.representations.belief.histogram.update_histogram_belief" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>update_histogram_belief(current_histogram, real_action, real_observation,</dt><dd><p>observation_model, transition_model, oargs={},
+targs={}, normalize=True, deterministic=False)</p>
+</dd>
+</dl>
+<p>This update is based on the equation:
 <span class="math notranslate nohighlight">\(B_{new}(s') = n O(z|s',a) \sum_s T(s'|s,a)B(s)\)</span>.</p>
-<p><cite>current_histogram</cite> is the Histogram that represents current belief.</p>
-<p>Returns the histogram distribution as a result of the update</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_histogram</strong> (<a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram" title="pomdp_py.representations.distribution.histogram.Histogram"><em>Histogram</em></a>) – </p></li>
+<li><p><strong>real_action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – </p></li>
+<li><p><strong>real_observation</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – </p></li>
+<li><p><strong>observation_model</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><em>ObservationModel</em></a>) – </p></li>
+<li><p><strong>transition_model</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><em>TransitionModel</em></a>) – </p></li>
+<li><p><strong>oargs</strong> (<em>dict</em><em>) </em><em>Additional parameters for observation_model</em><em> (</em><em>default {}</em>) – </p></li>
+<li><p><strong>targs</strong> (<em>dict</em><em>) </em><em>Additional parameters for transition_model</em><em> (</em><em>default {}</em>) – </p></li>
+<li><p><strong>normalize</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>static_transition</strong> (<em>bool</em>) – This basically means Pr(s’<a href="#id1"><span class="problematic" id="id2">|</span></a>s,a) = Indicator(s’ == s). This then means
+that sum_s Pr(s’<a href="#id3"><span class="problematic" id="id4">|</span></a>s,a)*B(s) = B(s’), since s’ and s have the same state space.
+This thus helps reduce the computation cost by avoiding the nested iteration
+over the state space; But still, updating histogram belief requires
+iteration of the state space, which may already be prohibitive.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the histogram distribution as a result of the update</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram" title="pomdp_py.representations.distribution.histogram.Histogram">Histogram</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -160,6 +206,28 @@ form part of the reinvigorated particles. At least maintain <cite>num_particles<
 number of particles. If already have more, then it’s ok.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="pomdp_py.representations.belief.particles.update_particles_belief">
+<code class="sig-prename descclassname">pomdp_py.representations.belief.particles.</code><code class="sig-name descname">update_particles_belief</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.belief.particles.update_particles_belief" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>update_particles_belief(Particles current_particles,</dt><dd><p>Action real_action, Observation real_observation=None,
+ObservationModel observation_model=None,
+TransitionModel transition_model=None,
+BlackboxModel blackbox_model=None,
+state_transform_func=None)</p>
+</dd>
+</dl>
+<p>This is the second case (update particles belief explicitly); Either
+BlackboxModel is not None, or TransitionModel and ObservationModel are not
+None. Note that you DON’T need to call this function if you are using POMCP.
+<a href="#id5"><span class="problematic" id="id6">|TODO: not tested|</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state_transform_func</strong> (<em>State-&gt;State</em>) – the reinvigorated particles.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -174,7 +242,7 @@ number of particles. If already have more, then it’s ok.</p>
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

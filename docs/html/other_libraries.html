@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Other POMDP Libraries &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="other-pomdp-libraries">
+<h1>Other POMDP Libraries<a class="headerlink" href="#other-pomdp-libraries" title="Permalink to this headline">¶</a></h1>
+<p>There are a number of other libraries; Feel free to check them out and feel the differences. We think our <cite>pomdp_py</cite> library has a simpler and more extensible set of interfaces than these peer libraries. Our implementation in Python and Cython makes the library easy for use in a research project, or a ROS robot system (when <a class="reference external" href="https://index.ros.org/doc/ros2/">ROS 2</a> supports Python 3; <a class="reference external" href="http://wiki.ros.org/Documentation">ROS</a> doesn’t support Python 3 but I have worked around the communication between ROS and <cite>pomdp_py</cite> in some other way; The code base is all in Python, which accelerates development.)</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pemami4911/POMDPy">POMDPy</a> is written in Python. This library features implementations of advanced Value Iteration algorithms and an implementation of POMCP. The documentation of interfaces is not sufficient, which appear to be more convoluted than <cite>pomdp_py</cite>. A potential connection between the two could be possible if POMDPy provides a clearer documentation of its POMDP interfaces.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/">APPL</a> (Approximate POMDP Planning Software) is a C++ library for approximate POMDP planning. It uses <a class="reference external" href="https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/index.php?n=Main.PomdpXDocumentation">POMDPX</a> file format to parse POMDPs. This library contains implementation of state-of-the-art planning algorithms such as SARSOP and DESPOT. It would be great to interface <cite>pomdp_py</cite> with this library so that one can make use of these algorithms in Python.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/JuliaPOMDP/POMDPs.jl">POMDPs.jl</a> is written in Julia, under active development.
+<a class="reference external" href="https://en.wikipedia.org/wiki/Julia_(programming_language)">Julia</a> is known to be suited for high-performance numerical analysis. Besides POMC, this library also has an <a class="reference external" href="https://github.com/JuliaPOMDP/DESPOT.jl">implementation of DESPOT</a>, and <a class="reference external" href="https://github.com/JuliaPOMDP/SARSOP.jl">SARSOP</a>. The libray supports porting Python POMDP code into Julia code. Connection between interfaces in <cite>pomdp_py</cite> and <cite>POMDPs.jl</cite> could potentially be done via this Python porting.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Svalorzen/AI-Toolbox">AI-Toolbox</a> is written in C++. This library contains a number of algorithms for planning and reinforcement learning in MDP or POMDP problems. It has Python 2 and 3 bindings in specific cases.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/david-abel/simple_rl">simple_rl</a> is written in Python. It focuses on MDP reinforcement learing algorithms and contains many tasks implementations. It does have a POMDP interface and an implementation of BeliefMDP.</p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/other_libraries.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

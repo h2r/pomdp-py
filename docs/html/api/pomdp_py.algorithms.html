@@ -7,12 +7,12 @@
     <title>pomdp_py.algorithms package &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -38,11 +38,13 @@
 
 
 
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -62,34 +64,38 @@
 </li>
 </ul>
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">pomdp_py Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simple_rl_integration.html">Integration with <cite>simple_rl</cite></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#further">Further</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
-</ul>
-</li>
-</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_py</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">pomdp_py.algorithms package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html">pomdp_py.framework package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.html">pomdp_py.representations package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.html#module-pomdp_py.util">pomdp_py.util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html">pomdp_py.utils package</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
 </ul>
 
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+</ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -112,7 +118,23 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -469,7 +491,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id9">[6]</a></p>
+domains</cite> <a class="bibtex reference internal" href="#kaelbling1998planning" id="id9">[2]</a></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration">
@@ -480,9 +502,8 @@ and observations can be explicitly enumerated.</p>
 <p>__init__(self, horizon=float(‘inf’), discount_factor=0.9, epsilon=1e-6)</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration.plan">
-<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
-<dd><p>The agent carries the information:
-Bt, ht, O,T,R/G, pi, necessary for planning</p>
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plans an action.</p>
 </dd></dl>
 
 </dd></dl>
@@ -503,7 +524,7 @@ Bt, ht, O,T,R/G, pi, necessary for planning</p>
 <dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
 <dd><p>António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In <em>ECAI</em>, 384–389. 2012.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id9">6</a></span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id9">2</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 </dl>
@@ -522,7 +543,7 @@ Bt, ht, O,T,R/G, pi, necessary for planning</p>
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

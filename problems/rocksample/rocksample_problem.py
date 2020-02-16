@@ -1,30 +1,32 @@
-# RockSample(n,k) problem
-#
-# Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)
-#
-# Description:
-#
-# State space: Position {(1,1),(1,2),...(n,n)}
-#              X RockType_1 X RockType_2, ..., X RockType_k
-#                where RockType_i = {Good, Bad}
-#              X TerminalState
-#
-#              (basically, the positions of rocks are known to the robot,
-#               but not represented explicitly in the state space. Check_i
-#               will smartly check the rock i at its location.)
-#
-# Action space: North, South, East, West, Sample, Check_1, ..., Check_k
-#               The first four moves the agent deterministically
-#               Sample: samples the rock at agent's current location
-#               Check_i: receives a noisy observation about RockType_i
-#                        (noise determined by eta. eta=1 -> perfect sensor; eta=0 -> uniform)
-#
-# Observation: observes the property of rock i when taking Check_i.
-#
-# Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.
-#         Move to exit area +10. Other actions have no cost or reward.
-#
-# Initial belief: every rock has equal probability of being Good or Bad.
+"""
+RockSample(n,k) problem
+
+Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)
+
+Description:
+
+State space: Position {(1,1),(1,2),...(n,n)}
+             X RockType_1 X RockType_2, ..., X RockType_k
+               where RockType_i = {Good, Bad}
+             X TerminalState
+
+             (basically, the positions of rocks are known to the robot,
+              but not represented explicitly in the state space. Check_i
+              will smartly check the rock i at its location.)
+
+Action space: North, South, East, West, Sample, Check_1, ..., Check_k
+              The first four moves the agent deterministically
+              Sample: samples the rock at agent's current location
+              Check_i: receives a noisy observation about RockType_i
+                       (noise determined by eta. eta=1 -> perfect sensor; eta=0 -> uniform)
+
+Observation: observes the property of rock i when taking Check_i.
+
+Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.
+        Move to exit area +10. Other actions have no cost or reward.
+
+Initial belief: every rock has equal probability of being Good or Bad.
+"""
 import pomdp_py
 import random
 import math

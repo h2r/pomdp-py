@@ -18,6 +18,8 @@ cdef class Particles(GenerativeDistribution):
         return len(self._particles)
     
     def __getitem__(self, value):
+        """__getitem__(self, value)
+        Returns the probability of `value`."""        
         belief = 0
         for s in self._particles:
             if s == value:
@@ -25,7 +27,9 @@ cdef class Particles(GenerativeDistribution):
         return belief / len(self._particles)
     
     def __setitem__(self, value, prob):
-        """Assume that value is between 0 and 1"""
+        """__setitem__(self, value, prob)
+        Sets probability of value to `prob`.
+        Assume that value is between 0 and 1"""        
         particles = [s for s in self._particles if s != value]
         len_not_value = len(particles)
         amount_to_add = prob * len_not_value / (1 - prob)
@@ -62,27 +66,30 @@ cdef class Particles(GenerativeDistribution):
             return value_counts_self == value_counts_other
 
     def mpe(self, hist=None):
-        mpe_value = None
+        """
+        mpe(self, hist=None)
+        Choose a particle that is most likely to be sampled.
+        """
         if hist is None:
             hist = self.get_histogram()
-        for s in hist:
-            if mpe_value is None:
-                mpe_value = s
-            else:
-                if hist[s] > hist[mpe_value]:
-                    mpe_value = s
-        return mpe_value
+        return max(hist, key=hist.get)
 
     def random(self):
+        """random(self)
+        Randomly choose a particle"""
         if len(self._particles) > 0:
             return random.choice(self._particles)
         else:
             return None
 
     def add(self, particle):
+        """add(self, particle)
+        Add a particle."""
         self._particles.append(particle)
 
     def get_histogram(self):
+        """get_histogram(self)
+        Returns a dictionary from value to probability of the histogram"""        
         value_counts_self = {}
         for s in self._particles:
             if s not in value_counts_self:
@@ -93,12 +100,16 @@ cdef class Particles(GenerativeDistribution):
         return value_counts_self
 
     def get_abstraction(self, state_mapper):
+        """get_abstraction(self, state_mapper)
+        feeds all particles through a state abstraction function.
+        Or generally, it could be any function.
+        """
         particles = [state_mapper(s) for s in self._particles]
         return particles
 
     @classmethod
     def from_histogram(self, histogram, num_particles=1000):
-        """
+        """from_histogram(self, histogram, num_particles=1000)
         Given a Histogram distribution `histogram`, return
         a particle representation of it, which is an approximation.
         """

@@ -1,13 +1,15 @@
-# Defines the Action for the 2D Multi-Object Search domain;
-#
-# Action space: Motion U Look U Find
-#               Motion Actions scheme 1: South, East, West, North.
-#               Motion Actions scheme 2: Left 45deg, Right 45deg, Forward
-#               Look: Interprets sensor input as observation
-#               Find: Marks objects observed in the last Look action as
-#                     (differs from original paper; reduces action space)
-#               It is possible to force "Look" after every N/S/E/W action;
-#               then the Look action could be dropped. This is optional behavior.
+"""
+Defines the Action for the 2D Multi-Object Search domain;
+
+Action space: Motion U Look U Find
+              Motion Actions scheme 1: South, East, West, North.
+              Motion Actions scheme 2: Left 45deg, Right 45deg, Forward
+              Look: Interprets sensor input as observation
+              Find: Marks objects observed in the last Look action as
+                    (differs from original paper; reduces action space)
+              It is possible to force "Look" after every N/S/E/W action;
+              then the Look action could be dropped. This is optional behavior.
+"""
 import pomdp_py
 import math
 
@@ -27,7 +29,7 @@ class Action(pomdp_py.Action):
     def __repr__(self):
         return "Action(%s)" % self.name
 
-MOTION_SCHEME="vw"  # can be either xy or vw
+MOTION_SCHEME="xy"  # can be either xy or vw
 class MotionAction(Action):
     # scheme 1 (vx,vy,th)
     EAST = (1, 0, 0)  # x is horizontal; x+ is right. y is vertical; y+ is down.

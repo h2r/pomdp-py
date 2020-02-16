@@ -1,4 +1,7 @@
-# Policy model for Mos
+"""Policy model for 2D Multi-Object Search domain. 
+It is optional for the agent to be equipped with an occupancy
+grid map of the environment.
+"""
 
 import pomdp_py
 import random

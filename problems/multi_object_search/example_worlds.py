@@ -1,4 +1,4 @@
-# This file has some examples of world string.
+"""This file has some examples of world string."""
 import random
 
 ############# Example Worlds ###########
@@ -108,8 +108,4 @@ def random_world(width, length, num_obj, num_obstacles,
     for row_chars in worldstr:
         finalstr.append("".join(row_chars))
     finalstr = "\n".join(finalstr)
-
-    print("Random world:\n %s" % finalstr)
-    return (finalstr, "r")
-
-world_rand50 = random_world(20, 20, 5, 20)
+    return finalstr, robot_char

@@ -1,34 +1,39 @@
-# This is a POMDP problem; Namely, it specifies both
-# the POMDP (i.e. state, action, observation space)
-# and the T/O/R for the agent as well as the environment.
+"""The classic Tiger problem.
 
-# The description of the tiger problem is as follows:
-# (Quote from __POMDP: Introduction to Partially Observable Markov
-#  Decision Processes__ by Kamalzadeh and Hahsler
-#  https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf)
+This is a POMDP problem; Namely, it specifies both
+the POMDP (i.e. state, action, observation space)
+and the T/O/R for the agent as well as the environment.
 
-# A tiger is put with equal probability behind one
-# of two doors, while treasure is put behind the other one.
-# You are standing in front of the two closed doors and
-# need to decide which one to open. If you open the door
-# with the tiger, you will get hurt (negative reward).
-# But if you open the door with treasure, you receive
-# a positive reward. Instead of opening a door right away,
-# you also have the option to wait and listen for tiger noises. But
-# listening is neither free nor entirely accurate. You might hear the
-# tiger behind the left door while it is actually behind the right
-# door and vice versa.
+The description of the tiger problem is as follows: (Quote from `POMDP:
+Introduction to Partially Observable Markov Decision Processes
+<https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf>`_ by
+Kamalzadeh and Hahsler )
 
-# States: tiger-left, tiger-right
-# Actions: open-left, open-right, listen
-# Rewards: +10 for opening treasure door. -100 for opening tiger door.
-#          -1 for listening.
-# Observations: You can hear either "tiger-left", or "tiger-right".
-#
-# Note that in this example, the TigerProblem is a POMDP that
-# also contains the agent and the environment as its fields. In
-# general this doesn't need to be the case. (Refer to more complicated
-# examples.)
+A tiger is put with equal probability behind one
+of two doors, while treasure is put behind the other one.
+You are standing in front of the two closed doors and
+need to decide which one to open. If you open the door
+with the tiger, you will get hurt (negative reward).
+But if you open the door with treasure, you receive
+a positive reward. Instead of opening a door right away,
+you also have the option to wait and listen for tiger noises. But
+listening is neither free nor entirely accurate. You might hear the
+tiger behind the left door while it is actually behind the right
+door and vice versa.
+
+States: tiger-left, tiger-right
+Actions: open-left, open-right, listen
+Rewards: 
+    +10 for opening treasure door. -100 for opening tiger door.
+    -1 for listening.
+Observations: You can hear either "tiger-left", or "tiger-right".
+
+Note that in this example, the TigerProblem is a POMDP that
+also contains the agent and the environment as its fields. In
+general this doesn't need to be the case. (Refer to more complicated
+examples.)
+
+"""
 
 import pomdp_py
 import random
@@ -44,6 +49,8 @@ def build_observations(strings):
 
 class State(pomdp_py.State):
     def __init__(self, name):
+        if name != "tiger-left" and name != "tiger-right":
+            raise ValueError("Invalid state: %s" % name)
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -59,6 +66,9 @@ class State(pomdp_py.State):
     
 class Action(pomdp_py.Action):
     def __init__(self, name):
+        if name != "open-left" and name != "open-right"\
+           and name != "listen":
+            raise ValueError("Invalid action: %s" % name)        
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -74,6 +84,8 @@ class Action(pomdp_py.Action):
     
 class Observation(pomdp_py.Observation):
     def __init__(self, name):
+        if name != "tiger-left" and name != "tiger-right":
+            raise ValueError("Invalid action: %s" % name)                
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -216,6 +228,14 @@ class TigerProblem(pomdp_py.POMDP):
 
 
 def test_planner(tiger_problem, planner, nsteps=3):
+    """
+    Runs the action-feedback loop of Tiger problem POMDP
+
+    Args:
+        tiger_problem (TigerProblem): an instance of the tiger problem.
+        planner (Planner): a planner
+        nsteps (int): Maximum number of steps to run this loop.
+    """
     for i in range(nsteps):
         action = planner.plan(tiger_problem.agent)
         print("==== Step %d ====" % (i+1))
@@ -224,7 +244,9 @@ def test_planner(tiger_problem, planner, nsteps=3):
         print("Action: %s" % str(action))
         print("Reward: %s" % str(tiger_problem.env.reward_model.sample(tiger_problem.env.state, action, None)))
 
-        # Let's create some simulated real observation; Update the belief (a bit hacky)
+        # Let's create some simulated real observation; Update the belief
+        # Creating true observation for sanity checking solver behavior.
+        # In general, this observation should be sampled from agent's observation model.
         real_observation = Observation(tiger_problem.env.state.name)
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
@@ -255,7 +277,7 @@ def build_setting(setting):
                  for sp in setting['trans_probs'][s][a]}
     return result
             
-if __name__ == '__main__':
+def main():
     ## Setting 1:
     ## The values are set according to the paper.
     setting1 = {
@@ -362,4 +384,5 @@ if __name__ == '__main__':
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
                                                 max_depth=5, anonymize=False)
 
-
+if __name__ == '__main__':
+    main()

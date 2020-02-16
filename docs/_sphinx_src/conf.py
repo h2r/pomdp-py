@@ -14,6 +14,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../pomdp_py'))
+sys.path.insert(0, os.path.abspath('../../problems'))
 
 
 # -- Project information -----------------------------------------------------
@@ -37,7 +38,9 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinxcontrib.bibtex',  # pip install sphinxcontrib-bibtex
     'sphinx.ext.napoleon',
-    'sphinx.ext.autosummary'
+    'sphinx.ext.autosummary',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',        
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,20 +70,31 @@ html_sidebars = {
         'navigation.html',
         'relations.html',
         'searchbox.html',
+        'donate.html'
     ]
 }
 
 html_theme_options = {
+    'description': 'A framework to build and solve POMDP problems.',
     'logo': 'logo.png',
     'github_user': 'h2r',
     'github_repo': 'pomdp-py',
-    'github_type': 'star',
-    'sidebar_collapse': False,
+    'github_button': True,
+    'sidebar_collapse': True,
     'fixed_sidebar': True,
+    'donate_url': "paypal.me/zkytony/10",
+    'extra_nav_links': {
+        "H2R lab": "https://h2r.cs.brown.edu/",
+        "Kaiyu's homepage": "http://kaiyuzh.me",        
+        # "bigAI initiative": "http://bigai.cs.brown.edu/"
+    },
+    # Colors
+    'narrow_sidebar_bg': "#330000",
+    'narrow_sidebar_fg': "#EFEFEF",
+    'narrow_sidebar_link': "#CDCDCD",
 }
 
 html_favicon = "images/favicon.ico"
 
 # Do not sort automodule classes alphebatically but by how they appear in source.
 autodoc_member_order = 'bysource'
-

@@ -1,3 +1,5 @@
+"""Sensor model (for example, laser scanner)"""
+
 import math
 import numpy as np
 from ...domain.action import *

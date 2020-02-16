@@ -20,7 +20,9 @@ Installation
     python problems/tiger/tiger_problem.py
     python problems/rocksample/rocksample_problem.py
 
-   For the Tiger problem, you should see output like::
+   For the Tiger problem, you should see output like
+   
+   .. code-block:: text
    
     ** Testing value iteration **
     ==== Step 1 ====
@@ -59,12 +61,3 @@ Installation
     ..x$x>
     .$...>
     R....>
-    
-
-
-Tools
------
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

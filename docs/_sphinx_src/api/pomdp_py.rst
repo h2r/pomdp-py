@@ -6,12 +6,4 @@ pomdp\_py package
    pomdp_py.algorithms
    pomdp_py.framework
    pomdp_py.representations
-
-
-pomdp\_py.util module
----------------------
-
-.. automodule:: pomdp_py.util
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   pomdp_py.utils   

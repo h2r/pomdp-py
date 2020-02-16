@@ -1,9 +1,6 @@
 pomdp\_py.representations.belief package
 ========================================
 
-Submodules
-----------
-
 pomdp\_py.representations.belief.histogram module
 -------------------------------------------------
 

@@ -1,9 +1,6 @@
 pomdp\_py.representations.distribution package
 ==============================================
 
-Submodules
-----------
-
 pomdp\_py.representations.distribution.histogram module
 -------------------------------------------------------
 
@@ -11,6 +8,7 @@ pomdp\_py.representations.distribution.histogram module
    :members:
    :undoc-members:
    :show-inheritance:
+   :special-members: __getitem__, __setitem__            
 
 pomdp\_py.representations.distribution.particles module
 -------------------------------------------------------
@@ -19,3 +17,14 @@ pomdp\_py.representations.distribution.particles module
    :members:
    :undoc-members:
    :show-inheritance:
+   :special-members: __getitem__, __setitem__      
+
+pomdp\_py.representations.distribution.gaussian module
+-------------------------------------------------------
+
+.. automodule:: pomdp_py.representations.distribution.gaussian
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __getitem__, __setitem__            
+      

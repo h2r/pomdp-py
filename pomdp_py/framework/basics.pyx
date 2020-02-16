@@ -64,9 +64,9 @@ cdef class ObservationModel:
         Returns the probability of :math:`\Pr(o|s',a)`.
 
         Args:
-            observation (Observation): the observation :math:`o`
-            next_state (State): the next state :math:`s'`
-            action (Action): the action :math:`a`
+            observation (~pomdp_py.framework.basics.Observation): the observation :math:`o`
+            next_state (~pomdp_py.framework.basics.State): the next state :math:`s'`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
         Returns:
             float: the probability :math:`\Pr(o|s',a)`
         """
@@ -77,8 +77,8 @@ cdef class ObservationModel:
         distribution of this observation model.
 
         Args:
-            next_state (State): the next state :math:`s'`
-            action (Action): the action :math:`a`
+            next_state (~pomdp_py.framework.basics.State): the next state :math:`s'`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
         Returns:
             Observation: the observation :math:`o`
         """
@@ -110,9 +110,9 @@ cdef class TransitionModel:
         Returns the probability of :math:`\Pr(s'|s,a)`.
 
         Args:
-            state (State): the state :math:`s`
-            next_state (State): the next state :math:`s'`
-            action (Action): the action :math:`a`
+            state (~pomdp_py.framework.basics.State): the state :math:`s`
+            next_state (~pomdp_py.framework.basics.State): the next state :math:`s'`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
         Returns:
             float: the probability :math:`\Pr(s'|s,a)`
         """        
@@ -124,8 +124,8 @@ cdef class TransitionModel:
         distribution of this transition model.
 
         Args:
-            state (State): the next state :math:`s`
-            action (Action): the action :math:`a`
+            state (~pomdp_py.framework.basics.State): the next state :math:`s`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
         Returns:
             State: the next state :math:`s'`
         """
@@ -157,8 +157,8 @@ cdef class RewardModel:
 
         Args:
             reward (float): the reward :math:`r`
-            state (State): the state :math:`s`
-            action (Action): the action :math:`a`
+            state (~pomdp_py.framework.basics.State): the state :math:`s`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
             next_state (State): the next state :math:`s'`
         Returns:
             float: the probability :math:`\Pr(r|s,a,s')`
@@ -171,8 +171,8 @@ cdef class RewardModel:
         distribution of this reward model.
 
         Args:
-            state (State): the next state :math:`s`
-            action (Action): the action :math:`a`
+            state (~pomdp_py.framework.basics.State): the next state :math:`s`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
             next_state (State): the next state :math:`s'`
         Returns:
             float: the reward :math:`r`
@@ -222,8 +222,8 @@ cdef class PolicyModel:
         Returns the probability of :math:`\pi(a|s)`.
 
         Args:
-            action (Action): the action :math:`a`
-            state (State): the state :math:`s`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
+            state (~pomdp_py.framework.basics.State): the state :math:`s`
         Returns:
             float: the probability :math:`\pi(a|s)`
         """
@@ -235,7 +235,7 @@ cdef class PolicyModel:
         distribution of this policy model.
 
         Args:
-            state (State): the next state :math:`s`
+            state (~pomdp_py.framework.basics.State): the next state :math:`s`
 
         Returns:
             Action: the action :math:`a`

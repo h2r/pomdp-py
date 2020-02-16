@@ -76,6 +76,8 @@ cdef class ValueIteration(Planner):
         self._planning_horizon = horizon
 
     def plan(self, agent):
+        """plan(self, agent)
+        Plans an action."""
         policy_trees = self._build_policy_trees(0, agent)
         value_beliefs = {}
         for p, policy_tree in enumerate(policy_trees):

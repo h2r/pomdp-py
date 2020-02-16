@@ -23,10 +23,10 @@ def update_histogram_belief(current_histogram, real_action, real_observation,
 
     Args:
         current_histogram (Histogram) is the Histogram that represents current belief.
-        real_action (Action)
-        real_observation (Observation)
-        observation_model (ObservationModel)
-        transition_model (TransitionModel)
+        real_action (~pomdp_py.framework.basics.Action)
+        real_observation (~pomdp_py.framework.basics.Observation)
+        observation_model (~pomdp_py.framework.basics.ObservationModel)
+        transition_model (~pomdp_py.framework.basics.TransitionModel)
         oargs (dict) Additional parameters for observation_model (default {})
         targs (dict) Additional parameters for transition_model (default {})
         normalize (bool) True if the updated belief should be normalized

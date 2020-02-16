@@ -1,3 +1,5 @@
+"""Optional grid map to assist collision avoidance during planning."""
+
 from ..transition_model import RobotTransitionModel
 from ...domain.action import *
 from ...domain.state import *

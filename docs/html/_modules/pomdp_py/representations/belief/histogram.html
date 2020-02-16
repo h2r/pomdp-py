@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.representations.belief.histogram &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.representations.belief.histogram</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pomdp_py.representations.distribution.histogram</span> <span class="kn">import</span> <span class="n">Histogram</span>
+
+
+<div class="viewcode-block" id="abstraction_over_histogram"><a class="viewcode-back" href="../../../../api/pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.abstraction_over_histogram">[docs]</a><span class="k">def</span> <span class="nf">abstraction_over_histogram</span><span class="p">(</span><span class="n">current_histogram</span><span class="p">,</span> <span class="n">state_mapper</span><span class="p">):</span>
+    <span class="n">state_mappings</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span><span class="n">state_mapper</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">current_histogram</span><span class="p">}</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">current_histogram</span><span class="p">:</span>
+        <span class="n">a_s</span> <span class="o">=</span> <span class="n">state_mapper</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a_s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hist</span><span class="p">[</span><span class="n">a_s</span><span class="p">]:</span>
+            <span class="n">hist</span><span class="p">[</span><span class="n">a_s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hist</span><span class="p">[</span><span class="n">a_s</span><span class="p">]</span> <span class="o">+=</span> <span class="n">current_histogram</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">hist</span></div>
+
+<div class="viewcode-block" id="update_histogram_belief"><a class="viewcode-back" href="../../../../api/pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.update_histogram_belief">[docs]</a><span class="k">def</span> <span class="nf">update_histogram_belief</span><span class="p">(</span><span class="n">current_histogram</span><span class="p">,</span> <span class="n">real_action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">,</span>
+                            <span class="n">observation_model</span><span class="p">,</span> <span class="n">transition_model</span><span class="p">,</span> <span class="n">oargs</span><span class="o">=</span><span class="p">{},</span>
+                            <span class="n">targs</span><span class="o">=</span><span class="p">{},</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_transition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    update_histogram_belief(current_histogram, real_action, real_observation,</span>
+<span class="sd">                            observation_model, transition_model, oargs={},</span>
+<span class="sd">                            targs={}, normalize=True, deterministic=False)</span>
+<span class="sd">    This update is based on the equation:</span>
+<span class="sd">    :math:`B_{new}(s&#39;) = n O(z|s&#39;,a) \sum_s T(s&#39;|s,a)B(s)`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        current_histogram (Histogram) is the Histogram that represents current belief.</span>
+<span class="sd">        real_action (~pomdp_py.framework.basics.Action)</span>
+<span class="sd">        real_observation (~pomdp_py.framework.basics.Observation)</span>
+<span class="sd">        observation_model (~pomdp_py.framework.basics.ObservationModel)</span>
+<span class="sd">        transition_model (~pomdp_py.framework.basics.TransitionModel)</span>
+<span class="sd">        oargs (dict) Additional parameters for observation_model (default {})</span>
+<span class="sd">        targs (dict) Additional parameters for transition_model (default {})</span>
+<span class="sd">        normalize (bool) True if the updated belief should be normalized</span>
+<span class="sd">        static_transition (bool) True if the transition_model is treated as static;</span>
+<span class="sd">            This basically means Pr(s&#39;|s,a) = Indicator(s&#39; == s). This then means</span>
+<span class="sd">            that sum_s Pr(s&#39;|s,a)*B(s) = B(s&#39;), since s&#39; and s have the same state space.</span>
+<span class="sd">            This thus helps reduce the computation cost by avoiding the nested iteration</span>
+<span class="sd">            over the state space; But still, updating histogram belief requires</span>
+<span class="sd">            iteration of the state space, which may already be prohibitive.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Histogram: the histogram distribution as a result of the update</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_histogram</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># state space still the same.</span>
+    <span class="n">total_prob</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="n">current_histogram</span><span class="p">:</span>
+        <span class="n">observation_prob</span> <span class="o">=</span> <span class="n">observation_model</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">real_observation</span><span class="p">,</span>
+                                                         <span class="n">next_state</span><span class="p">,</span>
+                                                         <span class="n">real_action</span><span class="p">,</span>
+                                                         <span class="o">**</span><span class="n">oargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">static_transition</span><span class="p">:</span>
+            <span class="n">transition_prob</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">current_histogram</span><span class="p">:</span>
+                <span class="n">transition_prob</span> <span class="o">+=</span> <span class="n">transition_model</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span>
+                                                                <span class="n">state</span><span class="p">,</span>
+                                                                <span class="n">real_action</span><span class="p">,</span>
+                                                                <span class="o">**</span><span class="n">targs</span><span class="p">)</span> <span class="o">*</span> <span class="n">current_histogram</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">transition_prob</span> <span class="o">=</span> <span class="n">current_histogram</span><span class="p">[</span><span class="n">next_state</span><span class="p">]</span>
+            
+        <span class="n">new_histogram</span><span class="p">[</span><span class="n">next_state</span><span class="p">]</span> <span class="o">=</span> <span class="n">observation_prob</span> <span class="o">*</span> <span class="n">transition_prob</span>
+        <span class="n">total_prob</span> <span class="o">+=</span> <span class="n">new_histogram</span><span class="p">[</span><span class="n">next_state</span><span class="p">]</span>
+
+    <span class="c1"># Normalize</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">new_histogram</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">total_prob</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_histogram</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total_prob</span>
+    <span class="k">return</span> <span class="n">Histogram</span><span class="p">(</span><span class="n">new_histogram</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

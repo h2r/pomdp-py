@@ -1,18 +1,20 @@
-# Provides utility functions that interfaces with simple_rl.
-# 
-# Essentially, this will convert an agent in pomdp_py into a simple_rl.MDPClass
-# or POMDPClass. Note that since creating these classes require enumerable
-# aciton and observation spaces, this conversion is only feasible for agents
-# whose ObservationModel and PolicyModel can return a list of all observations /
-# actions.
-#
-# Note: simple_rl is a library for Reinforcement Learning developed and
-# maintained by David Abel. It is also an early-stage library.
-#
-# Warning:
-# simple_rl is simple_rl's POMDP functionality is currently relatively
-# lacking. Providing this inteface is mostly to potentially leverage the MDP
-# algorithms in simple_rl.
+"""
+Provides utility functions that interfaces with `simple_rl <https://github.com/david-abel/simple_rl>`_.
+
+Essentially, this will convert an agent in pomdp_py into a simple_rl.MDPClass
+or POMDPClass. Note that since creating these classes require enumerable
+aciton and observation spaces, this conversion is only feasible for agents
+whose ObservationModel and PolicyModel can return a list of all observations /
+actions.
+
+Note: simple_rl is a library for Reinforcement Learning developed and
+maintained by David Abel. It is also an early-stage library.
+
+Warning:
+simple_rl is simple_rl's POMDP functionality is currently relatively
+lacking. Providing this inteface is mostly to potentially leverage the MDP
+algorithms in simple_rl.
+"""
 import simple_rl
 
 def convert_to_MDPClass(pomdp, discount_factor=0.99, step_cost=0):
@@ -61,8 +63,8 @@ def convert_to_POMDPClass(pomdp,
     try:
         belief_hist = agent.belief.get_histogram()
     except Exception:
-        raise ValueError("Agent belief cannot be converted into a histogram;
-                         thus cannot create POMDPClass.")
+        raise ValueError("Agent belief cannot be converted into a histogram;\n"
+                         "thus cannot create POMDPClass.")
 
     return simple_rl.POMDP(all_actions,
                            all_observations,

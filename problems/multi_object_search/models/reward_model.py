@@ -1,4 +1,4 @@
-# Reward model for Mos3D
+"""Reward model for 2D Multi-object Search domain"""
 
 import pomdp_py
 from ..domain.action import *

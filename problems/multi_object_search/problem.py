@@ -1,6 +1,7 @@
-# Uses the domain, models, and agent/environment
-# to actually define the POMDP problem for multi-object search.
-# Then, solve it using POUCT or POMCP.
+"""2D Multi-Object Search (MOS) Task.
+Uses the domain, models, and agent/environment
+to actually define the POMDP problem for multi-object search.
+Then, solve it using POUCT or POMCP."""
 import pomdp_py
 from .env.env import *
 from .env.visual import *
@@ -281,7 +282,8 @@ def solve(problem,
             
 # Test
 def unittest():
-    grid_map, robot_char = world_rand50
+    # random world
+    grid_map, robot_char = random_world(20, 20, 5, 20)
     laserstr = make_laser_sensor(90, (1, 5), 0.5, False)
     proxstr = make_proximity_sensor(5, False)    
     problem = MosOOPOMDP(robot_char,  # r is the robot character
