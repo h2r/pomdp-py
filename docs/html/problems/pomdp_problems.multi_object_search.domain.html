@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_problems.multi_object_search.domain package &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_problems.multi_object_search.models package" href="pomdp_problems.multi_object_search.models.html" />
+    <link rel="prev" title="pomdp_problems.multi_object_search.env package" href="pomdp_problems.multi_object_search.env.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pomdp_problems.multi_object_search.domain package</a><ul>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.domain.action">pomdp_problems.multi_object_search.domain.action module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.domain.observation">pomdp_problems.multi_object_search.domain.observation module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.domain.state">pomdp_problems.multi_object_search.domain.state module</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_problems.html">pomdp_problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">pomdp_problems.rocksample package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">pomdp_problems.tiger package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+  <li><a href="pomdp_problems.html">pomdp_problems package</a><ul>
+  <li><a href="pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a><ul>
+      <li>Previous: <a href="pomdp_problems.multi_object_search.env.html" title="previous chapter">pomdp_problems.multi_object_search.env package</a></li>
+      <li>Next: <a href="pomdp_problems.multi_object_search.models.html" title="next chapter">pomdp_problems.multi_object_search.models package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pomdp-problems-multi-object-search-domain-package">
+<h1>pomdp_problems.multi_object_search.domain package<a class="headerlink" href="#pomdp-problems-multi-object-search-domain-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pomdp_problems.multi_object_search.domain.action">
+<span id="pomdp-problems-multi-object-search-domain-action-module"></span><h2>pomdp_problems.multi_object_search.domain.action module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.domain.action" title="Permalink to this headline">¶</a></h2>
+<p>Defines the Action for the 2D Multi-Object Search domain;</p>
+<p>Action space:</p>
+<blockquote>
+<div><p>Motion <span class="math notranslate nohighlight">\(\cup\)</span> Look <span class="math notranslate nohighlight">\(\cup\)</span> Find</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Motion Actions scheme 1: South, East, West, North.</p></li>
+<li><p>Motion Actions scheme 2: Left 45deg, Right 45deg, Forward</p></li>
+<li><p>Look: Interprets sensor input as observation</p></li>
+<li><p>Find: Marks objects observed in the last Look action as
+(differs from original paper; reduces action space)</p></li>
+</ul>
+<p>It is possible to force “Look” after every N/S/E/W action;
+then the Look action could be dropped. This is optional behavior.</p>
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.action.Action">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.action.</code><code class="sig-name descname">Action</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/action.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
+<p>Mos action; Simple named action.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.action.</code><code class="sig-name descname">MotionAction</code><span class="sig-paren">(</span><em class="sig-param">motion</em>, <em class="sig-param">scheme='xy'</em>, <em class="sig-param">distance_cost=1</em>, <em class="sig-param">motion_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/action.html#MotionAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.domain.action.Action" title="pomdp_problems.multi_object_search.domain.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.domain.action.Action</span></code></a></p>
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.EAST">
+<code class="sig-name descname">EAST</code><em class="property"> = (1, 0, 0)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.EAST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.WEST">
+<code class="sig-name descname">WEST</code><em class="property"> = (-1, 0, 3.141592653589793)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.WEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.NORTH">
+<code class="sig-name descname">NORTH</code><em class="property"> = (0, -1, 4.71238898038469)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.NORTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.SOUTH">
+<code class="sig-name descname">SOUTH</code><em class="property"> = (0, 1, 1.5707963267948966)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.SOUTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.FORWARD">
+<code class="sig-name descname">FORWARD</code><em class="property"> = (1, 0)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.FORWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.BACKWARD">
+<code class="sig-name descname">BACKWARD</code><em class="property"> = (-1, 0)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.BACKWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.LEFT">
+<code class="sig-name descname">LEFT</code><em class="property"> = (0, -0.7853981633974483)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.LEFT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.action.MotionAction.RIGHT">
+<code class="sig-name descname">RIGHT</code><em class="property"> = (0, 0.7853981633974483)</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.MotionAction.RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.action.LookAction">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.action.</code><code class="sig-name descname">LookAction</code><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/action.html#LookAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.LookAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.domain.action.Action" title="pomdp_problems.multi_object_search.domain.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.domain.action.Action</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.action.FindAction">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.action.</code><code class="sig-name descname">FindAction</code><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/action.html#FindAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.action.FindAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.domain.action.Action" title="pomdp_problems.multi_object_search.domain.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.domain.action.Action</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_problems.multi_object_search.domain.observation">
+<span id="pomdp-problems-multi-object-search-domain-observation-module"></span><h2>pomdp_problems.multi_object_search.domain.observation module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.domain.observation" title="Permalink to this headline">¶</a></h2>
+<p>Defines the Observation for the 2D Multi-Object Search domain;</p>
+<p>Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
+(extensions: action space changes, different sensor model, gridworld instead of topological graph)</p>
+<p>Observation:</p>
+<blockquote>
+<div><p><code class="code docutils literal notranslate"><span class="pre">{objid</span> <span class="pre">:</span> <span class="pre">pose(x,y)</span> <span class="pre">or</span> <span class="pre">NULL}</span></code>.
+The sensor model could vary;
+it could be a fan-shaped model as the original paper, or
+it could be something else. But the resulting observation
+should be a map from object id to observed pose or NULL (not observed).</p>
+</div></blockquote>
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.observation.ObjectObservation">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.observation.</code><code class="sig-name descname">ObjectObservation</code><span class="sig-paren">(</span><em class="sig-param">objid</em>, <em class="sig-param">pose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/observation.html#ObjectObservation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.ObjectObservation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
+<p>The xy pose of the object is observed; or NULL if not observed</p>
+<dl class="attribute">
+<dt id="pomdp_problems.multi_object_search.domain.observation.ObjectObservation.NULL">
+<code class="sig-name descname">NULL</code><em class="property"> = None</em><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.ObjectObservation.NULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.observation.MosOOObservation">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.observation.</code><code class="sig-name descname">MosOOObservation</code><span class="sig-paren">(</span><em class="sig-param">objposes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/observation.html#MosOOObservation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.MosOOObservation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservation" title="pomdp_py.framework.oopomdp.OOObservation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.OOObservation</span></code></a></p>
+<p>Observation for Mos that can be factored by objects;
+thus this is an OOObservation.</p>
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.observation.MosOOObservation.for_obj">
+<code class="sig-name descname">for_obj</code><span class="sig-paren">(</span><em class="sig-param">objid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/observation.html#MosOOObservation.for_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.for_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.observation.MosOOObservation.factor">
+<code class="sig-name descname">factor</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">*params</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/observation.html#MosOOObservation.factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factor this OO-observation by objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.observation.MosOOObservation.merge">
+<em class="property">classmethod </em><code class="sig-name descname">merge</code><span class="sig-paren">(</span><em class="sig-param">object_observations</em>, <em class="sig-param">next_state</em>, <em class="sig-param">*params</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/observation.html#MosOOObservation.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge <cite>object_observations</cite> into a single OOObservation object;</p>
+<p>object_observation (dict): Maps from objid to ObjectObservation</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_problems.multi_object_search.domain.state">
+<span id="pomdp-problems-multi-object-search-domain-state-module"></span><h2>pomdp_problems.multi_object_search.domain.state module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.domain.state" title="Permalink to this headline">¶</a></h2>
+<p>Defines the State for the 2D Multi-Object Search domain;</p>
+<p>Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
+(extensions: action space changes, different sensor model, gridworld instead of
+topological graph)</p>
+<p>Description: Multi-Object Search in a 2D grid world.</p>
+<p>State space:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(S_1 \times S_2 \times ... S_n \times S_r\)</span>
+where <span class="math notranslate nohighlight">\(S_i (1\leq i\leq n)\)</span> is the object state, with attribute
+“pose” <span class="math notranslate nohighlight">\((x,y)\)</span> and Sr is the state of the robot, with attribute
+“pose” <span class="math notranslate nohighlight">\((x,y)\)</span> and “objects_found” (set).</p>
+</div></blockquote>
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.state.ObjectState">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.state.</code><code class="sig-name descname">ObjectState</code><span class="sig-paren">(</span><em class="sig-param">objid</em>, <em class="sig-param">objclass</em>, <em class="sig-param">pose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/state.html#ObjectState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.ObjectState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState" title="pomdp_py.framework.oopomdp.ObjectState"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.ObjectState</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.ObjectState.pose">
+<em class="property">property </em><code class="sig-name descname">pose</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.ObjectState.pose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.ObjectState.objid">
+<em class="property">property </em><code class="sig-name descname">objid</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.ObjectState.objid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.state.RobotState">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.state.</code><code class="sig-name descname">RobotState</code><span class="sig-paren">(</span><em class="sig-param">robot_id</em>, <em class="sig-param">pose</em>, <em class="sig-param">objects_found</em>, <em class="sig-param">camera_direction</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/state.html#RobotState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.RobotState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState" title="pomdp_py.framework.oopomdp.ObjectState"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.ObjectState</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.RobotState.pose">
+<em class="property">property </em><code class="sig-name descname">pose</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.RobotState.pose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.RobotState.robot_pose">
+<em class="property">property </em><code class="sig-name descname">robot_pose</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.RobotState.robot_pose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.RobotState.objects_found">
+<em class="property">property </em><code class="sig-name descname">objects_found</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.RobotState.objects_found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.multi_object_search.domain.state.MosOOState">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.domain.state.</code><code class="sig-name descname">MosOOState</code><span class="sig-paren">(</span><em class="sig-param">object_states</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/state.html#MosOOState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.MosOOState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState" title="pomdp_py.framework.oopomdp.OOState"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.OOState</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.MosOOState.object_pose">
+<code class="sig-name descname">object_pose</code><span class="sig-paren">(</span><em class="sig-param">objid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/state.html#MosOOState.object_pose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.MosOOState.object_pose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.MosOOState.pose">
+<code class="sig-name descname">pose</code><span class="sig-paren">(</span><em class="sig-param">objid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/domain/state.html#MosOOState.pose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.MosOOState.pose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.multi_object_search.domain.state.MosOOState.object_poses">
+<em class="property">property </em><code class="sig-name descname">object_poses</code><a class="headerlink" href="#pomdp_problems.multi_object_search.domain.state.MosOOState.object_poses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/problems/pomdp_problems.multi_object_search.domain.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -418,7 +418,8 @@ For the Tiger problem, we implemented this procedure as follows:
                                                               tiger_problem.agent.transition_model)
                 tiger_problem.agent.set_belief(new_belief)
 
-`[source] <_modules/problems/tiger/tiger_problem.html#test_planner>`_                
+`[source] <_modules/problems/tiger/tiger_problem.html#test_planner>`_
+
 .. _summary:
 
 Summary

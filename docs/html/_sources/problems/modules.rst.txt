@@ -4,4 +4,4 @@ problems
 .. toctree::
    :maxdepth: 4
 
-   problems
+   pomdp_problems

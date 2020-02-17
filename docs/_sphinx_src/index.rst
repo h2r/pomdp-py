@@ -7,9 +7,17 @@ Overview
 --------
 `pomdp_py <https://github.com/h2r/pomdp-py>`_ is a **general purpose POMDP library** written in Python and Cython. It features simple and comprehensive interfaces to describe POMDP or MDP problems. Originally written to support POMDP planning research, the interfaces also allow extensions to model-free or model-based learning in (PO)MDPs, multi-agent POMDP planning/learning, and task transfer or transfer learning.
 
+**Why pomdp_py?** It provides a POMDP framework in Python with clean and intuitive interfaces. This makes POMDP-related research or projects accessible to more people. It also helps sharing code and developing a community.
+
 POMDP stands for **P**\ artially **O**\ bservable **M**\ arkov **D**\ ecision **P**\ rocess :cite:`kaelbling1998planning`.
 
-The code is available `on github <https://github.com/h2r/pomdp-py>`_.
+The code is available `on github <https://github.com/h2r/pomdp-py>`_. We welcome contributions to this library in:
+
+(1) Implementation of additional POMDP solvers (see :doc:`existing_solvers`)
+(2) Implementation of additional POMDP domains (see :doc:`examples`)
+(3) Interfacing with `existing POMDP libraries <other_libraries.html>`_ (majority in other languages).
+(4) Extension of `pomdp_py` beyond planning (see :doc:`extensions`).
+
 
 
 Getting Started

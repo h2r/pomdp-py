@@ -134,8 +134,15 @@
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/h2r/pomdp-py">pomdp_py</a> is a <strong>general purpose POMDP library</strong> written in Python and Cython. It features simple and comprehensive interfaces to describe POMDP or MDP problems. Originally written to support POMDP planning research, the interfaces also allow extensions to model-free or model-based learning in (PO)MDPs, multi-agent POMDP planning/learning, and task transfer or transfer learning.</p>
-<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <a class="bibtex reference internal" href="examples.tiger.html#kaelbling1998planning" id="id1">[6]</a>.</p>
-<p>The code is available <a class="reference external" href="https://github.com/h2r/pomdp-py">on github</a>.</p>
+<p><strong>Why pomdp_py?</strong> It provides a POMDP framework in Python with clean and intuitive interfaces. This makes POMDP-related research or projects accessible to more people. It also helps sharing code and developing a community.</p>
+<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[6]</a>.</p>
+<p>The code is available <a class="reference external" href="https://github.com/h2r/pomdp-py">on github</a>. We welcome contributions to this library in:</p>
+<ol class="arabic simple">
+<li><p>Implementation of additional POMDP solvers (see <a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a>)</p></li>
+<li><p>Implementation of additional POMDP domains (see <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a>)</p></li>
+<li><p>Interfacing with <a class="reference external" href="other_libraries.html">existing POMDP libraries</a> (majority in other languages).</p></li>
+<li><p>Extension of <cite>pomdp_py</cite> beyond planning (see <a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a>).</p></li>
+</ol>
 </div>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
@@ -176,10 +183,10 @@ The Tiger example represents how one could quickly implement a simple POMDP; The
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="problems/problems.html">problems package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="problems/problems.multi_object_search.html">problems.multi_object_search package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="problems/problems.rocksample.html">problems.rocksample package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="problems/problems.tiger.html">problems.tiger package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems/pomdp_problems.html">pomdp_problems package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems/pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems/pomdp_problems.rocksample.html">pomdp_problems.rocksample package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems/pomdp_problems.tiger.html">pomdp_problems.tiger package</a></li>
 </ul>
 </li>
 </ul>

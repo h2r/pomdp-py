@@ -140,7 +140,7 @@
             
   <div class="section" id="tiger-problem">
 <h1>Tiger Problem<a class="headerlink" href="#tiger-problem" title="Permalink to this headline">¶</a></h1>
-<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[6]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
+<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[6]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
 <p><cite>A tiger is put with equal probability behind one
@@ -217,7 +217,7 @@ equivalent as defining classes that inherit
 <p>As mentioned before, the uncertainty of the models can be specified by a Python
 dictionary for Tiger problem. Let <code class="code docutils literal notranslate"><span class="pre">obs_probs</span></code> and <code class="code docutils literal notranslate"><span class="pre">trans_probs</span></code> be
 this dictionary for <span class="math notranslate nohighlight">\(O\)</span> and <span class="math notranslate nohighlight">\(T\)</span> respectively. For example, we can
-set the probabilities according to the paper <a class="bibtex reference internal" href="#kaelbling1998planning" id="id4">[6]</a>:</p>
+set the probabilities according to the paper <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id4">[6]</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obs_probs</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># next_state -&gt; action -&gt; observation</span>
      <span class="s2">&quot;tiger-left&quot;</span><span class="p">:{</span>
          <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
@@ -505,11 +505,10 @@ will result in the agent belief update as well. But for
             <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">new_belief</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#test_planner">[source]</a>
-.. _summary:</p>
+<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#test_planner">[source]</a></p>
 </div>
 <div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>In short, to use <cite>pomdp_py</cite> to define a POMDP problem and solve an instance of the problem,</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>

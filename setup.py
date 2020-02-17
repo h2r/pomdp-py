@@ -5,7 +5,7 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 
 setup(name='pomdp-py',
-      packages=['pomdp_py'],
+      packages=['pomdp_py', 'pomdp_problems'],
       version='0.0',
       description='Python POMDP Library.',
       install_requires=[
