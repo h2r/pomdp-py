@@ -85,7 +85,7 @@ The recommendation is to separate code for `domain`, `models`, `agent` and `envi
 As in the above package tree, files such as :code:`state.py` or
 :code:`transition_model.py` are self-evident in their role. The
 :code:`problem.py` file is where the
-:py:mod:`~problems.multi_object_search.problem.MosOOPOMDP` class is defined, and
+:py:mod:`~pomdp_problems.multi_object_search.problem.MosOOPOMDP` class is defined, and
 where the logic of `action-feedback loop` is implemented (see
 :doc:`examples.tiger` for more detail).
 
@@ -99,13 +99,12 @@ To try out the MOS example problem:
 
 .. code-block:: shell
 
-   $ cd pomdp_py/problems
-   $ python -m multi_object_search.problem
+   $ python -m pomdp_problems.multi_object_search.problem
 
 A gridworld with randomly placed obstacles, targets and robot initial pose is generated; The robot is equipped with either a disk-shape sensor or a laser sensor `[source] <_modules/problems/multi_object_search/problem.html#unittest>`_. A command-line interface is not yet provided; Check :py:mod:`~problems.multi_object_search.env.env.interpret`,
-:py:mod:`~problems.multi_object_search.env.env.equip_sensors`,
-:py:mod:`~problems.multi_object_search.env.env.make_laser_sensor`,
-:py:mod:`~problems.multi_object_search.env.env.make_proximity_sensor`
+:py:mod:`~pomdp_problems.multi_object_search.env.env.equip_sensors`,
+:py:mod:`~pomdp_problems.multi_object_search.env.env.make_laser_sensor`,
+:py:mod:`~pomdp_problems.multi_object_search.env.env.make_proximity_sensor`
 as well as previously linked source code
 for details about how to create your custom instance of the problem.
     

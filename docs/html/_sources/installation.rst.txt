@@ -19,17 +19,11 @@ Install Python and Cython
 Install pomdp_py
 ----------------
 
-You can install `pomdp_py` in two ways:
-
-A. From `PyPI <https://pypi.org/>`_ (recommended)::
-
-    pip install pomdp_py
-
-B. (For developers) **First**, download `pomdp_py` latest release `on github <https://github.com/h2r/pomdp-py/releases>`_, or directly clone the repository by::
+1. **First**, download `pomdp_py` latest release `on github <https://github.com/h2r/pomdp-py/releases>`_, or clone the repository by::
 
     git clone https://github.com/h2r/pomdp-py.git
      
-   **Next**, go to the package root directory (where :code:`setup.py` is located). Install as a developer::
+2. **Next**, go to the package root directory (where :code:`setup.py` is located). Run::
     
     pip install -e .
 
@@ -37,10 +31,10 @@ B. (For developers) **First**, download `pomdp_py` latest release `on github <ht
 
      make build
      
-   **Finally**, verify that Tiger problem and RockSample problem work::
+3. **Finally**, verify that Tiger problem and RockSample problem work::
    
-     python problems/tiger/tiger_problem.py
-     python problems/rocksample/rocksample_problem.py
+     python pomdp_problems/tiger/tiger_problem.py
+     python pomdp_problems/rocksample/rocksample_problem.py
    
    For the Tiger problem, you should see output like
       

@@ -6,7 +6,7 @@ from Cython.Build import cythonize
 
 setup(name='pomdp-py',
       packages=['pomdp_py', 'pomdp_problems'],
-      version='0.0',
+      version='1.2',
       description='Python POMDP Library.',
       install_requires=[
           'numpy',
