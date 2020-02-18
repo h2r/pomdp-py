@@ -8,18 +8,18 @@ We refer the reader to the following problems that have been implemented:
 .. autosummary::
    :nosignatures:
 
-   problems.multi_object_search.problem
-   problems.tiger.tiger_problem
-   problems.rocksample.rocksample_problem
+   pomdp_problems.multi_object_search.problem
+   pomdp_problems.tiger.tiger_problem
+   pomdp_problems.rocksample.rocksample_problem
 
 
 
 There are a number of problems that we hope to implement. There are even more examples `here <http://www.pomdp.org/examples/>`_.
 
-* :doc:`problems/problems.light_dark`
-* :doc:`problems/problems.load_unload`
-* :doc:`problems/problems.maze`
-* :doc:`problems/problems.tag`
+* :doc:`problems/pomdp_problems.light_dark`
+* :doc:`problems/pomdp_problems.load_unload`
+* :doc:`problems/pomdp_problems.maze`
+* :doc:`problems/pomdp_problems.tag`
 
 
 In addition, the interfaces in `pomdp_py` are general enough to be extended to e.g. learning, multi-agent POMDPs; see :doc:`extensions`. `Contributions are always welcomed!`
@@ -27,6 +27,8 @@ In addition, the interfaces in `pomdp_py` are general enough to be extended to e
 
 Tiger
 *****
+
+This example describes how one could quickly implement a simple POMDP.
 
 .. toctree::
    :maxdepth: 1
@@ -36,12 +38,9 @@ Tiger
 Multi-Object Search (MOS)
 *************************
 
+This example describes the convention of how one structures their project when using `pomdp_py` for more complicated domains.
+
 .. toctree::
    :maxdepth: 1
    
    examples.mos   
-
-..
-   `problems.tiger.tiger_problem.State`
-
-

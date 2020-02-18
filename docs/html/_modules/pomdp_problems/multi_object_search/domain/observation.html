@@ -7,12 +7,12 @@
     <title>pomdp_problems.multi_object_search.domain.observation &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-    <script src="../../../../_static/jquery.js"></script>
-    <script src="../../../../_static/underscore.js"></script>
-    <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -92,7 +92,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -138,7 +138,7 @@
 <div class="viewcode-block" id="ObjectObservation"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.ObjectObservation">[docs]</a><span class="k">class</span> <span class="nc">ObjectObservation</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Observation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The xy pose of the object is observed; or NULL if not observed&quot;&quot;&quot;</span>
     <span class="n">NULL</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objid</span> <span class="o">=</span> <span class="n">objid</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>\
            <span class="ow">or</span> <span class="n">pose</span> <span class="o">==</span> <span class="n">ObjectObservation</span><span class="o">.</span><span class="n">NULL</span><span class="p">:</span>
@@ -146,9 +146,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid observation </span><span class="si">%s</span><span class="s2"> for object&quot;</span>
                              <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pose</span><span class="p">),</span> <span class="n">objid</span><span class="p">))</span>
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">objid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pose</span><span class="p">))</span>
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ObjectObservation</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
@@ -158,7 +158,7 @@
 <div class="viewcode-block" id="MosOOObservation"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation">[docs]</a><span class="k">class</span> <span class="nc">MosOOObservation</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">OOObservation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Observation for Mos that can be factored by objects;</span>
 <span class="sd">    thus this is an OOObservation.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objposes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objposes</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        objposes (dict): map from objid to 2d pose or NULL (not ObjectObservation!).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -171,19 +171,19 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ObjectObservation</span><span class="p">(</span><span class="n">objid</span><span class="p">,</span> <span class="n">ObjectObservation</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span></div>
         
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hashcode</span>
     
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">MosOOObservation</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">objposes</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">objposes</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;MosOOObservation(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objposes</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MosOOObservation.factor"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.factor">[docs]</a>    <span class="k">def</span> <span class="nf">factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -212,7 +212,7 @@
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

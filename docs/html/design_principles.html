@@ -7,12 +7,12 @@
     <title>Design Principles &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -94,7 +94,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -127,7 +127,8 @@
 <cite>environment</cite>.  The interaction is formally encapsulated by a few important
 <cite>generative probability distributions</cite>. The core of pomdp_py is built around
 this understanding. The interfaces in <a class="reference internal" href="api/pomdp_py.framework.html#module-pomdp_py.framework.basics" title="pomdp_py.framework.basics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.basics</span></code></a>
-convey this idea.</p>
+convey this idea. Using distributions as the building block avoids the
+requirement of explicitly enumerating over <span class="math notranslate nohighlight">\(S,A,O\)</span>.</p>
 </li>
 </ol>
 <p>–</p>
@@ -137,18 +138,18 @@ convey this idea.</p>
 distributions including the
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a>,
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a>,
-<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a>. Because, generally, T, R, O
+<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a>. Because, generally, <span class="math notranslate nohighlight">\(T, R, O\)</span>
 may be different for the agent versus the environment (to support learning),
 it does not make much sense to have the POMDP class to hold this information;
-instead, Agent should have its own T, R, O, pi and the Environment should
-have its own T, R. The job of a POMDP is only to verify whether a given
+instead, Agent should have its own <span class="math notranslate nohighlight">\(T, R, O, \pi\)</span> and the Environment should
+have its own <span class="math notranslate nohighlight">\(T, R\)</span>. The job of a POMDP is only to verify whether a given
 state, action, or observation are valid. See <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a>
 and <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment" title="pomdp_py.framework.basics.Environment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></a>.</p>
 </li>
 </ol>
 <div class="figure align-default" id="id1">
 <img alt="POMDP diagram" src="_images/pomdp.jpg" />
-<p class="caption"><span class="caption-text">A Diagram for POMDP <span class="math notranslate nohighlight">\(\langle S,A,\Omega,T,O,R \rangle\)</span>. (<strong>error</strong>:
+<p class="caption"><span class="caption-text">A Diagram for POMDP <span class="math notranslate nohighlight">\(\langle S,A,\Omega,T,O,R \rangle\)</span>. (<strong>correction</strong>:
 change <span class="math notranslate nohighlight">\(o\in S\)</span> to <span class="math notranslate nohighlight">\(o\in\Omega\)</span>)</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 </div>
@@ -164,7 +165,7 @@ change <span class="math notranslate nohighlight">\(o\in S\)</span> to <span cla
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

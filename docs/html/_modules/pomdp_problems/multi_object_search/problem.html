@@ -7,12 +7,12 @@
     <title>pomdp_problems.multi_object_search.problem &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -92,7 +92,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -123,12 +123,12 @@
 <span class="sd">to actually define the POMDP problem for multi-object search.</span>
 <span class="sd">Then, solve it using POUCT or POMCP.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
-<span class="kn">from</span> <span class="nn">.env.env</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.env.visual</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.agent.agent</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.example_worlds</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.domain.observation</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.models.components.grid_map</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.env.env</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.env.visual</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.agent.agent</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.example_worlds</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.domain.observation</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.models.components.grid_map</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -147,7 +147,7 @@
 <span class="sd">    could construct an Environment object and give None to</span>
 <span class="sd">    the object poses.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">sensors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">belief_rep</span><span class="o">=</span><span class="s2">&quot;histogram&quot;</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="p">{},</span> <span class="n">num_particles</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
                  <span class="n">agent_has_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -436,7 +436,7 @@
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

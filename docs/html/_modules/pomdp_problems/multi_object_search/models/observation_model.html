@@ -7,12 +7,12 @@
     <title>pomdp_problems.multi_object_search.models.observation_model &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-    <script src="../../../../_static/jquery.js"></script>
-    <script src="../../../../_static/underscore.js"></script>
-    <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -92,7 +92,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -142,14 +142,14 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">..domain.state</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..domain.action</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..domain.observation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..domain.state</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..domain.action</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..domain.observation</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="c1">#### Observation Models ####</span>
 <div class="viewcode-block" id="MosObservationModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel">[docs]</a><span class="k">class</span> <span class="nc">MosObservationModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">OOObservationModel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Object-oriented transition model&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">dim</span><span class="p">,</span>
                  <span class="n">sensor</span><span class="p">,</span>
                  <span class="n">object_ids</span><span class="p">,</span>
@@ -173,7 +173,7 @@
         <span class="k">return</span> <span class="n">MosOOObservation</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">factored_observations</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="ObjectObservationModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel">[docs]</a><span class="k">class</span> <span class="nc">ObjectObservationModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">ObservationModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        sigma and epsilon are parameters of the observation model (see paper),</span>
 <span class="sd">        dim (tuple): a tuple (width, length) for the dimension of the world&quot;&quot;&quot;</span>
@@ -306,7 +306,7 @@
 
 <span class="c1">### Unit test ###</span>
 <div class="viewcode-block" id="unittest"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.unittest">[docs]</a><span class="k">def</span> <span class="nf">unittest</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">..env.env</span> <span class="kn">import</span> <span class="n">make_laser_sensor</span><span class="p">,</span>\
+    <span class="kn">from</span> <span class="nn">..env.env</span> <span class="k">import</span> <span class="n">make_laser_sensor</span><span class="p">,</span>\
         <span class="n">make_proximity_sensor</span><span class="p">,</span> <span class="n">equip_sensors</span><span class="p">,</span>\
         <span class="n">interpret</span><span class="p">,</span> <span class="n">interpret_robot_id</span>
     <span class="c1"># Test within search region check,</span>
@@ -381,7 +381,7 @@
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

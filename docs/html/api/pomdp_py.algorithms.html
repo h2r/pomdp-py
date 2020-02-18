@@ -7,12 +7,12 @@
     <title>pomdp_py.algorithms package &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -118,7 +118,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -502,8 +502,9 @@ and observations can be explicitly enumerated.</p>
 <p>__init__(self, horizon=float(‘inf’), discount_factor=0.9, epsilon=1e-6)</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration.plan">
-<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plans an action.</p>
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The agent carries the information:
+Bt, ht, O,T,R/G, pi, necessary for planning</p>
 </dd></dl>
 
 </dd></dl>
@@ -543,7 +544,7 @@ and observations can be explicitly enumerated.</p>
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

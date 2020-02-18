@@ -7,12 +7,12 @@
     <title>Examples &#8212; pomdp_py 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -107,7 +107,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -142,27 +142,28 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">problems.multi_object_search.problem</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.multi_object_search.html#module-pomdp_problems.multi_object_search.problem" title="pomdp_problems.multi_object_search.problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.problem</span></code></a></p></td>
+<td><p>2D Multi-Object Search (MOS) Task.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">problems.tiger.tiger_problem</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="problems/pomdp_problems.tiger.html#module-pomdp_problems.tiger.tiger_problem" title="pomdp_problems.tiger.tiger_problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.tiger.tiger_problem</span></code></a></p></td>
+<td><p>The classic Tiger problem.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">problems.rocksample.rocksample_problem</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.rocksample.html#module-pomdp_problems.rocksample.rocksample_problem" title="pomdp_problems.rocksample.rocksample_problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.rocksample_problem</span></code></a></p></td>
+<td><p>RockSample(n,k) problem</p></td>
 </tr>
 </tbody>
 </table>
 <p>There are a number of problems that we hope to implement. There are even more examples <a class="reference external" href="http://www.pomdp.org/examples/">here</a>.</p>
 <ul class="simple">
-<li><p><span class="xref std std-doc">problems/problems.light_dark</span></p></li>
-<li><p><span class="xref std std-doc">problems/problems.load_unload</span></p></li>
-<li><p><span class="xref std std-doc">problems/problems.maze</span></p></li>
-<li><p><span class="xref std std-doc">problems/problems.tag</span></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.light_dark.html"><span class="doc">pomdp_problems.light_dark package</span></a></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.load_unload.html"><span class="doc">pomdp_problems.load_unload package</span></a></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.maze.html"><span class="doc">pomdp_problems.maze package</span></a></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.tag.html"><span class="doc">pomdp_problems.tag package</span></a></p></li>
 </ul>
 <p>In addition, the interfaces in <cite>pomdp_py</cite> are general enough to be extended to e.g. learning, multi-agent POMDPs; see <a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a>. <cite>Contributions are always welcomed!</cite></p>
 <div class="section" id="tiger">
 <h2>Tiger<a class="headerlink" href="#tiger" title="Permalink to this headline">¶</a></h2>
+<p>This example describes how one could quickly implement a simple POMDP.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples.tiger.html">Tiger Problem</a></li>
@@ -171,6 +172,7 @@
 </div>
 <div class="section" id="multi-object-search-mos">
 <h2>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h2>
+<p>This example describes the convention of how one structures their project when using <cite>pomdp_py</cite> for more complicated domains.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples.mos.html">Multi-Object Search (MOS)</a></li>
@@ -190,7 +192,7 @@
       &copy;2020, Kaiyu Zheng.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
