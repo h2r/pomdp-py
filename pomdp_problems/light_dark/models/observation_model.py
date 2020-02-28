@@ -18,7 +18,7 @@ import pomdp_py
 import copy
 from ..domain.observation import *
 
-class LightDarkObservationModel(pomdp_py.ObservationModel):
+class ObservationModel(pomdp_py.ObservationModel):
 
     def __init__(self, light, const):
         """
@@ -53,7 +53,7 @@ class LightDarkObservationModel(pomdp_py.ObservationModel):
         gaussian_noise = pomdp_py.Gaussian([0,0],
                                            [[variance, 0],
                                             [0, variance]])
-        if mpe:
+        if argmax:
             omega = gaussian_noise.mpe()
         else:
             omega = gaussian_noise.random()

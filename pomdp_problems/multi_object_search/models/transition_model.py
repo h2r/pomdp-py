@@ -1,27 +1,10 @@
-"""
-Defines the TransitionModel for the 2D Multi-Object Search domain.
+"""Defines the TransitionModel for the 2D Multi-Object Search domain.
 
 Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
-(extensions: action space changes,
-             different sensor model,
-             gridworld instead of topological graph)
+(extensions: action space changes, different sensor model, gridworld instead of
+topological graph)
 
 Description: Multi-Object Search in a 2D grid world.
-
-State space: S1 X S2 X ... Sn X Sr
-             where Si (1<=i<=n) is the object state, with attribute "pose" (x,y)
-             and Sr is the state of the robot, with attribute "pose" (x,y) and
-             "objects_found" (set).
-
-Action space: Motion U Look U Find
-              Motion Actions scheme 1: South, East, West, North.
-              Motion Actions scheme 2: Left 45deg, Right 45deg, Forward
-              motion actions move the robot deterministically.
-              Look: Interprets sensor input as observation
-              Find: Marks objects observed in the last Look action as
-                    (differs from original paper; reduces action space)
-              It is possible to force "Look" after every N/S/E/W action;
-              then the Look action could be dropped. This is optional behavior.
 
 Transition: deterministic
 """

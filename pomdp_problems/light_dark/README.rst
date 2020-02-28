@@ -18,7 +18,6 @@ Reference: `Belief space planning assuming maximum likelihood observations <http
    Note that a variant of this domain appears in `Online algorithms for POMDPs with continuous state, action, and observation spaces <https://arxiv.org/pdf/1709.06196.pdf>`_ where the state and action spaces are discrete and the observation space is kept continuous. Here we do not implement this variant; You can implement it and create a pull request!
 
    There is an implementation of a variant of LightDarkDomain in the JuliaPOMDP suite (`repo <https://github.com/zsunberg/LightDarkPOMDPs.jl>`_).
-   
 
 **Not yet implemented**
 

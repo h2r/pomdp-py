@@ -1,10 +1,8 @@
-"""
-Defines the ObservationModel for the 2D Multi-Object Search domain.
+"""Defines the ObservationModel for the 2D Multi-Object Search domain.
 
 Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
-(extensions: action space changes,
-             different sensor model,
-             gridworld instead of topological graph)
+(extensions: action space changes, different sensor model, gridworld instead of
+topological graph)
 
 Observation: {objid : pose(x,y) or NULL}. The sensor model could vary;
              it could be a fan-shaped model as the original paper, or
@@ -16,7 +14,8 @@ Observation Model
   The agent can observe its own state, as well as object poses
   that are within its sensor range. We only need to model object
   observation.
-  """
+
+"""
 
 import pomdp_py
 import math

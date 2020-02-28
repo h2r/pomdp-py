@@ -19,4 +19,22 @@ class Action(pomdp_py.Action):
         Args:
             control (tuple): velocity
         """
+        if len(control) != 2:
+            raise ValueError("Action control must be a vector of length 2")        
         self.control = control
+
+    def __hash__(self):
+        return hash(self.control)
+    
+    def __eq__(self, other):
+        if isinstance(other, Action):
+            return self.control == other.control
+        else:
+            return False
+        
+    def __str__(self):
+        return self.__repr__()
+    
+    def __repr__(self):
+        return "Action(%s)" % (str(self.control))
+        

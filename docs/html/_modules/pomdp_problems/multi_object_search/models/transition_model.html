@@ -118,30 +118,13 @@
           <div class="body" role="main">
             
   <h1>Source code for pomdp_problems.multi_object_search.models.transition_model</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Defines the TransitionModel for the 2D Multi-Object Search domain.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Defines the TransitionModel for the 2D Multi-Object Search domain.</span>
 
 <span class="sd">Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)</span>
-<span class="sd">(extensions: action space changes,</span>
-<span class="sd">             different sensor model,</span>
-<span class="sd">             gridworld instead of topological graph)</span>
+<span class="sd">(extensions: action space changes, different sensor model, gridworld instead of</span>
+<span class="sd">topological graph)</span>
 
 <span class="sd">Description: Multi-Object Search in a 2D grid world.</span>
-
-<span class="sd">State space: S1 X S2 X ... Sn X Sr</span>
-<span class="sd">             where Si (1&lt;=i&lt;=n) is the object state, with attribute &quot;pose&quot; (x,y)</span>
-<span class="sd">             and Sr is the state of the robot, with attribute &quot;pose&quot; (x,y) and</span>
-<span class="sd">             &quot;objects_found&quot; (set).</span>
-
-<span class="sd">Action space: Motion U Look U Find</span>
-<span class="sd">              Motion Actions scheme 1: South, East, West, North.</span>
-<span class="sd">              Motion Actions scheme 2: Left 45deg, Right 45deg, Forward</span>
-<span class="sd">              motion actions move the robot deterministically.</span>
-<span class="sd">              Look: Interprets sensor input as observation</span>
-<span class="sd">              Find: Marks objects observed in the last Look action as</span>
-<span class="sd">                    (differs from original paper; reduces action space)</span>
-<span class="sd">              It is possible to force &quot;Look&quot; after every N/S/E/W action;</span>
-<span class="sd">              then the Look action could be dropped. This is optional behavior.</span>
 
 <span class="sd">Transition: deterministic</span>
 <span class="sd">&quot;&quot;&quot;</span>

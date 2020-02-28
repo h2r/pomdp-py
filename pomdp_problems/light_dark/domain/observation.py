@@ -19,4 +19,22 @@ class Observation(pomdp_py.Observation):
         Args:
             position (tuple): position of the robot.
         """
+        if len(position) != 2:
+            raise ValueError("Observation position must be a vector of length 2")
         self.position = position
+
+    def __hash__(self):
+        return hash(self.position)
+    
+    def __eq__(self, other):
+        if isinstance(other, Observation):
+            return self.position == other.position
+        else:
+            return False
+        
+    def __str__(self):
+        return self.__repr__()
+    
+    def __repr__(self):
+        return "Observation(%s)" % (str(self.position))
+        

@@ -210,8 +210,7 @@ def equip_sensors(worldmap, sensors):
 def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
     """
     Returns string representation of the laser scanner configuration.
-    For example: 
-        laser fov=90 min_range=1 max_range=10
+    For example:  "laser fov=90 min_range=1 max_range=10"
 
     Args:
         fov (int or float): angle between the start and end beams of one scan (degree).
@@ -231,8 +230,7 @@ def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
 def make_proximity_sensor(radius, occlusion):
     """
     Returns string representation of the proximity sensor configuration.
-    For example: 
-        proximity radius=5 occlusion_enabled=False
+    For example: "proximity radius=5 occlusion_enabled=False"
 
     Args:
         radius (int or float)

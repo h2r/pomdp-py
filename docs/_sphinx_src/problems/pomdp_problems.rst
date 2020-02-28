@@ -7,6 +7,7 @@ pomdp_problems package
    pomdp_problems.multi_object_search
    pomdp_problems.rocksample
    pomdp_problems.tiger
+   pomdp_problems.light_dark
 
 ..
    .. toctree::

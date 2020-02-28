@@ -77,6 +77,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">pomdp_problems.rocksample package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">pomdp_problems.tiger package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.light_dark.html">pomdp_problems.light_dark package</a></li>
 </ul>
 </li>
 </ul>
@@ -146,26 +147,26 @@
 <span class="target" id="module-pomdp_problems.rocksample.rocksample_problem"></span><p>RockSample(n,k) problem</p>
 <p>Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)</p>
 <p>Description:</p>
-<dl>
-<dt>State space: Position {(1,1),(1,2),…(n,n)}</dt><dd><dl class="simple">
-<dt><span class="math notranslate nohighlight">\(\times\)</span> RockType_1 <span class="math notranslate nohighlight">\(\times\)</span> RockType_2, …, <span class="math notranslate nohighlight">\(\times\)</span> RockType_k</dt><dd><p>where RockType_i = {Good, Bad}</p>
-</dd>
-</dl>
-<p><span class="math notranslate nohighlight">\(\times\)</span> TerminalState</p>
+<p>State space:</p>
+<blockquote>
+<div><p>Position {(1,1),(1,2),…(n,n)}
+<span class="math notranslate nohighlight">\(\times\)</span> RockType_1 <span class="math notranslate nohighlight">\(\times\)</span> RockType_2, …, <span class="math notranslate nohighlight">\(\times\)</span> RockType_k
+where RockType_i = {Good, Bad}
+<span class="math notranslate nohighlight">\(\times\)</span> TerminalState</p>
 <dl class="simple">
 <dt>(basically, the positions of rocks are known to the robot,</dt><dd><p>but not represented explicitly in the state space. Check_i
 will smartly check the rock i at its location.)</p>
 </dd>
 </dl>
-</dd>
-<dt>Action space: North, South, East, West, Sample, Check_1, …, Check_k</dt><dd><p>The first four moves the agent deterministically
-Sample: samples the rock at agent’s current location
-Check_i: receives a noisy observation about RockType_i</p>
-<blockquote>
-<div><p>(noise determined by eta. eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</p>
 </div></blockquote>
-</dd>
-</dl>
+<p>Action space:</p>
+<blockquote>
+<div><p>North, South, East, West, Sample, Check_1, …, Check_k
+The first four moves the agent deterministically
+Sample: samples the rock at agent’s current location
+Check_i: receives a noisy observation about RockType_i
+(noise determined by eta (<span class="math notranslate nohighlight">\(\eta\)</span>). eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</p>
+</div></blockquote>
 <p>Observation: observes the property of rock i when taking Check_i.</p>
 <dl class="simple">
 <dt>Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.</dt><dd><p>Move to exit area +10. Other actions have no cost or reward.</p>

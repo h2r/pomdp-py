@@ -125,20 +125,24 @@
 
 <span class="sd">Description:</span>
 
-<span class="sd">State space: Position {(1,1),(1,2),...(n,n)}</span>
-<span class="sd">             :math:`\\times` RockType_1 :math:`\\times` RockType_2, ..., :math:`\\times` RockType_k</span>
-<span class="sd">               where RockType_i = {Good, Bad}</span>
-<span class="sd">             :math:`\\times` TerminalState</span>
+<span class="sd">State space: </span>
 
-<span class="sd">             (basically, the positions of rocks are known to the robot,</span>
-<span class="sd">              but not represented explicitly in the state space. Check_i</span>
-<span class="sd">              will smartly check the rock i at its location.)</span>
+<span class="sd">    Position {(1,1),(1,2),...(n,n)}</span>
+<span class="sd">    :math:`\\times` RockType_1 :math:`\\times` RockType_2, ..., :math:`\\times` RockType_k</span>
+<span class="sd">    where RockType_i = {Good, Bad}</span>
+<span class="sd">    :math:`\\times` TerminalState</span>
 
-<span class="sd">Action space: North, South, East, West, Sample, Check_1, ..., Check_k</span>
-<span class="sd">              The first four moves the agent deterministically</span>
-<span class="sd">              Sample: samples the rock at agent&#39;s current location</span>
-<span class="sd">              Check_i: receives a noisy observation about RockType_i</span>
-<span class="sd">                       (noise determined by eta. eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</span>
+<span class="sd">    (basically, the positions of rocks are known to the robot,</span>
+<span class="sd">     but not represented explicitly in the state space. Check_i</span>
+<span class="sd">     will smartly check the rock i at its location.)</span>
+
+<span class="sd">Action space:</span>
+
+<span class="sd">    North, South, East, West, Sample, Check_1, ..., Check_k</span>
+<span class="sd">    The first four moves the agent deterministically</span>
+<span class="sd">    Sample: samples the rock at agent&#39;s current location</span>
+<span class="sd">    Check_i: receives a noisy observation about RockType_i</span>
+<span class="sd">    (noise determined by eta (:math:`\eta`). eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</span>
 
 <span class="sd">Observation: observes the property of rock i when taking Check_i.</span>
 
@@ -179,7 +183,7 @@
 <div class="viewcode-block" id="State"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.State">[docs]</a><span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">State</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">rocktypes</span><span class="p">,</span> <span class="n">terminal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        position: (x,y) position of the rover on the grid.</span>
+<span class="sd">        position (tuple): (x,y) position of the rover on the grid.</span>
 <span class="sd">        rocktypes: tuple of size k. Each is either Good or Bad.</span>
 <span class="sd">        terminal (bool): The robot is at the terminal state.</span>
 

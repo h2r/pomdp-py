@@ -118,13 +118,11 @@
           <div class="body" role="main">
             
   <h1>Source code for pomdp_problems.multi_object_search.models.observation_model</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Defines the ObservationModel for the 2D Multi-Object Search domain.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Defines the ObservationModel for the 2D Multi-Object Search domain.</span>
 
 <span class="sd">Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)</span>
-<span class="sd">(extensions: action space changes,</span>
-<span class="sd">             different sensor model,</span>
-<span class="sd">             gridworld instead of topological graph)</span>
+<span class="sd">(extensions: action space changes, different sensor model, gridworld instead of</span>
+<span class="sd">topological graph)</span>
 
 <span class="sd">Observation: {objid : pose(x,y) or NULL}. The sensor model could vary;</span>
 <span class="sd">             it could be a fan-shaped model as the original paper, or</span>
@@ -136,7 +134,8 @@
 <span class="sd">  The agent can observe its own state, as well as object poses</span>
 <span class="sd">  that are within its sensor range. We only need to model object</span>
 <span class="sd">  observation.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
 <span class="kn">import</span> <span class="nn">math</span>
