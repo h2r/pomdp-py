@@ -42,8 +42,78 @@ light-dark domain.
     of these directions be described by weights :math:`w_1,\cdots,w_k`.
 """
 import pomdp_py
+import pomdp_problems.util as util
 
-class RewardModel(pomdp_py.RewardModel):
+class LightDarkRewardModel(pomdp_py.RewardModel):
+    
+    def __init__(self, goal_pos, big=100, small=1):
+        self._goal_pos = goal_pos
+        self.big = big
+        self.small = small
+        
+    @property
+    def goal_pos(self):
+        return self._goal_pos
+                
+class SparseRewardModel(LightDarkRewardModel):
+    """
+    This sparse reward function comes from the POMCPOW paper <https://arxiv.org/pdf/1709.06196.pdf>`_
+    titled `Online algorithms for POMDPs with continuous state, action, and observation spaces`.
+    This can be interpreted as:
 
-    def __init__(self):
-        pass
+    If the agent takes a "stay" action, i.e. produces a control (vx,vy) that results in
+    no/little positional change, AND the agent is at the goal location, the agent receives a +100 reward.
+    If the agents "stays" at another non-goal location, the agent receives a -100 reward. Each
+    step also has a -1 step cost.
+    
+    Since the action spaces is continuous in this implementation (different from the POMCPOW paper),
+    we here allow a circular tolerance zone where staying inside that zone counts as reaching the goal.
+    It is straightforward to extend this to the discrete action space case in POMCPOW paper by setting
+    the tolerance radius to be zero.
+    """
+    def __init__(self,
+                 goal_pos, big=100,
+                 small=1, tolerance=0.5, minimum_motion=1e-3):
+        """
+        Args:
+            goal_pos (tuple): 2D goal location
+            big (float): the heavy reward/penalty
+            small (float): the small, step-wise cost.
+            tolerance (float): goal tolerance radius,
+            minimum_motion (float): upper bound of the change of the robot position that
+               can still be regarded as "staying"
+        """
+        self._tolerance = tolerance
+        self._mininum_motion = minimum_motion
+        super().__init__(goal_pos, big=big, small=small)
+        
+    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+        if reward == self._reward_func(state, action, next_state):
+            return 1.0
+        else:
+            return 0.0
+        
+    def sample(self, state, action, next_state,
+               normalized=False, robot_id=None):
+        # deterministic
+        return self._reward_func(state, action, next_state, robot_id=robot_id)
+    
+    def argmax(self, state, action, next_state, normalized=False, robot_id=None):
+        """Returns the most likely reward"""
+        return self._reward_func(state, action, next_state, robot_id=robot_id)
+
+    def _reward_func(self, state, action, next_state):
+        reward = -self.small
+        dx = next_state.position[0] - state.position[0]
+        dy = next_state.position[y] - state.position[y]
+        if abs(dx) <= self._minimum_motion and abs(dy) <= self._minimum_motion:
+            # agent is staying            
+            if util.euclidean_dist(next_state.position, self._goal_pos) < self._tolerance:
+                # close to goal
+                reward += self._big
+            else:
+                # not close to goal
+                reward -= self._big
+        return reward
+
+            
