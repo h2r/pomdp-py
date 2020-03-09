@@ -1,7 +1,6 @@
 """The Environment"""
 
 import pomdp_py
-import cv2
 import copy
 from ..models.transition_model import *
 from ..models.reward_model import *
