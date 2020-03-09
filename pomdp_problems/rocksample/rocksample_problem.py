@@ -5,20 +5,24 @@ Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)
 
 Description:
 
-State space: Position {(1,1),(1,2),...(n,n)}
-             :math:`\\times` RockType_1 :math:`\\times` RockType_2, ..., :math:`\\times` RockType_k
-               where RockType_i = {Good, Bad}
-             :math:`\\times` TerminalState
+State space: 
 
-             (basically, the positions of rocks are known to the robot,
-              but not represented explicitly in the state space. Check_i
-              will smartly check the rock i at its location.)
+    Position {(1,1),(1,2),...(n,n)}
+    :math:`\\times` RockType_1 :math:`\\times` RockType_2, ..., :math:`\\times` RockType_k
+    where RockType_i = {Good, Bad}
+    :math:`\\times` TerminalState
 
-Action space: North, South, East, West, Sample, Check_1, ..., Check_k
-              The first four moves the agent deterministically
-              Sample: samples the rock at agent's current location
-              Check_i: receives a noisy observation about RockType_i
-                       (noise determined by eta. eta=1 -> perfect sensor; eta=0 -> uniform)
+    (basically, the positions of rocks are known to the robot,
+     but not represented explicitly in the state space. Check_i
+     will smartly check the rock i at its location.)
+
+Action space:
+
+    North, South, East, West, Sample, Check_1, ..., Check_k
+    The first four moves the agent deterministically
+    Sample: samples the rock at agent's current location
+    Check_i: receives a noisy observation about RockType_i
+    (noise determined by eta (:math:`\eta`). eta=1 -> perfect sensor; eta=0 -> uniform)
 
 Observation: observes the property of rock i when taking Check_i.
 
@@ -59,7 +63,7 @@ class RockType:
 class State(pomdp_py.State):
     def __init__(self, position, rocktypes, terminal=False):
         """
-        position: (x,y) position of the rover on the grid.
+        position (tuple): (x,y) position of the rover on the grid.
         rocktypes: tuple of size k. Each is either Good or Bad.
         terminal (bool): The robot is at the terminal state.
 
