@@ -151,9 +151,9 @@ def belief_update(agent, real_action, real_observation, next_robot_state, planne
                                                                   static_transition=objid != agent.robot_id,
                                                                   oargs={"next_robot_state": next_robot_state})
             else:
-                raise ValueError("Unexpected program state. Are you using %s for %s?"
-                                 % (belief_rep, str(type(planner))))
-
+                raise ValueError("Unexpected program state."\
+                                 "Are you using the appropriate belief representation?")
+            
             agent.cur_belief.set_object_belief(objid, new_belief)
 
 
@@ -181,7 +181,6 @@ def solve(problem,
     random_object_belief = problem.agent.belief.object_beliefs[random_objid]
     if isinstance(random_object_belief, pomdp_py.Histogram):
         # Use POUCT
-        belief_rep = "histogram"
         planner = pomdp_py.POUCT(max_depth=max_depth,
                                  discount_factor=discount_factor,
                                  planning_time=planning_time,
@@ -189,7 +188,6 @@ def solve(problem,
                                  rollout_policy=problem.agent.policy_model)  # Random by default
     elif isinstance(random_object_belief, pomdp_py.Particles):
         # Use POMCP
-        belief_rep = "particles"
         planner = pomdp_py.POMCP(max_depth=max_depth,
                                  discount_factor=discount_factor,
                                  planning_time=planning_time,

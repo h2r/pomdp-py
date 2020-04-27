@@ -19,10 +19,18 @@ from ..domain.state import *
 from ..example_worlds import *
 
 # Deterministic way to get object color
-def object_color(objid):
-    return (217 + 217 % (objid+1),
-            107 + 107 % (objid+1),
-            107 + 107 % (objid+1),)
+def object_color(objid, count):
+    color = [107, 107, 107]
+    if count % 3 == 0:
+        color[0] += 100 + (3 * (objid*5 % 11))
+        color[0] = max(12, min(222, color[0]))
+    elif count % 3 == 1:
+        color[1] += 100 + (3 * (objid*5 % 11))
+        color[1] = max(12, min(222, color[1]))        
+    else:
+        color[2] += 100 + (3 * (objid*5 % 11))
+        color[2] = max(12, min(222, color[2]))    
+    return tuple(color)
 
 #### Visualization through pygame ####
 class MosViz:
@@ -45,8 +53,10 @@ class MosViz:
 
         # Generate some colors, one per target object
         colors = {}
+        count = 0
         for objid in env.target_objects:
-            colors[objid] = object_color(objid)
+            colors[objid] = object_color(objid, count)
+            count += 1
         self._target_colors = colors        
 
     def _make_gridworld_image(self, r):
