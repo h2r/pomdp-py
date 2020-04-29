@@ -7,16 +7,15 @@ Quote from the paper:
     The underlying system dynamics are linear with zero process noise,
     :math:`f(x_t,u_t)=x_t+u`. This means the transition dynamics is
     deterministic.
-
-Also, includes BeliefSpaceTransitionModel. Basically the "belief space dynamics",
-which is a main part of the original paper.
 """
 import pomdp_py
 import copy
 
 
 class TransitionModel(pomdp_py.TransitionModel):
-
+    """
+    The underlying deterministic system dynamics
+    """
     def __init__(self, epsilon=1e-9):
         self._epsilon = epsilon
 
@@ -40,26 +39,3 @@ class TransitionModel(pomdp_py.TransitionModel):
     def argmax(self, state, action):
         """Returns the most likely next state"""
         return self.sample(state, action)
-
-
-class BeliefSpaceTransitionModel(pomdp_py.TransitionModel):
-    """
-    This is the Belief Space Dynamics Model; It is a TransitionModel
-    but the states are BeliefState(s).
-    
-    Refer to Section III. Simplified Belief Space Dynamics of the paper.
-    """
-    def __init__(self):
-        pass
-
-    def probability(self, next_state, state, action, **kwargs):
-        pass
-
-    def sample(self, state, action):
-        pass
-
-
-
-
-
-                    

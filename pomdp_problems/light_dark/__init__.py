@@ -4,5 +4,3 @@ from pomdp_problems.light_dark.domain.action import *
 from pomdp_problems.light_dark.domain.observation import *
 from pomdp_problems.light_dark.models.transition_model import *
 from pomdp_problems.light_dark.models.observation_model import *
-from pomdp_problems.light_dark.models.reward_model import *
-from pomdp_problems.light_dark.models.policy_model import *

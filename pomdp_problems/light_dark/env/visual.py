@@ -31,14 +31,14 @@ class LightDarkViz:
 
     def plot(self):
         self._plot_gradient()
-        self._plot_path()
+        # self._plot_path()
         self._plot_robot()
         self._plot_goal()
 
     def _plot_robot(self):
         cur_pos = self._env.state.position
         util.plot_circle(self._ax, cur_pos,
-                         self._env.goal_tolerance/2.0,
+                         0.25, # tentative
                          color="black", fill=True,
                          linewidth=2, edgecolor="black",
                          zorder=3)
@@ -46,7 +46,7 @@ class LightDarkViz:
     def _plot_goal(self):
         util.plot_circle(self._ax,
                          self._env.goal_pos,
-                         self._env.goal_tolerance,
+                         0.5,  # tentative
                          linewidth=1, edgecolor="black",
                          zorder=3)
         
@@ -91,9 +91,8 @@ if __name__ == "__main__":
     env = ld.LightDarkEnvironment(ld.State((0.5, 2.5)),  # init state
                                   (1.5, -1),  # goal pose
                                   5,  # light
-                                  1,  # const
-                                  discrete=True)
-    viz = LightDarkViz(env, (-1, 7), (-2, 4), 0.2)
+                                  1)  # const
+    viz = LightDarkViz(env, (-1, 7), (-2, 4), 0.1)
     viz.log_position((5,2))
     viz.log_position((5,0))
     viz.log_position((4,-1))
