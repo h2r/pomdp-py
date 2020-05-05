@@ -53,10 +53,8 @@ class MosViz:
 
         # Generate some colors, one per target object
         colors = {}
-        count = 0
-        for objid in env.target_objects:
-            colors[objid] = object_color(objid, count)
-            count += 1
+        for i, objid in enumerate(env.target_objects):
+            colors[objid] = object_color(objid, i)
         self._target_colors = colors        
 
     def _make_gridworld_image(self, r):
