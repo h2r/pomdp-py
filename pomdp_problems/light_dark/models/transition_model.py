@@ -65,6 +65,12 @@ class TransitionModel(pomdp_py.TransitionModel):
             return np.array([[mt[0], mt[1] + ut[1]],
                              [mt[0] + ut[0], mt[1]]])
         return dfdu
-
-
     
+    def func_noise(self, var_sysd=1e-9):
+        """Returns a function that returns a state-dependent Gaussian noise."""
+        def fn(mt):
+            gaussian_noise = pomdp_py.Gaussian([0,0],
+                                               [[var_sysd, 0],
+                                                [0, var_sysd]])
+            return gaussian_noise
+        return fn

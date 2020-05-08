@@ -91,3 +91,14 @@ class ObservationModel(pomdp_py.ObservationModel):
             return np.array([[omega[0], mt[1] + omega[1]],
                              [mt[0] + omega[0], omega[1]]])
         return dgdx
+
+    def func_noise(self):
+        """Returns a function that returns a state-dependent Gaussian noise."""
+        def fn(mt):
+            variance = self._compute_variance(mt)
+            gaussian_noise = pomdp_py.Gaussian([0,0],
+                                               [[variance, 0],
+                                                [0, variance]])
+            return gaussian_noise
+        return fn
+        

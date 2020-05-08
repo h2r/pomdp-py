@@ -11,9 +11,11 @@ def abstraction_over_histogram(current_histogram, state_mapper):
         hist[a_s] += current_histogram[s]
     return hist
 
-def update_histogram_belief(current_histogram, real_action, real_observation,
+def update_histogram_belief(current_histogram, 
+                            real_action, real_observation,
                             observation_model, transition_model, oargs={},
-                            targs={}, normalize=True, static_transition=False):
+                            targs={}, normalize=True, static_transition=False,
+                            next_state_space=None):
     """
     update_histogram_belief(current_histogram, real_action, real_observation,
                             observation_model, transition_model, oargs={},
@@ -22,7 +24,8 @@ def update_histogram_belief(current_histogram, real_action, real_observation,
     :math:`B_{new}(s') = n O(z|s',a) \sum_s T(s'|s,a)B(s)`.
 
     Args:
-        current_histogram (Histogram) is the Histogram that represents current belief.
+        current_histogram (~pomdp_py.representations.distribution.Histogram)
+            is the Histogram that represents current belief.
         real_action (~pomdp_py.framework.basics.Action)
         real_observation (~pomdp_py.framework.basics.Observation)
         observation_model (~pomdp_py.framework.basics.ObservationModel)
@@ -36,13 +39,21 @@ def update_histogram_belief(current_histogram, real_action, real_observation,
             This thus helps reduce the computation cost by avoiding the nested iteration
             over the state space; But still, updating histogram belief requires
             iteration of the state space, which may already be prohibitive.
+        next_state_space (set) the state space of the updated belief. By default,
+            this parameter is None and the state space given by current_histogram
+            will be directly considered as the state space of the updated belief.
+            This is useful for space and time efficiency in problems where the state
+            space contains parts that the agent knows will deterministically update,
+            and thus not keeping track of the belief over these states.
 
     Returns:
         Histogram: the histogram distribution as a result of the update
     """
     new_histogram = {}  # state space still the same.
     total_prob = 0
-    for next_state in current_histogram:
+    if next_state_space is None:
+        next_state_space = current_histogram
+    for next_state in next_state_space:
         observation_prob = observation_model.probability(real_observation,
                                                          next_state,
                                                          real_action,

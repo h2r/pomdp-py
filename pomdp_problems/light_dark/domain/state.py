@@ -7,6 +7,7 @@ State space:
     :math:`X\subseteq\mathbb{R}^2` the state of the robot
 """
 import pomdp_py
+import numpy as np
 
 class State(pomdp_py.State):
     """The state of the problem is just the robot position"""
