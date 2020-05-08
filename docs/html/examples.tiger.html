@@ -140,7 +140,7 @@
             
   <div class="section" id="tiger-problem">
 <h1>Tiger Problem<a class="headerlink" href="#tiger-problem" title="Permalink to this headline">¶</a></h1>
-<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[6]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
+<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[7]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
 <p><cite>A tiger is put with equal probability behind one
@@ -217,7 +217,7 @@ equivalent as defining classes that inherit
 <p>As mentioned before, the uncertainty of the models can be specified by a Python
 dictionary for Tiger problem. Let <code class="code docutils literal notranslate"><span class="pre">obs_probs</span></code> and <code class="code docutils literal notranslate"><span class="pre">trans_probs</span></code> be
 this dictionary for <span class="math notranslate nohighlight">\(O\)</span> and <span class="math notranslate nohighlight">\(T\)</span> respectively. For example, we can
-set the probabilities according to the paper <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id4">[6]</a>:</p>
+set the probabilities according to the paper <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id4">[7]</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obs_probs</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># next_state -&gt; action -&gt; observation</span>
      <span class="s2">&quot;tiger-left&quot;</span><span class="p">:{</span>
          <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
@@ -521,7 +521,7 @@ will result in the agent belief update as well. But for
 <dt class="bibtex label" id="silver2010monte"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets">6</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id4">2</a>)</span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets">7</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id4">2</a>)</span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 <dt class="bibtex label" id="abel2015goal"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>

@@ -127,36 +127,73 @@
 <span class="sd">    The underlying system dynamics are linear with zero process noise,</span>
 <span class="sd">    :math:`f(x_t,u_t)=x_t+u`. This means the transition dynamics is</span>
 <span class="sd">    deterministic.</span>
-
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<div class="viewcode-block" id="LightDarkTransitionModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel">[docs]</a><span class="k">class</span> <span class="nc">LightDarkTransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
 
+<div class="viewcode-block" id="TransitionModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel">[docs]</a><span class="k">class</span> <span class="nc">TransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The underlying deterministic system dynamics</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
 
-<div class="viewcode-block" id="LightDarkTransitionModel.probability"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.probability">[docs]</a>    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TransitionModel.probability"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.probability">[docs]</a>    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deterministic.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">expected_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">control</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                             <span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">control</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">expected_position</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">action</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">position</span> <span class="o">==</span> <span class="n">expected_position</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span></div>
 
-<div class="viewcode-block" id="LightDarkTransitionModel.sample"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<div class="viewcode-block" id="TransitionModel.sample"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="n">next_state</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-        <span class="n">next_state</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">control</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                               <span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">control</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">next_state</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">action</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">next_state</span></div>
 
-<div class="viewcode-block" id="LightDarkTransitionModel.argmax"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.argmax">[docs]</a>    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<div class="viewcode-block" id="TransitionModel.argmax"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.argmax">[docs]</a>    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the most likely next state&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransitionModel.func"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.func">[docs]</a>    <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the function of the underlying system dynamics.</span>
+<span class="sd">        The function is: (xt, ut) -&gt; xt+1 where xt, ut, xt+1 are</span>
+<span class="sd">        all numpy arrays.&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">ut</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                             <span class="n">xt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">f</span></div>
+
+<div class="viewcode-block" id="TransitionModel.jac_dx"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_dx">[docs]</a>    <span class="k">def</span> <span class="nf">jac_dx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the function of the jacobian of the system dynamics</span>
+<span class="sd">        function with respect to the state vector mt: (mt, ut) -&gt; At&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">dfdx</span><span class="p">(</span><span class="n">mt</span><span class="p">,</span> <span class="n">ut</span><span class="p">):</span>
+            <span class="c1"># The result of computing the jacobian by hand</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">ut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                             <span class="p">[</span><span class="n">mt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ut</span><span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+        <span class="k">return</span> <span class="n">dfdx</span></div>
+
+<div class="viewcode-block" id="TransitionModel.jac_du"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_du">[docs]</a>    <span class="k">def</span> <span class="nf">jac_du</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the function of the jacobian of the system dynamics</span>
+<span class="sd">        function with respect to the state vector mt: (mt, ut) -&gt; Bt&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">dfdu</span><span class="p">(</span><span class="n">mt</span><span class="p">,</span> <span class="n">ut</span><span class="p">):</span>
+            <span class="c1"># The result of computing the jacobian by hand</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">mt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                             <span class="p">[</span><span class="n">mt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mt</span><span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+        <span class="k">return</span> <span class="n">dfdu</span></div>
+    
+<div class="viewcode-block" id="TransitionModel.func_noise"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.transition_model.TransitionModel.func_noise">[docs]</a>    <span class="k">def</span> <span class="nf">func_noise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_sysd</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a function that returns a state-dependent Gaussian noise.&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="n">mt</span><span class="p">):</span>
+            <span class="n">gaussian_noise</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                                               <span class="p">[[</span><span class="n">var_sysd</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">var_sysd</span><span class="p">]])</span>
+            <span class="k">return</span> <span class="n">gaussian_noise</span>
+        <span class="k">return</span> <span class="n">fn</span></div></div>
 </pre></div>
 
           </div>

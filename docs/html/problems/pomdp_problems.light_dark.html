@@ -56,8 +56,10 @@
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">pomdp_problems.light_dark package</a><ul>
+<li><a class="reference internal" href="#light-dark-domain">Light-Dark Domain</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.light_dark">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -143,8 +145,25 @@
             
   <div class="section" id="pomdp-problems-light-dark-package">
 <h1>pomdp_problems.light_dark package<a class="headerlink" href="#pomdp-problems-light-dark-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="light-dark-domain">
+<h2>Light-Dark Domain<a class="headerlink" href="#light-dark-domain" title="Permalink to this headline">¶</a></h2>
+<p>A simple continuous domain.</p>
+<p>Reference: <a class="reference external" href="http://groups.csail.mit.edu/robotics-center/public_papers/Platt10.pdf">Belief space planning assuming maximum likelihood observations</a>.</p>
+<p><cite>Quoting from the original paper on problem description</cite>:</p>
+<blockquote>
+<div><p>In the light-dark domain, a robot must localize its position in the plane before approaching the goal. The robot’s ability to localize itself depends upon the amount of light present at its actual position. Light varies as a quadratic function of the horizontal coordinate. Depending upon the goal position, the initial robot position, and the configuration of the light, the robot may need to move away from its ultimate goal in order to localize itself. Figure 1 illustrates the configuration of the light-dark domain used in our experiments. The goal position is at the origin, marked by an X in the figure. The intensity in the figure illustrates the magnitude of the light over the plane. The robot’s initial position is unknown.</p>
+</div></blockquote>
+<div class="figure align-default" id="id1">
+<img alt="Figure from the paper" src="https://i.imgur.com/7OYr6Hh.jpg" />
+<p class="caption"><span class="caption-text">Light-Dark domain</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<p>Note that a variant of this domain appears in <a class="reference external" href="https://arxiv.org/pdf/1709.06196.pdf">Online algorithms for POMDPs with continuous state, action, and observation spaces</a> where the state and action spaces are discrete and the observation space is kept continuous. Here we do not implement this variant; You can implement it and create a pull request!</p>
+<p>There is an implementation of a variant of LightDarkDomain in the JuliaPOMDP suite (<a class="reference external" href="https://github.com/zsunberg/LightDarkPOMDPs.jl">repo</a>).</p>
+</div>
+</div>
+<p><strong>BLQR planning implementation not complete yet.</strong></p>
 <div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<h3>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.light_dark.domain.html">pomdp_problems.light_dark.domain package</a><ul>
@@ -156,14 +175,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.light_dark.env.html">pomdp_problems.light_dark.env package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.env.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.env.html#module-pomdp_problems.light_dark.env.env">pomdp_problems.light_dark.env.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.env.html#module-pomdp_problems.light_dark.env.visual">pomdp_problems.light_dark.env.visual module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.env.html#module-pomdp_problems.light_dark.env">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.light_dark.models.html">pomdp_problems.light_dark.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#module-pomdp_problems.light_dark.models.observation_model">pomdp_problems.light_dark.models.observation_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#module-pomdp_problems.light_dark.models.policy_model">pomdp_problems.light_dark.models.policy_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#module-pomdp_problems.light_dark.models.reward_model">pomdp_problems.light_dark.models.reward_model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#module-pomdp_problems.light_dark.models.transition_model">pomdp_problems.light_dark.models.transition_model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.light_dark.models.html#module-pomdp_problems.light_dark.models">Module contents</a></li>
 </ul>
@@ -171,8 +191,6 @@
 </ul>
 </div>
 </div>
-<div class="section" id="module-pomdp_problems.light_dark">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.light_dark" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

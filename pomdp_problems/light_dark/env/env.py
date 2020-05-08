@@ -1,3 +1,8 @@
+"""Defines the Environment for the light dark domain.
+
+Origin: Belief space planning assuming maximum likelihood observations
+"""
+
 import pomdp_py
 import pomdp_problems.light_dark as ld
 import numpy as np

@@ -57,8 +57,6 @@
 <li><a class="reference internal" href="#">pomdp_problems.light_dark.models package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.light_dark.models.observation_model">pomdp_problems.light_dark.models.observation_model module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.light_dark.models.policy_model">pomdp_problems.light_dark.models.policy_model module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.light_dark.models.reward_model">pomdp_problems.light_dark.models.reward_model module</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.light_dark.models.transition_model">pomdp_problems.light_dark.models.transition_model module</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.light_dark.models">Module contents</a></li>
 </ul>
@@ -168,92 +166,50 @@ state (i.e. robot position). The number 5 indicates the x-coordinate
 of the light bar as shown in the figure (Fig.1 of the paper).</p>
 </div></blockquote>
 <dl class="class">
-<dt id="pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.models.observation_model.</code><code class="sig-name descname">LightDarkObservationModel</code><span class="sig-paren">(</span><em class="sig-param">light</em>, <em class="sig-param">const</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#LightDarkObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.models.observation_model.</code><code class="sig-name descname">ObservationModel</code><span class="sig-paren">(</span><em class="sig-param">light</em>, <em class="sig-param">const</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#LightDarkObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.noise_covariance">
+<code class="sig-name descname">noise_covariance</code><span class="sig-paren">(</span><em class="sig-param">pos</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.noise_covariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.noise_covariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>The observation is <span class="math notranslate nohighlight">\(g(x_t) = x_t+\omega\)</span>. So
 the probability of this observation is the probability
 of <span class="math notranslate nohighlight">\(\omega\)</span> which follows the Gaussian distribution.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#LightDarkObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>sample an observation.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#LightDarkObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.LightDarkObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely observation</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.func">
+<code class="sig-name descname">func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.jac_dx">
+<code class="sig-name descname">jac_dx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.jac_dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.jac_dx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.func_noise">
+<code class="sig-name descname">func_noise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.func_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.func_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a function that returns a state-dependent Gaussian noise.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-pomdp_problems.light_dark.models.policy_model">
-<span id="pomdp-problems-light-dark-models-policy-model-module"></span><h2>pomdp_problems.light_dark.models.policy_model module<a class="headerlink" href="#module-pomdp_problems.light_dark.models.policy_model" title="Permalink to this headline">¶</a></h2>
-<p>Defines the PolicyModel for the continuous light-dark domain;
-This is a continuous action space where actions are velocities.
-Different from other discrete domains, there is no enumeration over
-the action space provided, unless discretization is enforced.</p>
-<p>The policy model was not explicit in the original paper <cite>Belief space planning
-assuming maximum likelihood observations</cite> which is not proposing a sample
-based algorithm. This is an example of how PolicyModel can be flexibly
-used for non-MCTS or sampling based planners. Also, this PolicyModel indeed
-supports a variant of POMCP that handles continuous domains, which we will
-implement.</p>
-</div>
-<div class="section" id="module-pomdp_problems.light_dark.models.reward_model">
-<span id="pomdp-problems-light-dark-models-reward-model-module"></span><h2>pomdp_problems.light_dark.models.reward_model module<a class="headerlink" href="#module-pomdp_problems.light_dark.models.reward_model" title="Permalink to this headline">¶</a></h2>
-<p>Defines the RewardModel for the continuous light-dark domain;
-Also provides a sparse reward model, easier to be understood and
-probably a “better” reward with less human-designed factors.</p>
-<p>Origin: Belief space planning assuming maximum likelihood observations</p>
-<p>Quote from the paper:</p>
-<blockquote>
-<div><p>The cost function (equation 8) used recurring state and action costs
-of R = diag (0.5, 0.5) and Q = diag (0.5, 0.5) and a final cost on
-covariance, Lambda=200. B-LQR had an additional large final cost on
-mean. Direct transcription used a final value constraint on mean,
-m = (0,0) instead.</p>
-</div></blockquote>
-<p>More context (quote from the paper) and my comments/thoughts.</p>
-<blockquote>
-<div><p>In general, we are concerned with the problem of _reaching a given
-region of state space with high <a href="#id3"><span class="problematic" id="id4">certainty_</span></a>.</p>
-</div></blockquote>
-<p>Interesting - I thought POMDPs are about producing a sequence of actions to
-maximize the reward, which does not explicitly require the belief distribution
-to end up in any particular shape or form. In robotics problems the goal is
-specified through the reward; Indeed, for problems such as localization, one
-type of reward is to guide its actions is based on certainty of belief in its
-current position. But this is a specific kind of guided reward; A reward
-function that is more general in terms of possible behavior as a consequence is
-sparse goal-directed reward. This kind of reward is used in the
-<a class="reference external" href="https://arxiv.org/pdf/1709.06196.pdf">POMCPOW paper</a> regarding the
-light-dark domain.</p>
-<blockquote>
-<div><p>For a Gaussian belief space, this corresponds to a cost function that is minimized
-at zero covariance. However, it _may <a href="#id5"><span class="problematic" id="id6">be_</span></a> more important to reduce covariance
-in some directions over others. … We define a finite horizon quadratic cost-to-go
-function … As a result, we re-write the cost-to-go function as:</p>
-<blockquote>
-<div><p><span class="math notranslate nohighlight">\(J(b_{\tau:T}, u_{\tau:T}) = s_T^{\top}\Lambda s_T +
-\sum_{t=\tau}^{T-1}\tilde{m}_t^{\top} Q \tilde{m}_t + \tilde{u}_t^{\top} R \tilde{u}_t\)</span></p>
-</div></blockquote>
-<p>where <span class="math notranslate nohighlight">\(\Lambda=\sum_{i=1}^K w_iL_i\)</span> and the <cite>cost matrix</cite> <span class="math notranslate nohighlight">\(L_i\)</span> is
-a function of unit vectors <span class="math notranslate nohighlight">\(\{\hat{n}_1,\cdots,\hat{n}_k\}\)</span> pointing in <span class="math notranslate nohighlight">\(k\)</span>
-directions in which it is desried to minimize covariance and let the <cite>relative importance</cite>
-of these directions be described by weights <span class="math notranslate nohighlight">\(w_1,\cdots,w_k\)</span>.</p>
-</div></blockquote>
-<dl class="class">
-<dt id="pomdp_problems.light_dark.models.reward_model.LightDarkRewardModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.models.reward_model.</code><code class="sig-name descname">LightDarkRewardModel</code><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/reward_model.html#LightDarkRewardModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.reward_model.LightDarkRewardModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -268,18 +224,19 @@ of these directions be described by weights <span class="math notranslate nohigh
 deterministic.</p>
 </div></blockquote>
 <dl class="class">
-<dt id="pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.models.transition_model.</code><code class="sig-name descname">LightDarkTransitionModel</code><span class="sig-paren">(</span><em class="sig-param">epsilon=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#LightDarkTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.models.transition_model.</code><code class="sig-name descname">TransitionModel</code><span class="sig-paren">(</span><em class="sig-param">epsilon=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<p>The underlying deterministic system dynamics</p>
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#LightDarkTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deterministic.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#LightDarkTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
@@ -299,9 +256,37 @@ distribution of this transition model.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#LightDarkTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.LightDarkTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.func">
+<code class="sig-name descname">func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the function of the underlying system dynamics.
+The function is: (xt, ut) -&gt; xt+1 where xt, ut, xt+1 are
+all numpy arrays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_dx">
+<code class="sig-name descname">jac_dx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.jac_dx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the function of the jacobian of the system dynamics
+function with respect to the state vector mt: (mt, ut) -&gt; At</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_du">
+<code class="sig-name descname">jac_du</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.jac_du"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.jac_du" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the function of the jacobian of the system dynamics
+function with respect to the state vector mt: (mt, ut) -&gt; Bt</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.func_noise">
+<code class="sig-name descname">func_noise</code><span class="sig-paren">(</span><em class="sig-param">var_sysd=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.func_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.func_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a function that returns a state-dependent Gaussian noise.</p>
 </dd></dl>
 
 </dd></dl>

@@ -152,22 +152,26 @@
 <dt id="pomdp_py.representations.distribution.histogram.Histogram">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.histogram.</code><code class="sig-name descname">Histogram</code><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
+<p>Histogram representation of a probability distribution.</p>
+<p>__init__(self, histogram)
+:param histogram: variable value to probability
+:type histogram: dict</p>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.__getitem__">
-<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return self[key].</p>
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <cite>value</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.__setitem__">
-<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.__setitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set self[key] to value.</p>
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em>, <em class="sig-param">prob</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets probability of value to <cite>prob</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.get_histogram">
 <code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.get_histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary from state to probability</p>
+<dd><p>Returns a dictionary from value to probability of the histogram</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -183,14 +187,15 @@
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.mpe">
-<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.mpe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the value of the variable that has the highest probability.</p>
+<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.mpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most likely value of the variable.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.random">
-<code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.random" title="Permalink to this definition">¶</a></dt>
-<dd><p>Randomly sample a value based on the probability in the histogram</p>
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly sample a value based on the probability
+in the histogram</p>
 </dd></dl>
 
 </dd></dl>
@@ -204,43 +209,47 @@
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.__getitem__">
-<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return self[key].</p>
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <cite>value</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.__setitem__">
-<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__setitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assume that value is between 0 and 1</p>
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em>, <em class="sig-param">prob</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets probability of value to <cite>prob</cite>.
+Assume that value is between 0 and 1</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.add">
-<code class="sig-name descname">add</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">particle</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a particle.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.from_histogram">
-<code class="sig-name descname">from_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">from_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">histogram</em>, <em class="sig-param">num_particles=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a Histogram distribution <cite>histogram</cite>, return
 a particle representation of it, which is an approximation.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.get_abstraction">
-<code class="sig-name descname">get_abstraction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.get_abstraction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">get_abstraction</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state_mapper</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.get_abstraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>feeds all particles through a state abstraction function.
+Or generally, it could be any function.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.get_histogram">
 <code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.get_histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary from state to probability</p>
+<dd><p>Returns a dictionary from value to probability of the histogram</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.mpe">
-<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.mpe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the value of the variable that has the highest probability.</p>
+<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hist=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.mpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose a particle that is most likely to be sampled.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -250,8 +259,9 @@ a particle representation of it, which is an approximation.</p>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.random">
-<code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.random" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly choose a particle</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -264,16 +274,30 @@ a particle representation of it, which is an approximation.</p>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
 <p>Note that Gaussian distribution is defined over a vector of numerical variables,
 but not a State variable.</p>
+<p>__init__(self, mean, cov)</p>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__">
-<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return self[key].</p>
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the probability of given value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>list</em><em> or </em><em>array like</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The density of multivariate Gaussian.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__">
-<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set self[key] to value.</p>
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em>, <em class="sig-param">prob</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not Implemented;
+It isn’t supported to arbitrarily change a value in
+a Gaussian distribution to have a given probability.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -293,13 +317,12 @@ but not a State variable.</p>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.gaussian.Gaussian.mpe">
-<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.mpe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the value of the variable that has the highest probability.</p>
-</dd></dl>
+<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.mpe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.gaussian.Gaussian.random">
-<code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.random" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">n=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.random" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">

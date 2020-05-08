@@ -154,7 +154,7 @@
 
 <dl class="function">
 <dt id="pomdp_py.representations.belief.histogram.update_histogram_belief">
-<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">update_histogram_belief</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">real_action</em>, <em class="sig-param">real_observation</em>, <em class="sig-param">observation_model</em>, <em class="sig-param">transition_model</em>, <em class="sig-param">oargs={}</em>, <em class="sig-param">targs={}</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">static_transition=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/representations/belief/histogram.html#update_histogram_belief"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.representations.belief.histogram.update_histogram_belief" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pomdp_py.representations.belief.histogram.</code><code class="sig-name descname">update_histogram_belief</code><span class="sig-paren">(</span><em class="sig-param">current_histogram</em>, <em class="sig-param">real_action</em>, <em class="sig-param">real_observation</em>, <em class="sig-param">observation_model</em>, <em class="sig-param">transition_model</em>, <em class="sig-param">oargs={}</em>, <em class="sig-param">targs={}</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">static_transition=False</em>, <em class="sig-param">next_state_space=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/representations/belief/histogram.html#update_histogram_belief"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.representations.belief.histogram.update_histogram_belief" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>update_histogram_belief(current_histogram, real_action, real_observation,</dt><dd><p>observation_model, transition_model, oargs={},
 targs={}, normalize=True, deterministic=False)</p>
@@ -165,7 +165,7 @@ targs={}, normalize=True, deterministic=False)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>current_histogram</strong> (<a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram" title="pomdp_py.representations.distribution.histogram.Histogram"><em>Histogram</em></a>) – </p></li>
+<li><p><strong>current_histogram</strong> (<em>Histogram</em>) – is the Histogram that represents current belief.</p></li>
 <li><p><strong>real_action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – </p></li>
 <li><p><strong>real_observation</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – </p></li>
 <li><p><strong>observation_model</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><em>ObservationModel</em></a>) – </p></li>
@@ -178,6 +178,11 @@ that sum_s Pr(s’<a href="#id3"><span class="problematic" id="id4">|</span></a>
 This thus helps reduce the computation cost by avoiding the nested iteration
 over the state space; But still, updating histogram belief requires
 iteration of the state space, which may already be prohibitive.</p></li>
+<li><p><strong>next_state_space</strong> (<em>set</em>) – this parameter is None and the state space given by current_histogram
+will be directly considered as the state space of the updated belief.
+This is useful for space and time efficiency in problems where the state
+space contains parts that the agent knows will deterministically update,
+and thus not keeping track of the belief over these states.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

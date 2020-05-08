@@ -60,6 +60,7 @@
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.po_uct">pomdp_py.algorithms.po_uct module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.algorithms.bsp.blqr">pomdp_py.algorithms.bsp.blqr module</a></li>
 </ul>
 </li>
 </ul>
@@ -166,9 +167,21 @@
 </tr>
 </tbody>
 </table>
+<p>Solvers under development (<strong>contribution wanted</strong>):</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="pomdp_py.algorithms.bsp.html#module-pomdp_py.algorithms.bsp.blqr" title="pomdp_py.algorithms.bsp.blqr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blqr</span></code></a></p></td>
+<td><p>Implementation of B-LQR algorithm described in “Belief space planning assuming maximum likelihood observations” <a class="bibtex reference internal" href="#platt2010belief" id="id2">[2]</a></p></td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="module-pomdp_py.algorithms.po_rollout">
 <span id="pomdp-py-algorithms-po-rollout-module"></span><h2>pomdp_py.algorithms.po_rollout module<a class="headerlink" href="#module-pomdp_py.algorithms.po_rollout" title="Permalink to this headline">¶</a></h2>
-<p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id2">[1]</a>.</p>
+<p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id3">[1]</a>.</p>
 <p>Quote from the POMCP paper:</p>
 <blockquote>
 <div><p>To provide a performance benchmark in these cases, we evaluated the
@@ -223,21 +236,21 @@ belief.</p>
 <div class="section" id="module-pomdp_py.algorithms.po_uct">
 <span id="pomdp-py-algorithms-po-uct-module"></span><h2>pomdp_py.algorithms.po_uct module<a class="headerlink" href="#module-pomdp_py.algorithms.po_uct" title="Permalink to this headline">¶</a></h2>
 <p>This algorithm is PO-UCT (Partially Observable UCT). It is
-presented in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id3">[1]</a> as an extension to the UCT
-algorithm <a class="bibtex reference internal" href="#kocsis2006bandit" id="id4">[2]</a> that combines MCTS and UCB1
+presented in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id4">[1]</a> as an extension to the UCT
+algorithm <a class="bibtex reference internal" href="#kocsis2006bandit" id="id5">[3]</a> that combines MCTS and UCB1
 for action selection.</p>
 <p>In other words, this is just POMCP without particle belief,
 but arbitrary belief representation.</p>
 <p>This planning strategy, based on MCTS with belief sampling may be referred to as
 “belief sparse sampling”; Partially Observable Sparse Sampling (POSS) is
-introduced in a recent paper <a class="bibtex reference internal" href="#lim2019sparse" id="id5">[3]</a> as an extension of sparse sampling
-for MDP by <a class="bibtex reference internal" href="#kearns2002sparse" id="id6">[4]</a>; It proposes an extension of POSS
+introduced in a recent paper <a class="bibtex reference internal" href="#lim2019sparse" id="id6">[4]</a> as an extension of sparse sampling
+for MDP by <a class="bibtex reference internal" href="#kearns2002sparse" id="id7">[5]</a>; It proposes an extension of POSS
 called POWSS (partially observable weighted sparse sampling).  However, this
 line of work (POSS, POWSS) is based solely on particle belief
 representation. POSS still requires comparing observations exactly for particle
 belief update, while POWSS uses weighted particles depending on the observation
 distribution.</p>
-<p>A note on the exploration constant. Quote from <a class="bibtex reference internal" href="#gusmao2012towards" id="id7">[5]</a>:</p>
+<p>A note on the exploration constant. Quote from <a class="bibtex reference internal" href="#gusmao2012towards" id="id8">[6]</a>:</p>
 <blockquote>
 <div><p>“This constant should reflect the agent’s prior knowledge regarding
 the amount of exploration required.”</p>
@@ -278,7 +291,7 @@ This is particularly true in the RockSample problem.</p>
 <dt id="pomdp_py.algorithms.po_uct.POUCT">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">POUCT</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
-<p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id8">[1]</a> is presented in the POMCP
+<p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id9">[1]</a> is presented in the POMCP
 paper as an extension of the UCT algorithm to partially-observable domains
 that combines MCTS and UCB1 for action selection.</p>
 <p>POUCT only works for problems with action space that can be enumerated.</p>
@@ -491,7 +504,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id9">[6]</a></p>
+domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id10">[7]</a></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration">
@@ -502,30 +515,107 @@ and observations can be explicitly enumerated.</p>
 <p>__init__(self, horizon=float(‘inf’), discount_factor=0.9, epsilon=1e-6)</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration.plan">
-<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">Agent agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
-<dd><p>The agent carries the information:
-Bt, ht, O,T,R/G, pi, necessary for planning</p>
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">agent</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.value_iteration.ValueIteration.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plans an action.</p>
 </dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_py.algorithms.bsp.blqr">
+<span id="pomdp-py-algorithms-bsp-blqr-module"></span><h2>pomdp_py.algorithms.bsp.blqr module<a class="headerlink" href="#module-pomdp_py.algorithms.bsp.blqr" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of B-LQR algorithm described in “Belief space planning
+assuming maximum likelihood observations” <a class="bibtex reference internal" href="#platt2010belief" id="id11">[2]</a></p>
+<dl class="class">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.bsp.blqr.</code><code class="sig-name descname">BLQR</code><span class="sig-paren">(</span><em class="sig-param">func_sysd</em>, <em class="sig-param">func_obs</em>, <em class="sig-param">jac_sysd</em>, <em class="sig-param">jac_obs</em>, <em class="sig-param">jac_sysd_u</em>, <em class="sig-param">noise_obs</em>, <em class="sig-param">noise_sysd</em>, <em class="sig-param">Qlarge</em>, <em class="sig-param">L</em>, <em class="sig-param">Q</em>, <em class="sig-param">R</em>, <em class="sig-param">planning_horizon=15</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo">
+<code class="sig-name descname">ekf_update_mlo</code><span class="sig-paren">(</span><em class="sig-param">bt</em>, <em class="sig-param">ut</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR.ekf_update_mlo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the ekf belief update assuming maximum likelihood observation.
+This follows equations 12, 13 in the paper. It’s the function <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bt</strong> (<em>tuple</em>) – a belief point bt = (mt, Cov_t) representing the belief state.
+where mt is np.array of shape (d,) and Cov_t is np.array of shape (d,d).
+The cost function equation needs to turn Cov_t into a long vector consist
+of the columns of Cov_t stiched together.</p></li>
+<li><p><strong>ut</strong> (<em>np.array</em>) – control vector</p></li>
+<li><p><strong>noise_t</strong> (<em>pomdp_py.Gaussian</em>) – The Gaussian noise with “possibly state-dependent”
+covariance matrix Wt.</p></li>
+<li><p><strong>noise_sysd</strong> (<em>np.array</em>) – A noise term (e.g. Gaussian noise) added to the
+system dynamics (<span class="math notranslate nohighlight">\(v\)</span> in Eq.12). This array should have the sam
+dimensionality as mt.</p></li>
+<li><p><strong>noise_obs_cov</strong> (<em>np.array</em>) – The covariance matrix of the Gaussian noise of the
+observation function. This corresponds to Wt in equation 13.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR.integrate_belief_segment">
+<code class="sig-name descname">integrate_belief_segment</code><span class="sig-paren">(</span><em class="sig-param">b_i</em>, <em class="sig-param">u_i</em>, <em class="sig-param">num_segments</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR.integrate_belief_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR.integrate_belief_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is to represent equation 18.</p>
+<dl class="simple">
+<dt>phi(b_i’, u_i’) = F(b_i’, u_i’) +   sum    F(b_{t+1}, u_i) - F(b_t, u_i)</dt><dd><p>t in seg</p>
+</dd>
+</dl>
+<p>This essentially returns b_{i+1}’</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function">
+<code class="sig-name descname">segmented_cost_function</code><span class="sig-paren">(</span><em class="sig-param">bu_traj</em>, <em class="sig-param">b_des</em>, <em class="sig-param">u_des</em>, <em class="sig-param">num_segments</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR.segmented_cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>The cost function in eq 17.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b_des</strong> (<em>tuple</em>) – The desired belief (mT, CovT). This is needed to compute the cost function.</p></li>
+<li><p><strong>u_des</strong> (<em>list</em>) – A list of desired controls at the beginning of each segment.
+If this information is not available, pass in an empty list.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR.create_plan">
+<code class="sig-name descname">create_plan</code><span class="sig-paren">(</span><em class="sig-param">b_0</em>, <em class="sig-param">b_des</em>, <em class="sig-param">u_init</em>, <em class="sig-param">num_segments=5</em>, <em class="sig-param">control_bounds=None</em>, <em class="sig-param">opt_options={}</em>, <em class="sig-param">opt_callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR.create_plan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR.create_plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves the SQP problem using direct transcription, and produce belief points
+and controls at segments.
+Reference: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html">https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.algorithms.bsp.blqr.BLQR.interpret_sqp_plan">
+<code class="sig-name descname">interpret_sqp_plan</code><span class="sig-paren">(</span><em class="sig-param">opt_res</em>, <em class="sig-param">num_segments</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR.interpret_sqp_plan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR.interpret_sqp_plan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <p id="bibtex-bibliography-api/pomdp_py.algorithms-0"><dl class="citation">
-<dt class="bibtex label" id="silver2010monte"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id3">3</a>,<a href="#id8">4</a>)</span></dt>
+<dt class="bibtex label" id="silver2010monte"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>,<a href="#id9">4</a>)</span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="kocsis2006bandit"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dt class="bibtex label" id="platt2010belief"><span class="brackets">2</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id11">2</a>)</span></dt>
+<dd><p>R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In <em>Proceedings of Robotics: Science and Systems</em>. Zaragoza, Spain, June 2010. <a class="reference external" href="https://doi.org/10.15607/RSS.2010.VI.037">doi:10.15607/RSS.2010.VI.037</a>.</p>
+</dd>
+<dt class="bibtex label" id="kocsis2006bandit"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
 <dd><p>Levente Kocsis and Csaba Szepesvári. Bandit based monte-carlo planning. In <em>European conference on machine learning</em>, 282–293. Springer, 2006.</p>
 </dd>
-<dt class="bibtex label" id="lim2019sparse"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dt class="bibtex label" id="lim2019sparse"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
 <dd><p>Michael H Lim, Claire J Tomlin, and Zachary N Sunberg. Sparse tree search optimality guarantees in pomdps with continuous observation spaces. <em>arXiv preprint arXiv:1910.04332</em>, 2019.</p>
 </dd>
-<dt class="bibtex label" id="kearns2002sparse"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dt class="bibtex label" id="kearns2002sparse"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
 <dd><p>Michael Kearns, Yishay Mansour, and Andrew Y Ng. A sparse sampling algorithm for near-optimal planning in large markov decision processes. <em>Machine learning</em>, 49(2-3):193–208, 2002.</p>
 </dd>
-<dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
+<dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
 <dd><p>António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In <em>ECAI</em>, 384–389. 2012.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id9">6</a></span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id10">7</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 </dl>

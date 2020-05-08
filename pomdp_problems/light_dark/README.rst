@@ -19,5 +19,5 @@ Reference: `Belief space planning assuming maximum likelihood observations <http
 
    There is an implementation of a variant of LightDarkDomain in the JuliaPOMDP suite (`repo <https://github.com/zsunberg/LightDarkPOMDPs.jl>`_).
 
-**Not yet implemented**
+**BLQR planning implementation not complete yet. **
 

@@ -172,8 +172,8 @@ observation.</p>
 <p>Object-oriented transition model</p>
 <dl class="method">
 <dt id="pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns observation</p>
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns random observation</p>
 </dd></dl>
 
 </dd></dl>
@@ -370,13 +370,13 @@ multi-robot transition model should be used by the Environment, but
 not necessarily by each robot for planning.</p>
 <dl class="method">
 <dt id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns next_state</p>
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns random next_state</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next state</p>
 </dd></dl>
 

@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_problems.light_dark.env.visual &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_problems.light_dark.env.visual</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Plot the light dark environment&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pomdp_problems.util</span> <span class="k">as</span> <span class="nn">util</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.collections</span> <span class="k">import</span> <span class="n">PolyCollection</span>
+<span class="kn">import</span> <span class="nn">pomdp_problems.light_dark</span> <span class="k">as</span> <span class="nn">ld</span>
+
+<div class="viewcode-block" id="LightDarkViz"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz">[docs]</a><span class="k">class</span> <span class="nc">LightDarkViz</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class deals with visualizing a light dark domain&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            env (LightDarkEnvironment): Environment for light dark domain.</span>
+<span class="sd">            x_range (tuple): a tuple of floats (x_min, x_max).</span>
+<span class="sd">            y_range (tuple): a tuple of floats (y_min, y_max).</span>
+<span class="sd">            res (float): specifies the size of each rectangular strip to draw;</span>
+<span class="sd">                As in the paper, the light is at a location on the x axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_res</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x_range</span> <span class="o">=</span> <span class="n">x_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y_range</span> <span class="o">=</span> <span class="n">y_range</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_m_0</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># initial belief pose</span>
+
+        <span class="c1"># For tracking the path; list of robot position tuples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="LightDarkViz.log_position"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz.log_position">[docs]</a>    <span class="k">def</span> <span class="nf">log_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">position</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LightDarkViz.set_goal"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz.set_goal">[docs]</a>    <span class="k">def</span> <span class="nf">set_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal_pos</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pos</span> <span class="o">=</span> <span class="n">goal_pos</span></div>
+
+<div class="viewcode-block" id="LightDarkViz.set_initial_belief_pos"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz.set_initial_belief_pos">[docs]</a>    <span class="k">def</span> <span class="nf">set_initial_belief_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m_0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_m_0</span> <span class="o">=</span> <span class="n">m_0</span></div>
+
+<div class="viewcode-block" id="LightDarkViz.plot"><a class="viewcode-back" href="../../../../problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">path_colors</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">)]},</span>
+             <span class="n">path_styles</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;--&quot;</span><span class="p">},</span>
+             <span class="n">path_widths</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="p">}):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_gradient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_path</span><span class="p">(</span><span class="n">path_colors</span><span class="p">,</span> <span class="n">path_styles</span><span class="p">,</span> <span class="n">path_widths</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_robot</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_goal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_initial_belief_pos</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_plot_robot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cur_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">plot_circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="p">,</span> <span class="n">cur_pos</span><span class="p">,</span>
+                         <span class="mf">0.25</span><span class="p">,</span> <span class="c1"># tentative</span>
+                         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                         <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plot_initial_belief_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">plot_circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_0</span><span class="p">,</span>
+                             <span class="mf">0.25</span><span class="p">,</span> <span class="c1"># tentative</span>
+                             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                             <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                             <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plot_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">util</span><span class="o">.</span><span class="n">plot_circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pos</span><span class="p">,</span>
+                             <span class="mf">0.25</span><span class="p">,</span>  <span class="c1"># tentative</span>
+                             <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                             <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_plot_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">styles</span><span class="p">,</span> <span class="n">linewidths</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot robot path&quot;&quot;&quot;</span>
+        <span class="c1"># Plot line segments</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
+                <span class="n">path_color</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="n">path</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+                    <span class="n">path_color</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">linear_color_gradient</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span>
+                                                            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">]),</span>
+                                                            <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">path_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">path</span><span class="p">]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">:</span>
+                <span class="n">path_style</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path_style</span> <span class="o">=</span> <span class="n">styles</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">linewidths</span><span class="p">:</span>
+                <span class="n">path_width</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path_width</span> <span class="o">=</span> <span class="n">linewidths</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">])):</span>
+                <span class="n">p1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">p2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_paths</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">util</span><span class="o">.</span><span class="n">plot_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">path_color</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                   <span class="n">linestyle</span><span class="o">=</span><span class="n">path_style</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">path_width</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_plot_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;display the light dark domain.&quot;&quot;&quot;</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x_range</span>
+        <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_range</span>
+        <span class="c1"># Note that higher brightness has lower brightness value</span>
+        <span class="n">hi_brightness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">const</span>
+        <span class="n">lo_brightness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">light</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">const</span><span class="p">,</span>
+                            <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">light</span> <span class="o">-</span> <span class="n">xmax</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">const</span><span class="p">)</span>
+        <span class="c1"># Plot a bunch of rectangular strips along the x axis</span>
+        <span class="c1"># Check out: https://stackoverflow.com/questions/10550477</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xmin</span>
+        <span class="n">verts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">xmax</span><span class="p">:</span>
+            <span class="n">x_next</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_res</span>
+            <span class="n">verts</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="n">x</span><span class="p">,</span> <span class="n">ymin</span><span class="p">),</span> <span class="p">(</span><span class="n">x_next</span><span class="p">,</span> <span class="n">ymin</span><span class="p">),</span> <span class="p">(</span><span class="n">x_next</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)])</span>
+            <span class="c1"># compute brightness based on equation in the paper</span>
+            <span class="n">brightness</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">light</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">const</span>
+            <span class="c1"># map brightness to a grayscale color</span>
+            <span class="n">grayscale</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">remap</span><span class="p">(</span><span class="n">brightness</span><span class="p">,</span> <span class="n">hi_brightness</span><span class="p">,</span> <span class="n">lo_brightness</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">grayscale_hex</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">rgb_to_hex</span><span class="p">((</span><span class="n">grayscale</span><span class="p">,</span> <span class="n">grayscale</span><span class="p">,</span> <span class="n">grayscale</span><span class="p">))</span>
+            <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grayscale_hex</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x_next</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">plot_polygons</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>        </div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">ld</span><span class="o">.</span><span class="n">LightDarkEnvironment</span><span class="p">(</span><span class="n">ld</span><span class="o">.</span><span class="n">State</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)),</span>  <span class="c1"># init state</span>
+                                  <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># goal pose</span>
+                                  <span class="mi">5</span><span class="p">,</span>  <span class="c1"># light</span>
+                                  <span class="mi">1</span><span class="p">)</span>  <span class="c1"># const</span>
+    <span class="n">viz</span> <span class="o">=</span> <span class="n">LightDarkViz</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">viz</span><span class="o">.</span><span class="n">log_position</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">viz</span><span class="o">.</span><span class="n">log_position</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">viz</span><span class="o">.</span><span class="n">log_position</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">viz</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

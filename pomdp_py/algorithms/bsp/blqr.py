@@ -1,7 +1,5 @@
-"""
-Implementation of B-LQR algorithm described in
-
-"Belief space planning assuming maximum likelihood observations"
+"""Implementation of B-LQR algorithm described in "Belief space planning
+assuming maximum likelihood observations" :cite:`platt2010belief`
 """
 
 import pomdp_py
@@ -168,11 +166,10 @@ class BLQR(pomdp_py.Planner):
     def segmented_cost_function(self, bu_traj, b_des, u_des, num_segments):
         """The cost function in eq 17. 
 
-        Additional Arguments:
+        Args:
             b_des (tuple): The desired belief (mT, CovT). This is needed to compute the cost function.
             u_des (list): A list of desired controls at the beginning of each segment.
                 If this information is not available, pass in an empty list.
-        
         """
         if len(u_des) > 0 and len(u_des) != num_segments:
             raise ValueError("The list of desired controls, if provided, must have one control"\

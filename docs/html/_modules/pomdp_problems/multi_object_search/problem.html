@@ -271,9 +271,9 @@
                                                                   <span class="n">static_transition</span><span class="o">=</span><span class="n">objid</span> <span class="o">!=</span> <span class="n">agent</span><span class="o">.</span><span class="n">robot_id</span><span class="p">,</span>
                                                                   <span class="n">oargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;next_robot_state&quot;</span><span class="p">:</span> <span class="n">next_robot_state</span><span class="p">})</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected program state. Are you using </span><span class="si">%s</span><span class="s2"> for </span><span class="si">%s</span><span class="s2">?&quot;</span>
-                                 <span class="o">%</span> <span class="p">(</span><span class="n">belief_rep</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">planner</span><span class="p">))))</span>
-
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected program state.&quot;</span>\
+                                 <span class="s2">&quot;Are you using the appropriate belief representation?&quot;</span><span class="p">)</span>
+            
             <span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="o">.</span><span class="n">set_object_belief</span><span class="p">(</span><span class="n">objid</span><span class="p">,</span> <span class="n">new_belief</span><span class="p">)</span></div>
 
 
@@ -301,7 +301,6 @@
     <span class="n">random_object_belief</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="o">.</span><span class="n">object_beliefs</span><span class="p">[</span><span class="n">random_objid</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">random_object_belief</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">):</span>
         <span class="c1"># Use POUCT</span>
-        <span class="n">belief_rep</span> <span class="o">=</span> <span class="s2">&quot;histogram&quot;</span>
         <span class="n">planner</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
                                  <span class="n">discount_factor</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">,</span>
                                  <span class="n">planning_time</span><span class="o">=</span><span class="n">planning_time</span><span class="p">,</span>
@@ -309,7 +308,6 @@
                                  <span class="n">rollout_policy</span><span class="o">=</span><span class="n">problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>  <span class="c1"># Random by default</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">random_object_belief</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Particles</span><span class="p">):</span>
         <span class="c1"># Use POMCP</span>
-        <span class="n">belief_rep</span> <span class="o">=</span> <span class="s2">&quot;particles&quot;</span>
         <span class="n">planner</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
                                  <span class="n">discount_factor</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">,</span>
                                  <span class="n">planning_time</span><span class="o">=</span><span class="n">planning_time</span><span class="p">,</span>

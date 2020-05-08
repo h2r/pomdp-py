@@ -11,6 +11,13 @@ Existing POMDP Solvers:
    ~pomdp_py.algorithms.pomcp.POMCP
    ~pomdp_py.algorithms.value_iteration.ValueIteration
 
+Solvers under development (**contribution wanted**):
+
+.. autosummary::
+   :nosignatures:
+   
+   ~pomdp_py.algorithms.bsp.blqr
+
 
 
 pomdp\_py.algorithms.po\_rollout module
@@ -47,6 +54,16 @@ pomdp\_py.algorithms.value\_iteration module
    :show-inheritance:
 
 
+pomdp\_py.algorithms.bsp.blqr module
+------------------------------------
+
+.. automodule:: pomdp_py.algorithms.bsp.blqr
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. bibliography:: ../refs.bib
    :filter: docname in docnames
    :style: unsrt
+      

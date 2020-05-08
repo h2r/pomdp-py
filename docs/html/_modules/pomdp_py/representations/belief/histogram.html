@@ -131,9 +131,11 @@
         <span class="n">hist</span><span class="p">[</span><span class="n">a_s</span><span class="p">]</span> <span class="o">+=</span> <span class="n">current_histogram</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">hist</span></div>
 
-<div class="viewcode-block" id="update_histogram_belief"><a class="viewcode-back" href="../../../../api/pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.update_histogram_belief">[docs]</a><span class="k">def</span> <span class="nf">update_histogram_belief</span><span class="p">(</span><span class="n">current_histogram</span><span class="p">,</span> <span class="n">real_action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">,</span>
+<div class="viewcode-block" id="update_histogram_belief"><a class="viewcode-back" href="../../../../api/pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.update_histogram_belief">[docs]</a><span class="k">def</span> <span class="nf">update_histogram_belief</span><span class="p">(</span><span class="n">current_histogram</span><span class="p">,</span> 
+                            <span class="n">real_action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">,</span>
                             <span class="n">observation_model</span><span class="p">,</span> <span class="n">transition_model</span><span class="p">,</span> <span class="n">oargs</span><span class="o">=</span><span class="p">{},</span>
-                            <span class="n">targs</span><span class="o">=</span><span class="p">{},</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_transition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                            <span class="n">targs</span><span class="o">=</span><span class="p">{},</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_transition</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">next_state_space</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    update_histogram_belief(current_histogram, real_action, real_observation,</span>
 <span class="sd">                            observation_model, transition_model, oargs={},</span>
@@ -142,7 +144,8 @@
 <span class="sd">    :math:`B_{new}(s&#39;) = n O(z|s&#39;,a) \sum_s T(s&#39;|s,a)B(s)`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        current_histogram (Histogram) is the Histogram that represents current belief.</span>
+<span class="sd">        current_histogram (~pomdp_py.representations.distribution.Histogram)</span>
+<span class="sd">            is the Histogram that represents current belief.</span>
 <span class="sd">        real_action (~pomdp_py.framework.basics.Action)</span>
 <span class="sd">        real_observation (~pomdp_py.framework.basics.Observation)</span>
 <span class="sd">        observation_model (~pomdp_py.framework.basics.ObservationModel)</span>
@@ -156,13 +159,21 @@
 <span class="sd">            This thus helps reduce the computation cost by avoiding the nested iteration</span>
 <span class="sd">            over the state space; But still, updating histogram belief requires</span>
 <span class="sd">            iteration of the state space, which may already be prohibitive.</span>
+<span class="sd">        next_state_space (set) the state space of the updated belief. By default,</span>
+<span class="sd">            this parameter is None and the state space given by current_histogram</span>
+<span class="sd">            will be directly considered as the state space of the updated belief.</span>
+<span class="sd">            This is useful for space and time efficiency in problems where the state</span>
+<span class="sd">            space contains parts that the agent knows will deterministically update,</span>
+<span class="sd">            and thus not keeping track of the belief over these states.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Histogram: the histogram distribution as a result of the update</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_histogram</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># state space still the same.</span>
     <span class="n">total_prob</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="n">current_histogram</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">next_state_space</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">next_state_space</span> <span class="o">=</span> <span class="n">current_histogram</span>
+    <span class="k">for</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="n">next_state_space</span><span class="p">:</span>
         <span class="n">observation_prob</span> <span class="o">=</span> <span class="n">observation_model</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">real_observation</span><span class="p">,</span>
                                                          <span class="n">next_state</span><span class="p">,</span>
                                                          <span class="n">real_action</span><span class="p">,</span>

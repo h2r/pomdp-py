@@ -16,6 +16,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_problems.light_dark.env package" href="pomdp_problems.light_dark.env.html" />
+    <link rel="prev" title="pomdp_problems.light_dark package" href="pomdp_problems.light_dark.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -72,9 +74,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">problems</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_problems.html">pomdp_problems package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">pomdp_problems.rocksample package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">pomdp_problems.tiger package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pomdp_problems.light_dark.html">pomdp_problems.light_dark package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -90,6 +101,14 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+  <li><a href="pomdp_problems.html">pomdp_problems package</a><ul>
+  <li><a href="pomdp_problems.light_dark.html">pomdp_problems.light_dark package</a><ul>
+      <li>Previous: <a href="pomdp_problems.light_dark.html" title="previous chapter">pomdp_problems.light_dark package</a></li>
+      <li>Next: <a href="pomdp_problems.light_dark.env.html" title="next chapter">pomdp_problems.light_dark.env package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -154,8 +173,11 @@ by the control actions, <span class="math notranslate nohighlight">\(u\in\mathbb
 </div>
 <div class="section" id="module-pomdp_problems.light_dark.domain.observation">
 <span id="pomdp-problems-light-dark-domain-observation-module"></span><h2>pomdp_problems.light_dark.domain.observation module<a class="headerlink" href="#module-pomdp_problems.light_dark.domain.observation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pomdp_problems.light_dark.domain.observation.Observation">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.domain.observation.</code><code class="sig-name descname">Observation</code><span class="sig-paren">(</span><em class="sig-param">position</em>, <em class="sig-param">discrete=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/domain/observation.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.domain.observation.Observation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
 <p>Defines the Observation for the continuous light-dark domain;</p>
-<p>Origin: Belief space planning assuming maximum likelihood observations</p>
 <p>Observation space:</p>
 <blockquote>
 <div><dl class="simple">
@@ -163,11 +185,16 @@ by the control actions, <span class="math notranslate nohighlight">\(u\in\mathbb
 </dd>
 </dl>
 </div></blockquote>
-<dl class="class">
-<dt id="pomdp_problems.light_dark.domain.observation.Observation">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.light_dark.domain.observation.</code><code class="sig-name descname">Observation</code><span class="sig-paren">(</span><em class="sig-param">position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/domain/observation.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.domain.observation.Observation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
-<p>The observation of the problem is just the robot position</p>
+<dl class="attribute">
+<dt id="pomdp_problems.light_dark.domain.observation.Observation.PRECISION">
+<code class="sig-name descname">PRECISION</code><em class="property"> = 2</em><a class="headerlink" href="#pomdp_problems.light_dark.domain.observation.Observation.PRECISION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.light_dark.domain.observation.Observation.discretize">
+<code class="sig-name descname">discretize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/domain/observation.html#Observation.discretize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.domain.observation.Observation.discretize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
