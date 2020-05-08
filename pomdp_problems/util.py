@@ -25,13 +25,16 @@ def inverse_color_hex(hx):
     """hx is a string, begins with #. ASSUME len(hx)=7."""
     return inverse_color_rgb(hex_to_rgb(hx))
 
-def linear_color_gradient(rgb_start, rgb_end, n):
+def linear_color_gradient(rgb_start, rgb_end, n, normalize=False):
     colors = [rgb_start]
     for t in range(1, n):
-        colors.append(tuple(
+        color = tuple(
             rgb_start[i] + float(t)/(n-1)*(rgb_end[i] - rgb_start[i])
             for i in range(3)
-        ))
+        )
+        if normalize:
+            color = tuple(color[i] / 255.0 for i in range(3))
+        colors.append(color)
     return colors  
 
 def rgb_to_grayscale(rgb):

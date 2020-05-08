@@ -22,43 +22,90 @@ class LightDarkViz:
         self._y_range = y_range
         fig = plt.gcf()
         self._ax = fig.add_subplot(1,1,1)
+        self._goal_pos = None
+        self._m_0 = None  # initial belief pose
 
         # For tracking the path; list of robot position tuples
-        self._log_path = []
+        self._log_paths = {}
 
-    def log_position(self, position):
-        self._log_path.append(position)
+    def log_position(self, position, path=0):
+        if path not in self._log_paths:
+            self._log_paths[path] = []
+        self._log_paths[path].append(position)
 
-    def plot(self):
+    def set_goal(self, goal_pos):
+        self._goal_pos = goal_pos
+
+    def set_initial_belief_pos(self, m_0):
+        self._m_0 = m_0
+
+    def plot(self,
+             path_colors={0: [(0,0,0), (0,0,254)]},
+             path_styles={0: "--"},
+             path_widths={0: 1}):
         self._plot_gradient()
-        # self._plot_path()
+        self._plot_path(path_colors, path_styles, path_widths)
         self._plot_robot()
         self._plot_goal()
+        self._plot_initial_belief_pos()
 
     def _plot_robot(self):
         cur_pos = self._env.state.position
         util.plot_circle(self._ax, cur_pos,
                          0.25, # tentative
-                         color="black", fill=True,
-                         linewidth=2, edgecolor="black",
-                         zorder=3)
-
-    def _plot_goal(self):
-        util.plot_circle(self._ax,
-                         self._env.goal_pos,
-                         0.5,  # tentative
+                         color="black", fill=False,
                          linewidth=1, edgecolor="black",
                          zorder=3)
+
+    def _plot_initial_belief_pos(self):
+        if self._m_0 is not None:
+            util.plot_circle(self._ax, self._m_0,
+                             0.25, # tentative
+                             color="black", fill=False,
+                             linewidth=1, edgecolor="black",
+                             zorder=3)
+
+    def _plot_goal(self):
+        if self._goal_pos is not None:
+            util.plot_circle(self._ax,
+                             self._goal_pos,
+                             0.25,  # tentative
+                             linewidth=1, edgecolor="blue",
+                             zorder=3)
         
-    def _plot_path(self):
+    def _plot_path(self, colors, styles, linewidths):
         """Plot robot path"""
         # Plot line segments
-        print("GG")
-        for i in range(1, len(self._log_path)):
-            print("kk")
-            p1 = self._log_path[i-1]
-            p2 = self._log_path[i]
-            util.plot_line(self._ax, p1, p2, color="black", linestyle="--", zorder=2)
+        for path in self._log_paths:
+            if path not in colors:
+                path_color = [(0,0,0)] * len(self._log_paths[path])
+            else:
+                if len(colors[path]) == 2:
+                    c1, c2 = colors[path]
+                    path_color = util.linear_color_gradient(c1, c2,
+                                                            len(self._log_paths[path]),
+                                                            normalize=True)
+                else:
+                    path_color = [colors[path]] * len(self._log_paths[path])
+
+            if path not in styles:
+                path_style = "--"
+            else:
+                path_style = styles[path]
+
+            if path not in linewidths:
+                path_width = 1
+            else:
+                path_width = linewidths[path]
+
+            for i in range(1, len(self._log_paths[path])):
+                p1 = self._log_paths[path][i-1]
+                p2 = self._log_paths[path][i]
+                try:
+                    util.plot_line(self._ax, p1, p2, color=path_color[i],
+                                   linestyle=path_style, zorder=2, linewidth=path_width)
+                except Exception:
+                    import pdb; pdb.set_trace()
 
     def _plot_gradient(self):
         """display the light dark domain."""

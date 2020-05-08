@@ -1,14 +1,18 @@
 import pomdp_py
 import pomdp_problems.light_dark as ld
+import numpy as np
 
 class LightDarkEnvironment(pomdp_py.Environment):
     
     def __init__(self,
-                 init_state, goal_pos, light,
-                 const, reward_model=None):
+                 init_state,
+                 light,
+                 const,
+                 reward_model=None):
         """
         Args:
-            init_state (light_dark.domain.State): initial true state of the light-dark domain,
+            init_state (light_dark.domain.State or np.ndarray):
+                initial true state of the light-dark domain,
             goal_pos (tuple): goal position (x,y)
             light (float):  see below
             const (float): see below
@@ -21,15 +25,12 @@ class LightDarkEnvironment(pomdp_py.Environment):
         """
         self._light = light
         self._const = const
-        self._goal_pos = goal_pos
         transition_model = ld.TransitionModel()
+        if type(init_state) == np.ndarray:
+            init_state = ld.State(init_state)
         super().__init__(init_state,
                          transition_model,
                          reward_model)
-
-    @property
-    def goal_pos(self):
-        return self._goal_pos
 
     @property
     def light(self):
