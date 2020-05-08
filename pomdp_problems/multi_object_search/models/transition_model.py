@@ -10,9 +10,9 @@ Transition: deterministic
 """
 import pomdp_py
 import copy
-from ..domain.state import *
-from ..domain.observation import *
-from ..domain.action import *
+from pomdp_problems.multi_object_search.domain.state import *
+from pomdp_problems.multi_object_search.domain.observation import *
+from pomdp_problems.multi_object_search.domain.action import *
 
 ####### Transition Model #######
 class MosTransitionModel(pomdp_py.OOTransitionModel):

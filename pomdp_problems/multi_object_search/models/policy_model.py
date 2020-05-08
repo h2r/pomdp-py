@@ -5,7 +5,7 @@ grid map of the environment.
 
 import pomdp_py
 import random
-from ..domain.action import *
+from pomdp_problems.multi_object_search.domain.action import *
 
 class PolicyModel(pomdp_py.RolloutPolicy):
     """Simple policy model. All actions are possible at any state."""

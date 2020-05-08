@@ -1,7 +1,7 @@
 """Reward model for 2D Multi-object Search domain"""
 
 import pomdp_py
-from ..domain.action import *
+from pomdp_problems.multi_object_search.domain.action import *
 
 class MosRewardModel(pomdp_py.RewardModel):
     def __init__(self, target_objects, big=1000, small=1, robot_id=None):

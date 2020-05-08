@@ -12,11 +12,11 @@ import math
 import numpy as np
 import random
 from pomdp_py import util
-from .env import *
-from ..domain.observation import *
-from ..domain.action import *
-from ..domain.state import *
-from ..example_worlds import *
+from pomdp_problems.multi_object_search.env.env import *
+from pomdp_problems.multi_object_search.domain.observation import *
+from pomdp_problems.multi_object_search.domain.action import *
+from pomdp_problems.multi_object_search.domain.state import *
+from pomdp_problems.multi_object_search.example_worlds import *
 
 # Deterministic way to get object color
 def object_color(objid, count):

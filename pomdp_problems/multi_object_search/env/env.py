@@ -2,10 +2,10 @@
 
 import pomdp_py
 import copy
-from ..models.transition_model import *
-from ..models.reward_model import *
-from ..models.components.sensor import *
-from ..domain.state import *
+from pomdp_problems.multi_object_search.models.transition_model import *
+from pomdp_problems.multi_object_search.models.reward_model import *
+from pomdp_problems.multi_object_search.models.components.sensor import *
+from pomdp_problems.multi_object_search.domain.state import *
 
 class MosEnvironment(pomdp_py.Environment):
     """"""
@@ -179,11 +179,7 @@ def interpret(worldstr):
             raise ValueError("Unknown sensor type %s" % sensor_type)
         sensors[robot_id] = sensor
 
-    # Make init state
-    init_state = MosOOState({**objects, **robots})
-    return MosEnvironment((w,l),
-                          init_state, sensors,
-                          obstacles=obstacles)
+    return (w,l), robots, objects, obstacles, sensors
 
 def interpret_robot_id(robot_name):
     return -ord(robot_name)

@@ -21,9 +21,9 @@ import pomdp_py
 import math
 import random
 import numpy as np
-from ..domain.state import *
-from ..domain.action import *
-from ..domain.observation import *
+from pomdp_problems.multi_object_search.domain.state import *
+from pomdp_problems.multi_object_search.domain.action import *
+from pomdp_problems.multi_object_search.domain.observation import *
 
 #### Observation Models ####
 class MosObservationModel(pomdp_py.OOObservationModel):

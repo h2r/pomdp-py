@@ -3,12 +3,12 @@ Uses the domain, models, and agent/environment
 to actually define the POMDP problem for multi-object search.
 Then, solve it using POUCT or POMCP."""
 import pomdp_py
-from .env.env import *
-from .env.visual import *
-from .agent.agent import *
-from .example_worlds import *
-from .domain.observation import *
-from .models.components.grid_map import *
+from pomdp_problems.multi_object_search.env.env import *
+from pomdp_problems.multi_object_search.env.visual import *
+from pomdp_problems.multi_object_search.agent.agent import *
+from pomdp_problems.multi_object_search.example_worlds import *
+from pomdp_problems.multi_object_search.domain.observation import *
+from pomdp_problems.multi_object_search.models.components.grid_map import *
 import argparse
 import time
 import random
@@ -63,8 +63,12 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
                 "Since env is not provided, you must provide string descriptions"\
                 "of the world and sensors."
             worldstr = equip_sensors(grid_map, sensors)
-            env = interpret(worldstr)
-
+            dim, robots, objects, obstacles, sensors = interpret(worldstr)
+            init_state = MosOOState({**objects, **robots})
+            env = MosEnvironment(dim,
+                          init_state, sensors,
+                          obstacles=obstacles)
+            
         # construct prior
         if type(prior) == str:
             if prior == "uniform":

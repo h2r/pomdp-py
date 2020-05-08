@@ -1,8 +1,8 @@
 """Optional grid map to assist collision avoidance during planning."""
 
-from ..transition_model import RobotTransitionModel
-from ...domain.action import *
-from ...domain.state import *
+from pomdp_problems.multi_object_search.models.transition_model import RobotTransitionModel
+from pomdp_problems.multi_object_search.domain.action import *
+from pomdp_problems.multi_object_search.domain.state import *
 
 class GridMap:
     """This map assists the agent to avoid planning invalid
