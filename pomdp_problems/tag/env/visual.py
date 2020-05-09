@@ -108,7 +108,7 @@ class TagViz:
         for state in reversed(sorted(hist, key=hist.get)):
             if last_val != -1:
                 color = util.lighter(color, 1-hist[state]/last_val)
-            if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.99:
+            if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.999:
                 tx, ty = state.target_position
                 if (tx,ty) not in circle_drawn:
                     circle_drawn[(tx,ty)] = 0
