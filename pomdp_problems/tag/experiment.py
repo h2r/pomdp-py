@@ -13,13 +13,13 @@ def trial(worldstr, **kwargs):
                          init_target_position,
                          grid_map, **kwargs)
     discounted_reward = solve(problem,
-                              max_depth=20,
+                              max_depth=15,
                               discount_factor=0.95,
-                              planning_time=.5,
+                              planning_time=.7,
                               exploration_const=10,
                               visualize=True,
-                              max_time=60,
-                              max_steps=60)
+                              max_time=120,
+                              max_steps=500)
     return discounted_reward
 
 def main():

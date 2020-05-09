@@ -142,13 +142,13 @@ if __name__ == "__main__":
                          pr_move_away=0.8,
                          pr_stay=0.2,
                          small=1,
-                         big=100,
+                         big=10,
                          prior="uniform")
     solve(problem,
-          max_depth=20,
+          max_depth=15,
           discount_factor=0.95,
           planning_time=0.7,
-          exploration_const=20,
+          exploration_const=10,
           visualize=True,
           max_time=120,
           max_steps=500)
