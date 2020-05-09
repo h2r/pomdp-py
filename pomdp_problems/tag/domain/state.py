@@ -19,7 +19,7 @@ class TagState(pomdp_py.State):
         self.target_found = target_found
 
     def __hash__(self):
-        return hash(self.robot_position, self.target_position, self.target_found)
+        return hash((self.robot_position, self.target_position, self.target_found))
 
     def __eq__(self, other):
         if not isinstance(other, State):
@@ -33,3 +33,6 @@ class TagState(pomdp_py.State):
         return 'State(%s, %s | %s)' % (str(self.robot_position),
                                        str(self.target_position),
                                        str(self.target_found))
+
+    def __repr__(self):
+        return str(self)

@@ -1,5 +1,6 @@
 from pomdp_problems.tag.domain.action import *
 from pomdp_problems.tag.models.transition_model import TagTransitionModel
+from pomdp_problems.multi_object_search.env.env import interpret
 
 class GridMap:
 
@@ -26,3 +27,20 @@ class GridMap:
             valid_motions.add(motion_action)
         return valid_motions
 
+    @classmethod
+    def from_str(cls, worldstr, **kwargs):
+        dim, _, objects, obstacles, _ = interpret(worldstr)
+        obstacle_poses = set({})
+        for objid in objects:
+            if objid in obstacles:
+                obstacle_poses.add(objects[objid].pose)
+        grid_map = GridMap(dim[0], dim[1], obstacle_poses)
+        return grid_map
+
+    def free_cells(self):
+        cells = set({(x,y)
+                     for x in range(self.width)
+                     for y in range(self.length)
+                     if (x,y) not in self.obstacle_poses})
+        return cells
+                

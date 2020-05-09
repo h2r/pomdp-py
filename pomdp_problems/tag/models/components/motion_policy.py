@@ -17,16 +17,15 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
     def probability(self, next_target_position,
                     target_position, robot_position,
                     valid_target_motion_actions):
-        if next_state.target_position == state.target_position:
+        if next_target_position == target_position:
             return self._pr_stay
         
         cur_dist = util.euclidean_dist(robot_position, target_position)
         next_dist = util.euclidean_dist(robot_position, next_target_position)
-        if next_dist < cur_dist:
+        if next_dist <= cur_dist:
             return constants.EPSILON
         else:
-            assert next_dist > cur_dist
-            return self.pr_move_away / len(valid_motion_actions)
+            return self._pr_move_away / len(valid_target_motion_actions)
 
     def random(self, robot_position, target_position, valid_target_motion_actions,
                mpe=False):

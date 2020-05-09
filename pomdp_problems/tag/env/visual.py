@@ -65,7 +65,7 @@ class TagViz:
     def last_observation(self):
         return self._last_observation
     
-    def update(self, action, observation, viz_observation, belief):
+    def update(self, action, observation, belief):
         """
         Update the visualization after there is new real action and observation
         and updated belief.
@@ -94,37 +94,33 @@ class TagViz:
 
     # TODO! Deprecated.
     @staticmethod
-    def draw_belief(img, belief, r, size, target_colors):
+    def draw_belief(img, belief, r, size, target_color):
         """belief (OOBelief)"""
         radius = int(round(r / 2))
 
         circle_drawn = {}  # map from pose to number of times drawn
 
-        for objid in belief.object_beliefs:
-            if isinstance(belief.object_belief(objid).random(), RobotState):
-                continue
-            hist = belief.object_belief(objid).get_histogram()
-            color = target_colors[objid]
+        hist = belief.get_histogram()
+        color = target_color
+        
+        last_val = -1
+        count = 0
+        for state in reversed(sorted(hist, key=hist.get)):
+            if last_val != -1:
+                color = util.lighter(color, 1-hist[state]/last_val)
+            if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.99:
+                tx, ty = state.target_position
+                if (tx,ty) not in circle_drawn:
+                    circle_drawn[(tx,ty)] = 0
+                circle_drawn[(tx,ty)] += 1
 
-            last_val = -1
-            count = 0
-            for state in reversed(sorted(hist, key=hist.get)):
-                if state.objclass == 'target':
-                    if last_val != -1:
-                        color = util.lighter(color, 1-hist[state]/last_val)
-                    if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.99:
-                        tx, ty = state['pose']
-                        if (tx,ty) not in circle_drawn:
-                            circle_drawn[(tx,ty)] = 0
-                        circle_drawn[(tx,ty)] += 1
-                        
-                        cv2.circle(img, (ty*r+radius,
-                                         tx*r+radius), size//circle_drawn[(tx,ty)], color, thickness=-1)
-                        last_val = hist[state]
-                        
-                        count +=1
-                        if last_val <= 0:
-                            break
+                cv2.circle(img, (ty*r+radius,
+                                 tx*r+radius), size//circle_drawn[(tx,ty)], color, thickness=-1)
+                last_val = hist[state]
+
+                count +=1
+                if last_val <= 0:
+                    break
 
     # PyGame interface functions
     def on_init(self):
@@ -174,6 +170,7 @@ class TagViz:
                 print("     action: %s" % str(action.name))
                 print("     observation: %s" % str(z))
                 print("     reward: %s" % str(reward))
+                print(" valid motions: %s" % str(self._env.grid_map.valid_motions(self._env.state.robot_position)))
                 print("------------")
                 if self._env.state.target_found:
                     self._running = False
@@ -224,8 +221,8 @@ class TagViz:
         # last_observation = self._last_observation.get(robot_id, None)
         # last_viz_observation = self._last_viz_observation.get(robot_id, None)
         # last_belief = self._last_belief.get(robot_id, None)
-        # if last_belief is not None:
-        #     MosViz.draw_belief(img, last_belief, r, r//3, self._target_colors)
+        if self._last_belief is not None:
+            TagViz.draw_belief(img, self._last_belief, r, r//3, self._target_color)
         if self._last_observation is not None:
             TagViz.draw_observation(img, self._last_observation,
                                     rx, ry, 0, r, r//8, color=(20, 20, 180))

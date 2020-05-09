@@ -32,9 +32,9 @@ class TagTransitionModel(pomdp_py.TransitionModel):
 
     def probability(self, next_state, state, action, **kwargs):
         # Robot motion
-        expected_robot_position = TransitionModel.if_move_by(self._grid_map,
-                                                             state.robot_position,
-                                                             action)
+        expected_robot_position = TagTransitionModel.if_move_by(self._grid_map,
+                                                                state.robot_position,
+                                                                action)
         if expected_robot_position != next_state.robot_position:
             return constants.EPSILON
 
@@ -80,7 +80,7 @@ class TagTransitionModel(pomdp_py.TransitionModel):
         else:
             next_state.target_position = self.target_motion_policy.mpe(state.robot_position,
                                                                        state.target_position,
-                                                                       valid_target_motion_actions)            
+                                                                       valid_target_motion_actions)
         return next_state
 
     def argmax(self, state, action, **kwargs):

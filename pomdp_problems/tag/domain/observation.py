@@ -14,7 +14,7 @@ class TagObservation(pomdp_py.Observation):
         return hash(self.target_position)
 
     def __eq__(self, other):
-        if not isinstance(other, Observation):
+        if not isinstance(other, TagObservation):
             return False
         else:
             return self.target_position == other.target_position

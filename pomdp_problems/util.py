@@ -42,6 +42,15 @@ def rgb_to_grayscale(rgb):
     r,g,b = rgb
     return (0.2989*r, 0.5870*g, 0.1140*b)
 
+# colors
+def lighter(color, percent):
+    '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
+    color = np.array(color)
+    white = np.array([255, 255, 255])
+    vector = white-color
+    return color + vector * percent    
+
+
 # Plot polygons with colors
 def plot_polygons(verts, colors, ax=None, edgecolor=None):
     """
