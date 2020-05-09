@@ -10,18 +10,18 @@ class GridMap:
         self.obstacle_poses = obstacle_poses
 
     def valid_pose(self, position):
-        if not (position[0] >= 0 and position[0] < width\
-                and position[1] >= 0 and position[1] < length):
+        if not (position[0] >= 0 and position[0] < self.width\
+                and position[1] >= 0 and position[1] < self.length):
             return False
         if position in self.obstacle_poses:
             return False
         return True
 
     def valid_motions(self, position,
-                      all_motions={MoveEast, MoveWest, MoveNorth, MoveSouth}):
+                      all_motions=MOTION_ACTIONS):
         valid_motions = set({})
         for motion_action in all_motions:
-            if TagTransitionModel.if_move_by(position, motion_action) == position:
+            if TagTransitionModel.if_move_by(self, position, motion_action) == position:
                 continue
             valid_motions.add(motion_action)
         return valid_motions

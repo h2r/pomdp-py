@@ -32,4 +32,4 @@ class TagState(pomdp_py.State):
     def __str__(self):
         return 'State(%s, %s | %s)' % (str(self.robot_position),
                                        str(self.target_position),
-                                       str(self.objects_found))
+                                       str(self.target_found))

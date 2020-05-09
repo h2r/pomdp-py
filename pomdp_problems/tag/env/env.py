@@ -14,13 +14,12 @@ class TagEnvironment(pomdp_py.Environment):
                  grid_map,
                  pr_move_away=0.8,
                  pr_stay=0.2,
-                 pr_move_closer=0.8,
                  small=1,
                  big=10):
         self._grid_map = grid_map
-        target_motion_policy = TagTargetMotionPolicy(pr_move_away,
-                                                     pr_stay,
-                                                     pr_move_closer)
+        target_motion_policy = TagTargetMotionPolicy(grid_map,
+                                                     pr_move_away,
+                                                     pr_stay)
         transition_model = TagTransitionModel(grid_map, target_motion_policy)
         reward_model = TagRewardModel(small=small, big=big)
         super().__init__(init_state,
@@ -43,16 +42,16 @@ class TagEnvironment(pomdp_py.Environment):
     def from_str(cls, worldstr, **kwargs):
         dim, robots, objects, obstacles, _ = interpret(worldstr)
         assert len(robots) == 1, "Does not support multiple robots."
-        robot_position = robots[list(robots.keys())[0]]
+        robot_position = robots[list(robots.keys())[0]].pose[:2]
         targets = []
         obstacle_poses = set({})
         for objid in objects:
             if objid not in obstacles:
-                targtes.append(objid)
+                targets.append(objid)
             else:
-                obstacle_poses.add(objects[objid])
+                obstacle_poses.add(objects[objid].pose)
         assert len(targets) == 1, "Does not support multiple objects."                        
-        target_position = objects[targets[0]]
+        target_position = objects[targets[0]].pose
         init_state = TagState(robot_position, target_position, False)
         grid_map = GridMap(dim[0], dim[1], obstacle_poses)
         return TagEnvironment(init_state, grid_map, **kwargs)

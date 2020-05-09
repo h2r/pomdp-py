@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 import numpy as np
 import matplotlib.lines as lines
+import math
 
 # Convenient color utilities
 def rgb_to_hex(rgb):

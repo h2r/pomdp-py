@@ -9,19 +9,21 @@ from pomdp_problems.tag.env.env import *
 from pomdp_problems.tag.domain.observation import *
 from pomdp_problems.tag.domain.action import *
 from pomdp_problems.tag.domain.state import *
+from pomdp_problems.tag.example_worlds import *
+from pomdp_problems.tag.models.observation_model import *
 
 #### Visualization through pygame ####
 class TagViz:
 
-    def __init__(self, env, res=30, fps=30, controllable=False):
+    def __init__(self, env, res=30, fps=30, controllable=False, observation_model=None):
         self._env = env
 
         self._res = res
         self._img = self._make_gridworld_image(res)
-        self._last_observation = {}  # map from robot id to MosOOObservation
-        self._last_viz_observation = {}  # map from robot id to MosOOObservation        
-        self._last_action = {}  # map from robot id to Action
-        self._last_belief = {}  # map from robot id to OOBelief
+        self._last_observation = None
+        self._last_action = None
+        self._last_belief = None
+        self._observation_model = observation_model
         
         self._controllable = controllable
         self._running = False
@@ -67,36 +69,28 @@ class TagViz:
         """
         Update the visualization after there is new real action and observation
         and updated belief.
-
-        Args:
-            observation (MosOOObservation): Real observation
-            viz_observation (MosOOObservation): An observation used to visualize
-                                                the sensing region.
         """
         self._last_action = action
         self._last_observation = observation
-        self._last_viz_observation = viz_observation
         self._last_belief = belief
         
     @staticmethod
     def draw_robot(img, x, y, th, size, color=(255,12,12)):
         radius = int(round(size / 2))
-        cv2.circle(img, (y+radius, x+radius), radius, color, thickness=2)
+        cv2.circle(img, (y+radius, x+radius), radius, color, thickness=6)
+        # endpoint = (y+radius + int(round(radius*math.sin(th))),
+        #             x+radius + int(round(radius*math.cos(th))))
+        # cv2.line(img, (y+radius,x+radius), endpoint, color, 2)
 
-        endpoint = (y+radius + int(round(radius*math.sin(th))),
-                    x+radius + int(round(radius*math.cos(th))))
-        cv2.line(img, (y+radius,x+radius), endpoint, color, 2)
-
-    # TODO! Deprecated.        
     @staticmethod
     def draw_observation(img, z, rx, ry, rth, r, size, color=(12,12,255)):
-        assert type(z) == MosOOObservation, "%s != MosOOObservation" % (str(type(z)))
+        assert type(z) == TagObservation, "%s != TagObservation" % (str(type(z)))
         radius = int(round(r / 2))
-        for objid in z.objposes:
-            if z.for_obj(objid).pose != ObjectObservation.NULL:
-                lx, ly = z.for_obj(objid).pose
-                cv2.circle(img, (ly*r+radius,
-                                 lx*r+radius), size, color, thickness=-1)
+        if z.target_position is not None:
+            lx, ly = z.target_position
+            cv2.circle(img, (ly*r+radius,
+                             lx*r+radius), size, color, thickness=-1)
+        
 
     # TODO! Deprecated.
     @staticmethod
@@ -148,9 +142,6 @@ class TagViz:
         self._running = True
 
     def on_event(self, event):
-        # TODO: Keyboard control multiple robots
-        robot_id = list(self._env.robot_ids)[0]  # Just pick the first one.
-        
         if event.type == pygame.QUIT:
             self._running = False
         # TODO! DEPRECATED!
@@ -158,48 +149,34 @@ class TagViz:
             u = None  # control signal according to motion model
             action = None  # control input by user
 
-            # odometry model
             if event.key == pygame.K_LEFT:
-                action = MoveLeft
+                action = MoveWest2D
             elif event.key == pygame.K_RIGHT:
-                action = MoveRight
-            elif event.key == pygame.K_UP:
-                action = MoveForward
+                action = MoveEast2D
             elif event.key == pygame.K_DOWN:
-                action = MoveBackward
-            # euclidean axis model
-            elif event.key == pygame.K_a:
-                action = MoveWest
-            elif event.key == pygame.K_d:
-                action = MoveEast
-            elif event.key == pygame.K_s:
-                action = MoveSouth
-            elif event.key == pygame.K_w:
-                action = MoveNorth
+                action = MoveSouth2D
+            elif event.key == pygame.K_UP:
+                action = MoveNorth2D
             elif event.key == pygame.K_SPACE:
-                action = Look
-            elif event.key == pygame.K_RETURN:
-                action = Find
+                action = TagAction()
 
             if action is None:
                 return
 
             if self._controllable:
-                if isinstance(action, MotionAction):
-                    reward = self._env.state_transition(action, execute=True, robot_id=robot_id)
-                    z = None
-                elif isinstance(action, LookAction) or isinstance(action, FindAction):
-                    robot_pose = self._env.state.pose(robot_id)
-                    z = self._env.sensors[robot_id].observe(robot_pose,
-                                                            self._env.state)
-                    self._last_observation[robot_id] = z
-                    self._last_viz_observation[robot_id] = z                    
-                    reward = self._env.state_transition(action, execute=True, robot_id=robot_id)
-                print("robot state: %s" % str(self._env.state.object_states[robot_id]))
+                reward = self._env.state_transition(action, execute=True)
+                robot_pose = self._env.state.robot_position
+                z = None
+                if self._observation_model is not None:
+                    z = self._observation_model.sample(self._env.state, action)
+                    self._last_observation = z
+                print("      state: %s" % str(self._env.state))
                 print("     action: %s" % str(action.name))
                 print("     observation: %s" % str(z))
                 print("     reward: %s" % str(reward))
                 print("------------")
+                if self._env.state.target_found:
+                    self._running = False
             return action
 
     def on_loop(self):
@@ -208,14 +185,13 @@ class TagViz:
     def on_render(self):
         # self._display_surf.blit(self._background, (0, 0))
         self.render_env(self._display_surf)
-        robot_id = list(self._env.robot_ids)[0]  # Just pick the first one.
-        rx, ry, rth = self._env.state.pose(robot_id)
+        rx, ry = self._env.state.robot_position
         fps_text = "FPS: {0:.2f}".format(self._clock.get_fps())
-        last_action = self._last_action.get(robot_id, None)
+        last_action = self._last_action
         last_action_str = "no_action" if last_action is None else str(last_action)
-        pygame.display.set_caption("%s | Robot%d(%.2f,%.2f,%.2f) | %s | %s" %
-                                   (last_action_str, robot_id, rx, ry, rth*180/math.pi,
-                                    str(self._env.state.object_states[robot_id]["objects_found"]),
+        pygame.display.set_caption("%s | Robot(%.2f,%.2f,%.2f) | %s | %s" %
+                                   (last_action_str, rx, ry, 0,
+                                    str(self._env.state.target_found),
                                     fps_text))
         pygame.display.flip() 
  
@@ -237,50 +213,33 @@ class TagViz:
         img = np.copy(self._img)
         r = self._res  # Not radius! It's resolution.
         
-        # draw dynamic object
+        # draw target
         tx, ty = self._env.state.target_position
         cv2.rectangle(img, (ty*r, tx*r), (ty*r+r, tx*r+r),
                       (255, 165, 0), -1)
-        
-        for i, robot_id in enumerate(self._env.robot_ids):
-            rx, ry, rth = self._env.state.pose(robot_id)
-            r = self._res  # Not radius!
-            last_observation = self._last_observation.get(robot_id, None)
-            last_viz_observation = self._last_viz_observation.get(robot_id, None)
-            last_belief = self._last_belief.get(robot_id, None)
-            if last_belief is not None:
-                MosViz.draw_belief(img, last_belief, r, r//3, self._target_colors)
-            if last_viz_observation is not None:
-                MosViz.draw_observation(img, last_viz_observation,
-                                        rx, ry, rth, r, r//4, color=(200, 200, 12))
-            if last_observation is not None:
-                MosViz.draw_observation(img, last_observation,
-                                        rx, ry, rth, r, r//8, color=(20, 20, 180))
-                
-            MosViz.draw_robot(img, rx*r, ry*r, rth, r, color=(12, 255*(0.8*(i+1)), 12))
+
+        # draw robot
+        rx, ry = self._env.state.robot_position
+        r = self._res  # Not radius!
+        # last_observation = self._last_observation.get(robot_id, None)
+        # last_viz_observation = self._last_viz_observation.get(robot_id, None)
+        # last_belief = self._last_belief.get(robot_id, None)
+        # if last_belief is not None:
+        #     MosViz.draw_belief(img, last_belief, r, r//3, self._target_colors)
+        if self._last_observation is not None:
+            TagViz.draw_observation(img, self._last_observation,
+                                    rx, ry, 0, r, r//8, color=(20, 20, 180))
+
+        TagViz.draw_robot(img, rx*r, ry*r, 0, r, color=(200, 12, 150))
         pygame.surfarray.blit_array(display_surf, img)
 
 # TODO! DEPRECATED!
 def unittest():
-    # If you don't want occlusion, use this:
-    laserstr = make_laser_sensor(90, (1, 8), 0.5, False)
-    # If you want occlusion, use this
-    # (the difference is mainly in angle_increment; this
-    #  is due to the discretization - discretization may
-    #  cause "strange" behavior when checking occlusion
-    #  but the model is actually doing the right thing.)
-    laserstr_occ = make_laser_sensor(360, (1, 8), 0.5, True)
-    # Proximity sensor
-    proxstr = make_proximity_sensor(1.5, False)
-    proxstr_occ = make_proximity_sensor(1.5, True)
-
-    worldmap, robot = world1
-    worldstr = equip_sensors(worldmap, {robot: laserstr})
-    env = interpret(worldstr)
-    viz = MosViz(env, controllable=True)
+    worldmap, robot = world0
+    env = TagEnvironment.from_str(worldmap)
+    observation_model = TagObservationModel()
+    viz = TagViz(env, controllable=True, observation_model=observation_model)
     viz.on_execute()
 
 if __name__ == '__main__':
     unittest()
-        
-        

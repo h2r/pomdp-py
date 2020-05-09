@@ -90,12 +90,12 @@ class RobotTransitionModel(pomdp_py.TransitionModel):
 
         robot_pose = state.pose(robot_id)
         rx, ry, rth = robot_pose
-        if action.scheme == "xy":
+        if action.scheme == MotionAction.SCHEME_XYTH:
             dx, dy, th = action.motion
             rx += dx
             ry += dy
             rth = th
-        elif action.scheme == "vw":
+        elif action.scheme == MotionAction.SCHEME_VW:
             # odometry motion model
             forward, angle = action.motion
             rth += angle  # angle (radian)

@@ -21,18 +21,20 @@ class TagTransitionModel(pomdp_py.TransitionModel):
         self.target_motion_policy = target_motion_policy
 
     @classmethod
-    def if_move_by(self, position, action):
+    def if_move_by(cls, grid_map, position, action):
         if isinstance(action, MotionAction):
-            dx, dy, _ = action.motion
+            dx, dy = action.motion
             next_position = (position[0] + dx,
                              position[1] + dy)
-            if self._grid_map.valid_pose(next_position):
+            if grid_map.valid_pose(next_position):
                 return next_position
         return position
 
     def probability(self, next_state, state, action, **kwargs):
         # Robot motion
-        expected_robot_position = TransitionModel.if_move_by(state.robot_position, action)
+        expected_robot_position = TransitionModel.if_move_by(self._grid_map,
+                                                             state.robot_position,
+                                                             action)
         if expected_robot_position != next_state.robot_position:
             return constants.EPSILON
 
@@ -54,21 +56,13 @@ class TagTransitionModel(pomdp_py.TransitionModel):
                                                      state.target_position,
                                                      state.robot_position,
                                                      valid_target_motion_actions)
-        # if next_state.target_position == state.target_position:
-        #     return self.pr_stay
-        
-        # cur_dist = util.euclidean_dist(state.robot_position, state.target_position)
-        # next_dist = util.euclidean_dist(next_state.robot_position, next_state.target_position)
-        # if next_dist < cur_dist:
-        #     return self.pr_move_closer
-        # else:
-        #     assert next_dist > cur_dist
-        #     return self.pr_move_away
     
     def sample(self, state, action, argmax=False):
         # Robot motion
         next_state = copy.deepcopy(state)
-        next_state.robot_position = TransitionModel.if_move_by(state.robot_position, action)
+        next_state.robot_position = TagTransitionModel.if_move_by(self._grid_map,
+                                                                  state.robot_position,
+                                                                  action)
 
         # If Tag action
         if isinstance(action, TagAction):

@@ -7,8 +7,10 @@ from pomdp_problems.tag.models.transition_model import TagTransitionModel
 
 class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
     def __init__(self,
+                 grid_map,
                  pr_move_away=0.8,
                  pr_stay=0.2):
+        self._grid_map = grid_map
         self._pr_move_away = pr_move_away
         self._pr_stay = pr_stay
 
@@ -28,17 +30,24 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
 
     def random(self, robot_position, target_position, valid_target_motion_actions,
                mpe=False):
-        if mpe or random.uniform(0,1) > 0.2:
+        if mpe or random.uniform(0,1) > self._pr_stay:
             # Move away; Pick motion actions that makes the target moves away from the robot
             candidate_actions = set({})
             cur_dist = util.euclidean_dist(robot_position, target_position)
-            for action in valid_motion_actions:
-                next_target_position = TagTransitionModel.if_move_by(target_position, action)
+            for action in valid_target_motion_actions:
+                next_target_position = TagTransitionModel.if_move_by(self._grid_map,
+                                                                     target_position,
+                                                                     action)
                 next_dist = util.euclidean_dist(robot_position, next_target_position)
                 if next_dist > cur_dist:
                     candidate_actions.add(action)
+            if len(candidate_actions) == 0:
+                return target_position
+            
             chosen_action = random.sample(candidate_actions, 1)[0]
-            return TagTransitionModel.if_move_by(target_position, chosen_action)
+            return TagTransitionModel.if_move_by(self._grid_map,
+                                                 target_position,
+                                                 chosen_action)
         else:
             # stay
             return target_position

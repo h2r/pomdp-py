@@ -304,7 +304,12 @@ def unittest():
 
     worldmap, robot = world1
     worldstr = equip_sensors(worldmap, {robot: laserstr})
-    env = interpret(worldstr)
+
+    dim, robots, objects, obstacles, sensors = interpret(worldstr)
+    init_state = MosOOState({**objects, **robots})
+    env = MosEnvironment(dim,
+                         init_state, sensors,
+                         obstacles=obstacles)    
     viz = MosViz(env, controllable=True)
     viz.on_execute()
 

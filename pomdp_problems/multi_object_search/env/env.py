@@ -120,9 +120,9 @@ def interpret(worldstr):
              if len(line) > 0]
     w, l = len(worldlines[0]), len(worldlines)
     
-    objects = {}    # objid -> pose
+    objects = {}    # objid -> object_state(pose)
     obstacles = set({})  # objid
-    robots = {}  # robot_id -> pose
+    robots = {}  # robot_id -> robot_state(pose)
     sensors = {}  # robot_id -> Sensor
 
     # Parse world

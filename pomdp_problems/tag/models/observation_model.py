@@ -25,9 +25,9 @@ class TagObservationModel(pomdp_py.ObservationModel):
     def sample(self, next_state, action):
         """There is no stochaisticity in the observation model"""
         if next_state.robot_position == next_state.target_position:
-            return Observation(next_state.target_position)
+            return TagObservation(next_state.target_position)
         else:
-            return Observation(None)
+            return TagObservation(None)
 
     def argmax(self, next_state, action):
         return self.sample(next_state, action)
