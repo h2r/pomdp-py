@@ -304,7 +304,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
     def get_all_actions(self, **kwargs):
         return self._all_actions
 
-    def rollout(self, vnode, state, history=None):
+    def rollout(self, state, history=None):
         return random.sample(self._all_actions, 1)[0]
 
     
