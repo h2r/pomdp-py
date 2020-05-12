@@ -44,7 +44,5 @@ cdef class RandomRollout(RolloutPolicy):
     pass
     
 cdef class ActionPrior:
-    cdef Action action
-    cdef int num_visits_init
-    cdef float value_init
+    cpdef get_preferred_actions(ActionPrior self, State state, tuple history)
     

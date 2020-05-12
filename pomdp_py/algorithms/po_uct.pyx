@@ -175,16 +175,18 @@ def tree_stats_helper(root, depth, stats, max_depth=None):
 cdef class ActionPrior:
     """A problem-specific object"""
 
-    @classmethod
-    def get_preferred_actions(cls, state, history, **kwargs):
+    cpdef get_preferred_actions(ActionPrior self,
+                                State state,
+                                tuple history):
         """
-        get_preferred_actions(cls, state, history=None, **kwargs)
+        get_preferred_actions(cls, state, history, kwargs)
+        Intended as a classmethod.
         This is to mimic the behavior of Simulator.Prior
         and GenerateLegal/GeneratePreferred in David Silver's
         POMCP code.
 
-        Returns a set of preferred actions and associated
-        num_visits_init and value_init, given arguments.
+        Returns a set of tuples, in the form of (action, num_visits_init, value_init)
+        that represent the preferred actions.
         In POMCP, this acts as a history-based prior policy,
         and in DESPOT, this acts as a belief-based prior policy.
         For example, given certain state or history, only it
@@ -192,10 +194,6 @@ cdef class ActionPrior:
         This is particularly true in the RockSample problem."""
         raise NotImplementedError
     
-    def __init__(self, action, nvi, vi):
-        self.action = action
-        self.num_visits_init = nvi  # name it short to make cython compile work.
-        self.value_init = vi
     
 cdef class RolloutPolicy(PolicyModel):
     cpdef Action rollout(self, State state, tuple history):
@@ -282,23 +280,24 @@ cdef class POUCT(Planner):
 
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
         cdef Action action
+        cdef tuple preference
+        cdef int num_visits_init
+        cdef float value_init
+        
         for action in self._agent.valid_actions(state=state, history=history):
             if vnode[action] is None:
                 history_action_node = QNode(self._num_visits_init,
                                             self._value_init)
                 vnode[action] = history_action_node
 
-        cdef ActionPrior preference                
         if self._action_prior is not None:
             # Using action prior; special values are set;
             for preference in \
-                self._action_prior.get_preferred_actions(state,
-                                                         history,
-                                                         vnode=vnode):
-                action = preference.action
+                self._action_prior.get_preferred_actions(state, history):
+                action, num_visits_init, value_init = preference
                 if vnode[action] is None:
-                    history_action_node = QNode(preference.num_visits_init,
-                                                preference.value_init)
+                    history_action_node = QNode(num_visits_init,
+                                                value_init)
                     vnode[action] = history_action_node
 
 

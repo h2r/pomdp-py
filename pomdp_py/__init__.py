@@ -10,7 +10,7 @@ from pomdp_py.algorithms.pomcp import POMCP
 from pomdp_py.algorithms.po_rollout import PORollout
 from pomdp_py.algorithms.po_uct import POUCT, QNode, VNode, RootVNode,\
     RolloutPolicy, RandomRollout, print_preferred_actions, print_tree,\
-    tree_stats
+    tree_stats, ActionPrior
 from pomdp_py.algorithms.bsp.blqr import BLQR
 import pomdp_py.algorithms.visual.visual as visual
 from pomdp_py.representations.belief.histogram import update_histogram_belief
