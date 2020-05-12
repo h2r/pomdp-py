@@ -38,7 +38,7 @@ cdef class POUCT(Planner):
     cpdef tuple _sample_generative_model(self, State state, Action action)
 
 cdef class RolloutPolicy(PolicyModel):
-    cpdef Action rollout(self, State state, tuple history=*)
+    cpdef Action rollout(self, State state, tuple history)
 
 cdef class RandomRollout(RolloutPolicy):
     pass

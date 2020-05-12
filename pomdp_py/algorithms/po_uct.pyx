@@ -174,11 +174,11 @@ def tree_stats_helper(root, depth, stats, max_depth=None):
 
 cdef class ActionPrior:
     """A problem-specific object"""
-    
-    def get_preferred_actions(self, vnode, state=None, history=None,
-                              belief=None, **kwargs):
+
+    @classmethod
+    def get_preferred_actions(cls, state, history, **kwargs):
         """
-        get_preferred_actions(self, vnode, state=None, history=None, belief=None, **kwargs)
+        get_preferred_actions(cls, state, history=None, **kwargs)
         This is to mimic the behavior of Simulator.Prior
         and GenerateLegal/GeneratePreferred in David Silver's
         POMCP code.
@@ -198,12 +198,12 @@ cdef class ActionPrior:
         self.value_init = vi
     
 cdef class RolloutPolicy(PolicyModel):
-    cpdef Action rollout(self, State state, tuple history=None):
+    cpdef Action rollout(self, State state, tuple history):
         """rollout(self, State state, tuple history=None)"""
         pass
     
 cdef class RandomRollout(RolloutPolicy):
-    cpdef Action rollout(self, State state, tuple history=None):
+    cpdef Action rollout(self, State state, tuple history):
         """rollout(self, State state, tuple history=None)"""
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
     
@@ -282,23 +282,25 @@ cdef class POUCT(Planner):
 
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
         cdef Action action
+        for action in self._agent.valid_actions(state=state, history=history):
+            if vnode[action] is None:
+                history_action_node = QNode(self._num_visits_init,
+                                            self._value_init)
+                vnode[action] = history_action_node
+
+        cdef ActionPrior preference                
         if self._action_prior is not None:
             # Using action prior; special values are set;
             for preference in \
-                self._action_prior.get_preferred_actions(vnode,
-                                                         state=state,
-                                                         history=history):
+                self._action_prior.get_preferred_actions(state,
+                                                         history,
+                                                         vnode=vnode):
                 action = preference.action
                 if vnode[action] is None:
                     history_action_node = QNode(preference.num_visits_init,
                                                 preference.value_init)
                     vnode[action] = history_action_node
-        else:
-            for action in self._agent.valid_actions(state=state, history=history):
-                if vnode[action] is None:
-                    history_action_node = QNode(self._num_visits_init,
-                                                self._value_init)
-                    vnode[action] = history_action_node
+
 
     cpdef _search(self):
         cdef State state
@@ -372,7 +374,7 @@ cdef class POUCT(Planner):
         cdef float reward
         
         while depth < self._max_depth:
-            action = self._rollout_policy.rollout(state, history=history)
+            action = self._rollout_policy.rollout(state, history)
             next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
             if root[action] is None:
                 history_action_node = QNode(self._num_visits_init, self._value_init)
