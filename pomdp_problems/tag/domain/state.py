@@ -22,7 +22,7 @@ class TagState(pomdp_py.State):
         return hash((self.robot_position, self.target_position, self.target_found))
 
     def __eq__(self, other):
-        if not isinstance(other, State):
+        if not isinstance(other, TagState):
             return False
         else:
             return self.robot_position == other.robot_position\

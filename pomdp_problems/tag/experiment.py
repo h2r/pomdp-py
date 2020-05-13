@@ -27,8 +27,8 @@ def main():
     try:
         for i in range(100):
             dr = trial(world0[0],
-                       pr_move_away=0.8,
-                       pr_stay=0.2,
+                       pr_move_away=0.5,
+                       pr_stay=0.5,
                        small=1,
                        big=10,
                        prior="uniform")

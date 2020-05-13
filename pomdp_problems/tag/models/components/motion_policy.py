@@ -22,8 +22,8 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
         cur_dist = util.euclidean_dist(robot_position, target_position)
         for action in valid_target_motion_actions:
             next_target_position = TagTransitionModel.if_move_by(self._grid_map,
-                                                            target_position,
-                                                            action)
+                                                                 target_position,
+                                                                 action)
             next_dist = util.euclidean_dist(robot_position, next_target_position)
             if next_dist > cur_dist:
                 candidate_actions.add(action)

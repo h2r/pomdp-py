@@ -1,5 +1,6 @@
 import pomdp_py
 import copy
+import random
 from pomdp_problems.tag.domain.observation import *
 from pomdp_problems.tag.domain.action import *
 from pomdp_problems.tag.domain.state import *
@@ -43,6 +44,34 @@ def initialize_belief(grid_map, init_robot_position, prior={}):
 
     hist_belief = pomdp_py.Histogram(hist)
     return hist_belief
+
+def initialize_particles_belief(grid_map, init_robot_position, num_particles=100, prior={}):
+    """Initialize belief.
+    
+    Args:
+        grid_map (GridMap): Holds information of the map occupancy
+        prior (dict): A map from (x,y)->[0,1]. If empty, the belief
+            will be uniform."""
+    particles = []
+    if len(prior) > 0:
+        # prior knowledge provided. Just use the prior knowledge
+        prior_sum = sum(prior[pose] for pose in prior)
+        for pose in prior[objid]:
+            state = TagState(init_robot_position, pose)
+            amount_to_add = (prior[objid][pose] / prior_sum) * num_particles
+            for _ in range(amount_to_add):
+                particles.append(state)    
+    else:
+        while len(particles) < num_particles:
+            target_position = (random.randint(0, grid_map.width-1),
+                               random.randint(0, grid_map.length-1))
+            if target_position in grid_map.obstacle_poses:
+                # Skip obstacles
+                continue            
+            state = TagState(init_robot_position, target_position, False)
+            particles.append(state)
+    return pomdp_py.Particles(particles)
+
 
 ## belief update
 def belief_update(agent, real_action, real_observation):

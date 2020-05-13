@@ -16,7 +16,9 @@ class TagProblem(pomdp_py.POMDP):
                  pr_stay=0.2,
                  small=1,
                  big=10,
-                 prior="uniform"):
+                 prior="uniform",
+                 belief_type="hist",
+                 num_particles=6):
         init_state = TagState(init_robot_position,
                               init_target_position,
                               False)
@@ -33,7 +35,11 @@ class TagProblem(pomdp_py.POMDP):
         else:
             raise ValueError("Unrecognized prior type: %s" % prior)
 
-        init_belief = initialize_belief(grid_map, init_robot_position, prior=prior)
+        if belief_type == "particles":
+            init_belief = initialize_particles_belief(grid_map, init_robot_position,
+                                                      prior=prior, num_particles=num_particles)
+        else:
+            init_belief = initialize_belief(grid_map, init_robot_position, prior=prior)            
         agent = TagAgent(init_belief,
                          grid_map,
                          pr_move_away=pr_move_away,
@@ -45,19 +51,26 @@ class TagProblem(pomdp_py.POMDP):
 
 
 def solve(problem,
+          planner_type="pouct",
           max_depth=10,  # planning horizon
           discount_factor=0.99,
           planning_time=1.,       # amount of time (s) to plan each step
           exploration_const=1000, # exploration constant
           visualize=True,
           max_time=120,  # maximum amount of time allowed to solve the problem
-          max_steps=500): # maximum number of planning steps the agent can take.
-    
-    planner = pomdp_py.POUCT(max_depth=max_depth,
-                             discount_factor=discount_factor,
-                             planning_time=planning_time,
-                             exploration_const=exploration_const,
-                             rollout_policy=problem.agent.policy_model)
+          max_steps=500):  # maximum number of planning steps the agent can take.
+    if planner_type == "pouct":
+        planner = pomdp_py.POUCT(max_depth=max_depth,
+                                 discount_factor=discount_factor,
+                                 planning_time=planning_time,
+                                 exploration_const=exploration_const,
+                                 rollout_policy=problem.agent.policy_model)
+    else:
+        planner = pomdp_py.POMCP(max_depth=max_depth,
+                                 discount_factor=discount_factor,
+                                 planning_time=planning_time,
+                                 exploration_const=exploration_const,
+                                 rollout_policy=problem.agent.policy_model)
     if visualize:
         viz = TagViz(problem.env, controllable=False)
         if viz.on_init() == False:
@@ -92,7 +105,8 @@ def solve(problem,
         problem.agent.clear_history()  # truncate history
         problem.agent.update_history(real_action, real_observation)
         planner.update(problem.agent, real_action, real_observation)
-        belief_update(problem.agent, real_action, real_observation)
+        if planner_type == "pouct":
+            belief_update(problem.agent, real_action, real_observation)
         _time_used += time.time() - _start
 
         # Info and render
@@ -143,12 +157,14 @@ if __name__ == "__main__":
                          pr_stay=0.2,
                          small=1,
                          big=10,
-                         prior="uniform")
+                         prior="uniform",
+                         belief_type="histogram")
     solve(problem,
           max_depth=15,
           discount_factor=0.95,
-          planning_time=0.7,
-          exploration_const=10,
+          planning_time=0.8,
+          exploration_const=20,
           visualize=True,
-          max_time=120,
-          max_steps=500)
+          max_time=360,
+          max_steps=251,
+          planner_type="pouct")
