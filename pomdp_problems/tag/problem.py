@@ -12,7 +12,6 @@ class TagProblem(pomdp_py.POMDP):
                  init_robot_position,
                  init_target_position,
                  grid_map,
-                 pr_move_away=0.8,
                  pr_stay=0.2,
                  small=1,
                  big=10,
@@ -24,7 +23,6 @@ class TagProblem(pomdp_py.POMDP):
                               False)
         env = TagEnvironment(init_state,
                              grid_map,
-                             pr_move_away=pr_move_away,
                              pr_stay=pr_stay,
                              small=1,
                              big=10)
@@ -42,7 +40,6 @@ class TagProblem(pomdp_py.POMDP):
             init_belief = initialize_belief(grid_map, init_robot_position, prior=prior)            
         agent = TagAgent(init_belief,
                          grid_map,
-                         pr_move_away=pr_move_away,
                          pr_stay=pr_stay,
                          small=1,
                          big=10)
@@ -153,7 +150,6 @@ if __name__ == "__main__":
     problem = TagProblem(init_robot_position,
                          init_target_position,
                          grid_map,
-                         pr_move_away=0.8,
                          pr_stay=0.2,
                          small=1,
                          big=10,

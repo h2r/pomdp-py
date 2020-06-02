@@ -8,10 +8,8 @@ from pomdp_problems.tag.models.transition_model import TagTransitionModel
 class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
     def __init__(self,
                  grid_map,
-                 pr_move_away=0.8,
-                 pr_stay=0.2):
+                 pr_stay=0.2):  # With 1.0 - pr_stay chance, the target moves away
         self._grid_map = grid_map
-        self._pr_move_away = pr_move_away
         self._pr_stay = pr_stay
 
     def _compute_candidate_actions(self,
@@ -42,24 +40,31 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
                 or (diff_x == 0 and diff_y == 0)):
             return constants.EPSILON
 
-        if next_target_position == target_position:
-            return self._pr_stay
-        
-        cur_dist = util.euclidean_dist(robot_position, target_position)
-        next_dist = util.euclidean_dist(robot_position, next_target_position)
         candidate_actions = self._compute_candidate_actions(robot_position,
                                                             target_position,
                                                             valid_target_motion_actions)
         if len(candidate_actions) == 0:
-            # No action can be taken, yet next_target_position is a valid
-            # transition from current. That means the target is stuck. 
-            return self._pr_move_away
-        else:
-            if next_dist <= cur_dist:
-                # The target never actively moves closer to the robot
-                return constants.EPSILON
+            # No action possible, yet next_target_position is a valid
+            # transition from current. 
+            if next_target_position == target_position:
+                # That means the target is either
+                # stuck or staying. Either way, this is the only thing that
+                # can happen
+                return 1.0 - constants.EPSILON
             else:
-                return self._pr_move_away / len(candidate_actions)
+                return constants.EPSILON
+        else:
+            # There are candidate actions
+            if next_target_position == target_position:
+                # The object is staying
+                return self._pr_stay
+            else:
+                # The object has taken an adversarial action.
+                for action in candidate_actions:
+                    if (target_position[0] + action.motion[0],
+                        target_position[1] + action.motion[1]) == next_target_position:
+                        return (1.0 - self._pr_stay) / len(candidate_actions)
+                    return constants.EPSILON
 
     def random(self, robot_position, target_position, valid_target_motion_actions,
                mpe=False):

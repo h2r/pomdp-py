@@ -12,13 +12,11 @@ class TagEnvironment(pomdp_py.Environment):
     def __init__(self,
                  init_state,
                  grid_map,
-                 pr_move_away=0.8,
                  pr_stay=0.2,
                  small=1,
                  big=10):
         self._grid_map = grid_map
         target_motion_policy = TagTargetMotionPolicy(grid_map,
-                                                     pr_move_away,
                                                      pr_stay)
         transition_model = TagTransitionModel(grid_map, target_motion_policy)
         reward_model = TagRewardModel(small=small, big=big)
