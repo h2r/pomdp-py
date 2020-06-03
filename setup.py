@@ -28,10 +28,8 @@ setup(name='pomdp-py',
                              'pomdp_py/framework/planner.pyx',
                              'pomdp_py/framework/basics.pyx',
                              'pomdp_py/representations/distribution/particles.pyx',
-                             'pomdp_py/representations/distribution/weighted_particles.pyx',
                              'pomdp_py/representations/distribution/histogram.pyx',
                              'pomdp_py/representations/distribution/gaussian.pyx',
-                             'pomdp_py/representations/belief/particles.pyx',
-                             'pomdp_py/representations/belief/weighted_particles.pyx'],
+                             'pomdp_py/representations/belief/particles.pyx'],
                             build_dir="build", compiler_directives={'language_level' : "3"})
      )
