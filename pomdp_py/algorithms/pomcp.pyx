@@ -60,7 +60,7 @@ cdef class POMCP(POUCT):
     with action space that can be enumerated."""
 
     def __init__(self,
-                 max_depth=5, planning_time=1.,
+                 max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=1, value_init=0,
                  rollout_policy=RandomRollout(),
@@ -71,6 +71,7 @@ cdef class POMCP(POUCT):
         """
         super().__init__(max_depth=max_depth,
                          planning_time=planning_time,
+                         num_sims=num_sims,
                          discount_factor=discount_factor,
                          exploration_const=exploration_const,
                          num_visits_init=num_visits_init,

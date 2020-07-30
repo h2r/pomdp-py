@@ -214,17 +214,35 @@ cdef class POUCT(Planner):
     POUCT only works for problems with action space that can be enumerated."""
 
     def __init__(self,
-                 max_depth=5, planning_time=1.,
+                 max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=1, value_init=0,
                  rollout_policy=RandomRollout(),
                  action_prior=None):
         """
-        rollout_policy(vnode, state=?) -> a; default random rollout.
-        action_prior (ActionPrior), see above.
+        __init__(self,
+                 max_depth=5, planning_time=1., num_sims=-1,
+                 discount_factor=0.9, exploration_const=math.sqrt(2),
+                 num_visits_init=1, value_init=0,
+                 rollout_policy=RandomRollout(),
+                 action_prior=None)
+
+        Args:
+            max_depth (int): Depth of the MCTS tree. Default: 5.
+            planning_time (float), amount of time given to each planning step (seconds). Default: -1.
+                if negative, then planning terminates when number of simulations `num_sims` reached.
+                If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
+            num_sims (int): Number of simulations for each planning step. If negative,
+                then will terminate when planning_time is reached.
+                If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
+            rollout_policy (RolloutPolicy): rollout policy. Default: RandomRollout.
+            action_prior (ActionPrior): a prior over preferred actions given state and history.
         """
         self._max_depth = max_depth
         self._planning_time = planning_time
+        self._num_sims = num_sims
+        if self._num_sims < 0 and self._planning_time < 0:
+            self._planning_time = 1.
         self._num_visits_init = num_visits_init
         self._value_init = value_init
         self._rollout_policy = rollout_policy
@@ -235,6 +253,7 @@ cdef class POUCT(Planner):
         # to simplify function calls; plan only for one agent at a time
         self._agent = None
         self._last_num_sims = -1
+        self._last_planning_time = -1        
 
     @property
     def updates_agent_belief(self):
@@ -245,12 +264,18 @@ cdef class POUCT(Planner):
         """Returns the number of simulations ran for the last `plan` call."""
         return self._last_num_sims
 
+    @property
+    def last_planning_time(self):
+        """Returns the amount of time (seconds) ran for the last `plan` call."""
+        return self._last_planning_time
+
     cpdef public plan(self, Agent agent):
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
-        action, num_sims = self._search()
-        self._last_num_sims = num_sims
+        action, time_taken, sims_count = self._search()
+        self._last_num_sims = sims_count
+        self._last_planning_time = time_taken
         return action            
 
     cpdef public update(self, Agent agent, Action real_action, Observation real_observation):
@@ -303,18 +328,26 @@ cdef class POUCT(Planner):
 
     cpdef _search(self):
         cdef State state
-        cdef int num_sims = 0
+        cdef int sims_count = 0
+        cdef float time_taken = 0
         cdef Action best_action
         cdef float best_value
 
         start_time = time.time()
-        while time.time() - start_time < self._planning_time:
+        while True:
             ## Note: the tree node with () history will have
             ## the init belief given to the agent.
             state = self._agent.sample_belief()
             self._simulate(state, self._agent.history, self._agent.tree,
                            None, None, 0)
-            num_sims +=1
+            sims_count +=1
+            time_taken = time.time() - start_time
+            if self._planning_time > 0\
+               and time_taken > self._planning_time:
+                break
+            if self._num_sims > 0\
+               and sims_count >= self._num_sims:
+                break
             
         best_action, best_value = None, float('-inf')            
         for action in self._agent.tree.children:
@@ -322,7 +355,8 @@ cdef class POUCT(Planner):
                 best_value = self._agent.tree[action].value
                 best_action = action
                 
-        return best_action, num_sims
+        return best_action, time_taken, sims_count
+
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,

@@ -18,6 +18,7 @@ cdef class RootVNode(VNode):
 cdef class POUCT(Planner):
     cdef int _max_depth
     cdef float _planning_time
+    cdef int _num_sims
     cdef int _num_visits_init
     cdef float _value_init
     cdef float _discount_factor
@@ -26,11 +27,12 @@ cdef class POUCT(Planner):
     cdef RolloutPolicy _rollout_policy
     cdef Agent _agent
     cdef int _last_num_sims
+    cdef float _last_planning_time    
 
     cpdef _search(self)
     cpdef _simulate(POUCT self,
-                          State state, tuple history, VNode root, QNode parent,
-                          Observation observation, int depth)
+                    State state, tuple history, VNode root, QNode parent,
+                    Observation observation, int depth)
 
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=*)
     cpdef _rollout(self, State state, tuple history, VNode root, int depth)

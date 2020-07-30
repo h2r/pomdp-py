@@ -33,12 +33,12 @@ cdef class PORollout(Planner):
     """
 
     def __init__(self,
-                 num_simulations=100,
+                 num_sims=100,
                  max_depth=5, discount_factor=0.9,
                  rollout_policy=RandomRollout(),
                  particles=False,  # true if use Monte-Carlo belief update
                  action_prior=None):
-        self._num_sims = num_simulations
+        self._num_sims = num_sims
         self._max_depth = max_depth
         self._rollout_policy = rollout_policy
         self._action_prior = action_prior
