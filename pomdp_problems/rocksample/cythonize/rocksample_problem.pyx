@@ -31,6 +31,9 @@ Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.
 
 Initial belief: every rock has equal probability of being Good or Bad.
 """
+from pomdp_py.framework.basics cimport *
+from pomdp_py.algorithms.po_uct cimport *
+from pomdp_py.representations.belief.particles cimport *
 import pomdp_py
 import random
 import math
@@ -43,7 +46,7 @@ EPSILON = 1e-9
 def euclidean_dist(p1, p2):
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
-class RockType:
+cdef class RockType:
     GOOD = 'good'
     BAD = 'bad'
     @staticmethod
@@ -60,7 +63,10 @@ class RockType:
         else:
             return RockType.BAD
 
-class State(pomdp_py.State):
+cdef class RSState(State):
+    cpdef public tuple position
+    cpdef public tuple rocktypes
+    cpdef public bint terminal
     def __init__(self, position, rocktypes, terminal=False):
         """
         position (tuple): (x,y) position of the rover on the grid.
@@ -80,7 +86,7 @@ class State(pomdp_py.State):
     def __hash__(self):
         return hash((self.position, self.rocktypes, self.terminal))
     def __eq__(self, other):
-        if isinstance(other, State):
+        if isinstance(other, RSState):
             return self.position == other.position\
                 and self.rocktypes == other.rocktypes\
                 and self.terminal == other.terminal
@@ -91,9 +97,9 @@ class State(pomdp_py.State):
         return self.__repr__()
     
     def __repr__(self):
-        return "State(%s | %s | %s)" % (str(self.position), str(self.rocktypes), str(self.terminal))
+        return "RSState(%s | %s | %s)" % (str(self.position), str(self.rocktypes), str(self.terminal))
 
-class Action(pomdp_py.Action):
+cdef class RSAction(Action):
     def __init__(self, name):
         self.name = name
     def __hash__(self):
@@ -109,11 +115,12 @@ class Action(pomdp_py.Action):
         return "Action(%s)" % self.name
 
 
-class MoveAction(Action):
+cdef class MoveAction(RSAction):
     EAST = (1, 0)  # x is horizontal; x+ is right. y is vertical; y+ is up.
     WEST = (-1, 0)
     NORTH = (0, 1)
     SOUTH = (0, -1)
+    cpdef public tuple motion
     def __init__(self, motion):
         if motion not in {MoveAction.EAST, MoveAction.WEST,
                           MoveAction.NORTH, MoveAction.SOUTH}:
@@ -126,33 +133,38 @@ MoveWest = MoveAction(MoveAction.WEST)
 MoveNorth = MoveAction(MoveAction.NORTH)
 MoveSouth = MoveAction(MoveAction.SOUTH)
 
-class SampleAction(Action):
+cdef class SampleAction(RSAction):
     def __init__(self):
         super().__init__("sample")
 
-class CheckAction(Action):
+cdef class CheckAction(RSAction):
+    cpdef public int rock_id
     def __init__(self, rock_id):
         self.rock_id = rock_id
         super().__init__("check-%d" % self.rock_id)
 
-class Observation(pomdp_py.Observation):
+cdef class RSObservation(Observation):
+    cpdef public str quality
     def __init__(self, quality):
         self.quality = quality
     def __hash__(self):
         return hash(self.quality)
     def __eq__(self, other):
-        if isinstance(other, Observation):
+        if isinstance(other, RSObservation):
             return self.quality == other.quality
         elif type(other) == str:
-            return self.quality == other
+            return self.quality == other        
     def __str__(self):
         return str(self.quality)
     def __repr__(self):
-        return "Observation(%s)" % str(self.quality)
-    
-class RSTransitionModel(pomdp_py.TransitionModel):
+        return "RSObservation(%s)" % str(self.quality)
+
+cdef class RSTransitionModel(TransitionModel):
 
     """ The model is deterministic """
+    cpdef public int _n
+    cpdef public dict _rock_locs
+    cpdef public _in_exit_area
 
     def __init__(self, n, rock_locs, in_exit_area):
         """
@@ -177,11 +189,35 @@ class RSTransitionModel(pomdp_py.TransitionModel):
         else:
             return 1.0 - EPSILON
 
-    def sample(self, state, action):
+    # cpdef sample(self, State state, Action action):
+    #     next_state = copy.deepcopy(state)
+    #     if state.terminal:
+    #         return next_state  # already terminated. So no state transition happens
+    #     if isinstance(action, MoveAction):
+    #         next_state.position, exiting = self._move_or_exit(state.position, action)
+    #         if exiting:
+    #             next_state.terminal = True
+    #     elif isinstance(action, SampleAction):
+    #         position = next_state.position
+    #         if position in self._rock_locs:
+    #             rock_id = self._rock_locs[position]
+    #             _rocktypes = list(next_state.rocktypes)
+    #             _rocktypes[rock_id] = RockType.BAD
+    #             next_state.rocktypes = tuple(_rocktypes)
+    #     return next_state        
+
+    cpdef sample(self, State state, Action action):
+        cdef State next_state
+        cdef tuple next_position
+        cdef tuple rocktypes, next_rocktypes
+        cdef bint exiting = False
+        cdef bint next_terminal = False
+        cdef int rock_id
+        cdef list _rocktypes
+        
         next_position = tuple(state.position)
         rocktypes = tuple(state.rocktypes)
         next_rocktypes = rocktypes
-        next_terminal = state.terminal
         if state.terminal:
             next_terminal = True  # already terminated. So no state transition happens
         else:
@@ -195,14 +231,19 @@ class RSTransitionModel(pomdp_py.TransitionModel):
                     _rocktypes = list(rocktypes)
                     _rocktypes[rock_id] = RockType.BAD
                     next_rocktypes = tuple(_rocktypes)
-        return State(next_position, next_rocktypes, next_terminal)
+        return RSState(next_position, next_rocktypes, terminal=next_terminal)
+
 
     def argmax(self, state, action):
         """Returns the most likely next state"""
         return self.sample(state, action)
 
 
-class RSObservationModel(pomdp_py.ObservationModel):
+cdef class RSObservationModel(ObservationModel):
+
+    cpdef public float _half_efficiency_dist
+    cpdef public dict _rocks
+    
     def __init__(self, rock_locs, half_efficiency_dist=20):
         self._half_efficiency_dist = half_efficiency_dist
         self._rocks = {rock_locs[pos]:pos for pos in rock_locs}
@@ -241,12 +282,12 @@ class RSObservationModel(pomdp_py.ObservationModel):
             actual_rocktype = next_state.rocktypes[action.rock_id]
             if not keep:
                 observed_rocktype = RockType.invert(actual_rocktype)
-                return Observation(observed_rocktype)
+                return RSObservation(observed_rocktype)
             else:
-                return Observation(actual_rocktype)
+                return RSObservation(actual_rocktype)
         else:
             # Terminated or not a check action. So no observation.
-            return Observation(None)
+            return RSObservation(None)
         
         return self._probs[next_state][action][observation]
 
@@ -255,7 +296,11 @@ class RSObservationModel(pomdp_py.ObservationModel):
         return self.sample(next_state, action, argmax=True)
 
 
-class RSRewardModel(pomdp_py.RewardModel):
+cdef class RSRewardModel(RewardModel):
+
+    cpdef public dict _rock_locs
+    cpdef public _in_exit_area
+
     def __init__(self, rock_locs, in_exit_area):
         self._rock_locs = rock_locs
         self._in_exit_area = in_exit_area        
@@ -287,12 +332,13 @@ class RSRewardModel(pomdp_py.RewardModel):
         raise NotImplementedError
         
 
-class RSPolicyModel(pomdp_py.RolloutPolicy):
+cdef class RSPolicyModel(RolloutPolicy):
     """Simple policy model according to problem description."""
+    cpdef public set _all_actions
     def __init__(self, k):
         check_actions = set({CheckAction(rock_id) for rock_id in range(k)})
-        self._all_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth,
-                             SampleAction()} | check_actions
+        self._all_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth}
+                             # SampleAction()} | check_actions
 
     def sample(self, state, normalized=False, **kwargs):
         return random.sample(self._all_actions, 1)[0]
@@ -311,7 +357,24 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
         return random.sample(self._all_actions, 1)[0]
 
     
-class RockSampleProblem(pomdp_py.POMDP):
+cdef class RockSampleProblem(POMDP):
+
+    cpdef public int _n
+    cpdef public int _k
+    cpdef public dict _rock_locs
+
+    def __init__(self, n, k, init_state, rock_locs, init_belief):
+        self._n, self._k = n, k
+        agent = Agent(init_belief,
+                      RSPolicyModel(k),
+                      RSTransitionModel(n, rock_locs, self.in_exit_area),
+                      RSObservationModel(rock_locs),
+                      RSRewardModel(rock_locs, self.in_exit_area))
+        env = Environment(init_state,
+                          RSTransitionModel(n, rock_locs, self.in_exit_area),
+                          RSRewardModel(rock_locs, self.in_exit_area))
+        self._rock_locs = rock_locs
+        super().__init__(agent, env, name="RockSampleProblem")
 
     @staticmethod
     def random_free_location(n, not_free_locs):
@@ -339,7 +402,7 @@ class RockSampleProblem(pomdp_py.POMDP):
         rocktypes = tuple(RockType.random() for i in range(k))
 
         # Ground truth state
-        init_state = State(rover_position, rocktypes, False)
+        init_state = RSState(rover_position, rocktypes, False)
 
         return init_state, rock_locs
 
@@ -376,19 +439,7 @@ class RockSampleProblem(pomdp_py.POMDP):
                 string += char
             string += "\n"
         print(string)
-
-    def __init__(self, n, k, init_state, rock_locs, init_belief):
-        self._n, self._k = n, k
-        agent = pomdp_py.Agent(init_belief,
-                               RSPolicyModel(k),
-                               RSTransitionModel(n, rock_locs, self.in_exit_area),
-                               RSObservationModel(rock_locs),
-                               RSRewardModel(rock_locs, self.in_exit_area))
-        env = pomdp_py.Environment(init_state,
-                                   RSTransitionModel(n, rock_locs, self.in_exit_area),
-                                   RSRewardModel(rock_locs, self.in_exit_area))
-        self._rock_locs = rock_locs
-        super().__init__(agent, env, name="RockSampleProblem")
+        
 
 
 def test_planner(rocksample, planner, nsteps=3, discount=0.95):
@@ -403,6 +454,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         #                                             max_depth=5, anonymize=False)
         
         true_state = copy.deepcopy(rocksample.env.state)
+        print("Terminal? %s" % true_state.terminal)
         env_reward = rocksample.env.state_transition(action, execute=True)
         true_next_state = copy.deepcopy(rocksample.env.state)
         
@@ -432,7 +484,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     return total_reward, total_discounted_reward
         
 
-def init_particles_belief(num_particles, init_state, belief="uniform"):
+def init_particles_belief(k, num_particles, init_state, belief="uniform"):
     num_particles = 200
     particles = []
     for _ in range(num_particles):
@@ -443,13 +495,13 @@ def init_particles_belief(num_particles, init_state, belief="uniform"):
             rocktypes = tuple(rocktypes)
         elif belief == "groundtruth":
             rocktypes = copy.deepcopy(init_state.rocktypes)
-        particles.append(State(init_state.position, rocktypes, False))
+        particles.append(RSState(init_state.position, rocktypes, False))
     init_belief = pomdp_py.Particles(particles)
     return init_belief
-    
 
-if __name__ == '__main__':
-    n, k = 5, 5
+
+def main():
+    n, k = 3,1
     init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
     init_state_copy = copy.deepcopy(init_state)
 
@@ -457,34 +509,16 @@ if __name__ == '__main__':
 
     # init belief (uniform), represented in particles;
     # We don't factor the state here; We are also not doing any action prior.
-    init_belief = init_particles_belief(200, init_state, belief=belief)
+    init_belief = init_particles_belief(k, 200, init_state, belief=belief)
     
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
     pomcp = pomdp_py.POMCP(max_depth=20, discount_factor=0.95,
-                           num_sims=4096, exploration_const=20,
+                           planning_time=1., exploration_const=20,
                            rollout_policy=rocksample.agent.policy_model)
     tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
-    
-    rocksample.env.state.position = init_state_copy.position
-    rocksample.env.state.rocktypes = init_state_copy.rocktypes
-    rocksample.env.state.terminal = False
-    init_belief = init_particles_belief(200, rocksample.env.state, belief=belief)
-    rocksample.agent.set_belief(init_belief)
 
-    print("*** Testing PO-rollout ***")
-    poroll = pomdp_py.PORollout(max_depth=20, discount_factor=0.95,
-                                num_sims=2500,
-                                particles=True,
-                                rollout_policy=rocksample.agent.policy_model)
-    tt, ttd = test_planner(rocksample, poroll, nsteps=50, discount=0.95)
-    
-
-    # Some notes:
-    # When the world is too small, the robot seems to just prefer
-    # going to the EAST and collect the 10 reward. But when the world
-    # is not so small, such as 7,8, the robot chooses to do a lot of
-    # checking. This is kind of interesting.
-
+if __name__ == '__main__':
+    main()

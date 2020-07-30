@@ -34,6 +34,9 @@ general this doesn't need to be the case. (Refer to more complicated
 examples.)
 
 """
+from pomdp_py.framework.basics cimport *
+from pomdp_py.algorithms.po_uct cimport *
+from pomdp_py.representations.belief.histogram import *
 
 import pomdp_py
 import random
@@ -41,13 +44,14 @@ import numpy as np
 import sys
 
 def build_states(strings):
-    return {State(s) for s in strings}
+    return {TigerState(s) for s in strings}
 def build_actions(strings):
-    return {Action(s) for s in strings}
+    return {TigerAction(s) for s in strings}
 def build_observations(strings):
-    return {Observation(s) for s in strings}
+    return {TigerObservation(s) for s in strings}
 
-class State(pomdp_py.State):
+cdef class TigerState(State):
+    cpdef public str name
     def __init__(self, name):
         if name != "tiger-left" and name != "tiger-right":
             raise ValueError("Invalid state: %s" % name)
@@ -55,16 +59,16 @@ class State(pomdp_py.State):
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, State):
+        if isinstance(other, TigerState):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "State(%s)" % self.name
+        return "TigerState(%s)" % self.name
     
-class Action(pomdp_py.Action):
+cdef class TigerAction(Action):
     def __init__(self, name):
         if name != "open-left" and name != "open-right"\
            and name != "listen":
@@ -73,16 +77,17 @@ class Action(pomdp_py.Action):
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, Action):
+        if isinstance(other, TigerAction):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Action(%s)" % self.name
+        return "TigerAction(%s)" % self.name
     
-class Observation(pomdp_py.Observation):
+cdef class TigerObservation(Observation):
+    cpdef public str name
     def __init__(self, name):
         if name != "tiger-left" and name != "tiger-right":
             raise ValueError("Invalid action: %s" % name)                
@@ -90,69 +95,72 @@ class Observation(pomdp_py.Observation):
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, Observation):
+        if isinstance(other, TigerObservation):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Observation(%s)" % self.name
+        return "TigerObservation(%s)" % self.name
 
 # Observation model
-class ObservationModel(pomdp_py.ObservationModel):
+cdef class TigerObservationModel(ObservationModel):
     """This problem is small enough for the probabilities to be directly given
     externally"""
+    cpdef dict _probs
     def __init__(self, probs):
         self._probs = probs
 
     def probability(self, observation, next_state, action, normalized=False, **kwargs):
         return self._probs[next_state][action][observation]
 
-    def sample(self, next_state, action, normalized=False, **kwargs):
+    cpdef sample(self, State next_state, Action action, normalized=False):
         return self.get_distribution(next_state, action).random()
 
     def argmax(self, next_state, action, normalized=False, **kwargs):
         """Returns the most likely observation"""
         return max(self._probs[next_state][action], key=self._probs[next_state][action].get)
 
-    def get_distribution(self, next_state, action, **kwargs):
+    cpdef get_distribution(self, State next_state, Action action):
         """Returns the underlying distribution of the model; In this case, it's just a histogram"""
-        return pomdp_py.Histogram(self._probs[next_state][action])
+        return Histogram(self._probs[next_state][action])
 
     def get_all_observations(self):
         return TigerProblem.OBSERVATIONS
 
 # Transition Model
-class TransitionModel(pomdp_py.TransitionModel):
+cdef class TigerTransitionModel(TransitionModel):
     """This problem is small enough for the probabilities to be directly given
             externally"""
+    cpdef dict _probs
     def __init__(self, probs):
         self._probs = probs
 
     def probability(self, next_state, state, action, normalized=False, **kwargs):
         return self._probs[state][action][next_state]
 
-    def sample(self, state, action, normalized=False, **kwargs):
+    cpdef sample(self, State state, Action action, normalized=False):
         return self.get_distribution(state, action).random()
 
     def argmax(self, state, action, normalized=False, **kwargs):
         """Returns the most likely next state"""
         return max(self._probs[state][action], key=self._probs[state][action].get) 
 
-    def get_distribution(self, state, action, **kwargs):
+    cpdef get_distribution(self, State state, Action action):
         """Returns the underlying distribution of the model"""
-        return pomdp_py.Histogram(self._probs[state][action])
+        return Histogram(self._probs[state][action])
 
     def get_all_states(self):
         return TigerProblem.STATES
 
 # Reward Model
-class RewardModel(pomdp_py.RewardModel):
+cdef class TigerRewardModel(RewardModel):
+    cpdef int _scale
     def __init__(self, scale=1):
         self._scale = scale
-    def _reward_func(self, state, action):
-        reward = 0
+    cpdef _reward_func(self, State state, Action action):
+        cdef int reward = 0
         if action == "open-left":
             if state== "tiger-right":
                 reward += 10 * self._scale
@@ -167,27 +175,27 @@ class RewardModel(pomdp_py.RewardModel):
             reward -= 1 * self._scale
         return reward
 
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+    def probability(self, reward, state, action, next_state, normalized=False):
         if reward == self._reward_func(state, action):
             return 1.0
         else:
             return 0.0
 
-    def sample(self, state, action, next_state, normalized=False, **kwargs):
+    cpdef sample(self, State state, Action action, State next_state, normalized=False):
         # deterministic
         return self._reward_func(state, action)
 
-    def argmax(self, state, action, next_state, normalized=False, **kwargs):
+    def argmax(self, state, action, next_state, normalized=False):
         """Returns the most likely reward"""
         return self._reward_func(state, action)
 
-    def get_distribution(self, state, action, next_state, **kwargs):
+    def get_distribution(self, state, action, next_state):
         """Returns the underlying distribution of the model"""
         reward = self._reward_func(state, action)
-        return pomdp_py.Histogram({reward:1.0})
+        return Histogram({reward:1.0})
 
 # Policy Model
-class PolicyModel(pomdp_py.RandomRollout):
+cdef class TigerPolicyModel(RandomRollout):
     """This is an extremely dumb policy model; To keep consistent
     with the framework."""
     def probability(self, action, state, normalized=False, **kwargs):
@@ -204,7 +212,7 @@ class PolicyModel(pomdp_py.RandomRollout):
         return TigerProblem.ACTIONS
 
         
-class TigerProblem(pomdp_py.POMDP):
+class TigerProblem(POMDP):
 
     STATES = build_states({"tiger-left", "tiger-right"})
     ACTIONS = build_actions({"open-left", "open-right", "listen"})
@@ -216,14 +224,14 @@ class TigerProblem(pomdp_py.POMDP):
         self._trans_probs = trans_probs
 
         
-        agent = pomdp_py.Agent(init_belief,
-                               PolicyModel(),
-                               TransitionModel(self._trans_probs),
-                               ObservationModel(self._obs_probs),
-                               RewardModel())
-        env = pomdp_py.Environment(init_true_state,
-                                   TransitionModel(self._trans_probs),
-                                   RewardModel())
+        agent = Agent(init_belief,
+                               TigerPolicyModel(),
+                               TigerTransitionModel(self._trans_probs),
+                               TigerObservationModel(self._obs_probs),
+                               TigerRewardModel())
+        env = Environment(init_true_state,
+                                   TigerTransitionModel(self._trans_probs),
+                                   TigerRewardModel())
         super().__init__(agent, env, name="TigerProblem")
 
 
@@ -247,16 +255,16 @@ def test_planner(tiger_problem, planner, nsteps=3):
         # Let's create some simulated real observation; Update the belief
         # Creating true observation for sanity checking solver behavior.
         # In general, this observation should be sampled from agent's observation model.
-        real_observation = Observation(tiger_problem.env.state.name)
+        real_observation = TigerObservation(tiger_problem.env.state.name)
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
         
         planner.update(tiger_problem.agent, action, real_observation)
-        if isinstance(planner, pomdp_py.POUCT):
+        if isinstance(planner, POUCT):
             print("Num sims: %d" % planner.last_num_sims)
             print("Plan time: %.5f" % planner.last_planning_time)
-        if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
-            new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
+        if isinstance(tiger_problem.agent.cur_belief, Histogram):
+            new_belief = update_histogram_belief(tiger_problem.agent.cur_belief,
                                                           action, real_observation,
                                                           tiger_problem.agent.observation_model,
                                                           tiger_problem.agent.transition_model)
@@ -265,16 +273,16 @@ def test_planner(tiger_problem, planner, nsteps=3):
 def build_setting(setting):
     result = {'obs_probs':{}, 'trans_probs':{}}
     for sp in setting['obs_probs']:
-        result['obs_probs'][State(sp)] = {}
+        result['obs_probs'][TigerState(sp)] = {}
         for a in setting['obs_probs'][sp]:
-            result['obs_probs'][State(sp)][Action(a)] =\
-                {Observation(o):setting['obs_probs'][sp][a][o]
+            result['obs_probs'][TigerState(sp)][TigerAction(a)] =\
+                {TigerObservation(o):setting['obs_probs'][sp][a][o]
                  for o in setting['obs_probs'][sp][a]}
     for s in setting['trans_probs']:
-        result['trans_probs'][State(s)] = {}
+        result['trans_probs'][TigerState(s)] = {}
         for a in setting['trans_probs'][s]:
-            result['trans_probs'][State(s)][Action(a)] =\
-                {State(sp):setting['trans_probs'][s][a][sp]
+            result['trans_probs'][TigerState(s)][TigerAction(a)] =\
+                {TigerState(sp):setting['trans_probs'][s][a][sp]
                  for sp in setting['trans_probs'][s][a]}
     return result
             
@@ -348,42 +356,17 @@ def main():
     setting = build_setting(setting1)
 
     init_true_state = random.choice(list(TigerProblem.STATES))
-    init_belief = pomdp_py.Histogram({State("tiger-left"): 0.5,
-                                      State("tiger-right"): 0.5})
+    init_belief = Histogram({TigerState("tiger-left"): 0.5,
+                                      TigerState("tiger-right"): 0.5})
     tiger_problem = TigerProblem(setting['obs_probs'],
                                  setting['trans_probs'],
                                  init_true_state, init_belief)
-
-    # Value iteration
-    print("** Testing value iteration **")
-    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    test_planner(tiger_problem, vi, nsteps=3)
-
-    # Reset agent belief
-    tiger_problem.agent.set_belief(init_belief, prior=True)
-
     print("\n** Testing POUCT **")
-    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95,
+    pouct = POUCT(max_depth=10, discount_factor=0.95,
                            num_sims=4096, exploration_const=110,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pouct, nsteps=10)
-
-    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=5, anonymize=False)
-
-    # Reset agent belief    
-    tiger_problem.agent.set_belief(init_belief, prior=True)
-    tiger_problem.agent.tree = None
     
-    print("** Testing POMCP **")
-    tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
-                           num_sims=1000, exploration_const=110,
-                           rollout_policy=tiger_problem.agent.policy_model)
-    test_planner(tiger_problem, pomcp, nsteps=10)
-    
-    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=5, anonymize=False)
 
 if __name__ == '__main__':
     main()
