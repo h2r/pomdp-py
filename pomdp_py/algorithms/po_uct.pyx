@@ -270,6 +270,10 @@ cdef class POUCT(Planner):
         return self._last_planning_time
 
     cpdef public plan(self, Agent agent):
+        cdef Action action
+        cdef float time_taken
+        cdef int sims_count
+    
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
