@@ -324,10 +324,9 @@ cdef class POUCT(Planner):
             for preference in \
                 self._action_prior.get_preferred_actions(state, history):
                 action, num_visits_init, value_init = preference
-                if vnode[action] is None:
-                    history_action_node = QNode(num_visits_init,
-                                                value_init)
-                    vnode[action] = history_action_node
+                history_action_node = QNode(num_visits_init,
+                                            value_init)
+                vnode[action] = history_action_node
 
 
     cpdef _search(self):
