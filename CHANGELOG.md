@@ -1,3 +1,7 @@
+### Version 1.2.1
+
+* Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.
+
 ### Pull Request #3 (08/01/2020)
 
 * Added `num_sims` parameter to POMCP/POUCT that allows specifying the number of simulations per planning step (Previously only `planning_time` was available.
