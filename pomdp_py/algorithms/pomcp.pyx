@@ -38,7 +38,7 @@ cdef class VNodeParticles(VNode):
         self.belief = belief
         self.children = {}  # a -> QNode
     def __str__(self):
-        return "VNode(%.3f, %.3f, %d | %s)" % (self.num_visits, self.value, len(self.belief),
+        return "VNode(%d, %.3f, %d | %s)" % (self.num_visits, self.value, len(self.belief),
                                                str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
@@ -62,7 +62,7 @@ cdef class POMCP(POUCT):
     def __init__(self,
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
-                 num_visits_init=1, value_init=0,
+                 num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(),
                  action_prior=None):
         """
@@ -107,7 +107,7 @@ cdef class POMCP(POUCT):
         if not hasattr(agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
-        
+
         if agent.tree[real_action][real_observation] is None:
             # Never anticipated the real_observation. No reinvigoration can happen.
             raise ValueError("Particle deprivation.")
@@ -126,7 +126,7 @@ cdef class POMCP(POUCT):
 
     cpdef _simulate(POMCP self,
                     State state, tuple history, VNode root, QNode parent,
-                    Observation observation, int depth):    
+                    Observation observation, int depth):
         total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth)
         if depth == 1 and root is not None:
             root.belief.add(state)  # belief update happens as simulation goes.
