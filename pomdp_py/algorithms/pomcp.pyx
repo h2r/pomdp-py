@@ -62,7 +62,7 @@ cdef class POMCP(POUCT):
     def __init__(self,
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
-                 num_visits_init=1, value_init=0,
+                 num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(),
                  action_prior=None):
         """

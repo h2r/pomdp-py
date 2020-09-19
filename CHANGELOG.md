@@ -1,6 +1,7 @@
 ### Version 1.2.1
 
 * Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.
+* Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value. 
 
 ### Pull Request #3 (08/01/2020)
 

@@ -216,7 +216,7 @@ cdef class POUCT(Planner):
     def __init__(self,
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
-                 num_visits_init=1, value_init=0,
+                 num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(),
                  action_prior=None):
         """
@@ -432,8 +432,11 @@ cdef class POUCT(Planner):
         cdef float best_value
         best_action, best_value = None, float('-inf')
         for action in root.children:
-            val = root[action].value + \
-                self._exploration_const * math.sqrt(math.log(root.num_visits) / root[action].num_visits)
+            if root[action].num_visits == 0:
+                val = float('inf')
+            else:
+                val = root[action].value + \
+                    self._exploration_const * math.sqrt(math.log(root.num_visits) / root[action].num_visits) 
             if val > best_value:
                 best_action = action
                 best_value = val
