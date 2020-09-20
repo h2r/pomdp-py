@@ -436,7 +436,7 @@ cdef class POUCT(Planner):
                 val = float('inf')
             else:
                 val = root[action].value + \
-                    self._exploration_const * math.sqrt(math.log(root.num_visits) / root[action].num_visits) 
+                    self._exploration_const * math.sqrt(math.log(root.num_visits + 1) / root[action].num_visits)
             if val > best_value:
                 best_action = action
                 best_value = val
