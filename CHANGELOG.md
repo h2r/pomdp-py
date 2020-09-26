@@ -1,8 +1,9 @@
-### Version 1.2.1
+### Version 1.2.1 (pending)
 
 * Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.
 * Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value. 
 * Fixed another potential math domain error due to log(0) in UCB1 value calculation when initial number of visit set to 0.
+* Fixed bug in particle belief update (minor type error)
 
 ### Pull Request #3 (08/01/2020)
 
