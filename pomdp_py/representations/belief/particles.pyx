@@ -83,6 +83,6 @@ cpdef update_particles_belief(Particles current_particles,
         if observation == real_observation:
             filtered_particles.append(next_state)
     # Particle reinvigoration
-    return particle_reinvigoration(filtered_particles, len(current_particles.particles),
+    return particle_reinvigoration(Particles(filtered_particles), len(current_particles.particles),
                                    state_transform_func=state_transform_func)
     
