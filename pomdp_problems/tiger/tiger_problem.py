@@ -40,43 +40,34 @@ import random
 import numpy as np
 import sys
 
-def build_states(strings):
-    return {State(s) for s in strings}
-def build_actions(strings):
-    return {Action(s) for s in strings}
-def build_observations(strings):
-    return {Observation(s) for s in strings}
-
 class State(pomdp_py.State):
     def __init__(self, name):
-        if name != "tiger-left" and name != "tiger-right":
-            raise ValueError("Invalid state: %s" % name)
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
         if isinstance(other, State):
             return self.name == other.name
-        elif type(other) == str:
-            return self.name == other
+        return False
     def __str__(self):
         return self.name
     def __repr__(self):
         return "State(%s)" % self.name
+    def other(self):
+        if self.name.endswith("left"):
+            return State("tiger-right")
+        else:
+            return State("tiger-left")
     
 class Action(pomdp_py.Action):
     def __init__(self, name):
-        if name != "open-left" and name != "open-right"\
-           and name != "listen":
-            raise ValueError("Invalid action: %s" % name)        
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
         if isinstance(other, Action):
             return self.name == other.name
-        elif type(other) == str:
-            return self.name == other
+        return False
     def __str__(self):
         return self.name
     def __repr__(self):
@@ -84,16 +75,13 @@ class Action(pomdp_py.Action):
     
 class Observation(pomdp_py.Observation):
     def __init__(self, name):
-        if name != "tiger-left" and name != "tiger-right":
-            raise ValueError("Invalid action: %s" % name)                
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
         if isinstance(other, Observation):
             return self.name == other.name
-        elif type(other) == str:
-            return self.name == other
+        return False
     def __str__(self):
         return self.name
     def __repr__(self):
@@ -103,126 +91,111 @@ class Observation(pomdp_py.Observation):
 class ObservationModel(pomdp_py.ObservationModel):
     """This problem is small enough for the probabilities to be directly given
     externally"""
-    def __init__(self, probs):
-        self._probs = probs
+    def __init__(self, noise=0.15):
+        self.noise = noise
 
     def probability(self, observation, next_state, action, normalized=False, **kwargs):
-        return self._probs[next_state][action][observation]
+        if action.name == "listen":
+            if observation.name == next_state.name: # heard the correct growl
+                return 1.0 - self.noise
+            else:
+                return self.noise
+        else:
+            return 0.5
 
     def sample(self, next_state, action, normalized=False, **kwargs):
-        return self.get_distribution(next_state, action).random()
-
-    def argmax(self, next_state, action, normalized=False, **kwargs):
-        """Returns the most likely observation"""
-        return max(self._probs[next_state][action], key=self._probs[next_state][action].get)
-
-    def get_distribution(self, next_state, action, **kwargs):
-        """Returns the underlying distribution of the model; In this case, it's just a histogram"""
-        return pomdp_py.Histogram(self._probs[next_state][action])
+        if action.name == "listen":
+            thresh = 1.0 - self.noise
+        else:
+            thresh = 0.5
+            
+        if random.uniform(0,1) < thresh:
+            return Observation(next_state.name)
+        else:
+            return Observation(next_state.other().name)
 
     def get_all_observations(self):
-        return TigerProblem.OBSERVATIONS
+        """Only need to implement this if you're using
+        a solver that needs to enumerate over the observation space (e.g. value iteration)"""
+        return [Observation(s) for s in {"tiger-left", "tiger-right"}]
 
 # Transition Model
 class TransitionModel(pomdp_py.TransitionModel):
     """This problem is small enough for the probabilities to be directly given
             externally"""
-    def __init__(self, probs):
-        self._probs = probs
-
     def probability(self, next_state, state, action, normalized=False, **kwargs):
-        return self._probs[state][action][next_state]
+        """According to problem spec, the world resets once
+        action is open-left/open-right. Otherwise, stays the same"""
+        if action.name.startswith("open"):
+            return 0.5
+        else:
+            if next_state.name == state.name:
+                return 1.0 - 1e-9
+            else:
+                return 1e-9
 
     def sample(self, state, action, normalized=False, **kwargs):
-        return self.get_distribution(state, action).random()
-
-    def argmax(self, state, action, normalized=False, **kwargs):
-        """Returns the most likely next state"""
-        return max(self._probs[state][action], key=self._probs[state][action].get) 
-
-    def get_distribution(self, state, action, **kwargs):
-        """Returns the underlying distribution of the model"""
-        return pomdp_py.Histogram(self._probs[state][action])
+        if action.name.startswith("open"):
+            return State(random.choice(["tiger-left", "tiger-right"]))
+        else:
+            return State(state.name)
 
     def get_all_states(self):
-        return TigerProblem.STATES
+        """Only need to implement this if you're using
+        a solver that needs to enumerate over the observation space (e.g. value iteration)"""
+        return [State(s) for s in {"tiger-left", "tiger-right"}]
+        
+
 
 # Reward Model
 class RewardModel(pomdp_py.RewardModel):
-    def __init__(self, scale=1):
-        self._scale = scale
     def _reward_func(self, state, action):
-        reward = 0
-        if action == "open-left":
-            if state== "tiger-right":
-                reward += 10 * self._scale
+        if action.name == "open-left":
+            if state.name == "tiger-right":
+                return 10
             else:
-                reward -= 100 * self._scale
-        elif action == "open-right":
-            if state== "tiger-left":
-                reward += 10 * self._scale
+                return -100
+        elif action.name == "open-right":
+            if state.name == "tiger-left":
+                return 10
             else:
-                reward -= 100 * self._scale
-        elif action == "listen":
-            reward -= 1 * self._scale
-        return reward
-
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
-        if reward == self._reward_func(state, action):
-            return 1.0
-        else:
-            return 0.0
+                return -100
+        else: # listen
+            return -1
 
     def sample(self, state, action, next_state, normalized=False, **kwargs):
         # deterministic
         return self._reward_func(state, action)
 
-    def argmax(self, state, action, next_state, normalized=False, **kwargs):
-        """Returns the most likely reward"""
-        return self._reward_func(state, action)
-
-    def get_distribution(self, state, action, next_state, **kwargs):
-        """Returns the underlying distribution of the model"""
-        reward = self._reward_func(state, action)
-        return pomdp_py.Histogram({reward:1.0})
-
 # Policy Model
 class PolicyModel(pomdp_py.RandomRollout):
     """This is an extremely dumb policy model; To keep consistent
     with the framework."""
-    def probability(self, action, state, normalized=False, **kwargs):
-        raise NotImplementedError  # Never used
-    
     def sample(self, state, normalized=False, **kwargs):
         return self.get_all_actions().random()
-    
-    def argmax(self, state, normalized=False, **kwargs):
-        """Returns the most likely reward"""
-        raise NotImplementedError
     
     def get_all_actions(self, **kwargs):
         return TigerProblem.ACTIONS
 
         
 class TigerProblem(pomdp_py.POMDP):
+    """
+    In fact, creating a TigerProblem class is entirely optional
+    to simulate and solve POMDPs. But this is just an example
+    of how such a class can be created.
+    """
 
-    STATES = build_states({"tiger-left", "tiger-right"})
-    ACTIONS = build_actions({"open-left", "open-right", "listen"})
-    OBSERVATIONS = build_observations({"tiger-left", "tiger-right"})
+    ACTIONS = {Action(s) for s in {"open-left", "open-right", "listen"}}
 
-    def __init__(self, obs_probs, trans_probs, init_true_state, init_belief):
+    def __init__(self, obs_noise, init_true_state, init_belief):
         """init_belief is a Distribution."""
-        self._obs_probs = obs_probs
-        self._trans_probs = trans_probs
-
-        
         agent = pomdp_py.Agent(init_belief,
                                PolicyModel(),
-                               TransitionModel(self._trans_probs),
-                               ObservationModel(self._obs_probs),
+                               TransitionModel(),
+                               ObservationModel(obs_noise),
                                RewardModel())
         env = pomdp_py.Environment(init_true_state,
-                                   TransitionModel(self._trans_probs),
+                                   TransitionModel(),
                                    RewardModel())
         super().__init__(agent, env, name="TigerProblem")
 
@@ -261,97 +234,17 @@ def test_planner(tiger_problem, planner, nsteps=3):
                                                           tiger_problem.agent.observation_model,
                                                           tiger_problem.agent.transition_model)
             tiger_problem.agent.set_belief(new_belief)
-
-def build_setting(setting):
-    result = {'obs_probs':{}, 'trans_probs':{}}
-    for sp in setting['obs_probs']:
-        result['obs_probs'][State(sp)] = {}
-        for a in setting['obs_probs'][sp]:
-            result['obs_probs'][State(sp)][Action(a)] =\
-                {Observation(o):setting['obs_probs'][sp][a][o]
-                 for o in setting['obs_probs'][sp][a]}
-    for s in setting['trans_probs']:
-        result['trans_probs'][State(s)] = {}
-        for a in setting['trans_probs'][s]:
-            result['trans_probs'][State(s)][Action(a)] =\
-                {State(sp):setting['trans_probs'][s][a][sp]
-                 for sp in setting['trans_probs'][s][a]}
-    return result
+        if action.name.startswith("open"):
+            # Make it clearer to see what actions are taken until every time door is opened.
+            print("\n")
             
 def main():
-    ## Setting 1:
-    ## The values are set according to the paper.
-    setting1 = {
-        "obs_probs": {  # next_state -> action -> observation
-            "tiger-left":{ 
-                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
-            },
-            "tiger-right":{
-                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
-            }
-        },
-        
-        "trans_probs": {  # state -> action -> next_state
-            "tiger-left":{ 
-                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
-            },
-            "tiger-right":{
-                "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-                "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
-            }
-        }
-    }
-
-    ## Setting 2:
-    ## Based on my understanding of T and O; Treat the state as given.
-    setting2 = {
-        "obs_probs": {  # next_state -> action -> observation
-            "tiger-left":{ 
-                "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
-                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
-                "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
-            },
-            "tiger-right":{
-                "open-left": {"tiger-left": 0.0, "tiger-right": 1.0},
-                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
-                "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
-            }
-        },
-        
-        "trans_probs": {  # state -> action -> next_state
-            "tiger-left":{ 
-                "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
-                "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
-                "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
-            },
-            "tiger-right":{
-                "open-left": {"tiger-left": 0.0, "tiger-right": 1.0},
-                "open-right": {"tiger-left": 0.0, "tiger-right": 1.0},
-                "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
-            }
-        }
-    }
-
-    # setting1 resets the problem after the agent chooses open-left or open-right;
-    # It's reasonable - when the agent opens one door and sees a tiger, it gets
-    # killed; when the agent sees a treasure, it will take some of the treasure
-    # and leave. Thus, the agent will have no incentive to close the door and do
-    # this again. The setting2 is the case where the agent is a robot, and only
-    # cares about getting higher reward.
-    setting = build_setting(setting1)
-
-    init_true_state = random.choice(list(TigerProblem.STATES))
+    
+    init_true_state = random.choice([State("tiger-left"),
+                                     State("tiger-right")])
     init_belief = pomdp_py.Histogram({State("tiger-left"): 0.5,
                                       State("tiger-right"): 0.5})
-    tiger_problem = TigerProblem(setting['obs_probs'],
-                                 setting['trans_probs'],
+    tiger_problem = TigerProblem(0.15,  # observation noise
                                  init_true_state, init_belief)
 
     # Value iteration
