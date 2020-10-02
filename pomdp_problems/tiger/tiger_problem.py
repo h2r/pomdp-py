@@ -239,7 +239,6 @@ def test_planner(tiger_problem, planner, nsteps=3):
             print("\n")
             
 def main():
-    
     init_true_state = random.choice([State("tiger-left"),
                                      State("tiger-right")])
     init_belief = pomdp_py.Histogram({State("tiger-left"): 0.5,
@@ -248,16 +247,21 @@ def main():
                                  init_true_state, init_belief)
 
     # Value iteration
+    # Note (10/02/2020: VI seems buggy; When I add a stay action that doesn't receive
+    # any observation, the VI isn't able to take listen instead of stay. But POMCP or
+    # POUCT is able to (especially when max_depth is set to 2). This suggests VI
+    # implementation somehow isn't able to distinguish information gathering actions
+    # versus those that do not change the state while not receiving observations.
     print("** Testing value iteration **")
-    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
+    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.95)
     test_planner(tiger_problem, vi, nsteps=3)
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
     print("\n** Testing POUCT **")
-    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95,
-                           num_sims=4096, exploration_const=110,
+    pouct = pomdp_py.POUCT(max_depth=2, discount_factor=0.95,
+                           num_sims=4096, exploration_const=200,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pouct, nsteps=10)
 
@@ -270,8 +274,8 @@ def main():
     
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
-                           num_sims=1000, exploration_const=110,
+    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.95,
+                           num_sims=1000, exploration_const=200,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pomcp, nsteps=10)
     
