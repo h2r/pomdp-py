@@ -184,8 +184,10 @@ class TigerProblem(pomdp_py.POMDP):
     to simulate and solve POMDPs. But this is just an example
     of how such a class can be created.
     """
-
-    ACTIONS = {Action(s) for s in {"open-left", "open-right", "listen", "stay"}}
+    # A stay action can be added to test that POMDP solver is
+    # able to differentiate information gathering actions.
+    ACTIONS = {Action(s) for s in {"open-left", "open-right",
+                                   "listen", "stay"}}
 
     def __init__(self, obs_noise, init_true_state, init_belief):
         """init_belief is a Distribution."""
@@ -246,12 +248,6 @@ def main():
     tiger_problem = TigerProblem(0.15,  # observation noise
                                  init_true_state, init_belief)
 
-    # Value iteration Note (10/02/2020: VI seems buggy; When I add a stay action
-    # that doesn't receive any observation, the VI isn't able to consistently
-    # take listen instead of stay. But POMCP or POUCT is able to (especially
-    # when max_depth is set to 2). This suggests VI implementation somehow isn't
-    # able to distinguish information gathering actions versus those that do not
-    # change the state while not receiving observations.
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)
     test_planner(tiger_problem, vi, nsteps=3)
