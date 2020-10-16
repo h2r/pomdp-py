@@ -23,7 +23,7 @@ door and vice versa.
 
 States: tiger-left, tiger-right
 Actions: open-left, open-right, listen
-Rewards: 
+Rewards:
     +10 for opening treasure door. -100 for opening tiger door.
     -1 for listening.
 Observations: You can hear either "tiger-left", or "tiger-right".
@@ -58,7 +58,7 @@ class State(pomdp_py.State):
             return State("tiger-right")
         else:
             return State("tiger-left")
-    
+
 class Action(pomdp_py.Action):
     def __init__(self, name):
         self.name = name
@@ -72,7 +72,7 @@ class Action(pomdp_py.Action):
         return self.name
     def __repr__(self):
         return "Action(%s)" % self.name
-    
+
 class Observation(pomdp_py.Observation):
     def __init__(self, name):
         self.name = name
@@ -108,7 +108,7 @@ class ObservationModel(pomdp_py.ObservationModel):
             thresh = 1.0 - self.noise
         else:
             thresh = 0.5
-            
+
         if random.uniform(0,1) < thresh:
             return Observation(next_state.name)
         else:
@@ -144,7 +144,7 @@ class TransitionModel(pomdp_py.TransitionModel):
         """Only need to implement this if you're using
         a solver that needs to enumerate over the observation space (e.g. value iteration)"""
         return [State(s) for s in {"tiger-left", "tiger-right"}]
-        
+
 
 
 # Reward Model
@@ -173,11 +173,11 @@ class PolicyModel(pomdp_py.RandomRollout):
     with the framework."""
     def sample(self, state, normalized=False, **kwargs):
         return self.get_all_actions().random()
-    
+
     def get_all_actions(self, **kwargs):
         return TigerProblem.ACTIONS
 
-        
+
 class TigerProblem(pomdp_py.POMDP):
     """
     In fact, creating a TigerProblem class is entirely optional
@@ -185,7 +185,7 @@ class TigerProblem(pomdp_py.POMDP):
     of how such a class can be created.
     """
 
-    ACTIONS = {Action(s) for s in {"open-left", "open-right", "listen"}}
+    ACTIONS = {Action(s) for s in {"open-left", "open-right", "listen", "stay"}}
 
     def __init__(self, obs_noise, init_true_state, init_belief):
         """init_belief is a Distribution."""
@@ -223,7 +223,7 @@ def test_planner(tiger_problem, planner, nsteps=3):
         real_observation = Observation(tiger_problem.env.state.name)
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
-        
+
         planner.update(tiger_problem.agent, action, real_observation)
         if isinstance(planner, pomdp_py.POUCT):
             print("Num sims: %d" % planner.last_num_sims)
@@ -237,7 +237,7 @@ def test_planner(tiger_problem, planner, nsteps=3):
         if action.name.startswith("open"):
             # Make it clearer to see what actions are taken until every time door is opened.
             print("\n")
-            
+
 def main():
     init_true_state = random.choice([State("tiger-left"),
                                      State("tiger-right")])
@@ -246,14 +246,14 @@ def main():
     tiger_problem = TigerProblem(0.15,  # observation noise
                                  init_true_state, init_belief)
 
-    # Value iteration
-    # Note (10/02/2020: VI seems buggy; When I add a stay action that doesn't receive
-    # any observation, the VI isn't able to take listen instead of stay. But POMCP or
-    # POUCT is able to (especially when max_depth is set to 2). This suggests VI
-    # implementation somehow isn't able to distinguish information gathering actions
-    # versus those that do not change the state while not receiving observations.
+    # Value iteration Note (10/02/2020: VI seems buggy; When I add a stay action
+    # that doesn't receive any observation, the VI isn't able to consistently
+    # take listen instead of stay. But POMCP or POUCT is able to (especially
+    # when max_depth is set to 2). This suggests VI implementation somehow isn't
+    # able to distinguish information gathering actions versus those that do not
+    # change the state while not receiving observations.
     print("** Testing value iteration **")
-    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.95)
+    vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)
     test_planner(tiger_problem, vi, nsteps=3)
 
     # Reset agent belief
@@ -268,17 +268,17 @@ def main():
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
                                                 max_depth=5, anonymize=False)
 
-    # Reset agent belief    
+    # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
     tiger_problem.agent.tree = None
-    
+
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
     pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.95,
                            num_sims=1000, exploration_const=200,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pomcp, nsteps=10)
-    
+
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
                                                 max_depth=5, anonymize=False)
 
