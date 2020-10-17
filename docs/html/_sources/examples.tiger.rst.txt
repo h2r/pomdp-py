@@ -18,8 +18,8 @@ listening is neither free nor entirely accurate. You might hear the
 tiger behind the left door while it is actually behind the right
 door and vice versa.`
 
-Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).
-To define this POMDP:
+Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations.
+In pomdp_py, to define and solve a POMDP:
 
 1. :ref:`define-the-domain`
 2. :ref:`define-the-models`
@@ -30,7 +30,7 @@ To define this POMDP:
 
    For a simple POMDP like Tiger, it is encouraged to place the code for all components (e.g. state, action, observation and models) under the same Python module (i.e. the same :code:`.py` file).
 
-.. _define-the-domain:   
+.. _define-the-domain:
 
 Define the domain
 -----------------
@@ -52,12 +52,12 @@ equivalent as defining three classes that inherit
         # ... __hash__, __eq__ should be implemented
 
 .. code-block:: python
-                
+
     class Action(pomdp_py.Action):
         def __init__(self, name):
             if name != "open-left" and name != "open-right"\
                and name != "listen":
-                raise ValueError("Invalid action: %s" % name)        
+                raise ValueError("Invalid action: %s" % name)
             self.name = name
         # ... __hash__, __eq__ should be implemented
 
@@ -66,15 +66,15 @@ equivalent as defining three classes that inherit
     class Observation(pomdp_py.Observation):
         def __init__(self, name):
             if name != "tiger-left" and name != "tiger-right":
-                raise ValueError("Invalid action: %s" % name)                
+                raise ValueError("Invalid action: %s" % name)
             self.name = name
-        # ... __hash__, __eq__ should be implemented                        
+        # ... __hash__, __eq__ should be implemented
 
-`[source] <_modules/problems/tiger/tiger_problem.html#State>`_
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#State>`_
 
 .. _define-the-models:
 
-Define the models 
+Define the models
 ------------------
 
 Next, we define the models (:math:`T, O, R, \pi`). In `pomdp_py`, this is
@@ -89,99 +89,78 @@ equivalent as defining classes that inherit
 
    `pomdp_py` also provides an interface for :py:mod:`~pomdp_py.framework.basics.BlackboxModel`.
 
-As mentioned before, the uncertainty of the models can be specified by a Python
-dictionary for Tiger problem. Let :code:`obs_probs` and :code:`trans_probs` be
-this dictionary for :math:`O` and :math:`T` respectively. For example, we can
-set the probabilities according to the paper :cite:`kaelbling1998planning`:
+
+We begin with the :py:mod:`~pomdp_py.framework.basics.ObservationModel`. In Tiger, when the agent takes the listen action, it observes which side the tiger is with some noise. Implementing such a model in pomdp_py boils down to implementing a generative model with an optional :code:`probability` function that you can implement when, for example, you need to perform exact belief update. One way of implementing this is as follows. Note that our model inherits the pomdp_py's :py:mod:`~pomdp_py.framework.basics.ObservationModel` interface.
 
 .. code-block:: python
 
-   obs_probs = {  # next_state -> action -> observation
-        "tiger-left":{ 
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
-        },
-        "tiger-right":{
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
-        }
-    }
+  class ObservationModel(pomdp_py.ObservationModel):
+      def __init__(self, noise=0.15):
+          self.noise = noise
+
+      def probability(self, observation, next_state, action):
+          if action.name == "listen":
+              # heard the correct growl
+              if observation.name == next_state.name:
+                  return 1.0 - self.noise
+              else:
+                  return self.noise
+          else:
+              return 0.5
+
+      def sample(self, next_state, action):
+          if action.name == "listen":
+              thresh = 1.0 - self.noise
+          else:
+              thresh = 0.5
+
+          if random.uniform(0,1) < thresh:
+              return Observation(next_state.name)
+          else:
+              return Observation(next_state.other().name)
+
+      def get_all_observations(self):
+          """Only need to implement this if you're using
+          a solver that needs to enumerate over the observation
+          space (e.g. value iteration)"""
+          return [Observation(s)
+                  for s in {"tiger-left", "tiger-right"}]
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel>`_
+
+The :py:mod:`~pomdp_py.framework.basics.TransitionModel` is deterministic. Similarly, we implement the :code:`sample` and :code:`probability` functions in the interface for this generative model:
+
 
 .. code-block:: python
 
-    trans_probs: {  # state -> action -> next_state
-        "tiger-left":{ 
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
-        },
-        "tiger-right":{
-            "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
-            "listen": {"tiger-left": 0.0, "tiger-right": 1.0}
-        }
-    }
+  class TransitionModel(pomdp_py.TransitionModel):
+      def probability(self, next_state, state, action):
+          """According to problem spec, the world resets once
+          action is open-left/open-right. Otherwise, it
+          stays the same"""
+          if action.name.startswith("open"):
+              return 0.5
+          else:
+              if next_state.name == state.name:
+                  return 1.0 - 1e-9
+              else:
+                  return 1e-9
 
-This dictionary can be processed so that each string is replaced with
-the corresponding State, Action or Observation object.
+      def sample(self, state, action):
+          if action.name.startswith("open"):
+              return random.choice(self.get_all_states())
+          else:
+              return State(state.name)
 
-Then, we define classes that inherit
-:py:mod:`~pomdp_py.framework.basics.ObservationModel`,
-:py:mod:`~pomdp_py.framework.basics.TransitionModel`.
+      def get_all_states(self):
+          """Only need to implement this if you're using
+          a solver that needs to enumerate over the
+          observation space (e.g. value iteration)"""
+          return [State(s) for s in {"tiger-left", "tiger-right"}]
 
-.. code-block:: python
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#TransitionModel>`_
 
-    class TransitionModel(pomdp_py.TransitionModel):
-        """This problem is small enough for the probabilities to be directly given
-        externally"""
-        def __init__(self, probs):
-            self._probs = probs
-    
-        def probability(self, next_state, state, action, normalized=False, **kwargs):
-            return self._probs[state][action][next_state]
-    
-        def sample(self, state, action, normalized=False, **kwargs):
-            return self.get_distribution(state, action).random()
-    
-        def argmax(self, state, action, normalized=False, **kwargs):
-            """Returns the most likely next state"""
-            return max(self._probs[state][action], key=self._probs[state][action].get) 
-    
-        def get_distribution(self, state, action, **kwargs):
-            """Returns the underlying distribution of the model"""
-            return pomdp_py.Histogram(self._probs[state][action])
-    
-        def get_all_states(self):
-            return TigerProblem.STATES
 
-.. code-block:: python
-
-    class ObservationModel(pomdp_py.ObservationModel):
-        """This problem is small enough for the probabilities to be directly given
-        externally"""
-        def __init__(self, probs):
-            self._probs = probs
-    
-        def probability(self, observation, next_state, action, normalized=False, **kwargs):
-            return self._probs[next_state][action][observation]
-    
-        def sample(self, next_state, action, normalized=False, **kwargs):
-            return self.get_distribution(next_state, action).random()
-    
-        def argmax(self, next_state, action, normalized=False, **kwargs):
-            """Returns the most likely observation"""
-            return max(self._probs[next_state][action], key=self._probs[next_state][action].get)
-    
-        def get_distribution(self, next_state, action, **kwargs):
-            """Returns the underlying distribution of the model; In this case, it's just a histogram"""
-            return pomdp_py.Histogram(self._probs[next_state][action])
-    
-        def get_all_observations(self):
-            return TigerProblem.OBSERVATIONS
-                    
-`[source] <_modules/problems/tiger/tiger_problem.html#TransitionModel>`_
+Since the Tiger domain is small, the transition and observation probabilities can be easily specified by a table (a dictionary in Python), which is similar to specifying POMDPs using POMDP file formats. However, pomdp_py allows more flexible way of implementing these models which can be intractable to enumerate (e.g. continuous).
 
 Next, we define the :py:mod:`~pomdp_py.framework.basics.PolicyModel`. The job of
 a PolicyModel is to (1) determine the set of actions that the robot can take at
@@ -203,65 +182,50 @@ be learned, or the action space is large so a probability distribution over
 it becomes important.
 
 .. code-block:: python
-   
-   class PolicyModel(pomdp_py.RandomRollout):
-    """This is an extremely dumb policy model; To keep consistent
-    with the framework."""
-    def probability(self, action, state, normalized=False, **kwargs):
-        raise NotImplementedError  # Never used
-    
-    def sample(self, state, normalized=False, **kwargs):
-        return self.get_all_actions().random()
-    
-    def argmax(self, state, normalized=False, **kwargs):
-        """Returns the most likely action"""
-        raise NotImplementedError
-    
-    def get_all_actions(self, **kwargs):
-        return TigerProblem.ACTIONS
 
-`[source] <_modules/problems/tiger/tiger_problem.html#PolicyModel>`_        
+   class PolicyModel(pomdp_py.RandomRollout):
+       """This is an extremely dumb policy model; To keep consistent
+       with the framework."""
+       # A stay action can be added to test that POMDP solver is
+       # able to differentiate information gathering actions.
+       ACTIONS = {Action(s)
+                 for s in {"open-left", "open-right", "listen"}}
+
+       def sample(self, state, **kwargs):
+           return self.get_all_actions().random()
+
+       def get_all_actions(self, **kwargs):
+           return PolicyModel.ACTIONS
+
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel>`_
 
 Finally, we define the :py:mod:`~pomdp_py.framework.basics.RewardModel`.
 It is straightforward according to the problem description. In this case,
-(and very commonly), the reward function is deterministic.
+(and very commonly), the reward function is deterministic. We can implement
+it as follows. The interface for reward model does allow stochastic rewards.
 
 .. code-block:: python
 
-   class RewardModel(pomdp_py.RewardModel):
-       def __init__(self, scale=1):
-           self._scale = scale
-       def _reward_func(self, state, action):
-           reward = 0
-           if action == "open-left":
-               if state== "tiger-right":
-                   reward += 10 * self._scale
-               else:
-                   reward -= 100 * self._scale
-           elif action == "open-right":
-               if state== "tiger-left":
-                   reward += 10 * self._scale
-               else:
-                   reward -= 100 * self._scale
-           elif action == "listen":
-               reward -= 1 * self._scale
-           return reward
+  class RewardModel(pomdp_py.RewardModel):
+      def _reward_func(self, state, action):
+          if action.name == "open-left":
+              if state.name == "tiger-right":
+                  return 10
+              else:
+                  return -100
+          elif action.name == "open-right":
+              if state.name == "tiger-left":
+                  return 10
+              else:
+                  return -100
+          else: # listen
+              return -1
 
-       def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
-           if reward == self._reward_func(state, action):
-               return 1.0
-           else:
-               return 0.0            
-   
-       def sample(self, state, action, next_state, normalized=False, **kwargs):
-           # deterministic
-           return self._reward_func(state, action)
-   
-       def argmax(self, state, action, next_state, normalized=False, **kwargs):
-           """Returns the most likely reward"""
-           return self._reward_func(state, action)
+      def sample(self, state, action, next_state):
+          # deterministic
+          return self._reward_func(state, action)
 
-`[source] <_modules/problems/tiger/tiger_problem.html#RewardModel>`_
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel>`_
 
 
 Define the POMDP
@@ -269,32 +233,26 @@ Define the POMDP
 
 With the models that we have defined, it is simple to define a POMDP for the Tiger
 problem; To do this, we need to define :py:mod:`~pomdp_py.framework.basics.Agent`,
-and :py:mod:`~pomdp_py.framework.basics.Environment`.
+and :py:mod:`~pomdp_py.framework.basics.Environment`. Note that you could just construct an agent and an environment and still be able to plan actions and simulate the environment.
+This class is mostly just for code organization and is entirely optional.
 
 .. code-block:: python
-                
+
     class TigerProblem(pomdp_py.POMDP):
-    
-        STATES = build_states({"tiger-left", "tiger-right"})
-        ACTIONS = build_actions({"open-left", "open-right", "listen"})
-        OBSERVATIONS = build_observations({"tiger-left", "tiger-right"})
-    
-        def __init__(self, obs_probs, trans_probs, init_true_state, init_belief):
+
+        def __init__(self, obs_noise, init_true_state, init_belief):
             """init_belief is a Distribution."""
-            self._obs_probs = obs_probs
-            self._trans_probs = trans_probs
-            
             agent = pomdp_py.Agent(init_belief,
                                    PolicyModel(),
-                                   TransitionModel(self._trans_probs),
-                                   ObservationModel(self._obs_probs),
+                                   TransitionModel(),
+                                   ObservationModel(obs_noise),
                                    RewardModel())
             env = pomdp_py.Environment(init_true_state,
-                                       TransitionModel(self._trans_probs),
+                                       TransitionModel(),
                                        RewardModel())
             super().__init__(agent, env, name="TigerProblem")
 
-`[source] <_modules/problems/tiger/tiger_problem.html#TigerProblem>`_
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#TigerProblem>`_
 
 Notice that :code:`init_true_state` and :code:`init_belief` need to be provided.
 The process of creating them is described in more detail in the next section.
@@ -312,10 +270,10 @@ The process of creating them is described in more detail in the next section.
    :py:mod:`pomdp_py.framework.basics.Agent` and
    :py:mod:`pomdp_py.framework.basics.Environment`.
 
-   
+
 .. _instantiate:
 
-Instantiating the POMDP
+Instantiate the POMDP
 -----------------------
 
 Now we have a definition of the Tiger problem. Now, we need to `instantiate`
@@ -329,26 +287,26 @@ We can create a random initial state and a uniform belief as follows:
 
 .. code-block:: python
 
-   init_true_state = random.choice(list(TigerProblem.STATES))
+   init_true_state = random.choice([State("tiger-left"),
+                                    State("tiger-right")])
    init_belief = pomdp_py.Histogram({State("tiger-left"): 0.5,
                                      State("tiger-right"): 0.5})
 
-Then, we can create an instance of the Tiger problem:
+Then, we can create an instance of the Tiger problem with the standard noise of 0.15:
 
 .. code-block:: python
 
-   tiger_problem = TigerProblem(obs_probs,
-                                trans_probs,
-                                init_true_state, init_belief)
+   tiger_problem = TigerProblem(0.15, init_true_state, init_belief)
 
-`[source] <_modules/problems/tiger/tiger_problem.html#main>`_
+
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#main>`_
 
 
 .. _solve:
 
-Solving the POMDP instance
+Solve the POMDP instance
 --------------------------
-                                     
+
 To solve a POMDP with `pomdp_py`, here are the basic steps:
 
 1. Create a planner (:py:mod:`~pomdp_py.framework.planner.Planner`)
@@ -376,11 +334,11 @@ For the Tiger problem, we implemented this procedure as follows:
 
     # Step 1; in main()
     # creating planners
-    vi = pomdp_py.ValueIteration(horizon=2, discount_factor=0.99)
-    pouct = pomdp_py.POUCT(max_depth=10, discount_factor=0.95,
+    vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)
+    pouct = pomdp_py.POUCT(max_depth=3, discount_factor=0.95,
                            planning_time=.5, exploration_const=110,
                            rollout_policy=tiger_problem.agent.policy_model)
-    pomcp = pomdp_py.POMCP(max_depth=10, discount_factor=0.95,
+    pomcp = pomdp_py.POMCP(max_depth=3, discount_factor=0.95,
                            planning_time=.5, exploration_const=110,
                            rollout_policy=tiger_problem.agent.policy_model)
     ...  # call test_planner() for steps 2-6.
@@ -402,7 +360,7 @@ For the Tiger problem, we implemented this procedure as follows:
             # Step 4
             # Let's create some simulated real observation; Update the belief
             # Creating true observation for sanity checking solver behavior.
-            # In general, this observation should be sampled from agent's observation model.            
+            # In general, this observation should be sampled from agent's observation model.
                 real_observation = Observation(tiger_problem.env.state.name)
             print(">> Observation: %s" % real_observation)
 
@@ -418,7 +376,7 @@ For the Tiger problem, we implemented this procedure as follows:
                                                               tiger_problem.agent.transition_model)
                 tiger_problem.agent.set_belief(new_belief)
 
-`[source] <_modules/problems/tiger/tiger_problem.html#test_planner>`_
+`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#test_planner>`_
 
 .. _summary:
 
@@ -431,8 +389,6 @@ In short, to use `pomdp_py` to define a POMDP problem and solve an instance of t
 2. :ref:`define-the-models`
 3. :ref:`instantiate`
 4. :ref:`solve`
-
-Best of luck!
 
 .. bibliography:: refs.bib
    :filter: docname in docnames
