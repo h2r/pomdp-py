@@ -123,12 +123,12 @@
 <span class="sd">to actually define the POMDP problem for multi-object search.</span>
 <span class="sd">Then, solve it using POUCT or POMCP.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
-<span class="kn">from</span> <span class="nn">.env.env</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.env.visual</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.agent.agent</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.example_worlds</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.domain.observation</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.models.components.grid_map</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.env.env</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.env.visual</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.agent.agent</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.example_worlds</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.observation</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.models.components.grid_map</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -183,8 +183,12 @@
                 <span class="s2">&quot;Since env is not provided, you must provide string descriptions&quot;</span>\
                 <span class="s2">&quot;of the world and sensors.&quot;</span>
             <span class="n">worldstr</span> <span class="o">=</span> <span class="n">equip_sensors</span><span class="p">(</span><span class="n">grid_map</span><span class="p">,</span> <span class="n">sensors</span><span class="p">)</span>
-            <span class="n">env</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="n">worldstr</span><span class="p">)</span>
-
+            <span class="n">dim</span><span class="p">,</span> <span class="n">robots</span><span class="p">,</span> <span class="n">objects</span><span class="p">,</span> <span class="n">obstacles</span><span class="p">,</span> <span class="n">sensors</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="n">worldstr</span><span class="p">)</span>
+            <span class="n">init_state</span> <span class="o">=</span> <span class="n">MosOOState</span><span class="p">({</span><span class="o">**</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">robots</span><span class="p">})</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="n">MosEnvironment</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span>
+                          <span class="n">init_state</span><span class="p">,</span> <span class="n">sensors</span><span class="p">,</span>
+                          <span class="n">obstacles</span><span class="o">=</span><span class="n">obstacles</span><span class="p">)</span>
+            
         <span class="c1"># construct prior</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">prior</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">prior</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>

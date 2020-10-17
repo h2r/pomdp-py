@@ -209,7 +209,7 @@
       </ul></li>
       <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior">ActionPrior (class in pomdp_py.algorithms.po_uct)</a>
 </li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem.ACTIONS">ACTIONS (pomdp_problems.tiger.tiger_problem.TigerProblem attribute)</a>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS">ACTIONS (pomdp_problems.tiger.tiger_problem.PolicyModel attribute)</a>
 </li>
       <li><a href="api/pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.add">add() (pomdp_py.representations.distribution.particles.Particles method)</a>
 </li>
@@ -252,14 +252,6 @@
 </li>
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSTransitionModel.argmax">(pomdp_problems.rocksample.rocksample_problem.RSTransitionModel method)</a>
 </li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.ObservationModel.argmax">(pomdp_problems.tiger.tiger_problem.ObservationModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.argmax">(pomdp_problems.tiger.tiger_problem.PolicyModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.RewardModel.argmax">(pomdp_problems.tiger.tiger_problem.RewardModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TransitionModel.argmax">(pomdp_problems.tiger.tiger_problem.TransitionModel method)</a>
-</li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel.argmax">(pomdp_py.framework.basics.BlackboxModel method)</a>
 </li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution.argmax">(pomdp_py.framework.basics.GenerativeDistribution method)</a>
@@ -297,10 +289,10 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent.belief">(pomdp_py.framework.basics.Agent attribute)</a>
 </li>
       </ul></li>
-      <li><a href="problems/pomdp_problems.multi_object_search.html#pomdp_problems.multi_object_search.problem.belief_update">belief_update() (in module pomdp_problems.multi_object_search.problem)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="problems/pomdp_problems.multi_object_search.html#pomdp_problems.multi_object_search.problem.belief_update">belief_update() (in module pomdp_problems.multi_object_search.problem)</a>
+</li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel">BlackboxModel (class in pomdp_py.framework.basics)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR">BLQR (class in pomdp_py.algorithms.bsp.blqr)</a>, <a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR">[1]</a>
@@ -308,14 +300,6 @@
       <li><a href="api/pomdp_py.utils.html#pomdp_py.utils.util.bcolors.BLUE">BLUE (pomdp_py.utils.util.bcolors attribute)</a>
 </li>
       <li><a href="api/pomdp_py.utils.html#pomdp_py.utils.util.bcolors.BOLD">BOLD (pomdp_py.utils.util.bcolors attribute)</a>
-</li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.build_actions">build_actions() (in module pomdp_problems.tiger.tiger_problem)</a>
-</li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.build_observations">build_observations() (in module pomdp_problems.tiger.tiger_problem)</a>
-</li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.build_setting">build_setting() (in module pomdp_problems.tiger.tiger_problem)</a>
-</li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.build_states">build_states() (in module pomdp_problems.tiger.tiger_problem)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -391,6 +375,8 @@
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.MoveAction.EAST">(pomdp_problems.rocksample.rocksample_problem.MoveAction attribute)</a>
 </li>
       </ul></li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.EAST2D">EAST2D (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
       <li><a href="api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo">ekf_update_mlo() (pomdp_py.algorithms.bsp.blqr.BLQR method)</a>, <a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo">[1]</a>
 </li>
   </ul></td>
@@ -479,15 +465,9 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.get_all_states">(pomdp_py.framework.basics.TransitionModel method)</a>
 </li>
       </ul></li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.ObservationModel.get_distribution">get_distribution() (pomdp_problems.tiger.tiger_problem.ObservationModel method)</a>
+      <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.get_distribution">get_distribution() (pomdp_py.framework.basics.ObservationModel method)</a>
 
       <ul>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.RewardModel.get_distribution">(pomdp_problems.tiger.tiger_problem.RewardModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TransitionModel.get_distribution">(pomdp_problems.tiger.tiger_problem.TransitionModel method)</a>
-</li>
-        <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.get_distribution">(pomdp_py.framework.basics.ObservationModel method)</a>
-</li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.get_distribution">(pomdp_py.framework.basics.PolicyModel method)</a>
 </li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel.get_distribution">(pomdp_py.framework.basics.RewardModel method)</a>
@@ -611,12 +591,14 @@
 </li>
       <li><a href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.last_observation">last_observation() (pomdp_problems.multi_object_search.env.visual.MosViz property)</a>
 </li>
-      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.LEFT">LEFT (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+      <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.last_planning_time">last_planning_time (pomdp_py.algorithms.po_uct.POUCT attribute)</a>
 </li>
-      <li><a href="problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.env.LightDarkEnvironment.light">light() (pomdp_problems.light_dark.env.env.LightDarkEnvironment property)</a>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.LEFT">LEFT (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.env.LightDarkEnvironment.light">light() (pomdp_problems.light_dark.env.env.LightDarkEnvironment property)</a>
+</li>
       <li><a href="problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.env.LightDarkEnvironment">LightDarkEnvironment (class in pomdp_problems.light_dark.env.env)</a>
 </li>
       <li><a href="problems/pomdp_problems.light_dark.env.html#pomdp_problems.light_dark.env.visual.LightDarkViz">LightDarkViz (class in pomdp_problems.light_dark.env.visual)</a>
@@ -705,6 +687,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.NORTH2D">NORTH2D (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
       <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.ObjectObservation.NULL">NULL (pomdp_problems.multi_object_search.domain.observation.ObjectObservation attribute)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode.num_visits">num_visits (pomdp_py.algorithms.po_uct.TreeNode attribute)</a>
@@ -761,8 +745,6 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel">(class in pomdp_py.framework.basics)</a>
 </li>
       </ul></li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem.OBSERVATIONS">OBSERVATIONS (pomdp_problems.tiger.tiger_problem.TigerProblem attribute)</a>
-</li>
       <li><a href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_cleanup">on_cleanup() (pomdp_problems.multi_object_search.env.visual.MosViz method)</a>
 </li>
       <li><a href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_event">on_event() (pomdp_problems.multi_object_search.env.visual.MosViz method)</a>
@@ -788,6 +770,8 @@
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel">OOTransitionModel (class in pomdp_py.framework.oopomdp)</a>
 </li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Option">Option (class in pomdp_py.framework.basics)</a>
+</li>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.State.other">other() (pomdp_problems.tiger.tiger_problem.State method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -832,6 +816,8 @@
       <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP">POMCP (class in pomdp_py.algorithms.pomcp)</a>
 </li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP">POMDP (class in pomdp_py.framework.basics)</a>
+</li>
+      <li><a href="problems/pomdp_problems.lasertag.html#module-pomdp_problems.lasertag">pomdp_problems.lasertag (module)</a>
 </li>
       <li><a href="problems/pomdp_problems.light_dark.domain.html#module-pomdp_problems.light_dark.domain">pomdp_problems.light_dark.domain (module)</a>
 </li>
@@ -887,6 +873,8 @@
 </li>
       <li><a href="problems/pomdp_problems.tag.html#module-pomdp_problems.tag">pomdp_problems.tag (module)</a>
 </li>
+      <li><a href="problems/pomdp_problems.tiger.html#module-pomdp_problems.tiger">pomdp_problems.tiger (module)</a>
+</li>
       <li><a href="problems/pomdp_problems.tiger.html#module-pomdp_problems.tiger.tiger_problem">pomdp_problems.tiger.tiger_problem (module)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.bsp.html#module-pomdp_py.algorithms.bsp">pomdp_py.algorithms.bsp (module)</a>
@@ -901,12 +889,12 @@
 </li>
       <li><a href="api/pomdp_py.algorithms.html#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pomdp_py.framework.html#module-pomdp_py.framework.basics">pomdp_py.framework.basics (module)</a>
 </li>
       <li><a href="api/pomdp_py.framework.html#module-pomdp_py.framework.oopomdp">pomdp_py.framework.oopomdp (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pomdp_py.framework.html#module-pomdp_py.framework.planner">pomdp_py.framework.planner (module)</a>
 </li>
       <li><a href="api/pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram (module)</a>
@@ -993,10 +981,6 @@
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSTransitionModel.probability">(pomdp_problems.rocksample.rocksample_problem.RSTransitionModel method)</a>
 </li>
         <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.ObservationModel.probability">(pomdp_problems.tiger.tiger_problem.ObservationModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.probability">(pomdp_problems.tiger.tiger_problem.PolicyModel method)</a>
-</li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.RewardModel.probability">(pomdp_problems.tiger.tiger_problem.RewardModel method)</a>
 </li>
         <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TransitionModel.probability">(pomdp_problems.tiger.tiger_problem.TransitionModel method)</a>
 </li>
@@ -1179,10 +1163,10 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.sample">(pomdp_py.framework.oopomdp.OOTransitionModel method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent.sample_belief">sample_belief() (pomdp_py.framework.basics.Agent method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.sample_explict_models">sample_explict_models() (in module pomdp_py.framework.basics)</a>
 </li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.sample_generative_model">sample_generative_model() (in module pomdp_py.framework.basics)</a>
@@ -1190,6 +1174,14 @@
       <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.SampleAction">SampleAction (class in pomdp_problems.rocksample.rocksample_problem)</a>
 </li>
       <li><a href="api/pomdp_py.utils.html#pomdp_py.utils.util.save_plot">save_plot() (in module pomdp_py.utils.util)</a>
+</li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_VW">SCHEME_VW (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_XY">SCHEME_XY (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_XYTH">SCHEME_XYTH (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEMES">SCHEMES (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function">segmented_cost_function() (pomdp_py.algorithms.bsp.blqr.BLQR method)</a>, <a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function">[1]</a>
 </li>
@@ -1215,6 +1207,8 @@
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.MoveAction.SOUTH">(pomdp_problems.rocksample.rocksample_problem.MoveAction attribute)</a>
 </li>
       </ul></li>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SOUTH2D">SOUTH2D (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
       <li><a href="problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State">State (class in pomdp_problems.light_dark.domain.state)</a>
 
       <ul>
@@ -1233,8 +1227,6 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment.state_transition">(pomdp_py.framework.basics.Environment method)</a>
 </li>
       </ul></li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem.STATES">STATES (pomdp_problems.tiger.tiger_problem.TigerProblem attribute)</a>
-</li>
       <li><a href="problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel">StaticObjectTransitionModel (class in pomdp_problems.multi_object_search.models.transition_model)</a>
 </li>
   </ul></td>
@@ -1359,6 +1351,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.WEST2D">WEST2D (pomdp_problems.multi_object_search.domain.action.MotionAction attribute)</a>
+</li>
       <li><a href="api/pomdp_py.utils.html#pomdp_py.utils.util.bcolors.WHITE">WHITE (pomdp_py.utils.util.bcolors attribute)</a>
 </li>
   </ul></td>

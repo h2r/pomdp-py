@@ -4,6 +4,7 @@
 * Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value.
 * Fixed another potential math domain error due to log(0) in UCB1 value calculation when initial number of visit set to 0.
 * Fixed bug in particle belief update (minor type error)
+* Simplified the Tiger example code, updated the Tiger example in documentation.
 * Fixed bug in ValueIteration and verified in Tiger that it's able to
   differentiate differentiate between listen/stay actions when horizon = 3, but
   not so when horizon = 1 or 2. The same behavior is observed using the pomdp

@@ -130,9 +130,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">..domain.state</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..domain.observation</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..domain.action</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.state</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.observation</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.action</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="c1">####### Transition Model #######</span>
 <div class="viewcode-block" id="MosTransitionModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel">[docs]</a><span class="k">class</span> <span class="nc">MosTransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">OOTransitionModel</span><span class="p">):</span>
@@ -210,12 +210,12 @@
 
         <span class="n">robot_pose</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">pose</span><span class="p">(</span><span class="n">robot_id</span><span class="p">)</span>
         <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rth</span> <span class="o">=</span> <span class="n">robot_pose</span>
-        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;xy&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">:</span>
             <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">th</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">motion</span>
             <span class="n">rx</span> <span class="o">+=</span> <span class="n">dx</span>
             <span class="n">ry</span> <span class="o">+=</span> <span class="n">dy</span>
             <span class="n">rth</span> <span class="o">=</span> <span class="n">th</span>
-        <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;vw&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">:</span>
             <span class="c1"># odometry motion model</span>
             <span class="n">forward</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">motion</span>
             <span class="n">rth</span> <span class="o">+=</span> <span class="n">angle</span>  <span class="c1"># angle (radian)</span>

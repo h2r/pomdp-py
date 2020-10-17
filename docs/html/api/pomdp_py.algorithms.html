@@ -272,12 +272,13 @@ the prior knowledge.</p>
 <p>A problem-specific object</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions">
-<code class="sig-name descname">get_preferred_actions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">vnode</em>, <em class="sig-param">state=None</em>, <em class="sig-param">history=None</em>, <em class="sig-param">belief=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is to mimic the behavior of Simulator.Prior
+<code class="sig-name descname">get_preferred_actions</code><span class="sig-paren">(</span><em class="sig-param">cls</em>, <em class="sig-param">state</em>, <em class="sig-param">history</em>, <em class="sig-param">kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intended as a classmethod.
+This is to mimic the behavior of Simulator.Prior
 and GenerateLegal/GeneratePreferred in David Silver’s
 POMCP code.</p>
-<p>Returns a set of preferred actions and associated
-num_visits_init and value_init, given arguments.
+<p>Returns a set of tuples, in the form of (action, num_visits_init, value_init)
+that represent the preferred actions.
 In POMCP, this acts as a history-based prior policy,
 and in DESPOT, this acts as a belief-based prior policy.
 For example, given certain state or history, only it
@@ -304,6 +305,12 @@ that combines MCTS and UCB1 for action selection.</p>
 <dt id="pomdp_py.algorithms.po_uct.POUCT.last_num_sims">
 <code class="sig-name descname">last_num_sims</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.last_num_sims" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of simulations ran for the last <cite>plan</cite> call.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.algorithms.po_uct.POUCT.last_planning_time">
+<code class="sig-name descname">last_planning_time</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.last_planning_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amount of time (seconds) ran for the last <cite>plan</cite> call.</p>
 </dd></dl>
 
 <dl class="method">
@@ -504,7 +511,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id10">[7]</a></p>
+domains</cite> <a class="bibtex reference internal" href="../examples.tiger.html#kaelbling1998planning" id="id10">[7]</a></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration">

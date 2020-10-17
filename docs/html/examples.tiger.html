@@ -59,8 +59,8 @@
 <li><a class="reference internal" href="#define-the-domain">Define the domain</a></li>
 <li><a class="reference internal" href="#define-the-models">Define the models</a></li>
 <li><a class="reference internal" href="#define-the-pomdp">Define the POMDP</a></li>
-<li><a class="reference internal" href="#instantiating-the-pomdp">Instantiating the POMDP</a></li>
-<li><a class="reference internal" href="#solving-the-pomdp-instance">Solving the POMDP instance</a></li>
+<li><a class="reference internal" href="#instantiate-the-pomdp">Instantiate the POMDP</a></li>
+<li><a class="reference internal" href="#solve-the-pomdp-instance">Solve the POMDP instance</a></li>
 <li><a class="reference internal" href="#summary">Summary</a></li>
 </ul>
 </li>
@@ -140,7 +140,7 @@
             
   <div class="section" id="tiger-problem">
 <h1>Tiger Problem<a class="headerlink" href="#tiger-problem" title="Permalink to this headline">¶</a></h1>
-<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[7]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
+<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[7]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
 <p><cite>A tiger is put with equal probability behind one
@@ -154,13 +154,13 @@ you also have the option to wait and listen for tiger noises. But
 listening is neither free nor entirely accurate. You might hear the
 tiger behind the left door while it is actually behind the right
 door and vice versa.</cite></p>
-<p>Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations. The transition and observation probabilities can be easily specified by a table (or a dictionary in Python).
-To define this POMDP:</p>
+<p>Tiger is a simple POMDP with only 2 states, 2 actions, and 2 observations.
+In pomdp_py, to define and solve a POMDP:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>
 <li><p><a class="reference internal" href="#define-the-models"><span class="std std-ref">Define the models</span></a></p></li>
-<li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiating the POMDP</span></a></p></li>
-<li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solving the POMDP instance</span></a></p></li>
+<li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiate the POMDP</span></a></p></li>
+<li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solve the POMDP instance</span></a></p></li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -199,7 +199,7 @@ equivalent as defining three classes that inherit
     <span class="c1"># ... __hash__, __eq__ should be implemented</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#State">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#State">[source]</a></p>
 </div>
 <div class="section" id="define-the-models">
 <span id="id3"></span><h2>Define the models<a class="headerlink" href="#define-the-models" title="Permalink to this headline">¶</a></h2>
@@ -214,92 +214,70 @@ equivalent as defining classes that inherit
 <p class="admonition-title">Note</p>
 <p><cite>pomdp_py</cite> also provides an interface for <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel" title="pomdp_py.framework.basics.BlackboxModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BlackboxModel</span></code></a>.</p>
 </div>
-<p>As mentioned before, the uncertainty of the models can be specified by a Python
-dictionary for Tiger problem. Let <code class="code docutils literal notranslate"><span class="pre">obs_probs</span></code> and <code class="code docutils literal notranslate"><span class="pre">trans_probs</span></code> be
-this dictionary for <span class="math notranslate nohighlight">\(O\)</span> and <span class="math notranslate nohighlight">\(T\)</span> respectively. For example, we can
-set the probabilities according to the paper <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id4">[7]</a>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obs_probs</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># next_state -&gt; action -&gt; observation</span>
-     <span class="s2">&quot;tiger-left&quot;</span><span class="p">:{</span>
-         <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-         <span class="s2">&quot;open-right&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-         <span class="s2">&quot;listen&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">}</span>
-     <span class="p">},</span>
-     <span class="s2">&quot;tiger-right&quot;</span><span class="p">:{</span>
-         <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-         <span class="s2">&quot;open-right&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-         <span class="s2">&quot;listen&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">}</span>
-     <span class="p">}</span>
- <span class="p">}</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trans_probs</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># state -&gt; action -&gt; next_state</span>
-    <span class="s2">&quot;tiger-left&quot;</span><span class="p">:{</span>
-        <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-        <span class="s2">&quot;open-right&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-        <span class="s2">&quot;listen&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;tiger-right&quot;</span><span class="p">:{</span>
-        <span class="s2">&quot;open-left&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-        <span class="s2">&quot;open-right&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
-        <span class="s2">&quot;listen&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>This dictionary can be processed so that each string is replaced with
-the corresponding State, Action or Observation object.</p>
-<p>Then, we define classes that inherit
-<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ObservationModel</span></code></a>,
-<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TransitionModel</span></code></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This problem is small enough for the probabilities to be directly given</span>
-<span class="sd">    externally&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probs</span> <span class="o">=</span> <span class="n">probs</span>
-
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">action</span><span class="p">][</span><span class="n">next_state</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the most likely next state&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">action</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">action</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the underlying distribution of the model&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">state</span><span class="p">][</span><span class="n">action</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">get_all_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TigerProblem</span><span class="o">.</span><span class="n">STATES</span>
-</pre></div>
-</div>
+<p>We begin with the <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ObservationModel</span></code></a>. In Tiger, when the agent takes the listen action, it observes which side the tiger is with some noise. Implementing such a model in pomdp_py boils down to implementing a generative model with an optional <code class="code docutils literal notranslate"><span class="pre">probability</span></code> function that you can implement when, for example, you need to perform exact belief update. One way of implementing this is as follows. Note that our model inherits the pomdp_py’s <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ObservationModel</span></code></a> interface.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ObservationModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">ObservationModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This problem is small enough for the probabilities to be directly given</span>
-<span class="sd">    externally&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_probs</span> <span class="o">=</span> <span class="n">probs</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise</span> <span class="o">=</span> <span class="n">noise</span>
 
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">next_state</span><span class="p">][</span><span class="n">action</span><span class="p">][</span><span class="n">observation</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;listen&quot;</span><span class="p">:</span>
+            <span class="c1"># heard the correct growl</span>
+            <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">next_state</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.5</span>
 
-    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;listen&quot;</span><span class="p">:</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="mf">0.5</span>
 
-    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the most likely observation&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">next_state</span><span class="p">][</span><span class="n">action</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">next_state</span><span class="p">][</span><span class="n">action</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the underlying distribution of the model; In this case, it&#39;s just a histogram&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">next_state</span><span class="p">][</span><span class="n">action</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Observation</span><span class="p">(</span><span class="n">next_state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Observation</span><span class="p">(</span><span class="n">next_state</span><span class="o">.</span><span class="n">other</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_all_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TigerProblem</span><span class="o">.</span><span class="n">OBSERVATIONS</span>
+        <span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="sd">        a solver that needs to enumerate over the observation</span>
+<span class="sd">        space (e.g. value iteration)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Observation</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">}]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#TransitionModel">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel">[source]</a></p>
+<p>The <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TransitionModel</span></code></a> is deterministic. Similarly, we implement the <code class="code docutils literal notranslate"><span class="pre">sample</span></code> and <code class="code docutils literal notranslate"><span class="pre">probability</span></code> functions in the interface for this generative model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;According to problem spec, the world resets once</span>
+<span class="sd">        action is open-left/open-right. Otherwise, it</span>
+<span class="sd">        stays the same&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">1e-9</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1e-9</span>
+
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_states</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_all_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="sd">        a solver that needs to enumerate over the</span>
+<span class="sd">        observation space (e.g. value iteration)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">State</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">}]</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#TransitionModel">[source]</a></p>
+<p>Since the Tiger domain is small, the transition and observation probabilities can be easily specified by a table (a dictionary in Python), which is similar to specifying POMDPs using POMDP file formats. However, pomdp_py allows more flexible way of implementing these models which can be intractable to enumerate (e.g. continuous).</p>
 <p>Next, we define the <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyModel</span></code></a>. The job of
 a PolicyModel is to (1) determine the set of actions that the robot can take at
 given state (and/or history); (2) sample an action from this set according to
@@ -318,90 +296,69 @@ and (2) without those two functions. But in general, the PolicyModel could
 be learned, or the action space is large so a probability distribution over
 it becomes important.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RandomRollout</span><span class="p">):</span>
- <span class="sd">&quot;&quot;&quot;This is an extremely dumb policy model; To keep consistent</span>
-<span class="sd"> with the framework.&quot;&quot;&quot;</span>
- <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-     <span class="k">raise</span> <span class="ne">NotImplementedError</span>  <span class="c1"># Never used</span>
+    <span class="sd">&quot;&quot;&quot;This is an extremely dumb policy model; To keep consistent</span>
+<span class="sd">    with the framework.&quot;&quot;&quot;</span>
+    <span class="c1"># A stay action can be added to test that POMDP solver is</span>
+    <span class="c1"># able to differentiate information gathering actions.</span>
+    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Action</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}}</span>
 
- <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">()</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">()</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 
- <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-     <span class="sd">&quot;&quot;&quot;Returns the most likely action&quot;&quot;&quot;</span>
-     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-
- <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-     <span class="k">return</span> <span class="n">TigerProblem</span><span class="o">.</span><span class="n">ACTIONS</span>
+    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PolicyModel</span><span class="o">.</span><span class="n">ACTIONS</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#PolicyModel">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel">[source]</a></p>
 <p>Finally, we define the <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">RewardModel</span></code></a>.
 It is straightforward according to the problem description. In this case,
-(and very commonly), the reward function is deterministic.</p>
+(and very commonly), the reward function is deterministic. We can implement
+it as follows. The interface for reward model does allow stochastic rewards.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RewardModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RewardModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="n">scale</span>
     <span class="k">def</span> <span class="nf">_reward_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="n">reward</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;open-left&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">state</span><span class="o">==</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span>
-                <span class="n">reward</span> <span class="o">+=</span> <span class="mi">10</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;open-left&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">10</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">reward</span> <span class="o">-=</span> <span class="mi">100</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
-        <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;open-right&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">state</span><span class="o">==</span> <span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span>
-                <span class="n">reward</span> <span class="o">+=</span> <span class="mi">10</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">100</span>
+        <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;open-right&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">10</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">reward</span> <span class="o">-=</span> <span class="mi">100</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
-        <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;listen&quot;</span><span class="p">:</span>
-            <span class="n">reward</span> <span class="o">-=</span> <span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
-        <span class="k">return</span> <span class="n">reward</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">100</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># listen</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">reward</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reward_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-            <span class="k">return</span> <span class="mf">1.0</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-
-    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">):</span>
         <span class="c1"># deterministic</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reward_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the most likely reward&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reward_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#RewardModel">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel">[source]</a></p>
 </div>
 <div class="section" id="define-the-pomdp">
 <h2>Define the POMDP<a class="headerlink" href="#define-the-pomdp" title="Permalink to this headline">¶</a></h2>
 <p>With the models that we have defined, it is simple to define a POMDP for the Tiger
 problem; To do this, we need to define <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a>,
-and <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment" title="pomdp_py.framework.basics.Environment"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Environment</span></code></a>.</p>
+and <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment" title="pomdp_py.framework.basics.Environment"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Environment</span></code></a>. Note that you could just construct an agent and an environment and still be able to plan actions and simulate the environment.
+This class is mostly just for code organization and is entirely optional.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TigerProblem</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMDP</span><span class="p">):</span>
 
-    <span class="n">STATES</span> <span class="o">=</span> <span class="n">build_states</span><span class="p">({</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">})</span>
-    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="n">build_actions</span><span class="p">({</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">})</span>
-    <span class="n">OBSERVATIONS</span> <span class="o">=</span> <span class="n">build_observations</span><span class="p">({</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">})</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_probs</span><span class="p">,</span> <span class="n">trans_probs</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_noise</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;init_belief is a Distribution.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_obs_probs</span> <span class="o">=</span> <span class="n">obs_probs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_trans_probs</span> <span class="o">=</span> <span class="n">trans_probs</span>
-
         <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Agent</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span>
                                <span class="n">PolicyModel</span><span class="p">(),</span>
-                               <span class="n">TransitionModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trans_probs</span><span class="p">),</span>
-                               <span class="n">ObservationModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obs_probs</span><span class="p">),</span>
+                               <span class="n">TransitionModel</span><span class="p">(),</span>
+                               <span class="n">ObservationModel</span><span class="p">(</span><span class="n">obs_noise</span><span class="p">),</span>
                                <span class="n">RewardModel</span><span class="p">())</span>
         <span class="n">env</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Environment</span><span class="p">(</span><span class="n">init_true_state</span><span class="p">,</span>
-                                   <span class="n">TransitionModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trans_probs</span><span class="p">),</span>
+                                   <span class="n">TransitionModel</span><span class="p">(),</span>
                                    <span class="n">RewardModel</span><span class="p">())</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TigerProblem&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#TigerProblem">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#TigerProblem">[source]</a></p>
 <p>Notice that <code class="code docutils literal notranslate"><span class="pre">init_true_state</span></code> and <code class="code docutils literal notranslate"><span class="pre">init_belief</span></code> need to be provided.
 The process of creating them is described in more detail in the next section.</p>
 <div class="admonition note">
@@ -418,29 +375,28 @@ organize the parameters that need to be passed into the constructors of
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment" title="pomdp_py.framework.basics.Environment"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Environment</span></code></a>.</p>
 </div>
 </div>
-<div class="section" id="instantiating-the-pomdp">
-<span id="instantiate"></span><h2>Instantiating the POMDP<a class="headerlink" href="#instantiating-the-pomdp" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="instantiate-the-pomdp">
+<span id="instantiate"></span><h2>Instantiate the POMDP<a class="headerlink" href="#instantiate-the-pomdp" title="Permalink to this headline">¶</a></h2>
 <p>Now we have a definition of the Tiger problem. Now, we need to <cite>instantiate</cite>
 a problem by providing <cite>parameters</cite> for the models,
 the <cite>initial state</cite> of the environment, and the <cite>initial belief</cite> of the agent.</p>
 <p>In Tiger, the model parameters are basically the probabilities for <span class="math notranslate nohighlight">\(T\)</span>
 and <span class="math notranslate nohighlight">\(O\)</span>, which have been described above (see <a class="reference internal" href="#define-the-models"><span class="std std-ref">Define the models</span></a>).</p>
 <p>We can create a random initial state and a uniform belief as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">init_true_state</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TigerProblem</span><span class="o">.</span><span class="n">STATES</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">init_true_state</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="n">State</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">),</span>
+                                 <span class="n">State</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">)])</span>
 <span class="n">init_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">({</span><span class="n">State</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">):</span> <span class="mf">0.5</span><span class="p">,</span>
                                   <span class="n">State</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">):</span> <span class="mf">0.5</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>Then, we can create an instance of the Tiger problem:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tiger_problem</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="p">(</span><span class="n">obs_probs</span><span class="p">,</span>
-                             <span class="n">trans_probs</span><span class="p">,</span>
-                             <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">)</span>
+<p>Then, we can create an instance of the Tiger problem with the standard noise of 0.15:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tiger_problem</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#main">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#main">[source]</a></p>
 </div>
-<div class="section" id="solving-the-pomdp-instance">
-<span id="solve"></span><h2>Solving the POMDP instance<a class="headerlink" href="#solving-the-pomdp-instance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="solve-the-pomdp-instance">
+<span id="solve"></span><h2>Solve the POMDP instance<a class="headerlink" href="#solve-the-pomdp-instance" title="Permalink to this headline">¶</a></h2>
 <p>To solve a POMDP with <cite>pomdp_py</cite>, here are the basic steps:</p>
 <ol class="arabic simple">
 <li><p>Create a planner (<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Planner</span></code></a>)</p></li>
@@ -462,11 +418,11 @@ will result in the agent belief update as well. But for
 <p>For the Tiger problem, we implemented this procedure as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1; in main()</span>
 <span class="c1"># creating planners</span>
-<span class="n">vi</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">ValueIteration</span><span class="p">(</span><span class="n">horizon</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
-<span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+<span class="n">vi</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">ValueIteration</span><span class="p">(</span><span class="n">horizon</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                        <span class="n">planning_time</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
                        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
-<span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+<span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                        <span class="n">planning_time</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
                        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
 <span class="o">...</span>  <span class="c1"># call test_planner() for steps 2-6.</span>
@@ -505,7 +461,7 @@ will result in the agent belief update as well. But for
             <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">new_belief</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="_modules/problems/tiger/tiger_problem.html#test_planner">[source]</a></p>
+<p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#test_planner">[source]</a></p>
 </div>
 <div class="section" id="summary">
 <span id="id14"></span><h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -513,15 +469,14 @@ will result in the agent belief update as well. But for
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>
 <li><p><a class="reference internal" href="#define-the-models"><span class="std std-ref">Define the models</span></a></p></li>
-<li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiating the POMDP</span></a></p></li>
-<li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solving the POMDP instance</span></a></p></li>
+<li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiate the POMDP</span></a></p></li>
+<li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solve the POMDP instance</span></a></p></li>
 </ol>
-<p>Best of luck!</p>
 <p id="bibtex-bibliography-examples.tiger-0"><dl class="citation">
 <dt class="bibtex label" id="silver2010monte"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets">7</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id4">2</a>)</span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">7</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 <dt class="bibtex label" id="abel2015goal"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
