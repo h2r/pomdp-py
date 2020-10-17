@@ -1,5 +1,16 @@
 """
-TODO: write Documentation
+The load unload problem is as follows: An agent is placed on a one dimensional
+grid world and is tasked with loading itself up on the right side of the world
+and unloading on the left. The agent can observe whether or not it is in the
+load or unload block but can not tell its exact location of whether it is loaded
+or unloaded. Therefore the agent must maintain belief about it's location and
+load status.
+
+States are defined by the location of the agent and whether or not it is loaded
+Actions: "move-left", "move-right"
+Rewards:
+    +100 for moving into the unload block while loaded
+    -1 otherwise
 """
 
 import pomdp_py
@@ -43,8 +54,9 @@ class LUState(pomdp_py.State):
     
 class LUAction(pomdp_py.Action):
     def __init__(self, name):
-        if name != "move-left" and name != "move-right":
+        if name not in ["move-left", "move-right"]:
             raise ValueError("Invalid action: %s" % name)        
+
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -82,6 +94,7 @@ class LUObservationModel(pomdp_py.ObservationModel):
     externally"""
     def probability(self, observation, next_state, action, normalized=False, **kwargs):
         if observation != self.sample(next_state, action):
+            # return EPSILON to avoid degradation of particles
             return EPSILON
         else:
             return 1 - EPSILON
@@ -256,9 +269,6 @@ def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
     plt.show()
 
 def main():
-    # This is the length of the coridor the agent is moving up and down.
-    # Valid states will be (x, loaded) where 0 <= x < state_count represents
-    # the horizontal location of the agent, and loaded is a boolean.
     init_state = generate_random_state()
     init_belief = generate_init_belief(num_particles=100)
     load_unload_problem = LoadUnloadProblem(init_state, init_belief)
