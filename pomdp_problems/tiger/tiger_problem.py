@@ -89,12 +89,10 @@ class Observation(pomdp_py.Observation):
 
 # Observation model
 class ObservationModel(pomdp_py.ObservationModel):
-    """This problem is small enough for the probabilities to be directly given
-    externally"""
     def __init__(self, noise=0.15):
         self.noise = noise
 
-    def probability(self, observation, next_state, action, normalized=False, **kwargs):
+    def probability(self, observation, next_state, action):
         if action.name == "listen":
             if observation.name == next_state.name: # heard the correct growl
                 return 1.0 - self.noise
@@ -103,7 +101,7 @@ class ObservationModel(pomdp_py.ObservationModel):
         else:
             return 0.5
 
-    def sample(self, next_state, action, normalized=False, **kwargs):
+    def sample(self, next_state, action):
         if action.name == "listen":
             thresh = 1.0 - self.noise
         else:
@@ -121,9 +119,7 @@ class ObservationModel(pomdp_py.ObservationModel):
 
 # Transition Model
 class TransitionModel(pomdp_py.TransitionModel):
-    """This problem is small enough for the probabilities to be directly given
-            externally"""
-    def probability(self, next_state, state, action, normalized=False, **kwargs):
+    def probability(self, next_state, state, action):
         """According to problem spec, the world resets once
         action is open-left/open-right. Otherwise, stays the same"""
         if action.name.startswith("open"):
@@ -134,9 +130,9 @@ class TransitionModel(pomdp_py.TransitionModel):
             else:
                 return 1e-9
 
-    def sample(self, state, action, normalized=False, **kwargs):
+    def sample(self, state, action):
         if action.name.startswith("open"):
-            return State(random.choice(["tiger-left", "tiger-right"]))
+            return random.choice(self.get_all_states())
         else:
             return State(state.name)
 
@@ -163,7 +159,7 @@ class RewardModel(pomdp_py.RewardModel):
         else: # listen
             return -1
 
-    def sample(self, state, action, next_state, normalized=False, **kwargs):
+    def sample(self, state, action, next_state):
         # deterministic
         return self._reward_func(state, action)
 
@@ -171,11 +167,16 @@ class RewardModel(pomdp_py.RewardModel):
 class PolicyModel(pomdp_py.RandomRollout):
     """This is an extremely dumb policy model; To keep consistent
     with the framework."""
-    def sample(self, state, normalized=False, **kwargs):
+    # A stay action can be added to test that POMDP solver is
+    # able to differentiate information gathering actions.
+    ACTIONS = {Action(s) for s in {"open-left", "open-right",
+                                   "listen", "stay"}}
+
+    def sample(self, state, **kwargs):
         return self.get_all_actions().random()
 
     def get_all_actions(self, **kwargs):
-        return TigerProblem.ACTIONS
+        return PolicyModel.ACTIONS
 
 
 class TigerProblem(pomdp_py.POMDP):
@@ -184,10 +185,6 @@ class TigerProblem(pomdp_py.POMDP):
     to simulate and solve POMDPs. But this is just an example
     of how such a class can be created.
     """
-    # A stay action can be added to test that POMDP solver is
-    # able to differentiate information gathering actions.
-    ACTIONS = {Action(s) for s in {"open-left", "open-right",
-                                   "listen", "stay"}}
 
     def __init__(self, obs_noise, init_true_state, init_belief):
         """init_belief is a Distribution."""
@@ -256,7 +253,7 @@ def main():
     tiger_problem.agent.set_belief(init_belief, prior=True)
 
     print("\n** Testing POUCT **")
-    pouct = pomdp_py.POUCT(max_depth=2, discount_factor=0.95,
+    pouct = pomdp_py.POUCT(max_depth=3, discount_factor=0.95,
                            num_sims=4096, exploration_const=200,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pouct, nsteps=10)
@@ -270,7 +267,7 @@ def main():
 
     print("** Testing POMCP **")
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
-    pomcp = pomdp_py.POMCP(max_depth=2, discount_factor=0.95,
+    pomcp = pomdp_py.POMCP(max_depth=3, discount_factor=0.95,
                            num_sims=1000, exploration_const=200,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pomcp, nsteps=10)
