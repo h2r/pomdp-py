@@ -51,11 +51,11 @@ class LUState(pomdp_py.State):
         return str((self.x, self.loaded))
     def __repr__(self):
         return "State({})".format(self)
-    
+
 class LUAction(pomdp_py.Action):
     def __init__(self, name):
         if name not in ["move-left", "move-right"]:
-            raise ValueError("Invalid action: %s" % name)        
+            raise ValueError("Invalid action: %s" % name)
 
         self.name = name
     def __hash__(self):
@@ -69,7 +69,7 @@ class LUAction(pomdp_py.Action):
         return self.name
     def __repr__(self):
         return "Action(%s)" % self.name
-    
+
 class LUObservation(pomdp_py.Observation):
     def __init__(self, obs):
         if obs not in ["load", "unload", "middle"]:
@@ -172,18 +172,18 @@ class LUPolicyModel(pomdp_py.RandomRollout):
 
     def probability(self, action, state, normalized=False, **kwargs):
         raise NotImplementedError  # Never used
-    
+
     def sample(self, state, normalized=False, **kwargs):
         return self.get_all_actions().random()
-    
+
     def argmax(self, state, normalized=False, **kwargs):
         """Returns the most likely reward"""
         raise NotImplementedError
-    
+
     def get_all_actions(self, **kwargs):
         return self._all_actions
 
-        
+
 class LoadUnloadProblem(pomdp_py.POMDP):
 
     def __init__(self, init_state, init_belief):
@@ -231,15 +231,15 @@ def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
     ax.set_ylim(0, 2)
     x, y = [], []
     scat, = ax.plot(x, y, marker="x", markersize=20, ls=" ", color="black")
-    
+
     def update(t):
         nonlocal gamma, total_reward, total_discounted_reward
         print("==== Step %d ====" % (t+1))
         action = planner.plan(load_unload_problem.agent)
-        
-        true_state = copy.deepcopy(load_unload_problem.env.state)
+
         env_reward = load_unload_problem.env.state_transition(action, execute=True)
-        
+        true_state = copy.deepcopy(load_unload_problem.env.state)
+
         real_observation = load_unload_problem.env.provide_observation(
                 load_unload_problem.agent.observation_model, action)
         load_unload_problem.agent.update_history(action, real_observation)
