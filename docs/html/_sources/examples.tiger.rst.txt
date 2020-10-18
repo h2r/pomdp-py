@@ -184,10 +184,8 @@ it becomes important.
 .. code-block:: python
 
    class PolicyModel(pomdp_py.RandomRollout):
-       """This is an extremely dumb policy model; To keep consistent
-       with the framework."""
-       # A stay action can be added to test that POMDP solver is
-       # able to differentiate information gathering actions.
+       """A simple policy model with uniform prior over a
+          small, finite action space"""
        ACTIONS = {Action(s)
                  for s in {"open-left", "open-right", "listen"}}
 
