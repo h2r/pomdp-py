@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
 setup(name='pomdp-py',
-      packages=['pomdp_py', 'pomdp_problems'],
+      packages=find_packages(),
       version='1.2',
       description='Python POMDP Library.',
       install_requires=[
