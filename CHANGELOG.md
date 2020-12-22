@@ -1,4 +1,4 @@
-### Version 1.2.1 (pending)
+### Version 1.2.1
 
 * Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.
 * Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value.
@@ -10,6 +10,8 @@
   not so when horizon = 1 or 2. The same behavior is observed using the pomdp
   solver by [POMDP.org](https://www.pomdp.org/code/index.html).
 * Added an exact value function in `pomdp_py.algorithms.value_function`. It is a simpler exact value iteration algorithm.
+* Added Load/Unload domain [Pull request #9](https://github.com/h2r/pomdp-py/pull/9)
+* [Pull request #11](https://github.com/h2r/pomdp-py/pull/11)
 
 ### Pull Request #3 (08/01/2020)
 
