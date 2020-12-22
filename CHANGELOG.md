@@ -9,6 +9,7 @@
   differentiate differentiate between listen/stay actions when horizon = 3, but
   not so when horizon = 1 or 2. The same behavior is observed using the pomdp
   solver by [POMDP.org](https://www.pomdp.org/code/index.html).
+* Added an exact value function in `pomdp_py.algorithms.value_function`. It is a simpler exact value iteration algorithm.
 
 ### Pull Request #3 (08/01/2020)
 
