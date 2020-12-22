@@ -48,6 +48,7 @@ def qvalue(b, a, S, A, Z, T, O, R, gamma, horizon=1):
     return r + gamma * expected_future_value
 
 def expected_reward(b, R, a):
+    """Returns the expected reward at a given belief"""
     r = 0.0
     for s in b:
         for sp in b:
@@ -55,6 +56,7 @@ def expected_reward(b, R, a):
     return r
 
 def belief_observation_model(o, b, a, T, O):
+    """Returns the probability of Pr(o|b,a)"""
     prob = 0.0
     for s in b:
         for sp in b:
@@ -64,6 +66,8 @@ def belief_observation_model(o, b, a, T, O):
     return prob
 
 def belief_update(b, a, o, T, O):
+    """Returns the updated belief of `b` given
+    action `a` and observation `o`."""
     next_b = {}
     total_prob = 0.0
     for sp in b:
@@ -79,6 +83,7 @@ def belief_update(b, a, o, T, O):
         # normalize
         next_b[s] /= total_prob
     return next_b
+
 
 # Tests
 def create_case(noise=0.15, init_state="tiger-left"):
