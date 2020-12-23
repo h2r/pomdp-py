@@ -33,7 +33,7 @@ def value(b, S, A, Z, T, O, R, gamma, horizon=1):
 
 def qvalue(b, a, S, A, Z, T, O, R, gamma, horizon=1):
     """Compute Q(v,a)"""
-    r = expected_reward(b, R, a)
+    r = expected_reward(b, R, a, T)
 
     expected_future_value = 0.0
     if horizon > 0:
@@ -47,12 +47,15 @@ def qvalue(b, a, S, A, Z, T, O, R, gamma, horizon=1):
             expected_future_value += value_o
     return r + gamma * expected_future_value
 
-def expected_reward(b, R, a):
+def expected_reward(b, R, a, T=None):
     """Returns the expected reward at a given belief"""
     r = 0.0
     for s in b:
-        for sp in b:
-            r += b[s] * R.sample(s, a, sp)
+        if T is not None:
+            for sp in b:
+                r += b[s] * R.sample(s, a, sp) * T.probability(sp, s, a)
+        else:
+            r += b[s] * R.sample(s, a, None)
     return r
 
 def belief_observation_model(o, b, a, T, O):
