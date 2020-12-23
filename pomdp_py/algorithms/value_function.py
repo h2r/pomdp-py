@@ -36,7 +36,7 @@ def qvalue(b, a, S, A, Z, T, O, R, gamma, horizon=1):
     r = expected_reward(b, R, a, T)
 
     expected_future_value = 0.0
-    if horizon > 0:
+    if horizon > 1:
         for o in Z:
             # compute Pr(o|b,a)*V(b')
             prob_o = belief_observation_model(o, b, a, T, O)
