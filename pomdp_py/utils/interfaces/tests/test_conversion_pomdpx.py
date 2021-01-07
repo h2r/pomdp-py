@@ -3,7 +3,6 @@
 import sys
 from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdpx_file
-from pomdp_problems.tiger.tiger_problem import make_tiger
 import os
 
 
