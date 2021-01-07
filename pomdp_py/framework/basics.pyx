@@ -97,13 +97,13 @@ cdef class ObservationModel:
         """
         get_all_observations(self)
         Returns a set of all possible observations, if feasible."""
-        raise NotImplementedError        
-    
+        raise NotImplementedError
+
 cdef class TransitionModel:
     """
     A TransitionModel models the distribution :math:`T(s,a,s')=\Pr(s'|s,a)`.
     """
-    
+
     def probability(self, next_state, state, action, **kwargs):
         """
         probability(self, next_state, state, action, **kwargs)
@@ -115,9 +115,9 @@ cdef class TransitionModel:
             action (~pomdp_py.framework.basics.Action): the action :math:`a`
         Returns:
             float: the probability :math:`\Pr(s'|s,a)`
-        """        
+        """
         raise NotImplementedError
-        
+
     def sample(self, state, action, **kwargs):
         """sample(self, state, action, **kwargs)
         Returns next state randomly sampled according to the
@@ -162,13 +162,14 @@ cdef class RewardModel:
             next_state (State): the next state :math:`s'`
         Returns:
             float: the probability :math:`\Pr(r|s,a,s')`
-        """        
+        """
         raise NotImplementedError
-        
+
     def sample(self, state, action, next_state, **kwargs):
         """sample(self, state, action, next_state, **kwargs)
         Returns reward randomly sampled according to the
-        distribution of this reward model.
+        distribution of this reward model. This is required,
+        i.e. assumed to be implemented for a reward model.
 
         Args:
             state (~pomdp_py.framework.basics.State): the next state :math:`s`
@@ -178,28 +179,28 @@ cdef class RewardModel:
             float: the reward :math:`r`
         """
         raise NotImplementedError
-    
+
     def argmax(self, state, action, next_state, **kwargs):
         """
         argmax(self, state, action, next_state, **kwargs)
-        Returns the most likely reward"""
+        Returns the most likely reward. This is optional."""
         raise NotImplementedError
     def get_distribution(self, state, action, next_state, **kwargs):
         """get_distribution(self, state, action, next_state, **kwargs)
         Returns the underlying distribution of the model"""
-        raise NotImplementedError    
+        raise NotImplementedError
 
 cdef class BlackboxModel:
     """
     A BlackboxModel is the generative distribution :math:`G(s,a)`
     which can generate samples where each is a tuploe :math:`(s',o,r)`.
-    """    
+    """
     def sample(self, state, action, **kwargs):
         """
         sample(self, state, action, **kwargs)
         Sample (s',o,r) ~ G(s',o,r)"""
         raise NotImplementedError
-    
+
     def argmax(self, state, action, **kwargs):
         """
         argmax(self, state, action, **kwargs)
@@ -215,7 +216,7 @@ cdef class PolicyModel:
     The reason to have a policy model is to accommodate problems
     with very large action spaces, and the available actions may vary
     depending on the state (that is, certain actions have probabilty=0)"""
-    
+
     def probability(self, action, state, **kwargs):
         """
         probability(self, action, state, **kwargs)
@@ -228,7 +229,7 @@ cdef class PolicyModel:
             float: the probability :math:`\pi(a|s)`
         """
         raise NotImplementedError
-        
+
     def sample(self, state, **kwargs):
         """sample(self, state, **kwargs)
         Returns action randomly sampled according to the
@@ -241,7 +242,7 @@ cdef class PolicyModel:
             Action: the action :math:`a`
         """
         raise NotImplementedError
-    
+
     def argmax(self, state, **kwargs):
         """
         argmax(self, state, **kwargs)
@@ -262,7 +263,7 @@ cdef class PolicyModel:
         update(self, state, next_state, action, **kwargs)
         Policy model may be updated given a (s,a,s') pair."""
         pass
-    
+
 # Belief distribution is just a distribution. There's nothing special,
 # except that the update/abstraction function can be performed over them.
 # But it would make the class hierarchy a lot more complicated if belief
@@ -294,7 +295,7 @@ cdef class Action:
     def __eq__(self, other):
         raise NotImplementedError
     def __hash__(self):
-        raise NotImplementedError        
+        raise NotImplementedError
 cdef class State:
     """
     The State class. State must be `hashable`.
@@ -302,7 +303,7 @@ cdef class State:
     def __eq__(self, other):
         raise NotImplementedError
     def __hash__(self):
-        raise NotImplementedError        
+        raise NotImplementedError
 
 cdef class Observation:
     """
@@ -311,7 +312,7 @@ cdef class Observation:
     def __eq__(self, other):
         raise NotImplementedError
     def __hash__(self):
-        raise NotImplementedError        
+        raise NotImplementedError
 
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving
@@ -319,7 +320,7 @@ cdef class Agent:
     planner (:class:`Planner`), and the belief update is the job taken care of
     by the belief representation or the planner. But, the Agent supplies the
     :class:`TransitionModel`, :class:`ObservationModel`, :class:`RewardModel`,
-    OR :class:`BlackboxModel` to the planner or the belief update algorithm. 
+    OR :class:`BlackboxModel` to the planner or the belief update algorithm.
 
     __init__(self, init_belief,
              policy_model,
@@ -336,7 +337,7 @@ cdef class Agent:
                  blackbox_model=None):
         self._init_belief = init_belief
         self._policy_model = policy_model
-        
+
         self._transition_model = transition_model
         self._observation_model = observation_model
         self._reward_model = reward_model
@@ -490,7 +491,7 @@ cdef class Environment:
     def reward_model(self):
         """The :class:`RewardModel` underlying the environment"""
         return self._reward_model
-    
+
     def state_transition(self, action, execute=True, **kwargs):
         """
         state_transition(self, action, execute=True, **kwargs)
@@ -536,8 +537,8 @@ cdef class Environment:
             Observation: an observation sampled from :math:`\Pr(o|s',a)`.
         """
         return observation_model.sample(self.state, action, **kwargs)
-    
-    
+
+
 cdef class Option(Action):
     """An option is a temporally abstracted action that
     is defined by (I, pi, B), where I is a initiation set,
@@ -570,10 +571,10 @@ cdef class Option(Action):
         Convenience function; Can be overriden if don't
         feel like writing a PolicyModel class"""
         return self.policy.sample(state, **kwargs)
-    
+
     def __eq__(self, other):
         raise NotImplementedError
-    
+
     def __hash__(self):
         raise NotImplementedError
 
@@ -589,7 +590,7 @@ cpdef sample_generative_model(Agent agent, State state, Action action, float dis
     """
     sample_generative_model(Agent agent, State state, Action action, float discount_factor=1.0)
     :math:`(s', o, r) \sim G(s, a)`
-    
+
     If the agent has transition/observation models, a `black box` will be created
     based on these models (i.e. :math:`s'` and :math:`o` will be sampled according
     to these models).
@@ -666,4 +667,3 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
         return next_state, observation, reward, nsteps
     else:
         return next_state, reward, nsteps
-    
