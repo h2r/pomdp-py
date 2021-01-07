@@ -2,8 +2,10 @@
 Provides utility to convert a POMDP written in pomdp_py to
 a POMDP file format (.pomdp or .pomdpx). Output to a file.
 """
+import subprocess
+import os
 
-def to_pomdp_file(agent, output_path,
+def to_pomdp_file(agent, output_path=None,
                   discount_factor=0.95):
     """
     Pass in an Agent, and use its components to generate
@@ -21,8 +23,11 @@ def to_pomdp_file(agent, output_path,
 
     Args:
         agent (~pomdp_py.framework.basics.Agent): The agent
-        output_path (str): The path of the output file to write in.
+        output_path (str): The path of the output file to write in. Optional.
+                           Default None.
         discount_factor (float): The discount factor
+    Returns:
+        str: The content of the pomdp file
     """
     # Preamble
     try:
@@ -87,5 +92,46 @@ def to_pomdp_file(agent, output_path,
                 r = agent.reward_model.sample(s, a, s_next)
                 content += 'R : %s : %s : %s : *  %f\n' % (a, s, s_next, r)
 
-    with open(output_path, "w") as f:
-        f.write(content)
+    if output_path is not None:
+        with open(output_path, "w") as f:
+            f.write(content)
+    return content
+
+
+
+def to_pomdpx_file(agent, pomdpconvert_path,
+                   output_path=None,
+                   discount_factor=0.95):
+    """
+    Converts an agent to a pomdpx file. Requires
+    the usage of `pomdpconvert` from github://AdaCompNUS/sarsop
+
+    Follow the instructions at https://github.com/AdaCompNUS/sarsop
+    to download and build sarsop (I tested on Ubuntu 18.04, gcc version 7.5.0)
+
+    See documentation for pomdpx at:
+    https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/index.php?n=Main.PomdpXDocumentation
+
+    First converts the agent into .pomdp, then convert it to pomdpx.
+    """
+    pomdp_path = "./temp-pomdp.pomdp"
+    to_pomdp_file(agent, pomdp_path,
+                  discount_factor=discount_factor)
+    proc = subprocess.Popen([pomdpconvert_path, pomdp_path])
+    proc.wait()
+
+    pomdpx_path = pomdp_path + "x"
+    assert os.path.exists(pomdpx_path), "POMDPx conversion failed."
+
+    with open(pomdpx_path, 'r') as f:
+        content = f.read()
+
+    if output_path is not None:
+        os.rename(pomdpx_path, output_path)
+
+    # Delete temporary files
+    os.remove(pomdp_path)
+    if os.path.exists(pomdpx_path):
+        os.remove(pomdpx_path)
+
+    return content

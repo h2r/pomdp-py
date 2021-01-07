@@ -5,16 +5,14 @@ import pomdp_py
 import subprocess
 from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdp_file
-from pomdp_problems.tiger.tiger_problem import TigerProblem, State
+from pomdp_problems.tiger.tiger_problem import make_tiger
 import os
 import io
-import glob
 
 def test_pomdp_file_conversion(pomdp_solve_path):
     print("[testing] test_pomdp_file_conversion")
-    tiger = TigerProblem(0.15, State("tiger-left"),
-                         pomdp_py.Histogram({State("tiger-left"): 0.5,
-                                             State("tiger-right"): 0.5}))
+    tiger = make_tiger()
+
     # Generate a .pomdp file
     filename = "./test_tiger.POMDP"
     to_pomdp_file(tiger.agent, filename, discount_factor=0.95)
@@ -37,10 +35,10 @@ def test_pomdp_file_conversion(pomdp_solve_path):
     remove_files("./*.pg")
     remove_files("./*.alpha")
 
-
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("To run test, do: %s <pomdp-solver-path>" % sys.argv[0])
+        print("Download pomdp-solve from https://www.pomdp.org/code/")
         exit(1)
     solver_path = sys.argv[1]
     test_pomdp_file_conversion(solver_path)
