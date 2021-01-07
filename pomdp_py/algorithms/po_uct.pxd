@@ -10,7 +10,7 @@ cdef class QNode(TreeNode):
     pass
 
 cdef class VNode(TreeNode):
-    pass
+    cpdef argmax(VNode self)
 
 cdef class RootVNode(VNode):
     cdef public tuple history
@@ -27,7 +27,7 @@ cdef class POUCT(Planner):
     cdef RolloutPolicy _rollout_policy
     cdef Agent _agent
     cdef int _last_num_sims
-    cdef float _last_planning_time    
+    cdef float _last_planning_time
 
     cpdef _search(self)
     cpdef _simulate(POUCT self,
@@ -44,7 +44,6 @@ cdef class RolloutPolicy(PolicyModel):
 
 cdef class RandomRollout(RolloutPolicy):
     pass
-    
+
 cdef class ActionPrior:
     cpdef get_preferred_actions(ActionPrior self, State state, tuple history)
-    

@@ -1,9 +1,13 @@
-### Version 1.2.2
+### Version 1.2.2 (pending)
 * Documentation clarification about `.sample` and `.argmax` functions in the `RewardModel`.
 * Small pomdps (with enumerable state, action, observation spaces)
   defined in `pomdp_py` can be converted to `.pomdp` and `.pomdpx` file formats.
 * Added interfacing with [pomdp_solve](https://www.pomdp.org/code/) and tested.
 * (TODO) Allow simplified POMDP specification using native Python or numpy array data structures.
+* Resolved [issue #10](https://github.com/h2r/pomdp-py/issues/10).
+  Set value in V-Node to be the max among its children Q-Nodes.
+  Initial V-Node value set to negative infinity.
+* Avoid search tree building during rollout (thanks Jason)
 
 ### Version 1.2.1
 

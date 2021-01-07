@@ -2,7 +2,7 @@
 presented in the POMCP paper :cite:`silver2010monte` as an extension to the UCT
 algorithm :cite:`kocsis2006bandit` that combines MCTS and UCB1
 for action selection.
-    
+
 In other words, this is just POMCP without particle belief,
 but arbitrary belief representation.
 
@@ -20,7 +20,7 @@ A note on the exploration constant. Quote from :cite:`gusmao2012towards`:
 
     "This constant should reflect the agent’s prior knowledge regarding
     the amount of exploration required."
-  
+
 In the POMCP paper, they set this constant following:
 
     "The exploration constant for POMCP was set to c = Rhi - Rlo,
@@ -87,7 +87,19 @@ cdef class VNode(TreeNode):
     def print_children_value(self):
         for action in self.children:
             print("   action %s: %.3f" % (str(action), self[action].value))
-    
+
+    cpdef argmax(VNode self):
+        """argmax(VNode self)
+        Returns the action of the child with highest value"""
+        cdef Action action, best_action
+        cdef float best_value = float("-inf")
+        best_action = None
+        for action in self.children:
+            if self[action].value > best_value:
+                best_action = action
+                best_value = self[action].value
+        return best_action
+
 
 cdef class RootVNode(VNode):
     def __init__(self, num_visits, value, history):
@@ -168,7 +180,7 @@ def tree_stats_helper(root, depth, stats, max_depth=None):
             stats['total_qnodes'] += 1
             stats['total_qnodes_children'] += len(root.children)
             stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
-        
+
         for c in root.children:
             tree_stats_helper(root[c], depth+1, stats, max_depth=max_depth)
 
@@ -193,18 +205,18 @@ cdef class ActionPrior:
         is possible that only a subset of all actions is legal;
         This is particularly true in the RockSample problem."""
         raise NotImplementedError
-    
-    
+
+
 cdef class RolloutPolicy(PolicyModel):
     cpdef Action rollout(self, State state, tuple history):
         """rollout(self, State state, tuple history=None)"""
         pass
-    
+
 cdef class RandomRollout(RolloutPolicy):
     cpdef Action rollout(self, State state, tuple history):
         """rollout(self, State state, tuple history=None)"""
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
-    
+
 cdef class POUCT(Planner):
 
     """ POUCT (Partially Observable UCT) :cite:`silver2010monte` is presented in the POMCP
@@ -253,7 +265,7 @@ cdef class POUCT(Planner):
         # to simplify function calls; plan only for one agent at a time
         self._agent = None
         self._last_num_sims = -1
-        self._last_planning_time = -1        
+        self._last_planning_time = -1
 
     @property
     def updates_agent_belief(self):
@@ -273,14 +285,14 @@ cdef class POUCT(Planner):
         cdef Action action
         cdef float time_taken
         cdef int sims_count
-    
+
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
             self._agent.add_attr("tree", None)
         action, time_taken, sims_count = self._search()
         self._last_num_sims = sims_count
         self._last_planning_time = time_taken
-        return action            
+        return action
 
     cpdef public update(self, Agent agent, Action real_action, Observation real_observation):
         """
@@ -312,7 +324,7 @@ cdef class POUCT(Planner):
         cdef tuple preference
         cdef int num_visits_init
         cdef float value_init
-        
+
         for action in self._agent.valid_actions(state=state, history=history):
             if vnode[action] is None:
                 history_action_node = QNode(self._num_visits_init,
@@ -351,15 +363,10 @@ cdef class POUCT(Planner):
             if self._num_sims > 0\
                and sims_count >= self._num_sims:
                 break
-            
-        best_action, best_value = None, float('-inf')            
-        for action in self._agent.tree.children:
-            if self._agent.tree[action].value > best_value:
-                best_value = self._agent.tree[action].value
-                best_action = action
-                
-        return best_action, time_taken, sims_count
 
+        best_action = self._agent.tree.argmax()
+        self._agent.tree.value = self._agent.tree[best_action].value
+        return best_action, time_taken, sims_count
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,
@@ -397,7 +404,6 @@ cdef class POUCT(Planner):
                                                                                depth+nsteps)
         root.num_visits += 1
         root[action].num_visits += 1
-        root.value = root.value + (total_reward - root.value) / (root.num_visits)
         root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
         return total_reward
 
@@ -408,22 +414,15 @@ cdef class POUCT(Planner):
         cdef State next_state
         cdef Observation observation
         cdef float reward
-        
+
         while depth < self._max_depth:
             action = self._rollout_policy.rollout(state, history)
             next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
-            if root[action] is None:
-                history_action_node = QNode(self._num_visits_init, self._value_init)
-                root[action] = history_action_node
-            if observation not in root[action]:
-                root[action][observation] = self._VNode()
-                self._expand_vnode(root[action][observation], history, state=next_state)
             history = history + ((action, observation),)
             depth += nsteps
             total_discounted_reward += reward * discount
             discount *= (self._discount_factor**nsteps)
             state = next_state
-            root = root[action][observation]
         return total_discounted_reward
 
     cpdef Action _ucb(self, VNode root):
@@ -448,8 +447,8 @@ cdef class POUCT(Planner):
         '''
         cdef State next_state
         cdef Observation observation
-        cdef float reward        
-        
+        cdef float reward
+
         if self._agent.transition_model is None:
             next_state, observation, reward = self._agent.generative_model.sample(state, action)
         else:
@@ -463,9 +462,8 @@ cdef class POUCT(Planner):
         that this function is about creating a VNode object."""
         if root:
             return RootVNode(self._num_visits_init,
-                             self._value_init,
+                             float("-inf"),
                              self._agent.history)
         else:
             return VNode(self._num_visits_init,
-                         self._value_init)
-    
+                         float("-inf"))
