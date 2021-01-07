@@ -1,4 +1,5 @@
 from pomdp_py.utils import util
+from pomdp_py.utils.interfaces import conversion
 from pomdp_py.framework.basics import *
 from pomdp_py.framework.oopomdp import *
 from pomdp_py.framework.planner import *

@@ -130,3 +130,7 @@ Thumbs.db
 # Editor backup files #
 #######################
 
+# pomdp-solve generated files
+#############################
+*.alpha
+*.pg
