@@ -1,3 +1,10 @@
+### Version 1.2.2
+* Documentation clarification about `.sample` and `.argmax` functions in the `RewardModel`.
+* Small pomdps (with enumerable state, action, observation spaces)
+  defined in `pomdp_py` can be converted to `.pomdp` and `.pomdpx` file formats.
+* Added interfacing with [pomdp_solve](https://www.pomdp.org/code/) and tested.
+* (TODO) Allow simplified POMDP specification using native Python or numpy array data structures.
+
 ### Version 1.2.1
 
 * Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.
