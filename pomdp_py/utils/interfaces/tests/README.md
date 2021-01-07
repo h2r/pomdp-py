@@ -36,3 +36,17 @@ Total execution time = 0 hrs., 0 mins, 2.56 secs. (= 2.56 secs)
 [testing] running tiger simulation with computed policy graph (step=9)
 Pass.
 ```
+
+
+## Download pomdp_solve
+
+```
+wget https://www.pomdp.org/code/pomdp-solve-5.4.tar.gz
+```
+Then, build the package
+according to [Installing from Source section in the documentation](https://www.pomdp.org/code/).
+
+
+## Download sarsop
+
+Follow the instructions on its [github repo](https://github.com/AdaCompNUS/sarsop).
