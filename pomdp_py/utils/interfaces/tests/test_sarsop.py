@@ -9,9 +9,6 @@ import io
 
 
 def test_sarsop(pomdpsol_path):
-    """Test sarsop
-    note: Observed greater plan variance (not deterministic
-    every time you run the code, even when precision is high."""
     print("[testing] test_sarsop")
     tiger = make_tiger()
 
