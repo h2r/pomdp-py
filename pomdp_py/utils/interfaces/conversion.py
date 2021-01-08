@@ -6,6 +6,7 @@ import subprocess
 import os
 import pomdp_py
 import numpy as np
+import xml.etree.ElementTree as ET
 
 def to_pomdp_file(agent, output_path=None,
                   discount_factor=0.95):
@@ -147,19 +148,10 @@ def parse_pomdp_solve_output(alpha_path, pg_path):
     https://www.pomdp.org/code/alpha-file-spec.html
     https://www.pomdp.org/code/pg-file-spec.html
 
-    Note on policy graph (from the official website): If the solution to an
-    infinite horizon POMDP problem converges, then a finite state controller can
-    be created from the value function's partitioning of the belief space. With
-    this finite state controller, one can execute the optimal policy without
-    needing to track the belief state. **To use this first requires knowing which
-    of the policy graph states to start in. This can be achieved by finding the
-    alpha vector with the maximal dot product with the initial starting
-    state.** That "best" alpha vector will align with the nodes in the output
-    policy graph, so that determines the starting point in the finite state
-    controller. The node of the policy graph dictates the action to take. After
-    that, the observation received is used to lookup the next node in the polciy
-    graph, and hence the next action to take. This repeats as the way to execute
-    the optimal policy.
+    Note on policy graph (from the official website): To use this first requires
+    knowing which of the policy graph states to start in. This can be achieved
+    by finding the alpha vector with the maximal dot product with the initial
+    starting state.
     """
     alphas = []  # (alpha_vector, action_number) tuples
     with open(alpha_path, 'r') as f:
@@ -192,6 +184,59 @@ def parse_pomdp_solve_output(alpha_path, pg_path):
                 "The node id %d already exists. Something wrong" % parts[0]
             policy_graph[parts[0]] = (parts[1], parts[2:])
     return alphas, policy_graph
+
+
+class AlphaVectorPolicy(pomdp_py.Planner):
+    """
+    An offline POMDP policy is specified by a collection
+    of alpha vectors, each associated with an action. When
+    planning is needed, the dot product of these alpha vectors
+    and the agent's belief vector is computed and the alpha
+    vector leading to the maximum is the 'dominating' alpha
+    vector and we return its corresponding action.
+
+    An offline policy can be optionally represented as
+    a policy graph. In this case, the agent can plan without
+    actively maintaining a belief because the policy graph
+    is a finite state machine that transitions by observations.
+
+    This can be constructed using .policy file created by sarsop.
+    """
+    def __init__(self, alphas, states):
+        """
+        Args:
+            alphas (list): A list of (alpha_vector, action) tuples.
+                An alpha_vector is a list of floats
+            states (list): List of states, ordered as in .pomdp file
+        """
+        self.alphas = alphas
+        self.states = states
+
+    def plan(self, agent):
+        b = [agent.belief[s] for s in self.states]
+        _, action = max(self.alphas,
+                 key=lambda va: np.dot(b, va[0]))
+        return action
+
+    @classmethod
+    def construct(self, policy_path,
+                  states, actions):
+        """
+        Returns an AlphaVectorPolicy, given `alphas`,
+        which are the output of parse_appl_policy_file.
+
+        Args:
+            alphas (list): List of ( [V1, V2, ... VN], A ) tuples. A is an action number
+            actions (list): List of actions, ordered as in .pomdp file
+        """
+        alphas = []
+        root = ET.parse(policy_path).getroot()
+        for vector in root.find("AlphaVector").iter("Vector"):
+            action = actions[int(vector.attrib["action"])]
+            alpha_vector = tuple(map(float, vector.text.split()))
+            alphas.append((alpha_vector, action))
+        return AlphaVectorPolicy(alphas,
+                                 states)
 
 
 class PGNode:
@@ -231,29 +276,33 @@ class PolicyGraph(pomdp_py.Planner):
         self._current_node = None
 
     @classmethod
-    def construct(cls, alphas, policy_graph,
+    def construct(cls, alpha_path, pg_path,
                   states, actions, observations):
         """
         See parse_pomdp_solve_output for detailed definitions of
-        alphas and policy_graph.
+        alphas and pg.
 
         Args:
-            alphas (list): List of ( [V1, V2, ... VN], A ) tuples
-            policy_graph (dict): {node_id -> (A, edges)}
+            alpha_path (str): Path to .alpha file
+            pg_path (str): Path to .pg file
             states (list): List of states, ordered as in .pomdp file
             actions (list): List of actions, ordered as in .pomdp file
             observations (list): List of observations, ordered as in .pomdp file
         """
+        # alphas (list): List of ( [V1, V2, ... VN], A ) tuples
+        # pg (dict): {node_id -> (A, edges)}
+        alphas, pg = parse_pomdp_solve_output(alpha_path, pg_path)
+
         nodes = []
         for node_id, (alpha_vector, action_number) in enumerate(alphas):
             node = PGNode(node_id, alpha_vector, actions[action_number])
             nodes.append(node)
 
         edges = {}
-        for node_id in policy_graph:
+        for node_id in pg:
             assert 0 <= node_id < len(nodes), "Invalid node id in policy graph"
 
-            action_number, o_links = policy_graph[node_id]
+            action_number, o_links = pg[node_id]
             assert actions[action_number] == nodes[node_id].action,\
                 "Inconsistent action mapping"
 
