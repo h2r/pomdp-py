@@ -11,7 +11,7 @@ We plan to interface with:
 """
 import pomdp_py
 from pomdp_py.utils.interfaces.conversion\
-    import to_pomdp_file, PolicyGraph, AlphaVectorPolicy
+    import to_pomdp_file, PolicyGraph, AlphaVectorPolicy, parse_pomdp_solve_output
 import subprocess
 import os
 
@@ -19,7 +19,8 @@ def vi_pruning(agent, pomdp_solve_path,
                discount_factor=0.95,
                options=[],
                pomdp_name="temp-pomdp",
-               remove_generated_files=False):
+               remove_generated_files=False,
+               return_policy_graph=False):
     """
     Value Iteration with pruning, using the software pomdp-solve
     https://www.pomdp.org/code/ developed by Anthony R. Cassandra.
@@ -36,6 +37,8 @@ def vi_pruning(agent, pomdp_solve_path,
         pomdp_name (str): The name used to create the .pomdp file.
         remove_generated_files (bool): True if after policy is computed,
             the .pomdp, .alpha, .pg files are removed. Default is False.
+        return_policy_graph (bool): True if return the policy as a PolicyGraph.
+            By default is False, in which case an AlphaVectorPolicy is returned.
     """
     try:
         all_states = list(agent.all_states)
@@ -48,21 +51,27 @@ def vi_pruning(agent, pomdp_solve_path,
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
     proc = subprocess.Popen([pomdp_solve_path,
                              "-pomdp", pomdp_path,
-                             "-o", "temp-pomdp"] + options)
+                             "-o", "temp-pomdp"] + list(map(str,options)))
     proc.wait()
 
     # Read the value and policy graph files
     alpha_path = "%s.alpha" % pomdp_name
     pg_path = "%s.pg" % pomdp_name
-    policy_graph = PolicyGraph.construct(alpha_path, pg_path,
-                                         all_states, all_actions, all_observations)
+    if return_policy_graph:
+        policy = PolicyGraph.construct(alpha_path, pg_path,
+                                       all_states, all_actions, all_observations)
+    else:
+        alphas_with_action_numbers = parse_pomdp_solve_output(alpha_path)
+        alphas = [(alpha_vector, all_actions[action_number])
+                  for alpha_vector, action_number in alphas_with_action_numbers]
+        policy = AlphaVectorPolicy(alphas, all_states)
 
     # Remove temporary files
     if remove_generated_files:
         os.remove(pomdp_path)
         os.remove(alpha_path)
         os.remove(pg_path)
-    return policy_graph
+    return policy
 
 
 def sarsop(agent, pomdpsol_path,

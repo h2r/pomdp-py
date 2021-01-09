@@ -84,6 +84,9 @@ def to_pomdp_file(agent, output_path=None,
                 prob = agent.observation_model.probability(o, s_next, a)
                 probs.append(prob)
             total_prob = sum(probs)
+            assert total_prob > 0.0,\
+                "No observation is probable under state={} action={}"\
+                .format(s_next, a)
             for i, o in enumerate(all_observations):
                 prob_norm = probs[i] / total_prob
                 content += 'O : %s : %s : %s %f\n' % (a, s_next, o, prob_norm)
@@ -139,7 +142,7 @@ def to_pomdpx_file(agent, pomdpconvert_path,
         os.remove(pomdpx_path)
 
 
-def parse_pomdp_solve_output(alpha_path, pg_path):
+def parse_pomdp_solve_output(alpha_path, pg_path=None):
     """Parse the output of pomdp_solve, given
     by an .alpha file and a .pg file.
 
@@ -152,6 +155,13 @@ def parse_pomdp_solve_output(alpha_path, pg_path):
     knowing which of the policy graph states to start in. This can be achieved
     by finding the alpha vector with the maximal dot product with the initial
     starting state.
+
+    Note: Parsing the .alpha file is required. The .pg path is optional (this
+        is because I noticed some errors in the .pg file produced)
+
+    Returns:
+        alphas: [(alpha_vector, action_number) ...]
+        policy_graph: a mapping from node number to (action_number, edges)
     """
     alphas = []  # (alpha_vector, action_number) tuples
     with open(alpha_path, 'r') as f:
@@ -174,16 +184,20 @@ def parse_pomdp_solve_output(alpha_path, pg_path):
                 alpha_vector = None
 
     policy_graph = {}  # a mapping from node number to (action_number, edges)
-    with open(pg_path, 'r') as f:
-        for line in f:
-            line = line.rstrip()
-            if len(line) == 0:
-                continue
-            parts = list(map(int, line.split()))  # Splits on whitespace
-            assert parts[0] not in policy_graph,\
-                "The node id %d already exists. Something wrong" % parts[0]
-            policy_graph[parts[0]] = (parts[1], parts[2:])
-    return alphas, policy_graph
+    if pg_path is None:
+        return alphas
+    else:
+        with open(pg_path, 'r') as f:
+            for line in f:
+                line = line.rstrip()
+                if len(line) == 0:
+                    continue
+                parts = list(map(int, line.split()))  # Splits on whitespace
+                assert parts[0] not in policy_graph,\
+                    "The node id %d already exists. Something wrong" % parts[0]
+                policy_graph[parts[0]] = (parts[1], parts[2:])
+        return alphas, policy_graph
+
 
 
 class AlphaVectorPolicy(pomdp_py.Planner):
