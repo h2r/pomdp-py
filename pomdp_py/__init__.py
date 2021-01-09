@@ -1,10 +1,21 @@
 from pomdp_py.utils import util
+
+# Framework
 from pomdp_py.framework.basics import *
 from pomdp_py.framework.oopomdp import *
 from pomdp_py.framework.planner import *
+
+# Representations
 from pomdp_py.representations.distribution.particles import Particles
 from pomdp_py.representations.distribution.histogram import Histogram
 from pomdp_py.representations.distribution.gaussian import Gaussian
+from pomdp_py.representations.belief.histogram import update_histogram_belief
+from pomdp_py.representations.belief.particles import update_particles_belief
+from pomdp_py.utils.interfaces.conversion import to_pomdp_file, to_pomdpx_file
+from pomdp_py.utils.interfaces.solvers import vi_pruning
+
+
+# Algorithms
 from pomdp_py.algorithms.value_iteration import ValueIteration  # Cython compiled
 from pomdp_py.algorithms.value_function import value, qvalue
 from pomdp_py.algorithms.pomcp import POMCP
@@ -14,8 +25,6 @@ from pomdp_py.algorithms.po_uct import POUCT, QNode, VNode, RootVNode,\
     tree_stats, ActionPrior
 from pomdp_py.algorithms.bsp.blqr import BLQR
 from pomdp_py.algorithms.visual import visual
-from pomdp_py.representations.belief.histogram import update_histogram_belief
-from pomdp_py.representations.belief.particles import update_particles_belief
 
-from pomdp_py.utils.interfaces.conversion import to_pomdp_file, to_pomdpx_file
-from pomdp_py.utils.interfaces.solvers import vi_pruning
+# Templates
+from pomdp_py.utils.templates import *
