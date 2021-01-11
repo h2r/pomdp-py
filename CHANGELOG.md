@@ -8,7 +8,7 @@
   defined in `pomdp_py` can be converted to `.pomdp` and `.pomdpx` file formats.
 * Added interfacing with [pomdp_solve](https://www.pomdp.org/code/) and tested.
 * Added interfacing with [sarsop](https://github.com/AdaCompNUS/sarsop) and tested.
-* (TODO) Allow simplified POMDP specification using native Python or numpy array data structures.
+* Added `utils/templates.py` that contains some convenient implementations of the POMDP interface.
 
 
 ### Version 1.2.1
