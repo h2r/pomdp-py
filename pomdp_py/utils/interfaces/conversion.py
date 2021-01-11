@@ -233,8 +233,8 @@ class AlphaVectorPolicy(pomdp_py.Planner):
         return action
 
     @classmethod
-    def construct(self, policy_path,
-                  states, actions):
+    def construct(cls, policy_path,
+                  states, actions, solver="pomdpsol"):
         """
         Returns an AlphaVectorPolicy, given `alphas`,
         which are the output of parse_appl_policy_file.
@@ -243,14 +243,25 @@ class AlphaVectorPolicy(pomdp_py.Planner):
             alphas (list): List of ( [V1, V2, ... VN], A ) tuples. A is an action number
             actions (list): List of actions, ordered as in .pomdp file
         """
-        alphas = []
-        root = ET.parse(policy_path).getroot()
-        for vector in root.find("AlphaVector").iter("Vector"):
-            action = actions[int(vector.attrib["action"])]
-            alpha_vector = tuple(map(float, vector.text.split()))
-            alphas.append((alpha_vector, action))
-        return AlphaVectorPolicy(alphas,
-                                 states)
+        if solver == "pomdp-solve" or solver == "vi":
+            return cls.construct_from_pomdp_solve(policy_path, states, actions)
+        elif solver == "pomdpsol" or solver == "sarsop":
+            alphas = []
+            root = ET.parse(policy_path).getroot()
+            for vector in root.find("AlphaVector").iter("Vector"):
+                action = actions[int(vector.attrib["action"])]
+                alpha_vector = tuple(map(float, vector.text.split()))
+                alphas.append((alpha_vector, action))
+            return AlphaVectorPolicy(alphas,
+                                     states)
+
+    @classmethod
+    def construct_from_pomdp_solve(cls, alpha_path,
+                                   states, actions):
+        alphas_with_action_numbers = parse_pomdp_solve_output(alpha_path)
+        alphas = [(alpha_vector, actions[action_number])
+                  for alpha_vector, action_number in alphas_with_action_numbers]
+        return AlphaVectorPolicy(alphas, states)
 
 
 class PGNode:

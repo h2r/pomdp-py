@@ -51,7 +51,7 @@ def vi_pruning(agent, pomdp_solve_path,
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
     proc = subprocess.Popen([pomdp_solve_path,
                              "-pomdp", pomdp_path,
-                             "-o", "temp-pomdp"] + list(map(str,options)))
+                             "-o", pomdp_name] + list(map(str,options)))
     proc.wait()
 
     # Read the value and policy graph files
@@ -61,10 +61,8 @@ def vi_pruning(agent, pomdp_solve_path,
         policy = PolicyGraph.construct(alpha_path, pg_path,
                                        all_states, all_actions, all_observations)
     else:
-        alphas_with_action_numbers = parse_pomdp_solve_output(alpha_path)
-        alphas = [(alpha_vector, all_actions[action_number])
-                  for alpha_vector, action_number in alphas_with_action_numbers]
-        policy = AlphaVectorPolicy(alphas, all_states)
+        policy = AlphaVectorPolicy.construct(
+            alpha_path, all_states, all_actions, solver="pomdp-solve")
 
     # Remove temporary files
     if remove_generated_files:
