@@ -232,6 +232,17 @@ class AlphaVectorPolicy(pomdp_py.Planner):
                  key=lambda va: np.dot(b, va[0]))
         return action
 
+    def value(self, belief):
+        """
+        Returns the value V(b) under this alpha vector policy.
+
+        V(b) = max_{alpha} alpha dot b
+        """
+        b = [belief[s] for s in self.states]
+        alpha_vector, _ = max(self.alphas,
+                              key=lambda va: np.dot(b, va[0]))
+        return np.dot(b, alpha_vector)
+
     @classmethod
     def construct(cls, policy_path,
                   states, actions, solver="pomdpsol"):
