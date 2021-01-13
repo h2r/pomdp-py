@@ -9,6 +9,7 @@
 * Added interfacing with [pomdp_solve](https://www.pomdp.org/code/) and tested.
 * Added interfacing with [sarsop](https://github.com/AdaCompNUS/sarsop) and tested.
 * Added `utils/templates.py` that contains some convenient implementations of the POMDP interface.
+* Bug fixes (in `histogram.pyx`)
 
 
 ### Version 1.2.1
