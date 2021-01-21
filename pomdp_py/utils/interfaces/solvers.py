@@ -13,7 +13,7 @@ import pomdp_py
 from pomdp_py.utils.interfaces.conversion\
     import to_pomdp_file, PolicyGraph, AlphaVectorPolicy, parse_pomdp_solve_output
 import subprocess
-import os
+import os, sys
 
 def vi_pruning(agent, pomdp_solve_path,
                discount_factor=0.95,
@@ -77,7 +77,8 @@ def sarsop(agent, pomdpsol_path,
            timeout=30, memory=100,
            precision=0.5,
            pomdp_name="temp-pomdp",
-           remove_generated_files=False):
+           remove_generated_files=False,
+           logfile=None):
     """
     SARSOP, using the binary from https://github.com/AdaCompNUS/sarsop
     This is an anytime POMDP planning algorithm
@@ -88,6 +89,9 @@ def sarsop(agent, pomdpsol_path,
         timeout (int): The time limit (seconds) to run the algorithm until termination
         memory (int): The memory size (mb) to run the algorithm until termination
         precision (float): solver runs until regret is less than `precision`
+        pomdp_name (str): Name of the .pomdp file that will be created when solving
+        remove_generated_files (bool): Remove created files during solving after finish.
+        logfile (str): Path to file to write the log of both stdout and stderr
     """
     try:
         all_states = list(agent.all_states)
@@ -96,6 +100,14 @@ def sarsop(agent, pomdpsol_path,
     except NotImplementedError:
         print("S, A, O must be enumerable for a given agent to convert to .pomdpx format")
 
+    if logfile is None:
+        stdout = None
+        stderr = None
+    else:
+        logf = open(logfile, "w")
+        stdout = subprocess.PIPE
+        stderr = subprocess.STDOUT
+
     pomdp_path = "./%s.pomdp" % pomdp_name
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
     proc = subprocess.Popen([pomdpsol_path,
@@ -103,7 +115,12 @@ def sarsop(agent, pomdpsol_path,
                              "--memory", str(memory),
                              "--precision", str(precision),
                              "--output", "%s.policy" % pomdp_name,
-                             pomdp_path])
+                             pomdp_path], stdout=stdout, stderr=stderr)
+    if logfile is not None:
+        for line in proc.stdout:
+            line = line.decode("utf-8")
+            sys.stdout.write(line)
+            logf.write(line)
     proc.wait()
 
     policy_path = "%s.policy" % pomdp_name

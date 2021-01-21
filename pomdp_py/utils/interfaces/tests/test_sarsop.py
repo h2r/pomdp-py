@@ -16,10 +16,13 @@ def test_sarsop(pomdpsol_path):
     print("[testing] solving the tiger problem...")
     policy = sarsop(tiger.agent, pomdpsol_path, discount_factor=0.95,
                     timeout=10, memory=20, precision=0.000001,
-                    remove_generated_files=True)
+                    remove_generated_files=True,
+                    logfile="test_sarsop.log")
 
     assert str(policy.plan(tiger.agent)) == "listen",\
         "Bad solution. Test failed."
+
+    assert os.path.exists("test_sarsop.log")
 
     # Plan with the graph for several steps. So we should get high rewards
     # eventually in the tiger domain.
