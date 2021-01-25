@@ -142,6 +142,25 @@
 </tr>
 </tbody>
 </table>
+<p>The library also currently interfaces with <a class="reference external" href="https://www.pomdp.org/code/">pomdp-solve</a>, developed by Anthony R. Cassandra, and <a class="reference external" href="https://github.com/AdaCompNUS/sarsop">sarsop</a>, developed by NUS. See <a class="reference internal" href="examples.external_solvers.html"><span class="doc">Using External Solvers</span></a> for details and examples.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="examples.external_solvers.html#pomdp_py.utils.interfaces.solvers.sarsop" title="pomdp_py.utils.interfaces.solvers.sarsop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sarsop</span></code></a></p></td>
+<td><p>SARSOP, using the binary from <a class="reference external" href="https://github.com/AdaCompNUS/sarsop">https://github.com/AdaCompNUS/sarsop</a> This is an anytime POMDP planning algorithm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="examples.external_solvers.html#pomdp_py.utils.interfaces.solvers.vi_pruning" title="pomdp_py.utils.interfaces.solvers.vi_pruning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vi_pruning</span></code></a></p></td>
+<td><p>Value Iteration with pruning, using the software pomdp-solve <a class="reference external" href="https://www.pomdp.org/code/">https://www.pomdp.org/code/</a> developed by Anthony R.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A pomdp_py <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a> with enumerable state <span class="math notranslate nohighlight">\(S\)</span>, action <span class="math notranslate nohighlight">\(A\)</span>, and observation spaces <span class="math notranslate nohighlight">\(\Omega\)</span>, with explicitly defined probability for its models (<span class="math notranslate nohighlight">\(T,O,R\)</span>) can be directly used as input to the above functions that interface with the solvers’ binaries programs.</p>
+</div>
 </div>
 
 

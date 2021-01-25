@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.utils.interfaces.conversion &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.utils.interfaces.conversion</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provides utility to convert a POMDP written in pomdp_py to</span>
+<span class="sd">a POMDP file format (.pomdp or .pomdpx). Output to a file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
+
+<div class="viewcode-block" id="to_pomdp_file"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.to_pomdp_file">[docs]</a><span class="k">def</span> <span class="nf">to_pomdp_file</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pass in an Agent, and use its components to generate</span>
+<span class="sd">    a .pomdp file to `output_path`.</span>
+
+<span class="sd">    The .pomdp file format is specified at:</span>
+<span class="sd">    http://www.pomdp.org/code/pomdp-file-spec.html</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">    * It is assumed that the reward is independent of the observation.</span>
+<span class="sd">    * The state, action, and observations of the agent must be</span>
+<span class="sd">      explicitly enumerable.</span>
+<span class="sd">    * The state, action and observations of the agent must be</span>
+<span class="sd">      convertable to a string that does not contain any blank space.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agent (~pomdp_py.framework.basics.Agent): The agent</span>
+<span class="sd">        output_path (str): The path of the output file to write in. Optional.</span>
+<span class="sd">                           Default None.</span>
+<span class="sd">        discount_factor (float): The discount factor</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (list, list, list): The list of states, actions, observations that</span>
+<span class="sd">           are ordered in the same way as they are in the .pomdp file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Preamble</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_states</span><span class="p">)</span>
+        <span class="n">all_actions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_actions</span><span class="p">)</span>
+        <span class="n">all_observations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_observations</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S, A, O must be enumerable for a given agent to convert to .pomdp format&quot;</span><span class="p">)</span>
+
+    <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;discount: </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">discount_factor</span>
+    <span class="n">content</span> <span class="o">+=</span> <span class="s2">&quot;values: reward</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="c1"># We only consider reward, not cost.</span>
+
+    <span class="n">list_of_states</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_states</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_states</span><span class="p">),</span>\
+        <span class="s2">&quot;states must be convertable to strings without blank spaces&quot;</span>
+    <span class="n">content</span> <span class="o">+=</span> <span class="s2">&quot;states: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">list_of_states</span>
+
+    <span class="n">list_of_actions</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_actions</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_actions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_actions</span><span class="p">),</span>\
+        <span class="s2">&quot;actions must be convertable to strings without blank spaces&quot;</span>
+    <span class="n">content</span> <span class="o">+=</span> <span class="s2">&quot;actions: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">list_of_actions</span>
+
+    <span class="n">list_of_observations</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">all_observations</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_observations</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_observations</span><span class="p">),</span>\
+        <span class="s2">&quot;observations must be convertable to strings without blank spaces&quot;</span>
+    <span class="n">content</span> <span class="o">+=</span> <span class="s2">&quot;observations: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">list_of_observations</span>
+
+    <span class="c1"># Starting belief state - they need to be normalized</span>
+    <span class="n">total_belief</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">+=</span> <span class="s2">&quot;start: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">/</span><span class="n">total_belief</span><span class="p">)</span>
+                                          <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">]))</span>
+
+    <span class="c1"># State transition probabilities - they need to be normalized</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_actions</span><span class="p">:</span>
+            <span class="n">probs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">s_next</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">transition_model</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">s_next</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+                <span class="n">probs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+            <span class="n">total_prob</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s_next</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_states</span><span class="p">):</span>
+                <span class="n">prob_norm</span> <span class="o">=</span> <span class="n">probs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_prob</span>
+                <span class="n">content</span> <span class="o">+=</span> <span class="s1">&#39;T : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s_next</span><span class="p">,</span> <span class="n">prob_norm</span><span class="p">)</span>
+
+    <span class="c1"># Observation probabilities - they need to be normalized</span>
+    <span class="k">for</span> <span class="n">s_next</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_actions</span><span class="p">:</span>
+            <span class="n">probs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">all_observations</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">s_next</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+                <span class="n">probs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+            <span class="n">total_prob</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">total_prob</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span>\
+                <span class="s2">&quot;No observation is probable under state=</span><span class="si">{}</span><span class="s2"> action=</span><span class="si">{}</span><span class="s2">&quot;</span>\
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s_next</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_observations</span><span class="p">):</span>
+                <span class="n">prob_norm</span> <span class="o">=</span> <span class="n">probs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_prob</span>
+                <span class="n">content</span> <span class="o">+=</span> <span class="s1">&#39;O : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s_next</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">prob_norm</span><span class="p">)</span>
+
+    <span class="c1"># Immediate rewards</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_actions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s_next</span> <span class="ow">in</span> <span class="n">all_states</span><span class="p">:</span>
+                <span class="c1"># We will take the argmax reward, which works for deterministic rewards.</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">s_next</span><span class="p">)</span>
+                <span class="n">content</span> <span class="o">+=</span> <span class="s1">&#39;R : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%s</span><span class="s1"> : *  </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s_next</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_states</span><span class="p">,</span> <span class="n">all_actions</span><span class="p">,</span> <span class="n">all_observations</span></div>
+
+
+
+<div class="viewcode-block" id="to_pomdpx_file"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.to_pomdpx_file">[docs]</a><span class="k">def</span> <span class="nf">to_pomdpx_file</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdpconvert_path</span><span class="p">,</span>
+                   <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts an agent to a pomdpx file. This works by first converting the agent into a .pomdp file and then</span>
+<span class="sd">    using the :code:`pomdpconvert` utility program to convert that file to a .pomdpx file. Check out</span>
+<span class="sd">    :code:`pomdpconvert` at `github://AdaCompNUS/sarsop &lt;https://github.com/AdaCompNUS/sarsop&gt;`_</span>
+
+<span class="sd">    Follow the instructions at https://github.com/AdaCompNUS/sarsop</span>
+<span class="sd">    to download and build sarsop (I tested on Ubuntu 18.04, gcc version 7.5.0)</span>
+
+<span class="sd">    See documentation for pomdpx at:</span>
+<span class="sd">    https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/index.php?n=Main.PomdpXDocumentation</span>
+
+<span class="sd">    First converts the agent into .pomdp, then convert it to pomdpx.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agent (~pomdp_py.framework.basics.Agent): The agent</span>
+<span class="sd">        pomdpconvert_path (str): Path to the :code:`pomdpconvert` binary</span>
+<span class="sd">        output_path (str): The path of the output file to write in. Optional.</span>
+<span class="sd">                           Default None.</span>
+<span class="sd">        discount_factor (float): The discount factor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pomdp_path</span> <span class="o">=</span> <span class="s2">&quot;./temp-pomdp.pomdp&quot;</span>
+    <span class="n">to_pomdp_file</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_path</span><span class="p">,</span>
+                  <span class="n">discount_factor</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="n">pomdpconvert_path</span><span class="p">,</span> <span class="n">pomdp_path</span><span class="p">])</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="n">pomdpx_path</span> <span class="o">=</span> <span class="n">pomdp_path</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pomdpx_path</span><span class="p">),</span> <span class="s2">&quot;POMDPx conversion failed.&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pomdpx_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">pomdpx_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+
+    <span class="c1"># Delete temporary files</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pomdp_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pomdpx_path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pomdpx_path</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">parse_pomdp_solve_output</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">,</span> <span class="n">pg_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse the output of pomdp_solve, given</span>
+<span class="sd">    by an .alpha file and a .pg file.</span>
+
+<span class="sd">    Given a path to a .alpha file, read and interpret its contents.</span>
+<span class="sd">    The file formats are specified at:</span>
+<span class="sd">    https://www.pomdp.org/code/alpha-file-spec.html</span>
+<span class="sd">    https://www.pomdp.org/code/pg-file-spec.html</span>
+
+<span class="sd">    Note on policy graph (from the official website): To use this first requires</span>
+<span class="sd">    knowing which of the policy graph states to start in. This can be achieved</span>
+<span class="sd">    by finding the alpha vector with the maximal dot product with the initial</span>
+<span class="sd">    starting state.</span>
+
+<span class="sd">    Note: Parsing the .alpha file is required. The .pg path is optional (this</span>
+<span class="sd">        is because I noticed some errors in the .pg file produced)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        alphas: [(alpha_vector, action_number) ...]</span>
+<span class="sd">        policy_graph: a mapping from node number to (action_number, edges)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">alphas</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (alpha_vector, action_number) tuples</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">action_number</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">alpha_vector</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;action&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;action&quot;</span><span class="p">:</span>
+                <span class="n">action_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;alpha&quot;</span>
+            <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span>
+                <span class="n">alpha_vector</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)))</span>
+                <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">alpha_vector</span><span class="p">,</span> <span class="n">action_number</span><span class="p">))</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;action&quot;</span>
+                <span class="n">action_number</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">alpha_vector</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">policy_graph</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># a mapping from node number to (action_number, edges)</span>
+    <span class="k">if</span> <span class="n">pg_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">alphas</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pg_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>  <span class="c1"># Splits on whitespace</span>
+                <span class="k">assert</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">policy_graph</span><span class="p">,</span>\
+                    <span class="s2">&quot;The node id </span><span class="si">%d</span><span class="s2"> already exists. Something wrong&quot;</span> <span class="o">%</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">policy_graph</span><span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">policy_graph</span>
+
+
+
+<div class="viewcode-block" id="AlphaVectorPolicy"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy">[docs]</a><span class="k">class</span> <span class="nc">AlphaVectorPolicy</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Planner</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An offline POMDP policy is specified by a collection</span>
+<span class="sd">    of alpha vectors, each associated with an action. When</span>
+<span class="sd">    planning is needed, the dot product of these alpha vectors</span>
+<span class="sd">    and the agent&#39;s belief vector is computed and the alpha</span>
+<span class="sd">    vector leading to the maximum is the &#39;dominating&#39; alpha</span>
+<span class="sd">    vector and we return its corresponding action.</span>
+
+<span class="sd">    An offline policy can be optionally represented as</span>
+<span class="sd">    a policy graph. In this case, the agent can plan without</span>
+<span class="sd">    actively maintaining a belief because the policy graph</span>
+<span class="sd">    is a finite state machine that transitions by observations.</span>
+
+<span class="sd">    This can be constructed using .policy file created by sarsop.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">states</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            alphas (list): A list of (alpha_vector, action) tuples.</span>
+<span class="sd">                An alpha_vector is a list of floats :code:`[V1, V2, ... VN]`.</span>
+<span class="sd">            states (list): List of states, ordered as in .pomdp file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">alphas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+
+<div class="viewcode-block" id="AlphaVectorPolicy.plan"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy.plan">[docs]</a>    <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an action that is mapped by the agent belief, under this policy&quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">]</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">action</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span>
+                 <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">va</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">va</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">action</span></div>
+
+<div class="viewcode-block" id="AlphaVectorPolicy.value"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">belief</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value V(b) under this alpha vector policy.</span>
+
+<span class="sd">        :math:`V(b) = max_{a\in\Gamma} {a} \cdot b`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">belief</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">]</span>
+        <span class="n">alpha_vector</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span>
+                              <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">va</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">va</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">alpha_vector</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AlphaVectorPolicy.construct"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy.construct">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">policy_path</span><span class="p">,</span>
+                  <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;pomdpsol&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an AlphaVectorPolicy, given `alphas`,</span>
+<span class="sd">        which are the output of parse_appl_policy_file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            policy_path (str): Path to the generated .policy file</span>
+<span class="sd">                (for sarsop) or .alpha file (for pomdp-solve)</span>
+<span class="sd">            states (list): A list of States, in the same order as in the .pomdp file</span>
+<span class="sd">            actions (list): A list of Actions, in the same order as in the .pomdp file</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            AlphaVectorPolicy: The policy stored in the given policy file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;pomdp-solve&quot;</span> <span class="ow">or</span> <span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;vi&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">construct_from_pomdp_solve</span><span class="p">(</span><span class="n">policy_path</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;pomdpsol&quot;</span> <span class="ow">or</span> <span class="n">solver</span> <span class="o">==</span> <span class="s2">&quot;sarsop&quot;</span><span class="p">:</span>
+            <span class="n">alphas</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">policy_path</span><span class="p">)</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">vector</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;AlphaVector&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s2">&quot;Vector&quot;</span><span class="p">):</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">actions</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">])]</span>
+                <span class="n">alpha_vector</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">vector</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+                <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">alpha_vector</span><span class="p">,</span> <span class="n">action</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">AlphaVectorPolicy</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span>
+                                     <span class="n">states</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">construct_from_pomdp_solve</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">alpha_path</span><span class="p">,</span>
+                                   <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+        <span class="n">alphas_with_action_numbers</span> <span class="o">=</span> <span class="n">parse_pomdp_solve_output</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">)</span>
+        <span class="n">alphas</span> <span class="o">=</span> <span class="p">[(</span><span class="n">alpha_vector</span><span class="p">,</span> <span class="n">actions</span><span class="p">[</span><span class="n">action_number</span><span class="p">])</span>
+                  <span class="k">for</span> <span class="n">alpha_vector</span><span class="p">,</span> <span class="n">action_number</span> <span class="ow">in</span> <span class="n">alphas_with_action_numbers</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">AlphaVectorPolicy</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">states</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">PGNode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A node on the policy graph&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="n">alpha_vector</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_id</span> <span class="o">=</span> <span class="n">node_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_vector</span> <span class="o">=</span> <span class="n">alpha_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">PolicyNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">node_id</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_id</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;NodeID(</span><span class="si">%d</span><span class="s2">)::AlphaVector(</span><span class="si">%s</span><span class="s2">)::Action(</span><span class="si">%s</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>\
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha_vector</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PolicyGraph"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.PolicyGraph">[docs]</a><span class="k">class</span> <span class="nc">PolicyGraph</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Planner</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A PolicyGraph encodes a POMDP plan. It</span>
+<span class="sd">    can be constructed from the alphas and policy graph</span>
+<span class="sd">    format output by Cassandra&#39;s pomdp-solver.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">states</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a PolicyGraph.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            nodes (list): A list of PGNodes</span>
+<span class="sd">            edges (dict): Mapping from node_id to a dictionary {observation -&gt; node_id}</span>
+<span class="sd">            states (list): List of states, ordered as in .pomdp file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="o">.</span><span class="n">node_id</span><span class="p">:</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PolicyGraph.construct"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.PolicyGraph.construct">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">alpha_path</span><span class="p">,</span> <span class="n">pg_path</span><span class="p">,</span>
+                  <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">observations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See parse_pomdp_solve_output for detailed definitions of</span>
+<span class="sd">        alphas and pg.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alpha_path (str): Path to .alpha file</span>
+<span class="sd">            pg_path (str): Path to .pg file</span>
+<span class="sd">            states (list): List of states, ordered as in .pomdp file</span>
+<span class="sd">            actions (list): List of actions, ordered as in .pomdp file</span>
+<span class="sd">            observations (list): List of observations, ordered as in .pomdp file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># alphas (list): List of ( [V1, V2, ... VN], A ) tuples</span>
+        <span class="c1"># pg (dict): {node_id -&gt; (A, edges)}</span>
+        <span class="n">alphas</span><span class="p">,</span> <span class="n">pg</span> <span class="o">=</span> <span class="n">parse_pomdp_solve_output</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">,</span> <span class="n">pg_path</span><span class="p">)</span>
+
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node_id</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha_vector</span><span class="p">,</span> <span class="n">action_number</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">alphas</span><span class="p">):</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">PGNode</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="n">alpha_vector</span><span class="p">,</span> <span class="n">actions</span><span class="p">[</span><span class="n">action_number</span><span class="p">])</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">pg</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">node_id</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="s2">&quot;Invalid node id in policy graph&quot;</span>
+
+            <span class="n">action_number</span><span class="p">,</span> <span class="n">o_links</span> <span class="o">=</span> <span class="n">pg</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">actions</span><span class="p">[</span><span class="n">action_number</span><span class="p">]</span> <span class="o">==</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>\
+                <span class="s2">&quot;Inconsistent action mapping&quot;</span>
+
+            <span class="n">edges</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">for</span> <span class="n">o_index</span><span class="p">,</span> <span class="n">next_node_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">o_links</span><span class="p">):</span>
+                <span class="n">observation</span> <span class="o">=</span> <span class="n">observations</span><span class="p">[</span><span class="n">o_index</span><span class="p">]</span>
+                <span class="n">edges</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="n">observation</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_node_id</span>
+        <span class="k">return</span> <span class="n">PolicyGraph</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">states</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PolicyGraph.plan"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.PolicyGraph.plan">[docs]</a>    <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an action that is mapped by the agent belief, under this policy&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_node</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span><span class="o">.</span><span class="n">action</span></div>
+
+    <span class="k">def</span> <span class="nf">_find_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Locate the node in the policy graph corresponding to the agent&#39;s current</span>
+<span class="sd">        belief state. &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">]</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span>
+                   <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">nid</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span><span class="o">.</span><span class="n">alpha_vector</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+
+<div class="viewcode-block" id="PolicyGraph.update"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.PolicyGraph.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the planner based on real action and observation.</span>
+<span class="sd">        Basically sets the current node pointer based on the incoming</span>
+<span class="sd">        observation.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Find out the node number using agent current belief</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_node</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+        <span class="c1"># Transition the current node following the graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_node</span><span class="o">.</span><span class="n">node_id</span><span class="p">][</span><span class="n">observation</span><span class="p">]]</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,13 +1,14 @@
 """
-Provides function calls to use external solvers,
-given a POMDP defined using pomdp_py interfaces.
+`pomdp_py <https://h2r.github.io/pomdp-py/html/>`_ provides function calls to use external solvers,
+given a POMDP defined using pomdp_py interfaces. Currently, we interface with:
 
-Currently, we interface with:
-* pomdp-solve: http://www.pomdp.org/code/index.html
-* SARSOP
+* `pomdp-solve <http://www.pomdp.org/code/index.html>`_ by Anthony R. Cassandra
+* `SARSOP <https://github.com/AdaCompNUS/sarsop>`_ by NUS
 
-We plan to interface with:
-* POMDP.jl
+We hope to interface with:
+
+* `POMDP.jl <https://github.com/JuliaPOMDP/POMDPs.jl>`_
+* more? Help us if you can!
 """
 import pomdp_py
 from pomdp_py.utils.interfaces.conversion\
@@ -39,6 +40,9 @@ def vi_pruning(agent, pomdp_solve_path,
             the .pomdp, .alpha, .pg files are removed. Default is False.
         return_policy_graph (bool): True if return the policy as a PolicyGraph.
             By default is False, in which case an AlphaVectorPolicy is returned.
+
+    Returns:
+       PolicyGraph or AlphaVectorPolicy: The policy returned by the solver.
     """
     try:
         all_states = list(agent.all_states)
@@ -88,6 +92,8 @@ def sarsop(agent, pomdpsol_path,
         timeout (int): The time limit (seconds) to run the algorithm until termination
         memory (int): The memory size (mb) to run the algorithm until termination
         precision (float): solver runs until regret is less than `precision`
+    Returns:
+       AlphaVectorPolicy: The policy returned by the solver.
     """
     try:
         all_states = list(agent.all_states)

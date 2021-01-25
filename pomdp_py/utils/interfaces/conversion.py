@@ -18,6 +18,7 @@ def to_pomdp_file(agent, output_path=None,
     http://www.pomdp.org/code/pomdp-file-spec.html
 
     Note:
+
     * It is assumed that the reward is independent of the observation.
     * The state, action, and observations of the agent must be
       explicitly enumerable.
@@ -110,8 +111,9 @@ def to_pomdpx_file(agent, pomdpconvert_path,
                    output_path=None,
                    discount_factor=0.95):
     """
-    Converts an agent to a pomdpx file. Requires
-    the usage of `pomdpconvert` from github://AdaCompNUS/sarsop
+    Converts an agent to a pomdpx file. This works by first converting the agent into a .pomdp file and then
+    using the :code:`pomdpconvert` utility program to convert that file to a .pomdpx file. Check out
+    :code:`pomdpconvert` at `github://AdaCompNUS/sarsop <https://github.com/AdaCompNUS/sarsop>`_
 
     Follow the instructions at https://github.com/AdaCompNUS/sarsop
     to download and build sarsop (I tested on Ubuntu 18.04, gcc version 7.5.0)
@@ -120,6 +122,13 @@ def to_pomdpx_file(agent, pomdpconvert_path,
     https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/index.php?n=Main.PomdpXDocumentation
 
     First converts the agent into .pomdp, then convert it to pomdpx.
+
+    Args:
+        agent (~pomdp_py.framework.basics.Agent): The agent
+        pomdpconvert_path (str): Path to the :code:`pomdpconvert` binary
+        output_path (str): The path of the output file to write in. Optional.
+                           Default None.
+        discount_factor (float): The discount factor
     """
     pomdp_path = "./temp-pomdp.pomdp"
     to_pomdp_file(agent, pomdp_path,
@@ -220,13 +229,14 @@ class AlphaVectorPolicy(pomdp_py.Planner):
         """
         Args:
             alphas (list): A list of (alpha_vector, action) tuples.
-                An alpha_vector is a list of floats
+                An alpha_vector is a list of floats :code:`[V1, V2, ... VN]`.
             states (list): List of states, ordered as in .pomdp file
         """
         self.alphas = alphas
         self.states = states
 
     def plan(self, agent):
+        """Returns an action that is mapped by the agent belief, under this policy"""
         b = [agent.belief[s] for s in self.states]
         _, action = max(self.alphas,
                  key=lambda va: np.dot(b, va[0]))
@@ -236,7 +246,7 @@ class AlphaVectorPolicy(pomdp_py.Planner):
         """
         Returns the value V(b) under this alpha vector policy.
 
-        V(b) = max_{alpha} alpha dot b
+        :math:`V(b) = max_{a\in\Gamma} {a} \cdot b`
         """
         b = [belief[s] for s in self.states]
         alpha_vector, _ = max(self.alphas,
@@ -251,8 +261,12 @@ class AlphaVectorPolicy(pomdp_py.Planner):
         which are the output of parse_appl_policy_file.
 
         Args:
-            alphas (list): List of ( [V1, V2, ... VN], A ) tuples. A is an action number
-            actions (list): List of actions, ordered as in .pomdp file
+            policy_path (str): Path to the generated .policy file
+                (for sarsop) or .alpha file (for pomdp-solve)
+            states (list): A list of States, in the same order as in the .pomdp file
+            actions (list): A list of Actions, in the same order as in the .pomdp file
+        Returns:
+            AlphaVectorPolicy: The policy stored in the given policy file.
         """
         if solver == "pomdp-solve" or solver == "vi":
             return cls.construct_from_pomdp_solve(policy_path, states, actions)
@@ -301,6 +315,7 @@ class PolicyGraph(pomdp_py.Planner):
 
     def __init__(self, nodes, edges, states):
         """
+        Initializes a PolicyGraph.
         Args:
             nodes (list): A list of PGNodes
             edges (dict): Mapping from node_id to a dictionary {observation -> node_id}
@@ -350,6 +365,7 @@ class PolicyGraph(pomdp_py.Planner):
         return PolicyGraph(nodes, edges, states)
 
     def plan(self, agent):
+        """Returns an action that is mapped by the agent belief, under this policy"""
         if self._current_node is None:
             self._current_node = self._find_node(agent)
         return self._current_node.action

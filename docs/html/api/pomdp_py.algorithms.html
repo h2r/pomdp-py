@@ -406,6 +406,12 @@ belief.</p>
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">VNode</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.VNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.TreeNode" title="pomdp_py.algorithms.po_uct.TreeNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.TreeNode</span></code></a></p>
 <dl class="method">
+<dt id="pomdp_py.algorithms.po_uct.VNode.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">VNode self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.VNode.argmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the action of the child with highest value</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pomdp_py.algorithms.po_uct.VNode.print_children_value">
 <code class="sig-name descname">print_children_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.VNode.print_children_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -511,7 +517,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="../examples.tiger.html#kaelbling1998planning" id="id10">[1]</a></p>
+domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id10">[7]</a></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration">
@@ -622,7 +628,7 @@ Reference: <a class="reference external" href="https://docs.scipy.org/doc/scipy/
 <dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
 <dd><p>António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In <em>ECAI</em>, 384–389. 2012.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id10">1</a></span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id10">7</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 </dl>

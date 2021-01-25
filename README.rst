@@ -7,3 +7,14 @@ pomdp_py
 
 Please refer to the `full documentation <https://h2r.github.io/pomdp-py>`_ and `installation instructions <https://h2r.github.io/pomdp-py/html/installation.html>`_.
 
+
+If you find this library helpful to your work, please cite the `following paper <https://arxiv.org/pdf/2004.10099.pdf>`_::b
+
+    @inproceedings{zheng2020pomdp_py,
+      title = {pomdp\_py: A Framework to Build and Solve POMDP Problems},
+      author = {Zheng, Kaiyu and Tellex, Stefanie},
+      booktitle = {ICAPS 2020 Workshop on Planning and Robotics (PlanRob)},
+      year = {2020},
+      url = {https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/14-PlanRob_2020_paper_3.pdf},
+      note = {Arxiv link: "\url{https://arxiv.org/pdf/2004.10099.pdf}"}
+   }

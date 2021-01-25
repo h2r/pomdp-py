@@ -58,6 +58,7 @@
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li><a class="reference internal" href="#further">Further</a></li>
+<li><a class="reference internal" href="#citation">Citation</a></li>
 <li><a class="reference internal" href="#api-references">API References</a></li>
 <li><a class="reference internal" href="#tools">Tools</a></li>
 </ul>
@@ -135,7 +136,7 @@
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/h2r/pomdp-py">pomdp_py</a> is a <strong>general purpose POMDP library</strong> written in Python and Cython. It features simple and comprehensive interfaces to describe POMDP or MDP problems. Originally written to support POMDP planning research, the interfaces also allow extensions to model-free or model-based learning in (PO)MDPs, multi-agent POMDP planning/learning, and task transfer or transfer learning.</p>
 <p><strong>Why pomdp_py?</strong> It provides a POMDP framework in Python with clean and intuitive interfaces. This makes POMDP-related research or projects accessible to more people. It also helps sharing code and developing a community.</p>
-<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <a class="bibtex reference internal" href="examples.tiger.html#kaelbling1998planning" id="id1">[1]</a>.</p>
+<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <a class="bibtex reference internal" href="#kaelbling1998planning" id="id1">[7]</a>.</p>
 <p>The code is available <a class="reference external" href="https://github.com/h2r/pomdp-py">on github</a>. We welcome contributions to this library in:</p>
 <ol class="arabic simple">
 <li><p>Implementation of additional POMDP solvers (see <a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a>)</p></li>
@@ -152,8 +153,7 @@
 The Tiger example represents how one could quickly implement a simple POMDP; The Multi-Object Search domain represents how one may structure their project (as a convention) when using <cite>pomdp_py</cite> for more complicated domains.</p></li>
 <li><p><a class="reference internal" href="design_principles.html"><span class="doc">Design Principles</span></a></p></li>
 <li><p><a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a></p></li>
-<li><p><a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a></p></li>
-<li><p><a class="reference internal" href="simple_rl_integration.html"><span class="doc">Integration with simple_rl</span></a></p></li>
+<li><p><a class="reference internal" href="examples.external_solvers.html"><span class="doc">Using External Solvers</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="further">
@@ -163,8 +163,24 @@ The Tiger example represents how one could quickly implement a simple POMDP; The
 <li><p><a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a></p></li>
 <li><p><a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a></p></li>
 <li><p><a class="reference internal" href="other_libraries.html"><span class="doc">Other POMDP Libraries</span></a></p></li>
+<li><p><a class="reference internal" href="simple_rl_integration.html"><span class="doc">Integration with simple_rl</span></a></p></li>
+<li><p><a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a></p></li>
 </ul>
 <div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
+<p>If you find this library helpful to your work, please cite the <a class="reference external" href="https://arxiv.org/pdf/2004.10099.pdf">following paper</a></p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">zheng2020pomdp_py</span><span class="p">,</span>
+   <span class="na">title</span> <span class="p">=</span> <span class="s">{pomdp\_py: A Framework to Build and Solve POMDP Problems}</span><span class="p">,</span>
+   <span class="na">author</span> <span class="p">=</span> <span class="s">{Zheng, Kaiyu and Tellex, Stefanie}</span><span class="p">,</span>
+   <span class="na">booktitle</span> <span class="p">=</span> <span class="s">{ICAPS 2020 Workshop on Planning and Robotics (PlanRob)}</span><span class="p">,</span>
+   <span class="na">year</span> <span class="p">=</span> <span class="s">{2020}</span><span class="p">,</span>
+   <span class="na">url</span> <span class="p">=</span> <span class="s">{https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/14-PlanRob_2020_paper_3.pdf}</span><span class="p">,</span>
+   <span class="na">note</span> <span class="p">=</span> <span class="s">{Arxiv link: &quot;\url{https://arxiv.org/pdf/2004.10099.pdf}&quot;}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="api-references">
@@ -203,7 +219,7 @@ The Tiger example represents how one could quickly implement a simple POMDP; The
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 <p id="bibtex-bibliography-index-0"><dl class="citation">
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">7</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 </dl>

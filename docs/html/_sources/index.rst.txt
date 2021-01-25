@@ -25,30 +25,46 @@ Getting Started
 * :doc:`installation`
 * :doc:`examples` (:doc:`examples.tiger`, :doc:`examples.mos`).
   The Tiger example represents how one could quickly implement a simple POMDP; The Multi-Object Search domain represents how one may structure their project (as a convention) when using `pomdp_py` for more complicated domains.
-  
+
 * :doc:`design_principles`
 * :doc:`existing_solvers`
-* :doc:`extensions`
-* :doc:`simple_rl_integration`
+* :doc:`examples.external_solvers`
 
 Further
 -------
 * :doc:`design_principles`
 * :doc:`existing_solvers`
 * :doc:`extensions`
-* :doc:`other_libraries`  
+* :doc:`other_libraries`
+* :doc:`simple_rl_integration`
+* :doc:`extensions`
 
 .. toctree::
    :maxdepth: 2
-   :caption: Overview              
+   :caption: Overview
    :hidden:
 
    installation
    examples
    design_principles
    existing_solvers
-   extensions         
- 
+   extensions
+
+
+Citation
+--------
+If you find this library helpful to your work, please cite the `following paper <https://arxiv.org/pdf/2004.10099.pdf>`_
+
+.. code-block:: bibtex
+
+ @inproceedings{zheng2020pomdp_py,
+    title = {pomdp\_py: A Framework to Build and Solve POMDP Problems},
+    author = {Zheng, Kaiyu and Tellex, Stefanie},
+    booktitle = {ICAPS 2020 Workshop on Planning and Robotics (PlanRob)},
+    year = {2020},
+    url = {https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/14-PlanRob_2020_paper_3.pdf},
+    note = {Arxiv link: "\url{https://arxiv.org/pdf/2004.10099.pdf}"}
+ }
 
 API References
 --------------
@@ -57,7 +73,7 @@ API References
    :caption: API References
 
    api/modules
-   problems/modules   
+   problems/modules
 
 Tools
 -----
