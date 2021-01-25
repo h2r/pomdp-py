@@ -131,4 +131,6 @@ def sarsop(agent, pomdpsol_path,
     if remove_generated_files:
         os.remove(pomdp_path)
         os.remove(policy_path)
+    if logfile is not None:
+        logf.close()
     return policy
