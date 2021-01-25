@@ -8,7 +8,7 @@ pomdp_py
 Please refer to the `full documentation <https://h2r.github.io/pomdp-py>`_ and `installation instructions <https://h2r.github.io/pomdp-py/html/installation.html>`_.
 
 
-If you find this library helpful to your work, please cite the `following paper <https://arxiv.org/pdf/2004.10099.pdf>`_::b
+If you find this library helpful to your work, please cite the `following paper <https://arxiv.org/pdf/2004.10099.pdf>`_::
 
     @inproceedings{zheng2020pomdp_py,
       title = {pomdp\_py: A Framework to Build and Solve POMDP Problems},
