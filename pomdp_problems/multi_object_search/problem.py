@@ -36,7 +36,7 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
             robot_id (int or str): the id of the agent that will solve this MosOOPOMDP.
                 If it is a `str`, it will be interpreted as an integer using `interpret_robot_id`
                 in env/env.py.
-            env (MosEnvironment): the environment. 
+            env (MosEnvironment): the environment.
             grid_map (str): Search space description. See env/env.py:interpret. An example:
                 rx...
                 .x.xT
@@ -68,7 +68,7 @@ class MosOOPOMDP(pomdp_py.OOPOMDP):
             env = MosEnvironment(dim,
                           init_state, sensors,
                           obstacles=obstacles)
-            
+
         # construct prior
         if type(prior) == str:
             if prior == "uniform":
@@ -121,7 +121,7 @@ def belief_update(agent, real_action, real_observation, next_robot_state, planne
                 else:
                     # This is doing
                     #    B(si') = normalizer * O(oi|si',sr',a) * sum_s T(si'|s,a)*B(si)
-                    # 
+                    #
                     # Notes: First, objects are static; Second,
                     # O(oi|s',a) ~= O(oi|si',sr',a) according to the definition
                     # of the observation model in models/observation.py.  Note
@@ -157,7 +157,7 @@ def belief_update(agent, real_action, real_observation, next_robot_state, planne
             else:
                 raise ValueError("Unexpected program state."\
                                  "Are you using the appropriate belief representation?")
-            
+
             agent.cur_belief.set_object_belief(objid, new_belief)
 
 
@@ -200,7 +200,7 @@ def solve(problem,
     else:
         raise ValueError("Unsupported object belief type %s" % str(type(random_object_belief)))
 
-    robot_id = problem.agent.robot_id    
+    robot_id = problem.agent.robot_id
     if visualize:
         viz = MosViz(problem.env, controllable=False)  # controllable=False means no keyboard control.
         if viz.on_init() == False:
@@ -209,7 +209,7 @@ def solve(problem,
                    None,
                    None,
                    None,
-                   problem.agent.cur_belief)        
+                   problem.agent.cur_belief)
         viz.on_render()
 
     _time_used = 0
@@ -252,7 +252,7 @@ def solve(problem,
         print("Find Actions Count: %d" %  _find_actions_count)
         if isinstance(planner, pomdp_py.POUCT):
             print("__num_sims__: %d" % planner.last_num_sims)
-            
+
         if visualize:
             # This is used to show the sensing range; Not sampled
             # according to observation model.
@@ -269,7 +269,7 @@ def solve(problem,
                        problem.agent.cur_belief)
             viz.on_loop()
             viz.on_render()
-            
+
         # Termination check
         if set(problem.env.state.object_states[robot_id].objects_found)\
            == problem.env.target_objects:
@@ -281,16 +281,16 @@ def solve(problem,
         if _time_used > max_time:
             print("Maximum time reached.")
             break
-            
+
 # Test
 def unittest():
     # random world
-    grid_map, robot_char = random_world(20, 20, 5, 20)
-    laserstr = make_laser_sensor(90, (1, 5), 0.5, False)
-    proxstr = make_proximity_sensor(5, False)    
+    grid_map, robot_char = random_world(10, 10, 5, 10)
+    laserstr = make_laser_sensor(90, (1, 4), 0.5, False)
+    proxstr = make_proximity_sensor(4, False)
     problem = MosOOPOMDP(robot_char,  # r is the robot character
-                         sigma=0.01,  # observation model parameter
-                         epsilon=1.0, # observation model parameter
+                         sigma=0.05,  # observation model parameter
+                         epsilon=0.95, # observation model parameter
                          grid_map=grid_map,
                          sensors={robot_char: proxstr},
                          prior="uniform",
