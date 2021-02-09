@@ -1,6 +1,6 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 import sys
-import random
+import random as rand
 import numpy as np
 
 cdef class Histogram(GenerativeDistribution):
@@ -72,7 +72,7 @@ cdef class Histogram(GenerativeDistribution):
         """
         return max(self._histogram, key=self._histogram.get)
 
-    def random(self):
+    def random(self, rnd=rand):
         """
         random(self)
         Randomly sample a value based on the probability
@@ -83,8 +83,10 @@ cdef class Histogram(GenerativeDistribution):
             prob_dist.append(self._histogram[value])
         if sys.version_info[0] >= 3 and sys.version_info[1] >= 6:
             # available in Python 3.6+
-            return random.choices(candidates, weights=prob_dist, k=1)[0]
+            return rnd.choices(candidates, weights=prob_dist, k=1)[0]
         else:
+            print("Warning: Histogram.random() using np.random"\
+                  "due to old Python version (<3.6). Random seed ignored.")
             return np.random.choice(candidates, 1, p=prob_dist)[0]
 
     def get_histogram(self):
