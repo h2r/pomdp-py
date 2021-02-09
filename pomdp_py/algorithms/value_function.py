@@ -11,9 +11,9 @@ def value(b, S, A, Z, T, O, R, gamma, horizon=1):
 
     Args:
         b (dict or Histogram): belief state, maps from every state in S to a probability
-        S (set): A set of states
-        A (set): A set of actions
-        Z (set): A set of observations
+        S (list): A list of states
+        A (list): A list of actions
+        Z (list): A list of observations
         T (TransitionModel): The pomdp_py.TransitionModel where probability is defined
         O (ObservationModel): The pomdp_py.ObservationModel where probability is defined
         R (RewardModel): The pomdp_py.RewardModel: deterministic
@@ -23,6 +23,9 @@ def value(b, S, A, Z, T, O, R, gamma, horizon=1):
     Returns:
         float: value at belief
     """
+    assert type(S) == list, "S must be a list"
+    assert type(A) == list, "A must be a list"
+    assert type(Z) == list, "Z must be a list"
     max_qvalue = float('-inf')
     for a in A:
         # Compute Q(b,a)
