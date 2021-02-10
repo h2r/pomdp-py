@@ -45,7 +45,7 @@ def vi_pruning(agent, pomdp_solve_path,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        print("S, A, O must be enumerable for a given agent to convert to .pomdp format")
+        raise("S, A, O must be enumerable for a given agent to convert to .pomdp format")
 
     pomdp_path = "./%s.pomdp" % pomdp_name
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
@@ -98,7 +98,7 @@ def sarsop(agent, pomdpsol_path,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        print("S, A, O must be enumerable for a given agent to convert to .pomdpx format")
+        raise("S, A, O must be enumerable for a given agent to convert to .pomdpx format")
 
     if logfile is None:
         stdout = None
