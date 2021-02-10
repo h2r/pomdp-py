@@ -39,7 +39,7 @@ def to_pomdp_file(agent, output_path=None,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        print("S, A, O must be enumerable for a given agent to convert to .pomdp format")
+        raise ValueError("S, A, O must be enumerable for a given agent to convert to .pomdp format")
 
     content = "discount: %f\n" % discount_factor
     content += "values: reward\n" # We only consider reward, not cost.
