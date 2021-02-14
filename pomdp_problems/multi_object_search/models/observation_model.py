@@ -180,6 +180,8 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             zi = (int(round(zi[0])), int(round(zi[1])))
 
         elif event == "B":
+            # TODO: FIX. zi should ONLY come from the field of view.
+            # There is currently no easy way to sample from the field of view.
             width, height = self._dim
             zi = (random.randint(0, width),   # x axis
                   random.randint(0, height))  # y axis
