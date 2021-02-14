@@ -1,4 +1,7 @@
-### Version 1.2.2 (pending)
+### Version 1.2.2.1
+* Updated documentation for external library interfacing. Added citation.
+
+### Version 1.2.2
 * Resolved [issue #10](https://github.com/h2r/pomdp-py/issues/10).
   Set value in V-Node to be the max among its children Q-Nodes.
   Initial V-Node value set to negative infinity.

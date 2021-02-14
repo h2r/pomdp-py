@@ -125,7 +125,7 @@
 
 <span class="sd">Description:</span>
 
-<span class="sd">State space: </span>
+<span class="sd">State space:</span>
 
 <span class="sd">    Position {(1,1),(1,2),...(n,n)}</span>
 <span class="sd">    :math:`\\times` RockType_1 :math:`\\times` RockType_2, ..., :math:`\\times` RockType_k</span>
@@ -172,7 +172,7 @@
             <span class="k">return</span> <span class="s1">&#39;bad&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;good&#39;</span></div>
-        <span class="c1"># return 1 - rocktype </span>
+        <span class="c1"># return 1 - rocktype</span>
 <div class="viewcode-block" id="RockType.random"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RockType.random">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">p</span><span class="p">:</span>
@@ -196,7 +196,7 @@
             <span class="n">rocktypes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rocktypes</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rocktypes</span> <span class="o">=</span> <span class="n">rocktypes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="n">terminal</span>
-        
+
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rocktypes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal</span><span class="p">))</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -206,10 +206,10 @@
                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">terminal</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        
+
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
-    
+
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;State(</span><span class="si">%s</span><span class="s2"> | </span><span class="si">%s</span><span class="s2"> | </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rocktypes</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal</span><span class="p">))</span></div>
 
@@ -232,19 +232,19 @@
 <div class="viewcode-block" id="MoveAction"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.MoveAction">[docs]</a><span class="k">class</span> <span class="nc">MoveAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
     <span class="n">EAST</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># x is horizontal; x+ is right. y is vertical; y+ is up.</span>
     <span class="n">WEST</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">NORTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">SOUTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">):</span>
+    <span class="n">NORTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOUTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">motion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="n">MoveAction</span><span class="o">.</span><span class="n">WEST</span><span class="p">,</span>
                           <span class="n">MoveAction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="n">MoveAction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">}:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid move motion </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">motion</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">motion</span> <span class="o">=</span> <span class="n">motion</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;move-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">motion</span><span class="p">))</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;move-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
 
-<span class="n">MoveEast</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">EAST</span><span class="p">)</span>
-<span class="n">MoveWest</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">WEST</span><span class="p">)</span>
-<span class="n">MoveNorth</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">)</span>
-<span class="n">MoveSouth</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">)</span>
+<span class="n">MoveEast</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="s2">&quot;EAST&quot;</span><span class="p">)</span>
+<span class="n">MoveWest</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">WEST</span><span class="p">,</span> <span class="s2">&quot;WEST&quot;</span><span class="p">)</span>
+<span class="n">MoveNorth</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="s2">&quot;NORTH&quot;</span><span class="p">)</span>
+<span class="n">MoveSouth</span> <span class="o">=</span> <span class="n">MoveAction</span><span class="p">(</span><span class="n">MoveAction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">,</span> <span class="s2">&quot;SOUTH&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SampleAction"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.SampleAction">[docs]</a><span class="k">class</span> <span class="nc">SampleAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -269,7 +269,7 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quality</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Observation(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quality</span><span class="p">)</span></div>
-    
+
 <div class="viewcode-block" id="RSTransitionModel"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSTransitionModel">[docs]</a><span class="k">class</span> <span class="nc">RSTransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot; The model is deterministic &quot;&quot;&quot;</span>
@@ -290,7 +290,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">motion</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
                     <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">action</span><span class="o">.</span><span class="n">motion</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="o">-</span><span class="mi">1</span><span class="p">))),</span> <span class="kc">False</span>
-    
+
 <div class="viewcode-block" id="RSTransitionModel.probability"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSTransitionModel.probability">[docs]</a>    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">next_state</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">EPSILON</span>
@@ -352,7 +352,7 @@
             <span class="n">rock_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rocks</span><span class="p">[</span><span class="n">action</span><span class="o">.</span><span class="n">rock_id</span><span class="p">]</span>
             <span class="n">dist</span> <span class="o">=</span> <span class="n">euclidean_dist</span><span class="p">(</span><span class="n">rock_pos</span><span class="p">,</span> <span class="n">next_state</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
             <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_efficiency_dist</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.5</span>
-            
+
             <span class="k">if</span> <span class="n">argmax</span><span class="p">:</span>
                 <span class="n">keep</span> <span class="o">=</span> <span class="n">eta</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
             <span class="k">else</span><span class="p">:</span>
@@ -367,7 +367,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Terminated or not a check action. So no observation.</span>
             <span class="k">return</span> <span class="n">Observation</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_probs</span><span class="p">[</span><span class="n">next_state</span><span class="p">][</span><span class="n">action</span><span class="p">][</span><span class="n">observation</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="RSObservationModel.argmax"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSObservationModel.argmax">[docs]</a>    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
@@ -378,7 +378,7 @@
 <div class="viewcode-block" id="RSRewardModel"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSRewardModel">[docs]</a><span class="k">class</span> <span class="nc">RSRewardModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RewardModel</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rock_locs</span><span class="p">,</span> <span class="n">in_exit_area</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rock_locs</span> <span class="o">=</span> <span class="n">rock_locs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_in_exit_area</span> <span class="o">=</span> <span class="n">in_exit_area</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_in_exit_area</span> <span class="o">=</span> <span class="n">in_exit_area</span>
 
 <div class="viewcode-block" id="RSRewardModel.sample"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSRewardModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># deterministic</span>
@@ -402,21 +402,23 @@
 
 <div class="viewcode-block" id="RSRewardModel.argmax"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSRewardModel.argmax">[docs]</a>    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-    
+
 <div class="viewcode-block" id="RSRewardModel.probability"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSRewardModel.probability">[docs]</a>    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
-        
+
 
 <div class="viewcode-block" id="RSPolicyModel"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSPolicyModel">[docs]</a><span class="k">class</span> <span class="nc">RSPolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RolloutPolicy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simple policy model according to problem description.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
         <span class="n">check_actions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">({</span><span class="n">CheckAction</span><span class="p">(</span><span class="n">rock_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">rock_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span> <span class="o">=</span> <span class="p">{</span><span class="n">MoveEast</span><span class="p">,</span> <span class="n">MoveWest</span><span class="p">,</span> <span class="n">MoveNorth</span><span class="p">,</span> <span class="n">MoveSouth</span><span class="p">,</span>
-                             <span class="n">SampleAction</span><span class="p">()}</span> <span class="o">|</span> <span class="n">check_actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_move_actions</span> <span class="o">=</span> <span class="p">{</span><span class="n">MoveEast</span><span class="p">,</span> <span class="n">MoveWest</span><span class="p">,</span> <span class="n">MoveNorth</span><span class="p">,</span> <span class="n">MoveSouth</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_other_actions</span> <span class="o">=</span> <span class="p">{</span><span class="n">SampleAction</span><span class="p">()}</span> <span class="o">|</span> <span class="n">check_actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_move_actions</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">_other_actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="n">n</span>
 
 <div class="viewcode-block" id="RSPolicyModel.sample"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSPolicyModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
-    
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="RSPolicyModel.probability"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSPolicyModel.probability">[docs]</a>    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
@@ -425,12 +427,24 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="RSPolicyModel.get_all_actions"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSPolicyModel.get_all_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span></div>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">motions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span><span class="p">)</span>
+            <span class="n">rover_x</span><span class="p">,</span> <span class="n">rover_y</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">position</span>
+            <span class="k">if</span> <span class="n">rover_x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">motions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">MoveWest</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rover_y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">motions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">MoveNorth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rover_y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">motions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">MoveSouth</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">motions</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">_other_actions</span></div>
 
 <div class="viewcode-block" id="RSPolicyModel.rollout"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RSPolicyModel.rollout">[docs]</a>    <span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_actions</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div></div>
 
-    
+
 <div class="viewcode-block" id="RockSampleProblem"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RockSampleProblem">[docs]</a><span class="k">class</span> <span class="nc">RockSampleProblem</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMDP</span><span class="p">):</span>
 
 <div class="viewcode-block" id="RockSampleProblem.random_free_location"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.RockSampleProblem.random_free_location">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -472,7 +486,7 @@
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
                 <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">:</span>
-                    <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>             
+                    <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rock_locs</span><span class="p">:</span>
                     <span class="n">char</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rock_locs</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)])</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">rover_position</span><span class="p">:</span>
@@ -485,7 +499,7 @@
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
                 <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">:</span>
-                    <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>             
+                    <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rock_locs</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">rocktypes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_rock_locs</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)]]</span> <span class="o">==</span> <span class="n">RockType</span><span class="o">.</span><span class="n">GOOD</span><span class="p">:</span>
                         <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;$&quot;</span>
@@ -500,7 +514,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">rock_locs</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">=</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span>
         <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Agent</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span>
-                               <span class="n">RSPolicyModel</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>
+                               <span class="n">RSPolicyModel</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">),</span>
                                <span class="n">RSTransitionModel</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">rock_locs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_exit_area</span><span class="p">),</span>
                                <span class="n">RSObservationModel</span><span class="p">(</span><span class="n">rock_locs</span><span class="p">),</span>
                                <span class="n">RSRewardModel</span><span class="p">(</span><span class="n">rock_locs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_exit_area</span><span class="p">))</span>
@@ -518,14 +532,14 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
-        
+
         <span class="c1"># pomdp_py.visual.visualize_pouct_search_tree(rocksample.agent.tree,</span>
         <span class="c1">#                                             max_depth=5, anonymize=False)</span>
-        
+
         <span class="n">true_state</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
         <span class="n">env_reward</span> <span class="o">=</span> <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">true_next_state</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-        
+
         <span class="n">real_observation</span> <span class="o">=</span> <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">provide_observation</span><span class="p">(</span><span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="p">,</span>
                                                               <span class="n">action</span><span class="p">)</span>
         <span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">update_history</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
@@ -550,7 +564,7 @@
         <span class="k">if</span> <span class="n">rocksample</span><span class="o">.</span><span class="n">in_exit_area</span><span class="p">(</span><span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">position</span><span class="p">):</span>
             <span class="k">break</span>
     <span class="k">return</span> <span class="n">total_reward</span><span class="p">,</span> <span class="n">total_discounted_reward</span></div>
-        
+
 
 <div class="viewcode-block" id="init_particles_belief"><a class="viewcode-back" href="../../../problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.init_particles_belief">[docs]</a><span class="k">def</span> <span class="nf">init_particles_belief</span><span class="p">(</span><span class="n">num_particles</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">belief</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">):</span>
     <span class="n">num_particles</span> <span class="o">=</span> <span class="mi">200</span>
@@ -566,48 +580,46 @@
         <span class="n">particles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">State</span><span class="p">(</span><span class="n">init_state</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">rocktypes</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
     <span class="n">init_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Particles</span><span class="p">(</span><span class="n">particles</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">init_belief</span></div>
-    
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
     <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span>
     <span class="n">init_state</span><span class="p">,</span> <span class="n">rock_locs</span> <span class="o">=</span> <span class="n">RockSampleProblem</span><span class="o">.</span><span class="n">generate_instance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-    <span class="n">init_state_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">init_state</span><span class="p">)</span>
+    <span class="c1"># # For debugging purpose</span>
+    <span class="c1"># n, k = 2,2</span>
+    <span class="c1"># rover_position = (0, 0)</span>
+    <span class="c1"># rock_locs = {}  # map from rock location to rock id</span>
+    <span class="c1"># rock_locs[(0,1)] = 0</span>
+    <span class="c1"># rock_locs[(1,1)] = 1</span>
+    <span class="c1"># rocktypes = (&#39;good&#39;, &#39;good&#39;)</span>
+    <span class="c1"># Ground truth state</span>
+    <span class="c1"># init_state = State(rover_position, rocktypes, False)</span>
+    <span class="c1"># belief = &quot;uniform&quot;</span>
 
     <span class="n">belief</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span>
+
+    <span class="n">init_state_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">init_state</span><span class="p">)</span>
 
     <span class="c1"># init belief (uniform), represented in particles;</span>
     <span class="c1"># We don&#39;t factor the state here; We are also not doing any action prior.</span>
     <span class="n">init_belief</span> <span class="o">=</span> <span class="n">init_particles_belief</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">belief</span><span class="o">=</span><span class="n">belief</span><span class="p">)</span>
-    
+
     <span class="n">rocksample</span> <span class="o">=</span> <span class="n">RockSampleProblem</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">rock_locs</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">)</span>
     <span class="n">rocksample</span><span class="o">.</span><span class="n">print_state</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*** Testing POMCP ***&quot;</span><span class="p">)</span>
-    <span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
+    <span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">,</span>
+                           <span class="n">num_visits_init</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">tt</span><span class="p">,</span> <span class="n">ttd</span> <span class="o">=</span> <span class="n">test_planner</span><span class="p">(</span><span class="n">rocksample</span><span class="p">,</span> <span class="n">pomcp</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">discount</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
-    
+
     <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">init_state_copy</span><span class="o">.</span><span class="n">position</span>
     <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">rocktypes</span> <span class="o">=</span> <span class="n">init_state_copy</span><span class="o">.</span><span class="n">rocktypes</span>
     <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">init_belief</span> <span class="o">=</span> <span class="n">init_particles_belief</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">rocksample</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">belief</span><span class="o">=</span><span class="n">belief</span><span class="p">)</span>
     <span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">init_belief</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*** Testing PO-rollout ***&quot;</span><span class="p">)</span>
-    <span class="n">poroll</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">PORollout</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                                <span class="n">num_sims</span><span class="o">=</span><span class="mi">2500</span><span class="p">,</span>
-                                <span class="n">particles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                <span class="n">rollout_policy</span><span class="o">=</span><span class="n">rocksample</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
-    <span class="n">tt</span><span class="p">,</span> <span class="n">ttd</span> <span class="o">=</span> <span class="n">test_planner</span><span class="p">(</span><span class="n">rocksample</span><span class="p">,</span> <span class="n">poroll</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">discount</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
-    
-
-    <span class="c1"># Some notes:</span>
-    <span class="c1"># When the world is too small, the robot seems to just prefer</span>
-    <span class="c1"># going to the EAST and collect the 10 reward. But when the world</span>
-    <span class="c1"># is not so small, such as 7,8, the robot chooses to do a lot of</span>
-    <span class="c1"># checking. This is kind of interesting.</span>
-
 </pre></div>
 
           </div>

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.utils.interfaces.solvers &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.utils.interfaces.solvers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">`pomdp_py &lt;https://h2r.github.io/pomdp-py/html/&gt;`_ provides function calls to use external solvers,</span>
+<span class="sd">given a POMDP defined using pomdp_py interfaces. Currently, we interface with:</span>
+
+<span class="sd">* `pomdp-solve &lt;http://www.pomdp.org/code/index.html&gt;`_ by Anthony R. Cassandra</span>
+<span class="sd">* `SARSOP &lt;https://github.com/AdaCompNUS/sarsop&gt;`_ by NUS</span>
+
+<span class="sd">We hope to interface with:</span>
+
+<span class="sd">* `POMDP.jl &lt;https://github.com/JuliaPOMDP/POMDPs.jl&gt;`_</span>
+<span class="sd">* more? Help us if you can!</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.utils.interfaces.conversion</span>\
+    <span class="kn">import</span> <span class="nn">to_pomdp_file</span><span class="o">,</span> <span class="nn">PolicyGraph</span><span class="o">,</span> <span class="nn">AlphaVectorPolicy</span><span class="o">,</span> <span class="nn">parse_pomdp_solve_output</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="vi_pruning"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.solvers.vi_pruning">[docs]</a><span class="k">def</span> <span class="nf">vi_pruning</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_solve_path</span><span class="p">,</span>
+               <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+               <span class="n">options</span><span class="o">=</span><span class="p">[],</span>
+               <span class="n">pomdp_name</span><span class="o">=</span><span class="s2">&quot;temp-pomdp&quot;</span><span class="p">,</span>
+               <span class="n">remove_generated_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">return_policy_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Value Iteration with pruning, using the software pomdp-solve</span>
+<span class="sd">    https://www.pomdp.org/code/ developed by Anthony R. Cassandra.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agent (pomdp_py.Agent): The agent that contains the POMDP definition</span>
+<span class="sd">        pomdp_solve_path (str): Path to the `pomdp_solve` binary generated after</span>
+<span class="sd">            compiling the pomdp-solve library.</span>
+<span class="sd">        options (list): Additional options to pass in to the command line interface.</span>
+<span class="sd">             The options should be a list of strings, such as [&quot;-stop_criteria&quot;, &quot;weak&quot;, ...]</span>
+<span class="sd">             Some useful options are:</span>
+<span class="sd">                 -horizon &lt;int&gt;</span>
+<span class="sd">                 -time_limit &lt;int&gt;</span>
+<span class="sd">        pomdp_name (str): The name used to create the .pomdp file.</span>
+<span class="sd">        remove_generated_files (bool): True if after policy is computed,</span>
+<span class="sd">            the .pomdp, .alpha, .pg files are removed. Default is False.</span>
+<span class="sd">        return_policy_graph (bool): True if return the policy as a PolicyGraph.</span>
+<span class="sd">            By default is False, in which case an AlphaVectorPolicy is returned.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       PolicyGraph or AlphaVectorPolicy: The policy returned by the solver.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_states</span><span class="p">)</span>
+        <span class="n">all_actions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_actions</span><span class="p">)</span>
+        <span class="n">all_observations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_observations</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S, A, O must be enumerable for a given agent to convert to .pomdp format&quot;</span><span class="p">)</span>
+
+    <span class="n">pomdp_path</span> <span class="o">=</span> <span class="s2">&quot;./</span><span class="si">%s</span><span class="s2">.pomdp&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span>
+    <span class="n">to_pomdp_file</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="n">pomdp_solve_path</span><span class="p">,</span>
+                             <span class="s2">&quot;-pomdp&quot;</span><span class="p">,</span> <span class="n">pomdp_path</span><span class="p">,</span>
+                             <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">pomdp_name</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">options</span><span class="p">)))</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="c1"># Read the value and policy graph files</span>
+    <span class="n">alpha_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.alpha&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span>
+    <span class="n">pg_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.pg&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span>
+    <span class="k">if</span> <span class="n">return_policy_graph</span><span class="p">:</span>
+        <span class="n">policy</span> <span class="o">=</span> <span class="n">PolicyGraph</span><span class="o">.</span><span class="n">construct</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">,</span> <span class="n">pg_path</span><span class="p">,</span>
+                                       <span class="n">all_states</span><span class="p">,</span> <span class="n">all_actions</span><span class="p">,</span> <span class="n">all_observations</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">policy</span> <span class="o">=</span> <span class="n">AlphaVectorPolicy</span><span class="o">.</span><span class="n">construct</span><span class="p">(</span>
+            <span class="n">alpha_path</span><span class="p">,</span> <span class="n">all_states</span><span class="p">,</span> <span class="n">all_actions</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;pomdp-solve&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Remove temporary files</span>
+    <span class="k">if</span> <span class="n">remove_generated_files</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pomdp_path</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">alpha_path</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pg_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">policy</span></div>
+
+
+<div class="viewcode-block" id="sarsop"><a class="viewcode-back" href="../../../../examples.external_solvers.html#pomdp_py.utils.interfaces.solvers.sarsop">[docs]</a><span class="k">def</span> <span class="nf">sarsop</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdpsol_path</span><span class="p">,</span>
+           <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+           <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+           <span class="n">precision</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+           <span class="n">pomdp_name</span><span class="o">=</span><span class="s2">&quot;temp-pomdp&quot;</span><span class="p">,</span>
+           <span class="n">remove_generated_files</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SARSOP, using the binary from https://github.com/AdaCompNUS/sarsop</span>
+<span class="sd">    This is an anytime POMDP planning algorithm</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agent (pomdp_py.Agent): The agent that defines the POMDP models</span>
+<span class="sd">        pomdpsol_path (str): Path to the `pomdpsol` binary</span>
+<span class="sd">        timeout (int): The time limit (seconds) to run the algorithm until termination</span>
+<span class="sd">        memory (int): The memory size (mb) to run the algorithm until termination</span>
+<span class="sd">        precision (float): solver runs until regret is less than `precision`</span>
+<span class="sd">    Returns:</span>
+<span class="sd">       AlphaVectorPolicy: The policy returned by the solver.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">all_states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_states</span><span class="p">)</span>
+        <span class="n">all_actions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_actions</span><span class="p">)</span>
+        <span class="n">all_observations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_observations</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S, A, O must be enumerable for a given agent to convert to .pomdpx format&quot;</span><span class="p">)</span>
+
+    <span class="n">pomdp_path</span> <span class="o">=</span> <span class="s2">&quot;./</span><span class="si">%s</span><span class="s2">.pomdp&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span>
+    <span class="n">to_pomdp_file</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="n">discount_factor</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="n">pomdpsol_path</span><span class="p">,</span>
+                             <span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span>
+                             <span class="s2">&quot;--memory&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory</span><span class="p">),</span>
+                             <span class="s2">&quot;--precision&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">precision</span><span class="p">),</span>
+                             <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.policy&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span><span class="p">,</span>
+                             <span class="n">pomdp_path</span><span class="p">])</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="n">policy_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.policy&quot;</span> <span class="o">%</span> <span class="n">pomdp_name</span>
+    <span class="n">policy</span> <span class="o">=</span> <span class="n">AlphaVectorPolicy</span><span class="o">.</span><span class="n">construct</span><span class="p">(</span><span class="n">policy_path</span><span class="p">,</span>
+                                         <span class="n">all_states</span><span class="p">,</span> <span class="n">all_actions</span><span class="p">)</span>
+
+    <span class="c1"># Remove temporary files</span>
+    <span class="k">if</span> <span class="n">remove_generated_files</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pomdp_path</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">policy_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">policy</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

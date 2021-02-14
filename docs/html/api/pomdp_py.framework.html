@@ -367,15 +367,15 @@ is the given <cite>action</cite>, and <span class="math notranslate nohighlight"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>observation_model</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><em>ObservationModel</em></a>) – </p></li>
-<li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – </p></li>
+<li><p><strong>observation_model</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.observation_model.ObservationModel" title="pomdp_problems.light_dark.models.observation_model.ObservationModel"><em>ObservationModel</em></a>) – </p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action"><em>Action</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>an observation sampled from <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.observation.Observation" title="pomdp_problems.light_dark.domain.observation.Observation">Observation</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -400,7 +400,7 @@ then the resulting state will be the new current state of the environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – action that triggers the state transition</p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action"><em>Action</em></a>) – action that triggers the state transition</p></li>
 <li><p><strong>execute</strong> (<em>bool</em>) – If True, the resulting state of the transition will become the current state.</p></li>
 </ul>
 </dd>
@@ -516,7 +516,7 @@ distribution of this observation model.</p>
 <dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.observation.Observation" title="pomdp_problems.light_dark.domain.observation.Observation">Observation</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -630,7 +630,7 @@ distribution of this policy model.</p>
 <dd class="field-even"><p>the action <span class="math notranslate nohighlight">\(a\)</span></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action">Action</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action">Action</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -653,7 +653,7 @@ distribution of this policy model.</p>
 <dl class="method">
 <dt id="pomdp_py.framework.basics.RewardModel.argmax">
 <code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.RewardModel.argmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the most likely reward</p>
+<dd><p>Returns the most likely reward. This is optional.</p>
 </dd></dl>
 
 <dl class="method">
@@ -672,7 +672,7 @@ distribution of this policy model.</p>
 <li><p><strong>reward</strong> (<em>float</em>) – the reward <span class="math notranslate nohighlight">\(r\)</span></p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
-<li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State" title="pomdp_problems.light_dark.domain.state.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -688,13 +688,14 @@ distribution of this policy model.</p>
 <dt id="pomdp_py.framework.basics.RewardModel.sample">
 <code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.RewardModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns reward randomly sampled according to the
-distribution of this reward model.</p>
+distribution of this reward model. This is required,
+i.e. assumed to be implemented for a reward model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
-<li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State" title="pomdp_problems.light_dark.domain.state.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -775,7 +776,7 @@ distribution of this transition model.</p>
 <dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State" title="pomdp_problems.light_dark.domain.state.State">State</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -798,8 +799,8 @@ to these models).</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>agent</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><em>Agent</em></a>) – agent that supplies all the models</p></li>
-<li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – </p></li>
-<li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – </p></li>
+<li><p><strong>state</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State" title="pomdp_problems.light_dark.domain.state.State"><em>State</em></a>) – </p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action"><em>Action</em></a>) – </p></li>
 <li><p><strong>discount_factor</strong> (<em>float</em>) – Defaults to 1.0; Only used when <cite>action</cite> is an <a class="reference internal" href="#pomdp_py.framework.basics.Option" title="pomdp_py.framework.basics.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">Option</span></code></a>.</p></li>
 </ul>
 </dd>
@@ -887,7 +888,7 @@ That is, <span class="math notranslate nohighlight">\(z\mapsto z_1,\cdots,z_n\)<
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState" title="pomdp_py.framework.oopomdp.OOState"><em>OOState</em></a>) – given state</p></li>
-<li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – given action</p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action"><em>Action</em></a>) – given action</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -909,7 +910,7 @@ single OOObservation.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>object_observations</strong> (<em>dict</em>) – map from object id to a <cite>pomdp_py.Observation</cite>.</p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState" title="pomdp_py.framework.oopomdp.OOState"><em>OOState</em></a>) – given state</p></li>
-<li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – given action</p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../problems/pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.action.Action" title="pomdp_problems.light_dark.domain.action.Action"><em>Action</em></a>) – given action</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
