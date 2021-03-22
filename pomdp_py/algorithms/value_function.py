@@ -4,7 +4,25 @@ used as an exact value iteration algorithm.
 """
 import pomdp_py
 
-def value(b, S, A, Z, T, O, R, gamma, horizon=1):
+def value(b, *args, horizon=1):
+    """
+    Computes the value of a POMDP at belief state b
+    for a given pomdp. The `args` argument can be either
+    a dictionary or a sequence of arguments. If it is a
+    sequence of arguments, those should be in the same order
+    as the arguments for `_value`, that is, S, A, Z, T, O, R, gamma.
+    If it is a dictionary, then it is expected to contain S, A,
+    Z, T, O, R, gamma as its fields.
+    """
+    if len(args) > 1:
+        return _value(b, *args, horizon=horizon)
+    else:
+        pomdp = args[0]
+        return _value(b, pomdp["S"], pomdp["A"], pomdp["Z"],
+                      pomdp["T"], pomdp["O"], pomdp["R"], pomdp["gamma"],
+                      horizon=horizon)
+
+def _value(b, S, A, Z, T, O, R, gamma, horizon=1):
     """
     Computes the value of a POMDP at belief state b,
     given a POMDP defined by S, A, Z, T, O, R and gamma.
@@ -103,9 +121,9 @@ def create_case(noise=0.15, init_state="tiger-left"):
                                              State("tiger-right"): 0.5}))
     T = tiger.agent.transition_model
     O = tiger.agent.observation_model
-    S = T.get_all_states()
-    Z = O.get_all_observations()
-    A = tiger.agent.policy_model.get_all_actions()
+    S = list(T.get_all_states())
+    Z = list(O.get_all_observations())
+    A = list(tiger.agent.policy_model.get_all_actions())
     R = tiger.agent.reward_model
     gamma = 0.95
 
