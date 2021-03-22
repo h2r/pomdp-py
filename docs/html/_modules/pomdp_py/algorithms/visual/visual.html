@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.algorithms.visual.visual &#8212; pomdp_py 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../extensions.html">Use Case Extensions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.algorithms.visual.visual</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">networkx.drawing.nx_agraph</span> <span class="k">import</span> <span class="n">graphviz_layout</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="k">import</span> <span class="n">QNode</span><span class="p">,</span> <span class="n">VNode</span><span class="p">,</span> <span class="n">RootVNode</span><span class="p">,</span> <span class="n">util</span>
+
+<span class="c1"># ---- POMCP Visualization ---- #</span>
+
+<span class="k">def</span> <span class="nf">_build_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span>
+                 <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">max_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">relabel_actions</span><span class="o">=</span><span class="p">{},</span>
+                 <span class="n">relabel_observations</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">if</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="n">max_depth</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">relabel_observations</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="n">relabel_observations</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">relabel_actions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="n">relabel_actions</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">remap</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">,</span>
+                                <span class="mf">0.1</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span><span class="n">conn</span><span class="p">,</span>
+                                    <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">max_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_value</span><span class="p">,</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">min_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">num_visits</span> <span class="o">&gt;</span> <span class="n">visit_threshold</span><span class="p">:</span>
+            <span class="n">_build_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">root</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+                         <span class="n">max_value</span><span class="o">=</span><span class="n">max_value</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="n">min_value</span><span class="p">,</span>
+                         <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="n">visit_threshold</span><span class="p">,</span>
+                         <span class="n">relabel_actions</span><span class="o">=</span><span class="n">relabel_actions</span><span class="p">,</span> <span class="n">relabel_observations</span><span class="o">=</span><span class="n">relabel_observations</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_build_relabel_dict</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">observations</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Traverse the tree and collect unique actions and observations,</span>
+<span class="sd">    store them in dictionaries `actions` and `observations`. Requires</span>
+<span class="sd">    all observations and actions to be hashable.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="n">max_depth</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">conn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">conn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">:</span>
+                <span class="n">observations</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;o&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">observations</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">conn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+                <span class="n">actions</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">actions</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">num_visits</span> <span class="o">&gt;</span> <span class="n">visit_threshold</span><span class="p">:</span>
+            <span class="n">_build_relabel_dict</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">c</span><span class="p">,</span>  <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">observations</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="n">visit_threshold</span><span class="p">)</span>
+
+<div class="viewcode-block" id="visualize_pouct_search_tree"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree">[docs]</a><span class="k">def</span> <span class="nf">visualize_pouct_search_tree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">visit_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">anonymize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">anonymize_actions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">anonymize_observations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_dot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualize the given tree up to depth `max_depth`. Display nodes</span>
+<span class="sd">    with number of visits &gt;= `visit_threshold`.</span>
+
+<span class="sd">    If anonymize is True, will only display actions as a1,a2,... and observations</span>
+<span class="sd">    as o1,o2,... .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">relabel_actions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">relabel_observations</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">anonymize</span><span class="p">:</span>
+        <span class="n">anonymize_actions</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">anonymize_observations</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">anonymize_actions</span> <span class="ow">or</span> <span class="n">anonymize_observations</span><span class="p">:</span>
+        <span class="n">_build_relabel_dict</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">relabel_actions</span><span class="p">,</span> <span class="n">relabel_observations</span><span class="p">,</span>
+                            <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="n">visit_threshold</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---- Action labels ----&quot;</span><span class="p">)</span>
+        <span class="n">action_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">relabel_actions</span><span class="p">[</span><span class="n">action</span><span class="p">]:</span><span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">relabel_actions</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">action_map</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">action_map</span><span class="p">[</span><span class="n">label</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---- Observation labels ----&quot;</span><span class="p">)</span>
+        <span class="n">observation_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">relabel_observations</span><span class="p">[</span><span class="n">ob</span><span class="p">]:</span><span class="n">ob</span> <span class="k">for</span> <span class="n">ob</span> <span class="ow">in</span> <span class="n">relabel_observations</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">observation_map</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">observation_map</span><span class="p">[</span><span class="n">label</span><span class="p">]))</span>        
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">anonymize_actions</span><span class="p">:</span>
+        <span class="n">relabel_actions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">anonymize_observations</span><span class="p">:</span>
+        <span class="n">relabel_observations</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># Build a networkx graph.</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">_build_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="n">visit_threshold</span><span class="p">,</span>
+                 <span class="n">relabel_actions</span><span class="o">=</span><span class="n">relabel_actions</span><span class="p">,</span> <span class="n">relabel_observations</span><span class="o">=</span><span class="n">relabel_observations</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">use_dot</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">output_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Please provide output .dot file.&quot;</span><span class="p">)</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">nx_agraph</span><span class="o">.</span><span class="n">write_dot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dot file saved at </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">output_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please run `dot -Tpng </span><span class="si">%s</span><span class="s2"> &gt; </span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node_labels</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">color_map</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+            <span class="n">belief_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;belief&quot;</span><span class="p">):</span>
+                <span class="n">belief_str</span> <span class="o">=</span> <span class="s2">&quot; | </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">belief</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">RootVNode</span><span class="p">):</span>
+                <span class="n">color_map</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;cyan&quot;</span><span class="p">)</span>
+                <span class="n">node_labels</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;R(</span><span class="si">%d</span><span class="s2"> | </span><span class="si">%.2f%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">belief_str</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
+                <span class="n">color_map</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+                <span class="n">node_labels</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;V(</span><span class="si">%d</span><span class="s2"> | </span><span class="si">%.2f%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">belief_str</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">color_map</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+                <span class="n">node_labels</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Q(</span><span class="si">%d</span><span class="s2"> | </span><span class="si">%.2f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">edge_labels</span> <span class="o">=</span> <span class="p">{(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span> <span class="n">edge</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
+        <span class="n">edge_widths</span> <span class="o">=</span> <span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+        
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">graphviz_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;dot&#39;</span><span class="p">)</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+                         <span class="n">node_color</span><span class="o">=</span><span class="n">color_map</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">node_labels</span><span class="p">,</span>
+                         <span class="n">width</span><span class="o">=</span><span class="n">edge_widths</span><span class="p">,</span>
+                         <span class="n">font_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+                                     <span class="n">edge_labels</span><span class="o">=</span><span class="n">edge_labels</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Kaiyu Zheng.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

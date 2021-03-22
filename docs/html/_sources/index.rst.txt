@@ -37,7 +37,7 @@ Further
 * :doc:`extensions`
 * :doc:`other_libraries`
 * :doc:`simple_rl_integration`
-* :doc:`extensions`
+* :doc:`building_docs`
 
 .. toctree::
    :maxdepth: 2

@@ -5,5 +5,3 @@ pomdp_py
    :maxdepth: 4
 
    pomdp_py
-
-

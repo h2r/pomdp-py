@@ -63,7 +63,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#using-sarsop">Using sarsop</a><ul>
-<li><a class="reference internal" href="#id3">Example</a></li>
+<li><a class="reference internal" href="#id4">Example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#policygraph-and-alphavectorpolicy">PolicyGraph and AlphaVectorPolicy</a></li>
@@ -154,14 +154,14 @@ given a POMDP defined using pomdp_py interfaces. Currently, we interface with:</
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title first"><strong>Table of Contents</strong></p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#converting-a-pomdp-py-agent-to-a-pomdp-file" id="id4">Converting a pomdp_py <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a> to a POMDP File</a></p></li>
-<li><p><a class="reference internal" href="#using-pomdp-solve" id="id5">Using pomdp-solve</a></p></li>
-<li><p><a class="reference internal" href="#using-sarsop" id="id6">Using sarsop</a></p></li>
-<li><p><a class="reference internal" href="#policygraph-and-alphavectorpolicy" id="id7">PolicyGraph and AlphaVectorPolicy</a></p></li>
+<li><p><a class="reference internal" href="#converting-a-pomdp-py-agent-to-a-pomdp-file" id="id5">Converting a pomdp_py <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a> to a POMDP File</a></p></li>
+<li><p><a class="reference internal" href="#using-pomdp-solve" id="id6">Using pomdp-solve</a></p></li>
+<li><p><a class="reference internal" href="#using-sarsop" id="id7">Using sarsop</a></p></li>
+<li><p><a class="reference internal" href="#policygraph-and-alphavectorpolicy" id="id8">PolicyGraph and AlphaVectorPolicy</a></p></li>
 </ul>
 </div>
 <div class="section" id="converting-a-pomdp-py-agent-to-a-pomdp-file">
-<h2><a class="toc-backref" href="#id4">Converting a pomdp_py <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a> to a POMDP File</a><a class="headerlink" href="#converting-a-pomdp-py-agent-to-a-pomdp-file" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">Converting a pomdp_py <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a> to a POMDP File</a><a class="headerlink" href="#converting-a-pomdp-py-agent-to-a-pomdp-file" title="Permalink to this headline">¶</a></h2>
 <p>Many existing libraries take as input a POMDP model written in a text file.
 There are two file formats: <code class="code docutils literal notranslate"><span class="pre">.POMDP</span></code> <a class="reference external" href="http://www.pomdp.org/code/pomdp-file-spec.html">(link)</a> and <code class="code docutils literal notranslate"><span class="pre">.POMDPX</span></code> <a class="reference external" href="https://bigbird.comp.nus.edu.sg/pmwiki/farm/appl/index.php?n=Main.PomdpXDocumentation">(link)</a>. A <code class="code docutils literal notranslate"><span class="pre">.POMDP</span></code> file can be converted
 into a <code class="code docutils literal notranslate"><span class="pre">.POMDPX</span></code> file using the <code class="code docutils literal notranslate"><span class="pre">pomdpconvert</span></code> program that is part of the <a class="reference external" href="https://github.com/AdaCompNUS/sarsop">SARSOP toolkit</a>.</p>
@@ -255,7 +255,7 @@ First we create an instance of the Tiger problem:</p>
 </div>
 </div>
 <div class="section" id="using-pomdp-solve">
-<h2><a class="toc-backref" href="#id5">Using pomdp-solve</a><a class="headerlink" href="#using-pomdp-solve" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Using pomdp-solve</a><a class="headerlink" href="#using-pomdp-solve" title="Permalink to this headline">¶</a></h2>
 <p>Pass in the agent to the <a class="reference internal" href="#pomdp_py.utils.interfaces.solvers.vi_pruning" title="pomdp_py.utils.interfaces.solvers.vi_pruning"><code class="xref py py-mod docutils literal notranslate"><span class="pre">vi_pruning</span></code></a> function,
 and it will run the <cite>pomdp-solve</cite> binary (using specified path)</p>
 <dl class="function">
@@ -295,7 +295,14 @@ By default is False, in which case an AlphaVectorPolicy is returned.</p></li>
 
 <div class="section" id="id2">
 <h3>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Computing a policy. We recommend using the <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a>.</p>
+<p><strong>Setting the path.</strong> After downloading and installing <a class="reference external" href="https://www.pomdp.org/code/">pomdp-solve</a>,
+a binary executable called <code class="code docutils literal notranslate"><span class="pre">pomdp-solve</span></code> should appear under <code class="code docutils literal notranslate"><span class="pre">path/to/pomdp-solve-&lt;version&gt;/src/</span></code>. We create a variable in Python
+to point to this path:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pomdp_solve_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/pomdp-solve-&lt;version&gt;/src/pomdp-solve&quot;</span>
+</pre></div>
+</div>
+<p><strong>Computing a policy.</strong> We recommend using the <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a>;
+That means setting <code class="code docutils literal notranslate"><span class="pre">return_policy_graph</span></code> to False (optional).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="kn">import</span> <span class="n">vi_pruning</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">vi_pruning</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_solve_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                     <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-horizon&quot;</span><span class="p">,</span> <span class="s2">&quot;100&quot;</span><span class="p">],</span>
@@ -303,7 +310,7 @@ By default is False, in which case an AlphaVectorPolicy is returned.</p></li>
                     <span class="n">return_policy_graph</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Using the policy</p>
+<p><strong>Using the policy.</strong> Here the code checks whether the policy is a  <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a> or a  <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.PolicyGraph" title="pomdp_py.utils.interfaces.conversion.PolicyGraph"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyGraph</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
      <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
      <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -319,10 +326,10 @@ By default is False, in which case an AlphaVectorPolicy is returned.</p></li>
 </div>
 </div>
 <div class="section" id="using-sarsop">
-<h2><a class="toc-backref" href="#id6">Using sarsop</a><a class="headerlink" href="#using-sarsop" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Using sarsop</a><a class="headerlink" href="#using-sarsop" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pomdp_py.utils.interfaces.solvers.sarsop">
-<code class="sig-prename descclassname">pomdp_py.utils.interfaces.solvers.</code><code class="sig-name descname">sarsop</code><span class="sig-paren">(</span><em class="sig-param">agent</em>, <em class="sig-param">pomdpsol_path</em>, <em class="sig-param">discount_factor=0.95</em>, <em class="sig-param">timeout=30</em>, <em class="sig-param">memory=100</em>, <em class="sig-param">precision=0.5</em>, <em class="sig-param">pomdp_name='temp-pomdp'</em>, <em class="sig-param">remove_generated_files=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pomdp_py/utils/interfaces/solvers.html#sarsop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.interfaces.solvers.sarsop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pomdp_py.utils.interfaces.solvers.</code><code class="sig-name descname">sarsop</code><span class="sig-paren">(</span><em class="sig-param">agent</em>, <em class="sig-param">pomdpsol_path</em>, <em class="sig-param">discount_factor=0.95</em>, <em class="sig-param">timeout=30</em>, <em class="sig-param">memory=100</em>, <em class="sig-param">precision=0.5</em>, <em class="sig-param">pomdp_name='temp-pomdp'</em>, <em class="sig-param">remove_generated_files=False</em>, <em class="sig-param">logfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pomdp_py/utils/interfaces/solvers.html#sarsop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.interfaces.solvers.sarsop" title="Permalink to this definition">¶</a></dt>
 <dd><p>SARSOP, using the binary from <a class="reference external" href="https://github.com/AdaCompNUS/sarsop">https://github.com/AdaCompNUS/sarsop</a>
 This is an anytime POMDP planning algorithm</p>
 <dl class="field-list simple">
@@ -333,6 +340,9 @@ This is an anytime POMDP planning algorithm</p>
 <li><p><strong>timeout</strong> (<em>int</em>) – The time limit (seconds) to run the algorithm until termination</p></li>
 <li><p><strong>memory</strong> (<em>int</em>) – The memory size (mb) to run the algorithm until termination</p></li>
 <li><p><strong>precision</strong> (<em>float</em>) – solver runs until regret is less than <cite>precision</cite></p></li>
+<li><p><strong>pomdp_name</strong> (<em>str</em>) – Name of the .pomdp file that will be created when solving</p></li>
+<li><p><strong>remove_generated_files</strong> (<em>bool</em>) – Remove created files during solving after finish.</p></li>
+<li><p><strong>logfile</strong> (<em>str</em>) – Path to file to write the log of both stdout and stderr</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -344,16 +354,23 @@ This is an anytime POMDP planning algorithm</p>
 </dl>
 </dd></dl>
 
-<div class="section" id="id3">
-<h3>Example<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>Computing a policy</p>
+<div class="section" id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p><strong>Setting the path.</strong> After building <cite>SARSOP &lt;https://github.com/AdaCompNUS/sarsop&gt;_</cite>, there is a
+binary file <code class="code docutils literal notranslate"><span class="pre">pomdpsol</span></code> under <code class="code docutils literal notranslate"><span class="pre">path/to/sarsop/src</span></code>.
+We create a variable in Python
+to point to this path:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pomdpsol_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/sarsop/src/pomdpsol&quot;</span>
+</pre></div>
+</div>
+<p><strong>Computing a policy.</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="kn">import</span> <span class="n">sarsop</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">sarsop</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdpsol_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">,</span>
                 <span class="n">remove_generated_files</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Using the policy (Same as above, for the <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy</span></code></a> case)</p>
+<p><strong>Using the policy.</strong> (Same as above, for the <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a> case)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
      <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
      <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -364,7 +381,7 @@ This is an anytime POMDP planning algorithm</p>
 </div>
 </div>
 <div class="section" id="policygraph-and-alphavectorpolicy">
-<h2><a class="toc-backref" href="#id7">PolicyGraph and AlphaVectorPolicy</a><a class="headerlink" href="#policygraph-and-alphavectorpolicy" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">PolicyGraph and AlphaVectorPolicy</a><a class="headerlink" href="#policygraph-and-alphavectorpolicy" title="Permalink to this headline">¶</a></h2>
 <p>PolicyGraph and AlphaVectorPolicy extend the <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Planner</span></code></a>
 interface which means they have a <code class="code docutils literal notranslate"><span class="pre">plan</span></code> function that can be used to
 output an action given an agent (using the agent’s belief).</p>

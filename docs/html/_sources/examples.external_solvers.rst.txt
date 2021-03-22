@@ -70,7 +70,16 @@ and it will run the `pomdp-solve` binary (using specified path)
 Example
 ~~~~~~~
 
-Computing a policy. We recommend using the :py:mod:`~pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy`.
+**Setting the path.** After downloading and installing `pomdp-solve <https://www.pomdp.org/code/>`_,
+a binary executable called :code:`pomdp-solve` should appear under :code:`path/to/pomdp-solve-<version>/src/`. We create a variable in Python
+to point to this path:
+
+.. code-block:: python
+
+   pomdp_solve_path = "path/to/pomdp-solve-<version>/src/pomdp-solve"
+
+**Computing a policy.** We recommend using the :py:mod:`~pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy`;
+That means setting :code:`return_policy_graph` to False (optional).
 
 .. code-block:: python
 
@@ -80,7 +89,7 @@ Computing a policy. We recommend using the :py:mod:`~pomdp_py.utils.interfaces.c
                        remove_generated_files=False,
                        return_policy_graph=False)
 
-Using the policy
+**Using the policy.** Here the code checks whether the policy is a  :py:mod:`~pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy` or a  :py:mod:`~pomdp_py.utils.interfaces.conversion.PolicyGraph`
 
 .. code-block:: python
 
@@ -103,7 +112,16 @@ Using sarsop
 Example
 ~~~~~~~
 
-Computing a policy
+**Setting the path.** After building `SARSOP <https://github.com/AdaCompNUS/sarsop>_`, there is a
+binary file :code:`pomdpsol` under :code:`path/to/sarsop/src`.
+We create a variable in Python
+to point to this path:
+
+.. code-block:: python
+
+   pomdpsol_path = "path/to/sarsop/src/pomdpsol"
+
+**Computing a policy.**
 
 .. code-block:: python
 
@@ -112,7 +130,7 @@ Computing a policy
                    timeout=10, memory=20, precision=0.000001,
                    remove_generated_files=True)
 
-Using the policy (Same as above, for the :py:mod:`pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy` case)
+**Using the policy.** (Same as above, for the :py:mod:`~pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy` case)
 
 .. code-block:: python
 

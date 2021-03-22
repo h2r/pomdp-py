@@ -22,24 +22,24 @@ Install pomdp_py
 1. **First**, download `pomdp_py` latest release `on github <https://github.com/h2r/pomdp-py/releases>`_, or clone the repository by::
 
     git clone https://github.com/h2r/pomdp-py.git
-     
+
 2. **Next**, go to the package root directory (where :code:`setup.py` is located). Run::
-    
+
     pip install -e .
 
    This will build and install `pomdp_py` package. This will build :code:`.so` files and copy them to the python source directory.  When you make changes to :code:`.pyx` or :code:`.pyd` files, run the following to rebuild those :code:`.so` libraries, so that the python imports can get those changes you made::
 
      make build
-     
+
 3. **Finally**, verify that Tiger problem and RockSample problem work::
-   
+
      python pomdp_problems/tiger/tiger_problem.py
      python pomdp_problems/rocksample/rocksample_problem.py
-   
+
    For the Tiger problem, you should see output like
-      
+
    .. code-block:: text
-      
+
       ** Testing value iteration **
       ==== Step 1 ====
       True state: tiger-left
@@ -48,11 +48,11 @@ Install pomdp_py
       Reward: -1
       >> Observation: tiger-left
       ...
-   
+
    There will be plots that visualize the MCTS trees displayed,
-   
+
    For the RockSample problem, you should see something like::
-   
+
      *** Testing POMCP ***
      ==== Step 1 ====
      Particle reinvigoration for 66 particles
@@ -64,7 +64,7 @@ Install pomdp_py
      Reward (Cumulative Discounted): 0.0
      __num_sims__: 1217
      World:
-       
+
      ______ID______
      .....>
      4....>
@@ -77,4 +77,10 @@ Install pomdp_py
      ..x$x>
      .$...>
      R....>
-   
+
+
+Docker image
+************
+Instructions for using `pomdp_py` via Docker can be found at `here <https://hub.docker.com/r/romainegele/pomdp>`_ on Docker Hub.
+
+Credit: `Romain Egele <https://github.com/Deathn0t>`_

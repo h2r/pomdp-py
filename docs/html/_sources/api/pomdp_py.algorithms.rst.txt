@@ -15,7 +15,7 @@ Solvers under development (**contribution wanted**):
 
 .. autosummary::
    :nosignatures:
-   
+
    ~pomdp_py.algorithms.bsp.blqr
 
 
@@ -63,7 +63,15 @@ pomdp\_py.algorithms.bsp.blqr module
    :show-inheritance:
 
 
+pomdp\_py.algorithms.visual.visual module
+-----------------------------------------
+
+.. automodule:: pomdp_py.algorithms.visual.visual
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. bibliography:: ../refs.bib
    :filter: docname in docnames
    :style: unsrt
-      
