@@ -43,11 +43,14 @@ def qvalue(b, a, S, A, Z, T, O, R, gamma, horizon=1):
         for o in Z:
             # compute Pr(o|b,a)*V(b')
             prob_o = belief_observation_model(o, b, a, T, O)
-            next_b = belief_update(b, a, o, T, O)
-            next_value = value(next_b, S, A, Z, T, O, R, gamma,
-                               horizon=horizon-1)
-            value_o = prob_o * next_value
-            expected_future_value += value_o
+            # If o has non-zero probability
+            if prob_o > 0:
+                next_b = belief_update(b, a, o, T, O)
+                next_value = value(next_b, S, A, Z, T, O, R, gamma,
+                                   horizon=horizon-1)
+                value_o = prob_o * next_value
+                expected_future_value += value_o
+
     return r + gamma * expected_future_value
 
 def expected_reward(b, R, a, T=None):
