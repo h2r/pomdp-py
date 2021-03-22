@@ -1,3 +1,9 @@
+### Version 1.2.3
+* Bug fix in `solvers.py` and `conversion.py` (18fc58e0, cfc88e8d8)
+* Bug fix in the MOS domain's observation model (719c2edf5)
+* Linked [docker image](https://hub.docker.com/r/romainegele/pomdp) in documentation ([issue #13](https://github.com/h2r/pomdp-py/issues)).
+* Updated documentations
+
 ### Version 1.2.2.1
 * Updated documentation for external library interfacing. Added citation.
 
