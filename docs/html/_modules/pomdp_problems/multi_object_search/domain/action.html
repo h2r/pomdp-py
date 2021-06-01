@@ -140,18 +140,18 @@
 <span class="c1">###### Actions ######</span>
 <div class="viewcode-block" id="Action"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.Action">[docs]</a><span class="k">class</span> <span class="nc">Action</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Mos action; Simple named action.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Action</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Action(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 
 <span class="n">MOTION_SCHEME</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span>  <span class="c1"># can be either xy or vw</span>
@@ -180,7 +180,7 @@
 
     <span class="n">SCHEMES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;xyth&quot;</span><span class="p">,</span> <span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;vw&quot;</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">,</span>
                  <span class="n">scheme</span><span class="o">=</span><span class="n">MOTION_SCHEME</span><span class="p">,</span> <span class="n">distance_cost</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">motion_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -230,11 +230,11 @@
 
 <div class="viewcode-block" id="LookAction"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.LookAction">[docs]</a><span class="k">class</span> <span class="nc">LookAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
     <span class="c1"># For simplicity, this LookAction is not parameterized by direction</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;look&quot;</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="FindAction"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.FindAction">[docs]</a><span class="k">class</span> <span class="nc">FindAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;find&quot;</span><span class="p">)</span></div>
 
 <span class="n">Look</span> <span class="o">=</span> <span class="n">LookAction</span><span class="p">()</span>
@@ -255,7 +255,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

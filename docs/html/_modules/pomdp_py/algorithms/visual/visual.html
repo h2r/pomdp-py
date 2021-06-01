@@ -119,9 +119,9 @@
             
   <h1>Source code for pomdp_py.algorithms.visual.visual</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">from</span> <span class="nn">networkx.drawing.nx_agraph</span> <span class="k">import</span> <span class="n">graphviz_layout</span>
+<span class="kn">from</span> <span class="nn">networkx.drawing.nx_agraph</span> <span class="kn">import</span> <span class="n">graphviz_layout</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="k">import</span> <span class="n">QNode</span><span class="p">,</span> <span class="n">VNode</span><span class="p">,</span> <span class="n">RootVNode</span><span class="p">,</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="kn">import</span> <span class="n">QNode</span><span class="p">,</span> <span class="n">VNode</span><span class="p">,</span> <span class="n">RootVNode</span><span class="p">,</span> <span class="n">util</span>
 
 <span class="c1"># ---- POMCP Visualization ---- #</span>
 
@@ -177,7 +177,7 @@
         <span class="k">if</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">num_visits</span> <span class="o">&gt;</span> <span class="n">visit_threshold</span><span class="p">:</span>
             <span class="n">_build_relabel_dict</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">c</span><span class="p">,</span>  <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">observations</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">visit_threshold</span><span class="o">=</span><span class="n">visit_threshold</span><span class="p">)</span>
 
-<div class="viewcode-block" id="visualize_pouct_search_tree"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree">[docs]</a><span class="k">def</span> <span class="nf">visualize_pouct_search_tree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<div class="viewcode-block" id="visualize_pouct_search_tree"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.visual.html#pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree">[docs]</a><span class="k">def</span> <span class="nf">visualize_pouct_search_tree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                 <span class="n">visit_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">anonymize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                 <span class="n">anonymize_actions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">anonymize_observations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                 <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_dot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -260,7 +260,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

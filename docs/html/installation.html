@@ -56,11 +56,10 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#install-python-and-cython">Install Python and Cython</a></li>
-<li><a class="reference internal" href="#install-pomdp-py">Install pomdp_py</a><ul>
+<li><a class="reference internal" href="#pre-installation">Pre-installation</a></li>
+<li><a class="reference internal" href="#install-pomdp-py">Install pomdp-py</a></li>
+<li><a class="reference internal" href="#test-things-out">Test things out</a></li>
 <li><a class="reference internal" href="#docker-image">Docker image</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -68,8 +67,10 @@
 <p class="caption"><span class="caption-text">Overview</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#install-python-and-cython">Install Python and Cython</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-pomdp-py">Install pomdp_py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-installation">Pre-installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-pomdp-py">Install pomdp-py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-things-out">Test things out</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-image">Docker image</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -138,26 +139,43 @@
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>We recommend using <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> and <a class="reference external" href="https://pip.pypa.io/en/stable/installing/">pip</a> to manage package versions and installation.</p>
-<div class="section" id="install-python-and-cython">
-<span id="install-pycy"></span><h2>Install Python and Cython<a class="headerlink" href="#install-python-and-cython" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic" start="0">
-<li><p>Install Python 3.7+ from <a class="reference external" href="https://www.python.org/downloads/">official website</a>.</p></li>
-<li><p>Install Cython.:</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title first"><strong>Table of Contents</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pre-installation" id="id1">Pre-installation</a></p></li>
+<li><p><a class="reference internal" href="#install-pomdp-py" id="id2">Install pomdp-py</a></p></li>
+<li><p><a class="reference internal" href="#test-things-out" id="id3">Test things out</a></p></li>
+<li><p><a class="reference internal" href="#docker-image" id="id4">Docker image</a></p></li>
+</ul>
+</div>
+<div class="section" id="pre-installation">
+<h2><a class="toc-backref" href="#id1">Pre-installation</a><a class="headerlink" href="#pre-installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>install Python 3.7+ from <a class="reference external" href="https://www.python.org/downloads/">official website</a>.</p></li>
+<li><p>Install Graphviz, following <a class="reference external" href="https://graphviz.org/download/">these official instructions</a> (Optional for visualizing search tree)</p></li>
+</ol>
+</div>
+<div class="section" id="install-pomdp-py">
+<h2><a class="toc-backref" href="#id2">Install pomdp-py</a><a class="headerlink" href="#install-pomdp-py" title="Permalink to this headline">¶</a></h2>
+<p>Install <cite>pomdp-py</cite> by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pomdp</span><span class="o">-</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="line-block" id="install-dev">
+<div class="line"><strong>Install as developer</strong></div>
+</div>
+<ol class="arabic">
+<li><p>Install Cython:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">Cython</span>
 </pre></div>
 </div>
 </li>
-</ol>
-</div>
-<div class="section" id="install-pomdp-py">
-<span id="get-pomdp-py"></span><h2>Install pomdp_py<a class="headerlink" href="#install-pomdp-py" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic">
-<li><p><strong>First</strong>, download <cite>pomdp_py</cite> latest release <a class="reference external" href="https://github.com/h2r/pomdp-py/releases">on github</a>, or clone the repository by:</p>
+<li><p>Download <cite>pomdp-py</cite> latest release <a class="reference external" href="https://github.com/h2r/pomdp-py/releases">on github</a>, or clone the repository by:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">h2r</span><span class="o">/</span><span class="n">pomdp</span><span class="o">-</span><span class="n">py</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
 </li>
-<li><p><strong>Next</strong>, go to the package root directory (where <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> is located). Run:</p>
+<li><p>Go to the package root directory (where <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> is located). Run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
@@ -166,12 +184,17 @@
 </pre></div>
 </div>
 </li>
-<li><p><strong>Finally</strong>, verify that Tiger problem and RockSample problem work:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">pomdp_problems</span><span class="o">/</span><span class="n">tiger</span><span class="o">/</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">py</span>
-<span class="n">python</span> <span class="n">pomdp_problems</span><span class="o">/</span><span class="n">rocksample</span><span class="o">/</span><span class="n">rocksample_problem</span><span class="o">.</span><span class="n">py</span>
+</ol>
+</div>
+<div class="section" id="test-things-out">
+<h2><a class="toc-backref" href="#id3">Test things out</a><a class="headerlink" href="#test-things-out" title="Permalink to this headline">¶</a></h2>
+<p>Verify that <strong>Tiger</strong>, <strong>RockSample</strong>, and <strong>Multi-Object Search</strong> problems work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pomdp_problems</span><span class="o">.</span><span class="n">tiger</span><span class="o">.</span><span class="n">tiger_problem</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pomdp_problems</span><span class="o">.</span><span class="n">rocksample</span><span class="o">.</span><span class="n">rocksample_problem</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pomdp_problems</span><span class="o">.</span><span class="n">multi_object_search</span><span class="o">.</span><span class="n">problem</span>
 </pre></div>
 </div>
-<p>For the Tiger problem, you should see output like</p>
+<p>For the <strong>Tiger</strong> problem, you should see output like</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>** Testing value iteration **
 ==== Step 1 ====
 True state: tiger-left
@@ -183,7 +206,7 @@ Reward: -1
 </pre></div>
 </div>
 <p>There will be plots that visualize the MCTS trees displayed,</p>
-<p>For the RockSample problem, you should see something like:</p>
+<p>For the <strong>RockSample</strong> problem, you should see something like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*** Testing POMCP ***
 ==== Step 1 ====
 Particle reinvigoration for 66 particles
@@ -210,13 +233,34 @@ $....&gt;
 R....&gt;
 </pre></div>
 </div>
-</li>
-</ol>
-<div class="section" id="docker-image">
-<h3>Docker image<a class="headerlink" href="#docker-image" title="Permalink to this headline">¶</a></h3>
-<p>Instructions for using <cite>pomdp_py</cite> via Docker can be found at <a class="reference external" href="https://hub.docker.com/r/romainegele/pomdp">here</a> on Docker Hub.</p>
-<p>Credit: <a class="reference external" href="https://github.com/Deathn0t">Romain Egele</a></p>
+<p>For <strong>Multi-Object Search</strong>, you should see a plot like below,</p>
+<a class="reference internal image-reference" href="_images/mos_window.png"><img alt="MOS window" src="_images/mos_window.png" style="width: 225.0px; height: 247.5px;" /></a>
+<p>and the agent (a green circle) starts acting:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ python -m pomdp_problems.multi_object_search.problem
+pygame 1.9.6
+Hello from the pygame community. https://www.pygame.org/contribute.html
+==== Step 1 ====
+Action: move-xyth-North
+Observation: MosOOObservation({})
+Reward: -2
+Reward (Cumulative): -2
+Find Actions Count: 0
+__num_sims__: 542
+==== Step 2 ====
+Action: look
+Observation: MosOOObservation({3: None, 8: None, 11: (0, 6), 12: None, 14: None})
+Reward: -1
+Reward (Cumulative): -3
+Find Actions Count: 0
+__num_sims__: 506
+...
+</pre></div>
 </div>
+</div>
+<div class="section" id="docker-image">
+<h2><a class="toc-backref" href="#id4">Docker image</a><a class="headerlink" href="#docker-image" title="Permalink to this headline">¶</a></h2>
+<p>Instructions for using <cite>pomdp_py</cite> via <a class="reference external" href="https://hub.docker.com/r/romainegele/pomdp">Docker can be found here</a> on Docker Hub.</p>
+<p>Credit: <a class="reference external" href="https://github.com/Deathn0t">Romain Egele</a></p>
 </div>
 </div>
 
@@ -228,7 +272,7 @@ R....&gt;
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

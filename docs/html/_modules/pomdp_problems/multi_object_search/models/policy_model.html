@@ -125,12 +125,12 @@
 
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.action</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.multi_object_search.domain.action</span> <span class="kn">import</span> <span class="o">*</span>
 
 <div class="viewcode-block" id="PolicyModel"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel">[docs]</a><span class="k">class</span> <span class="nc">PolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RolloutPolicy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simple policy model. All actions are possible at any state.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">grid_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">grid_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;FindAction can only be taken after LookAction&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">robot_id</span> <span class="o">=</span> <span class="n">robot_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span> <span class="o">=</span> <span class="n">grid_map</span>
@@ -177,7 +177,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

@@ -306,14 +306,14 @@ That means setting <code class="code docutils literal notranslate"><span class="
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="kn">import</span> <span class="n">vi_pruning</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">vi_pruning</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdp_solve_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                     <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-horizon&quot;</span><span class="p">,</span> <span class="s2">&quot;100&quot;</span><span class="p">],</span>
-                    <span class="n">remove_generated_files</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                    <span class="n">return_policy_graph</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="n">remove_generated_files</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">return_policy_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Using the policy.</strong> Here the code checks whether the policy is a  <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a> or a  <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.PolicyGraph" title="pomdp_py.utils.interfaces.conversion.PolicyGraph"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyGraph</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
      <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
-     <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+     <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
      <span class="n">observation</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
 
      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">policy</span><span class="p">,</span> <span class="n">PolicyGraph</span><span class="p">):</span>
@@ -367,13 +367,13 @@ to point to this path:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pomdp_py</span> <span class="kn">import</span> <span class="n">sarsop</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">sarsop</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">pomdpsol_path</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">,</span>
-                <span class="n">remove_generated_files</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">remove_generated_files</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Using the policy.</strong> (Same as above, for the <a class="reference internal" href="#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy" title="pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">AlphaVectorPolicy</span></code></a> case)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
      <span class="n">action</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
-     <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+     <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
      <span class="n">observation</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
      <span class="c1"># ... perform belief update on agent</span>
 </pre></div>
@@ -488,7 +488,7 @@ which are the output of parse_appl_policy_file.</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

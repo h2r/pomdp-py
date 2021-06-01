@@ -140,7 +140,7 @@
             
   <div class="section" id="tiger-problem">
 <h1>Tiger Problem<a class="headerlink" href="#tiger-problem" title="Permalink to this headline">¶</a></h1>
-<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[7]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
+<p>This is a classic POMDP problem, introduced in <a class="bibtex reference internal" href="index.html#kaelbling1998planning" id="id1">[2]</a>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
 <p><cite>A tiger is put with equal probability behind one
@@ -283,7 +283,7 @@ a PolicyModel is to (1) determine the set of actions that the robot can take at
 given state (and/or history); (2) sample an action from this set according to
 some probability distribution. This allows extensions to policy models that have
 a prior over actions. The idea of preference over actions have been used in
-several existing work <a class="bibtex reference internal" href="#silver2010monte" id="id6">[1]</a> <a class="bibtex reference internal" href="#abel2015goal" id="id7">[3]</a>
+several existing work <a class="bibtex reference internal" href="api/pomdp_py.algorithms.html#silver2010monte" id="id6">[1]</a> <a class="bibtex reference internal" href="#abel2015goal" id="id7">[3]</a>
 <a class="bibtex reference internal" href="#xiao-icra-2019" id="id8">[4]</a>.  Without prior knowledge of action preference, the
 PolicyModel can simply sample actions from the set uniformly. Typically, we
 would like to start without (usually human-engineered) prior knowledge over
@@ -418,10 +418,10 @@ will result in the agent belief update as well. But for
 <span class="c1"># creating planners</span>
 <span class="n">vi</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">ValueIteration</span><span class="p">(</span><span class="n">horizon</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
 <span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                       <span class="n">planning_time</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
+                       <span class="n">planning_time</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
                        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
 <span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                       <span class="n">planning_time</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
+                       <span class="n">planning_time</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span>
                        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
 <span class="o">...</span>  <span class="c1"># call test_planner() for steps 2-6.</span>
 
@@ -431,26 +431,26 @@ will result in the agent belief update as well. But for
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>  <span class="c1"># Step 6</span>
         <span class="c1"># Step 2</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;True state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Belief: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Action: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Belief: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">))</span>
         <span class="c1"># Step 3; no transition since actions in Tiger problem</span>
         <span class="c1"># does not change environment state (i.e. tiger location).</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Reward: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="bp">None</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reward: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="kc">None</span><span class="p">)))</span>
 
         <span class="c1"># Step 4</span>
         <span class="c1"># Let&#39;s create some simulated real observation; Update the belief</span>
         <span class="c1"># Creating true observation for sanity checking solver behavior.</span>
         <span class="c1"># In general, this observation should be sampled from agent&#39;s observation model.</span>
             <span class="n">real_observation</span> <span class="o">=</span> <span class="n">Observation</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; Observation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">real_observation</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; Observation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">real_observation</span><span class="p">)</span>
 
         <span class="c1"># Step 5</span>
         <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">update_history</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
         <span class="n">planner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">planner</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">):</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Num sims: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">planner</span><span class="o">.</span><span class="n">last_num_sims</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Num sims: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">planner</span><span class="o">.</span><span class="n">last_num_sims</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">):</span>
             <span class="n">new_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">update_histogram_belief</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">,</span>
                                                           <span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">,</span>
@@ -474,7 +474,7 @@ will result in the agent belief update as well. But for
 <dt class="bibtex label" id="silver2010monte"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">7</a></span></dt>
+<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
 <dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 <dt class="bibtex label" id="abel2015goal"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
@@ -496,7 +496,7 @@ will result in the agent belief update as well. But for
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

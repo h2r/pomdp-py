@@ -139,13 +139,13 @@
 
 <span class="c1">###### States ######</span>
 <div class="viewcode-block" id="ObjectState"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.ObjectState">[docs]</a><span class="k">class</span> <span class="nc">ObjectState</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">ObjectState</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">objclass</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">,</span> <span class="n">objclass</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">objclass</span> <span class="o">!=</span> <span class="s2">&quot;obstacle&quot;</span> <span class="ow">and</span> <span class="n">objclass</span> <span class="o">!=</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only allow object class to be&quot;</span>\
                              <span class="s2">&quot;either &#39;target&#39; or &#39;obstacle&#39;.&quot;</span>
                              <span class="s2">&quot;Got </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">objclass</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">objclass</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;pose&quot;</span><span class="p">:</span><span class="n">pose</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">objid</span><span class="p">})</span>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;ObjectState(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objclass</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pose</span><span class="p">))</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -155,16 +155,16 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="RobotState"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.RobotState">[docs]</a><span class="k">class</span> <span class="nc">RobotState</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">ObjectState</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">pose</span><span class="p">,</span> <span class="n">objects_found</span><span class="p">,</span> <span class="n">camera_direction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">pose</span><span class="p">,</span> <span class="n">objects_found</span><span class="p">,</span> <span class="n">camera_direction</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Note: camera_direction is None unless the robot is looking at a direction,</span>
 <span class="sd">        in which case camera_direction is the string e.g. look+x, or &#39;look&#39;&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;robot&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">robot_id</span><span class="p">,</span>
                                    <span class="s2">&quot;pose&quot;</span><span class="p">:</span><span class="n">pose</span><span class="p">,</span>  <span class="c1"># x,y,th</span>
                                    <span class="s2">&quot;objects_found&quot;</span><span class="p">:</span> <span class="n">objects_found</span><span class="p">,</span>
                                    <span class="s2">&quot;camera_direction&quot;</span><span class="p">:</span> <span class="n">camera_direction</span><span class="p">})</span>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;RobotState(</span><span class="si">%s</span><span class="s1">,</span><span class="si">%s</span><span class="s1">|</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objclass</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pose</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects_found</span><span class="p">))</span>
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -177,7 +177,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;objects_found&#39;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="MosOOState"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState">[docs]</a><span class="k">class</span> <span class="nc">MosOOState</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">OOState</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_states</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_states</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">object_states</span><span class="p">)</span>
 <div class="viewcode-block" id="MosOOState.object_pose"><a class="viewcode-back" href="../../../../problems/pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState.object_pose">[docs]</a>    <span class="k">def</span> <span class="nf">object_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objid</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">][</span><span class="s2">&quot;pose&quot;</span><span class="p">]</span></div>
@@ -187,9 +187,9 @@
     <span class="k">def</span> <span class="nf">object_poses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">objid</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">][</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">objid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_states</span><span class="p">}</span>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;MosOOState</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_states</span><span class="p">))</span>
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 </pre></div>
 
@@ -200,7 +200,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, Kaiyu Zheng.
+      &copy;2020, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

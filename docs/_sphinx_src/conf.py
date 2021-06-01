@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../../problems'))
 # -- Project information -----------------------------------------------------
 
 project = 'pomdp_py'
-copyright = '2020, Kaiyu Zheng'
+copyright = '2020, H2R@Brown'
 author = 'Kaiyu Zheng'
 
 # The full version, including alpha/beta/rc tags
@@ -40,7 +40,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',        
+    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -85,7 +85,7 @@ html_theme_options = {
     'donate_url': "paypal.me/zkytony/10",
     'extra_nav_links': {
         "H2R lab": "https://h2r.cs.brown.edu/",
-        "Kaiyu's homepage": "http://kaiyuzh.me",        
+        "Kaiyu's homepage": "http://kaiyuzh.me",
         # "bigAI initiative": "http://bigai.cs.brown.edu/"
     },
     # Colors
