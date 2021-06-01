@@ -489,8 +489,8 @@ if __name__ == '__main__':
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
-    pomcp = pomdp_py.POMCP(max_depth=6, discount_factor=0.95,
-                           num_sims=20000, exploration_const=20,
+    pomcp = pomdp_py.POMCP(max_depth=20, discount_factor=0.95,
+                           num_sims=10000, exploration_const=20,
                            rollout_policy=rocksample.agent.policy_model,
                            num_visits_init=1)
     tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
