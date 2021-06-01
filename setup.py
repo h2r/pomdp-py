@@ -4,11 +4,17 @@ from setuptools import setup, find_packages
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
+with open("README.rst", 'r') as f:
+    long_description = f.read()
+
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.2',
+      version='1.2.3.1',
       description='Python POMDP Library.',
+      long_description=long_description,
+      long_description_content_type="text/x-rst",
       install_requires=[
+          'Cython',
           'numpy',
           'scipy',
           'matplotlib',

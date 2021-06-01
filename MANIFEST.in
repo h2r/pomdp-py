@@ -1,0 +1,11 @@
+include ./pomdp_py/representations/belief/particles.pxd
+include ./pomdp_py/representations/distribution/histogram.pxd
+include ./pomdp_py/representations/distribution/gaussian.pxd
+include ./pomdp_py/representations/distribution/particles.pxd
+include ./pomdp_py/algorithms/po_rollout.pxd
+include ./pomdp_py/algorithms/value_iteration.pxd
+include ./pomdp_py/algorithms/pomcp.pxd
+include ./pomdp_py/algorithms/po_uct.pxd
+include ./pomdp_py/framework/basics.pxd
+include ./pomdp_py/framework/planner.pxd
+include ./pomdp_py/framework/oopomdp.pxd
