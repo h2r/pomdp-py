@@ -1,3 +1,10 @@
+### Version 1.2.4
+* `pomdp_py/algorithms/value_function.py`:
+   * zero-probability observation should be skipped.
+   * refactored so that `value()` can take either a dict or a sequence of arguments.
+* Available on [PyPI](https://pypi.org/project/pomdp-py/#history)
+* `.value` field of VNode is instead changed to be a property, computed by finding the maximum value of the children Q-Nodes.
+
 ### Version 1.2.3
 * Bug fix in `solvers.py` and `conversion.py` (18fc58e0, cfc88e8d8)
 * Bug fix in the MOS domain's observation model (719c2edf5)
