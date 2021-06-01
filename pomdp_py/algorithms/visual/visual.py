@@ -76,7 +76,7 @@ def visualize_pouct_search_tree(root, max_depth=1,
     if anonymize_actions or anonymize_observations:
         _build_relabel_dict(root, None, 0, relabel_actions, relabel_observations,
                             max_depth=max_depth, visit_threshold=visit_threshold)
-        
+
         print("---- Action labels ----")
         action_map = {relabel_actions[action]:action for action in relabel_actions}
         for label in sorted(action_map):
@@ -84,13 +84,13 @@ def visualize_pouct_search_tree(root, max_depth=1,
         print("---- Observation labels ----")
         observation_map = {relabel_observations[ob]:ob for ob in relabel_observations}
         for label in sorted(observation_map):
-            print("%s : %s" % (label, observation_map[label]))        
+            print("%s : %s" % (label, observation_map[label]))
 
     if not anonymize_actions:
         relabel_actions = {}
     if not anonymize_observations:
         relabel_observations = {}
-    
+
     # Build a networkx graph.
     G = nx.DiGraph()
     _build_graph(G, root, None, None, 0, max_depth=max_depth, visit_threshold=visit_threshold,
@@ -119,7 +119,7 @@ def visualize_pouct_search_tree(root, max_depth=1,
                 node_labels[node] = "Q(%d | %.2f)" % (node.num_visits, node.value)
         edge_labels = {(edge[0],edge[1]): edge[2]["label"] for edge in G.edges(data=True)}
         edge_widths = [edge[2]["weight"] for edge in G.edges(data=True)]
-        
+
         pos = graphviz_layout(G, prog='dot')
         nx.draw_networkx(G, pos,
                          node_color=color_map, labels=node_labels,

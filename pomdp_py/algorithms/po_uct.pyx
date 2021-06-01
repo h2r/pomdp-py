@@ -74,9 +74,8 @@ cdef class QNode(TreeNode):
         return self.__str__()
 
 cdef class VNode(TreeNode):
-    def __init__(self, num_visits, value, **kwargs):
+    def __init__(self, num_visits, **kwargs):
         self.num_visits = num_visits
-        self.value = value
         self.children = {}  # a -> QNode
     def __str__(self):
         return "VNode(%.3f, %.3f | %s)" % (self.num_visits, self.value,
@@ -100,15 +99,20 @@ cdef class VNode(TreeNode):
                 best_value = self[action].value
         return best_action
 
+    @property
+    def value(self):
+        best_action = max(self.children, key=lambda action: self.children[action].value)
+        return self.children[best_action].value
+
 
 cdef class RootVNode(VNode):
-    def __init__(self, num_visits, value, history):
-        VNode.__init__(self, num_visits, value)
+    def __init__(self, num_visits, history):
+        VNode.__init__(self, num_visits)
         self.history = history
     @classmethod
     def from_vnode(cls, vnode, history):
         """from_vnode(cls, vnode, history)"""
-        rootnode = RootVNode(vnode.num_visits, vnode.value, history)
+        rootnode = RootVNode(vnode.num_visits, history)
         rootnode.children = vnode.children
         return rootnode
 
@@ -365,7 +369,6 @@ cdef class POUCT(Planner):
                 break
 
         best_action = self._agent.tree.argmax()
-        self._agent.tree.value = self._agent.tree[best_action].value
         return best_action, time_taken, sims_count
 
     cpdef _simulate(POUCT self,
@@ -461,9 +464,7 @@ cdef class POUCT(Planner):
         """Returns a VNode with default values; The function naming makes it clear
         that this function is about creating a VNode object."""
         if root:
-            return RootVNode(self._num_visits_init,
-                             float("-inf"),
-                             self._agent.history)
+            return RootVNode(self._num_visits_init, self._agent.history)
+
         else:
-            return VNode(self._num_visits_init,
-                         float("-inf"))
+            return VNode(self._num_visits_init)

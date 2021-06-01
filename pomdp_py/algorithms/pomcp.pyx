@@ -32,9 +32,8 @@ import math
 
 cdef class VNodeParticles(VNode):
     """POMCP's VNode maintains particle belief"""
-    def __init__(self, num_visits, value, belief=Particles([])):
+    def __init__(self, num_visits, belief=Particles([])):
         self.num_visits = num_visits
-        self.value = value
         self.belief = belief
         self.children = {}  # a -> QNode
     def __str__(self):
@@ -44,13 +43,13 @@ cdef class VNodeParticles(VNode):
         return self.__str__()
 
 cdef class RootVNodeParticles(RootVNode):
-    def __init__(self, num_visits, value, history, belief=Particles([])):
+    def __init__(self, num_visits, history, belief=Particles([])):
         # vnodeobj = VNodeParticles(num_visits, value, belief=belief)
-        RootVNode.__init__(self, num_visits, value, history)
+        RootVNode.__init__(self, num_visits, history)
         self.belief = belief
     @classmethod
     def from_vnode(cls, vnode, history):
-        rootnode = RootVNodeParticles(vnode.num_visits, vnode.value, history, belief=vnode.belief)
+        rootnode = RootVNodeParticles(vnode.num_visits, history, belief=vnode.belief)
         rootnode.children = vnode.children
         return rootnode
 
@@ -107,7 +106,7 @@ cdef class POMCP(POUCT):
         if not hasattr(agent, "tree"):
             print("Warning: agent does not have tree. Have you planned yet?")
             return
-        
+
         if agent.tree[real_action][real_observation] is None:
             # Never anticipated the real_observation. No reinvigoration can happen.
             raise ValueError("Particle deprivation.")
@@ -126,7 +125,7 @@ cdef class POMCP(POUCT):
 
     cpdef _simulate(POMCP self,
                     State state, tuple history, VNode root, QNode parent,
-                    Observation observation, int depth):    
+                    Observation observation, int depth):
         total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth)
         if depth == 1 and root is not None:
             root.belief.add(state)  # belief update happens as simulation goes.
@@ -138,15 +137,12 @@ cdef class POMCP(POUCT):
         if root:
             # agent cannot be None.
             return RootVNodeParticles(self._num_visits_init,
-                                      self._value_init,
                                       agent.history,
                                       belief=copy.deepcopy(agent.belief))
         else:
             if agent is None:
                 return VNodeParticles(self._num_visits_init,
-                                      self._value_init,
                                       belief=Particles([]))
             else:
                 return VNodeParticles(self._num_visits_init,
-                                      self._value_init,
                                       belief=copy.deepcopy(agent.belief))
