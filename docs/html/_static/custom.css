@@ -18,7 +18,7 @@ html {
   --thumbBG: #CDCDCD;b
 }
 body::-webkit-scrollbar {
-  width: 11px;
+  width: 14px;
 }
 body {
   scrollbar-width: thin;

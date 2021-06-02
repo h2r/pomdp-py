@@ -25,7 +25,7 @@ Install `pomdp-py` by::
 
 .. _install_dev:
 
-| **Install as developer**
+| Or, **install as developer**
 
 1. Install Cython::
 
@@ -66,7 +66,8 @@ For the **Tiger** problem, you should see output like
     >> Observation: tiger-left
     ...
 
-There will be plots that visualize the MCTS trees displayed,
+There will be plots that visualize the MCTS trees displayed, like below (could be more messy):
+
 
 For the **RockSample** problem, you should see something like::
 
