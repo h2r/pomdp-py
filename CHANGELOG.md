@@ -1,3 +1,7 @@
+### Version 1.2.4.1
+* Fix documentation (external solver examples).
+* Update `tiger_problem.py` to match documentation
+
 ### Version 1.2.4
 * `pomdp_py/algorithms/value_function.py`:
    * zero-probability observation should be skipped.
