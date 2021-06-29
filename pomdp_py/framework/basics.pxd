@@ -17,10 +17,10 @@ cdef class POMDP:
     cpdef public Agent agent
     cpdef public Environment env
     cpdef public str name
-    
+
 cdef class Action:
     cpdef public str name
-    
+
 cdef class State:
     pass
 
@@ -42,6 +42,7 @@ cdef class Environment:
     cdef State _init_state
     cdef TransitionModel _transition_model
     cdef RewardModel _reward_model
+    cdef BlackboxModel _blackbox_model
     cdef State _cur_state
 
 cdef class Option(Action):

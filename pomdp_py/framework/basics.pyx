@@ -193,7 +193,7 @@ cdef class RewardModel:
 cdef class BlackboxModel:
     """
     A BlackboxModel is the generative distribution :math:`G(s,a)`
-    which can generate samples where each is a tuploe :math:`(s',o,r)`.
+    which can generate samples where each is a tuple :math:`(s',o,r)`, or `(s',r)`.
     """
     def sample(self, state, action, **kwargs):
         """
@@ -465,12 +465,19 @@ cdef class Environment:
     The Environment is passive. It never observes nor acts.
     """
     def __init__(self, init_state,
-                 transition_model,
-                 reward_model):
+                 transition_model=None,
+                 reward_model=None,
+                 blackbox_model=None):
         self._init_state = init_state
+        self._cur_state = init_state
         self._transition_model = transition_model
         self._reward_model = reward_model
-        self._cur_state = init_state
+        self._blackbox_model = blackbox_model
+
+        # It cannot be the case that both explicit models and blackbox model are None.
+        if self._blackbox_model is None:
+            assert self._transition_model is not None\
+                and self._reward_model is not None
 
     @property
     def state(self):
