@@ -9,7 +9,7 @@ with open("README.rst", 'r') as f:
 
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.2.4',
+      version='1.3.0',
       description='Python POMDP Library.',
       long_description=long_description,
       long_description_content_type="text/x-rst",
