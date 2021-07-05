@@ -38,7 +38,10 @@ cdef class Agent:
     cdef tuple _history
     cdef dict __dict__
 
-cdef class Environment:
+cdef class GeneralEnvironment:
+    pass
+
+cdef class Environment(GeneralEnvironment):
     cdef State _init_state
     cdef TransitionModel _transition_model
     cdef RewardModel _reward_model

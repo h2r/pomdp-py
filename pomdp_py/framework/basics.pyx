@@ -453,8 +453,35 @@ cdef class Agent:
     def valid_actions(self, *args, **kwargs):
         return self.policy_model.get_all_actions(*args, **kwargs)
 
+cdef class GeneralEnvironment:
+   """
+   A GeneralEnvironment is a basic skeleton of an environment of a task;
+   It handles action execution and maintains task state. And optionally,
+   a :meth:`done` function can be implemented to check the status of the task.
+   It is more general than the :class:`Environment`, which is specifically
+   a POMDP environment that needs to be initialized by the relevant POMDP models.
+   """
+   def execute(self, action, *args, **kwargs):
+       """
+       execute(self, action, *args, **kwargs)
+       Executes the action.
 
-cdef class Environment:
+       Args:
+           action (Action): action that will be executed
+           args, kwargs: other parameters
+       Returns:
+           tuple: (Observation, Reward)"""
+       pass
+
+   def done(self):
+       """
+       done(self)
+       Returns True if the task is completed. Note that this doesn't necessarily
+       imply task success."""
+       raise NotImplementedError
+
+
+cdef class Environment(GeneralEnvironment):
     """An Environment maintains the true state of the world.
     For example, it is the 2D gridworld, rendered by pygame.
     Or it could be the 3D simulated world rendered by OpenGL.
@@ -528,6 +555,11 @@ cdef class Environment:
         Apply the transition, that is, assign current state to
         be the `next_state`."""
         self._cur_state = next_state
+
+    def execute(self, action, observation_model, **kwargs):
+        reward = self.state_transition(action, execute=True, **kwargs)
+        observation = self.provide_observation(observation_model, action)
+        return (observation, reward)
 
     def provide_observation(self, observation_model, action, **kwargs):
         """
