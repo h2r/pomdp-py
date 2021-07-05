@@ -193,7 +193,7 @@ cdef class RewardModel:
 cdef class BlackboxModel:
     """
     A BlackboxModel is the generative distribution :math:`G(s,a)`
-    which can generate samples where each is a tuple :math:`(s',o,r)`, or `(s',r)`.
+    which can generate samples where each is a tuple :math:`(s',o,r)`.
     """
     def sample(self, state, action, **kwargs):
         """
@@ -525,6 +525,11 @@ cdef class Environment(GeneralEnvironment):
     def reward_model(self):
         """The :class:`RewardModel` underlying the environment"""
         return self._reward_model
+
+    @property
+    def blackbox_model(self):
+        """The :class:`BlackboxModel` underlying the environment"""
+        return self._blackbox_model
 
     def state_transition(self, action, execute=True, **kwargs):
         """
