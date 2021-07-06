@@ -1,8 +1,6 @@
 ### Version 1.3.0 (Pending)
 * Code refactoring: Remove unnecessary `*args, **kwargs` in interface signature. **Backwards compatible**.
 * Can initialize `Environment` with  `BlackboxModel`.
-* Adding `GeneralEnvironment`, which is a non-POMDP environment. `Environment` now is a subclass of `GeneralEnvironment`.
-* Adding `GeneralAgent`, which is a non-POMDP agent. `Agent` now is a subclass of `GeneralAgent`.
 
 ### Version 1.2.4
 * `pomdp_py/algorithms/value_function.py`:

@@ -8,13 +8,11 @@ cdef class Planner:
 
     A Planner may be a purely planning algorithm, or it could be using a learned
     model for planning underneath the hood. Its job is to output an action to take
-    for a given agent. Indeed, you may choose to not follow this interface and
-    produce actions for agents in some other way.
+    for a given agent.
 
-    A Planner can be made to be specific to an agent, or not. If specific, then
-    when calling :meth:`plan` the agent passed in must always be the same one.
+    You can implement a Planner that is specific to an agent, or not. If specific, then
+    when calling :meth:`plan` the agent passed in is expected to always be the same one.
     """
-
     cpdef public plan(self, Agent agent):
         """
         plan(self, Agent agent)

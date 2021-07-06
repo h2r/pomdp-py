@@ -27,13 +27,7 @@ cdef class State:
 cdef class Observation:
     pass
 
-cdef class GeneralAgent:
-    pass
-
-cdef class GeneralEnvironment:
-    pass
-
-cdef class Agent(GeneralAgent):
+cdef class Agent:
     cdef GenerativeDistribution _init_belief
     cdef PolicyModel _policy_model
     cdef TransitionModel _transition_model
@@ -44,7 +38,7 @@ cdef class Agent(GeneralAgent):
     cdef tuple _history
     cdef dict __dict__
 
-cdef class Environment(GeneralEnvironment):
+cdef class Environment:
     cdef State _init_state
     cdef TransitionModel _transition_model
     cdef RewardModel _reward_model
