@@ -1,3 +1,8 @@
+### Version 1.2.4.5
+* Edit `setup.py` file so that Cython modules in `pomdp-py` can be `cimport`ed.
+
+(skipped versions due to attempting pypi release)
+
 ### Version 1.2.4.1
 * Fix documentation (external solver examples).
 * Update `tiger_problem.py` to match documentation
