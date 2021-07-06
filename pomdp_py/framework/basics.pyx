@@ -314,7 +314,55 @@ cdef class Observation:
     def __hash__(self):
         raise NotImplementedError
 
-cdef class Agent:
+cdef class GeneralAgent:
+   """A GeneralAgent is a basic skeleton of an agent; The agent maintains its
+   own information (e.g. belief state) necessary for acting. It updates itself
+   once receiving an action, and observation from the environment. The actual action
+   selection is performed by the :class:`Planner`. This is more general than
+   the :class:`Agent`, which is specifically a POMDP agent that needs to be initialized
+   by the relevant POMDP models."""
+   def update(self, real_action, real_observation):
+       """update(self, real_action, real_observation)
+       Upon executing real_action and receiving real_observation,
+       the agent updates itself as needed. Note that we do not
+       explicitly have an argument for reward, because (1) during
+       actual execution a real robot may not perceive reward signals;
+       (2) even if it can, it is still a form of observation.
+
+       Args:
+           real_action (Action): action executed
+           real_observation (Observation): observation received """
+       pass
+
+cdef class GeneralEnvironment:
+   """
+   A GeneralEnvironment is a basic skeleton of an environment of a task;
+   It handles action execution and maintains task state. And optionally,
+   a :meth:`done` function can be implemented to check the status of the task.
+   It is more general than the :class:`Environment`, which is specifically
+   a POMDP environment that needs to be initialized by the relevant POMDP models.
+   """
+   def execute(self, action, *args):
+       """
+       execute(self, action, *args)
+       Executes the action.
+
+       Args:
+           action (Action): action that will be executed
+           args, kwargs: other parameters
+       Returns:
+           tuple: (Observation, Reward)"""
+       pass
+
+   def done(self):
+       """
+       done(self)
+       Returns True if the task is completed. Note that this doesn't necessarily
+       imply task success."""
+       raise NotImplementedError
+
+
+cdef class Agent(GeneralAgent):
     """ An Agent operates in an environment by taking actions, receiving
     observations, and updating its belief. Taking actions is the job of a
     planner (:class:`Planner`), and the belief update is the job taken care of
@@ -452,33 +500,6 @@ cdef class Agent:
 
     def valid_actions(self, state=None, history=None):
         return self.policy_model.get_all_actions(state=state, history=history)
-
-cdef class GeneralEnvironment:
-   """
-   A GeneralEnvironment is a basic skeleton of an environment of a task;
-   It handles action execution and maintains task state. And optionally,
-   a :meth:`done` function can be implemented to check the status of the task.
-   It is more general than the :class:`Environment`, which is specifically
-   a POMDP environment that needs to be initialized by the relevant POMDP models.
-   """
-   def execute(self, action, *args):
-       """
-       execute(self, action, *args)
-       Executes the action.
-
-       Args:
-           action (Action): action that will be executed
-           args, kwargs: other parameters
-       Returns:
-           tuple: (Observation, Reward)"""
-       pass
-
-   def done(self):
-       """
-       done(self)
-       Returns True if the task is completed. Note that this doesn't necessarily
-       imply task success."""
-       raise NotImplementedError
 
 
 cdef class Environment(GeneralEnvironment):
