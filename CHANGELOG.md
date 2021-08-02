@@ -1,3 +1,6 @@
+### Version 1.2.4.6 (pending)
+* Fix `setup.py` so that `pip install -e .` works.
+
 ### Version 1.2.4.5
 * Edit `setup.py` file so that Cython modules in `pomdp-py` can be `cimport`ed.
 

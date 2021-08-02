@@ -8,18 +8,32 @@ import os.path
 with open("README.rst", 'r') as f:
     long_description = f.read()
 
-extensions = [
-    Extension("pomdp_py.algorithms", ["pomdp_py/algorithms/*.pyx"]),
-    Extension("pomdp_py.framework", ["pomdp_py/framework/*.pyx"]),
-    Extension("pomdp_py.representations.distribution", ["pomdp_py/representations/distribution/*.pyx"]),
-    Extension("pomdp_py.representations.belief", ["pomdp_py/representations/belief/*.pyx"]),
+# Build cython files as extensions
+def build_extensions(pkg_name, major_submodules):
+    cwd = os.path.abspath(os.path.dirname(__file__))
+    extensions = []
+    for subm in major_submodules:
+        for f in os.listdir(os.path.join(cwd, pkg_name, subm.replace(".", "/"))):
+            if f.endswith(".pyx"):
+                filename = os.path.splitext(f)[0]
+                ext_name = f"{pkg_name}.{subm}.{filename}"
+                ext_path = os.path.join(pkg_name, subm.replace(".", "/"), f)
+                extensions.append(Extension(ext_name, [ext_path]))
+
+    return extensions
+
+extensions = build_extensions("pomdp_py", ["framework",
+                                           "algorithms",
+                                           "representations.distribution",
+                                           "representations.belief"])
+extensions += [
     Extension("pomdp_problems.tiger.cythonize", ["pomdp_problems/tiger/cythonize/tiger_problem.pyx"]),
     Extension("pomdp_problems.rocksample.cythonize", ["pomdp_problems/rocksample/cythonize/rocksample_problem.pyx"])
 ]
 
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.2.4.5',
+      version='1.2.4.6',
       description='Python POMDP Library.',
       long_description=long_description,
       long_description_content_type="text/x-rst",
