@@ -25,7 +25,7 @@ Install `pomdp-py` by::
 
 .. _install_dev:
 
-| **Install as developer**
+| Or, **install as developer**
 
 1. Install Cython::
 

@@ -202,8 +202,6 @@
 </li>
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.Action">(class in pomdp_problems.rocksample.rocksample_problem)</a>
 </li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.Action">(class in pomdp_problems.tiger.tiger_problem)</a>
-</li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Action">(class in pomdp_py.framework.basics)</a>
 </li>
       </ul></li>
@@ -738,15 +736,11 @@
       <ul>
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.Observation">(class in pomdp_problems.rocksample.rocksample_problem)</a>
 </li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.Observation">(class in pomdp_problems.tiger.tiger_problem)</a>
-</li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation">(class in pomdp_py.framework.basics)</a>
 </li>
       </ul></li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.observation_models">observation_models (pomdp_py.framework.oopomdp.OOObservationModel attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="problems/pomdp_problems.light_dark.models.html#pomdp_problems.light_dark.models.observation_model.ObservationModel">ObservationModel (class in pomdp_problems.light_dark.models.observation_model)</a>
 
       <ul>
@@ -755,6 +749,8 @@
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel">(class in pomdp_py.framework.basics)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_cleanup">on_cleanup() (pomdp_problems.multi_object_search.env.visual.MosViz method)</a>
 </li>
       <li><a href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_event">on_event() (pomdp_problems.multi_object_search.env.visual.MosViz method)</a>
@@ -781,7 +777,7 @@
 </li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Option">Option (class in pomdp_py.framework.basics)</a>
 </li>
-      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.State.other">other() (pomdp_problems.tiger.tiger_problem.State method)</a>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerState.other">other() (pomdp_problems.tiger.tiger_problem.TigerState method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1238,8 +1234,6 @@
       <ul>
         <li><a href="problems/pomdp_problems.rocksample.html#pomdp_problems.rocksample.rocksample_problem.State">(class in pomdp_problems.rocksample.rocksample_problem)</a>
 </li>
-        <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.State">(class in pomdp_problems.tiger.tiger_problem)</a>
-</li>
         <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.State">(class in pomdp_py.framework.basics)</a>
 </li>
       </ul></li>
@@ -1269,16 +1263,22 @@
         <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.test_planner">(in module pomdp_problems.tiger.tiger_problem)</a>
 </li>
       </ul></li>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerAction">TigerAction (class in pomdp_problems.tiger.tiger_problem)</a>
+</li>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerObservation">TigerObservation (class in pomdp_problems.tiger.tiger_problem)</a>
+</li>
       <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem">TigerProblem (class in pomdp_problems.tiger.tiger_problem)</a>
+</li>
+      <li><a href="problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerState">TigerState (class in pomdp_problems.tiger.tiger_problem)</a>
 </li>
       <li><a href="examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.to_pomdp_file">to_pomdp_file() (in module pomdp_py.utils.interfaces.conversion)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.to_pomdpx_file">to_pomdpx_file() (in module pomdp_py.utils.interfaces.conversion)</a>
 </li>
       <li><a href="api/pomdp_py.utils.html#pomdp_py.utils.util.to_radians">to_radians() (in module pomdp_py.utils.util)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment.transition_model">transition_model (pomdp_py.framework.basics.Environment attribute)</a>
 </li>
       <li><a href="api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.transition_models">transition_models (pomdp_py.framework.oopomdp.OOTransitionModel attribute)</a>
@@ -1356,7 +1356,11 @@
       <li><a href="problems/pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.valid_pose">valid_pose() (in module pomdp_problems.multi_object_search.models.transition_model)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode.value">value (pomdp_py.algorithms.po_uct.TreeNode attribute)</a>
+
+      <ul>
+        <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.VNode.value">(pomdp_py.algorithms.po_uct.VNode attribute)</a>
 </li>
+      </ul></li>
       <li><a href="examples.external_solvers.html#pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy.value">value() (pomdp_py.utils.interfaces.conversion.AlphaVectorPolicy method)</a>
 </li>
       <li><a href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration">ValueIteration (class in pomdp_py.algorithms.value_iteration)</a>

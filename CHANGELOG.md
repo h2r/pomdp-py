@@ -2,6 +2,18 @@
 * Code refactoring: Remove unnecessary `*args, **kwargs` in interface signature. **Backwards compatible**.
 * Can initialize `Environment` with  `BlackboxModel`.
 
+### Version 1.2.4.6 (pending)
+* Fix `setup.py` so that `pip install -e .` works.
+
+### Version 1.2.4.5
+* Edit `setup.py` file so that Cython modules in `pomdp-py` can be `cimport`ed.
+
+(skipped versions due to attempting pypi release)
+
+### Version 1.2.4.1
+* Fix documentation (external solver examples).
+* Update `tiger_problem.py` to match documentation
+
 ### Version 1.2.4
 * `pomdp_py/algorithms/value_function.py`:
    * zero-probability observation should be skipped.

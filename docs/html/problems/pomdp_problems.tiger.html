@@ -183,25 +183,25 @@ also contains the agent and the environment as its fields. In
 general this doesn’t need to be the case. (Refer to more complicated
 examples.)</p>
 <dl class="class">
-<dt id="pomdp_problems.tiger.tiger_problem.State">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">State</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.State" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.tiger.tiger_problem.TigerState">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">TigerState</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
 <dl class="method">
-<dt id="pomdp_problems.tiger.tiger_problem.State.other">
-<code class="sig-name descname">other</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#State.other"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.State.other" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.tiger.tiger_problem.TigerState.other">
+<code class="sig-name descname">other</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerState.other"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerState.other" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="pomdp_problems.tiger.tiger_problem.Action">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">Action</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.Action" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.tiger.tiger_problem.TigerAction">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">TigerAction</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
-<dt id="pomdp_problems.tiger.tiger_problem.Observation">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">Observation</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.Observation" title="Permalink to this definition">¶</a></dt>
+<dt id="pomdp_problems.tiger.tiger_problem.TigerObservation">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.tiger_problem.</code><code class="sig-name descname">TigerObservation</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerObservation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerObservation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
 </dd></dl>
 
@@ -338,7 +338,7 @@ i.e. assumed to be implemented for a reward model.</p>
 with the framework.</p>
 <dl class="attribute">
 <dt id="pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS">
-<code class="sig-name descname">ACTIONS</code><em class="property"> = {Action(stay), Action(listen), Action(open-right), Action(open-left)}</em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ACTIONS</code><em class="property"> = {TigerAction(open-left), TigerAction(open-right), TigerAction(listen), TigerAction(stay)}</em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

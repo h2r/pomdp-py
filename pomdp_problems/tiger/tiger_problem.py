@@ -40,52 +40,52 @@ import random
 import numpy as np
 import sys
 
-class State(pomdp_py.State):
+class TigerState(pomdp_py.State):
     def __init__(self, name):
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, State):
+        if isinstance(other, TigerState):
             return self.name == other.name
         return False
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "State(%s)" % self.name
+        return "TigerState(%s)" % self.name
     def other(self):
         if self.name.endswith("left"):
-            return State("tiger-right")
+            return TigerState("tiger-right")
         else:
-            return State("tiger-left")
+            return TigerState("tiger-left")
 
-class Action(pomdp_py.Action):
+class TigerAction(pomdp_py.Action):
     def __init__(self, name):
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, Action):
+        if isinstance(other, TigerAction):
             return self.name == other.name
         return False
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Action(%s)" % self.name
+        return "TigerAction(%s)" % self.name
 
-class Observation(pomdp_py.Observation):
+class TigerObservation(pomdp_py.Observation):
     def __init__(self, name):
         self.name = name
     def __hash__(self):
         return hash(self.name)
     def __eq__(self, other):
-        if isinstance(other, Observation):
+        if isinstance(other, TigerObservation):
             return self.name == other.name
         return False
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "Observation(%s)" % self.name
+        return "TigerObservation(%s)" % self.name
 
 # Observation model
 class ObservationModel(pomdp_py.ObservationModel):
@@ -108,14 +108,14 @@ class ObservationModel(pomdp_py.ObservationModel):
             thresh = 0.5
 
         if random.uniform(0,1) < thresh:
-            return Observation(next_state.name)
+            return TigerObservation(next_state.name)
         else:
-            return Observation(next_state.other().name)
+            return TigerObservation(next_state.other().name)
 
     def get_all_observations(self):
         """Only need to implement this if you're using
         a solver that needs to enumerate over the observation space (e.g. value iteration)"""
-        return [Observation(s) for s in {"tiger-left", "tiger-right"}]
+        return [TigerObservation(s) for s in {"tiger-left", "tiger-right"}]
 
 # Transition Model
 class TransitionModel(pomdp_py.TransitionModel):
@@ -134,12 +134,12 @@ class TransitionModel(pomdp_py.TransitionModel):
         if action.name.startswith("open"):
             return random.choice(self.get_all_states())
         else:
-            return State(state.name)
+            return TigerState(state.name)
 
     def get_all_states(self):
         """Only need to implement this if you're using
         a solver that needs to enumerate over the observation space (e.g. value iteration)"""
-        return [State(s) for s in {"tiger-left", "tiger-right"}]
+        return [TigerState(s) for s in {"tiger-left", "tiger-right"}]
 
 
 
@@ -169,8 +169,8 @@ class PolicyModel(pomdp_py.RandomRollout):
     with the framework."""
     # A stay action can be added to test that POMDP solver is
     # able to differentiate information gathering actions.
-    ACTIONS = {Action(s) for s in {"open-left", "open-right",
-                                   "listen", "stay"}}
+    ACTIONS = {TigerAction(s) for s in {"open-left", "open-right",
+                                        "listen", "stay"}}
 
     def sample(self, state, **kwargs):
         return self.get_all_actions().random()
@@ -219,29 +219,32 @@ def test_planner(tiger_problem, planner, nsteps=3):
         # Let's create some simulated real observation; Update the belief
         # Creating true observation for sanity checking solver behavior.
         # In general, this observation should be sampled from agent's observation model.
-        real_observation = Observation(tiger_problem.env.state.name)
+        real_observation = TigerObservation(tiger_problem.env.state.name)
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
 
+        # If the planner is POMCP, planner.update also updates agent belief.
         planner.update(tiger_problem.agent, action, real_observation)
         if isinstance(planner, pomdp_py.POUCT):
             print("Num sims: %d" % planner.last_num_sims)
             print("Plan time: %.5f" % planner.last_planning_time)
+
         if isinstance(tiger_problem.agent.cur_belief, pomdp_py.Histogram):
             new_belief = pomdp_py.update_histogram_belief(tiger_problem.agent.cur_belief,
                                                           action, real_observation,
                                                           tiger_problem.agent.observation_model,
                                                           tiger_problem.agent.transition_model)
             tiger_problem.agent.set_belief(new_belief)
+
         if action.name.startswith("open"):
             # Make it clearer to see what actions are taken until every time door is opened.
             print("\n")
 
 def main():
-    init_true_state = random.choice([State("tiger-left"),
-                                     State("tiger-right")])
-    init_belief = pomdp_py.Histogram({State("tiger-left"): 0.5,
-                                      State("tiger-right"): 0.5})
+    init_true_state = random.choice([TigerState("tiger-left"),
+                                     TigerState("tiger-right")])
+    init_belief = pomdp_py.Histogram({TigerState("tiger-left"): 0.5,
+                                      TigerState("tiger-right"): 0.5})
     tiger_problem = TigerProblem(0.15,  # observation noise
                                  init_true_state, init_belief)
 
