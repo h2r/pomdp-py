@@ -38,6 +38,7 @@ from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,
     sample_generative_model
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
+from pomdp_py.utils.util import typ
 import copy
 import time
 import random
@@ -69,7 +70,9 @@ cdef class QNode(TreeNode):
         self.value = value
         self.children = {}  # o -> VNode
     def __str__(self):
-        return "QNode(%.3f, %.3f | %s)" % (self.num_visits, self.value, str(self.children.keys()))
+        return typ.red("QNode") + "(%.3f, %.3f | %s)" % (self.num_visits,
+                                                         self.value,
+                                                         str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
 
@@ -78,8 +81,9 @@ cdef class VNode(TreeNode):
         self.num_visits = num_visits
         self.children = {}  # a -> QNode
     def __str__(self):
-        return "VNode(%.3f, %.3f | %s)" % (self.num_visits, self.value,
-                                           str(self.children.keys()))
+        return typ.green("VNode") + "(%.3f, %.3f | %s)" % (self.num_visits,
+                                                           self.value,
+                                                           str(self.children.keys()))
     def __repr__(self):
         return self.__str__()
 
