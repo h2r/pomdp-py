@@ -4,7 +4,7 @@ import cv2
 import math
 import numpy as np
 import random
-from pomdp_py import util
+import pomdp_py.utils as util
 from pomdp_problems.tag.env.env import *
 from pomdp_problems.tag.domain.observation import *
 from pomdp_problems.tag.domain.action import *
@@ -24,7 +24,7 @@ class TagViz:
         self._last_action = None
         self._last_belief = None
         self._observation_model = observation_model
-        
+
         self._controllable = controllable
         self._running = False
         self._fps = fps
@@ -50,13 +50,13 @@ class TagViz:
                     cv2.rectangle(img, (y*r, x*r), (y*r+r, x*r+r),
                                   (40, 31, 3), -1)
                 cv2.rectangle(img, (y*r, x*r), (y*r+r, x*r+r),
-                              (0, 0, 0), 1, 8)                    
+                              (0, 0, 0), 1, 8)
         return img
-    
+
     @property
     def img_width(self):
         return self._img.shape[0]
-    
+
     @property
     def img_height(self):
         return self._img.shape[1]
@@ -64,7 +64,7 @@ class TagViz:
     @property
     def last_observation(self):
         return self._last_observation
-    
+
     def update(self, action, observation, belief):
         """
         Update the visualization after there is new real action and observation
@@ -73,7 +73,7 @@ class TagViz:
         self._last_action = action
         self._last_observation = observation
         self._last_belief = belief
-        
+
     @staticmethod
     def draw_robot(img, x, y, th, size, color=(255,12,12)):
         radius = int(round(size / 2))
@@ -90,7 +90,7 @@ class TagViz:
             lx, ly = z.target_position
             cv2.circle(img, (ly*r+radius,
                              lx*r+radius), size, color, thickness=-1)
-        
+
 
     # TODO! Deprecated.
     @staticmethod
@@ -102,7 +102,7 @@ class TagViz:
 
         hist = belief.get_histogram()
         color = target_color
-        
+
         last_val = -1
         count = 0
         for state in reversed(sorted(hist, key=hist.get)):
@@ -178,7 +178,7 @@ class TagViz:
 
     def on_loop(self):
         self._playtime += self._clock.tick(self._fps) / 1000.0
-        
+
     def on_render(self):
         # self._display_surf.blit(self._background, (0, 0))
         self.render_env(self._display_surf)
@@ -190,15 +190,15 @@ class TagViz:
                                    (last_action_str, rx, ry, 0,
                                     str(self._env.state.target_found),
                                     fps_text))
-        pygame.display.flip() 
- 
+        pygame.display.flip()
+
     def on_cleanup(self):
         pygame.quit()
- 
+
     def on_execute(self):
         if self.on_init() == False:
             self._running = False
- 
+
         while( self._running ):
             for event in pygame.event.get():
                 self.on_event(event)
@@ -209,7 +209,7 @@ class TagViz:
     def render_env(self, display_surf):
         img = np.copy(self._img)
         r = self._res  # Not radius! It's resolution.
-        
+
         # draw target
         tx, ty = self._env.state.target_position
         cv2.rectangle(img, (ty*r, tx*r), (ty*r+r, tx*r+r),

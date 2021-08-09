@@ -1,4 +1,4 @@
-from pomdp_py.utils import util
+import pomdp_py.utils as util
 
 # Framework
 from pomdp_py.framework.basics import *

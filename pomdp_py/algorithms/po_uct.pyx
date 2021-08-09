@@ -38,7 +38,7 @@ from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,
     sample_generative_model
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
-from pomdp_py.utils.util import typ
+from pomdp_py.utils import typ
 import copy
 import time
 import random
