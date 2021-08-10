@@ -16,10 +16,6 @@ cdef class Distribution:
         Sets the probability of :math:`X=varval` to be `value`.
         """
         raise NotImplementedError
-    def __hash__(self):
-        return id(self)
-    def __eq__(self, other):
-        return id(self) == id(other)
     def __iter__(self):
         """Initialization of iterator over the values in this distribution"""
         raise NotImplementedError
@@ -296,6 +292,9 @@ cdef class Action:
         raise NotImplementedError
     def __hash__(self):
         raise NotImplementedError
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 cdef class State:
     """
     The State class. State must be `hashable`.
@@ -304,6 +303,8 @@ cdef class State:
         raise NotImplementedError
     def __hash__(self):
         raise NotImplementedError
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 cdef class Observation:
     """
@@ -313,6 +314,8 @@ cdef class Observation:
         raise NotImplementedError
     def __hash__(self):
         raise NotImplementedError
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving

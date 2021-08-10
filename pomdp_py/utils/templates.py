@@ -17,6 +17,8 @@ class SimpleState(pomdp_py.State):
         if isinstance(other, SimpleState):
             return self.data == other.data
         return False
+    def __ne__(self, other):
+        return not self.__eq__(other)
     def __str__(self):
         return str(self.data)
     def __repr__(self):
@@ -32,6 +34,8 @@ class SimpleAction(pomdp_py.Action):
         if isinstance(other, SimpleAction):
             return self.name == other.name
         return False
+    def __ne__(self, other):
+        return not self.__eq__(other)
     def __str__(self):
         return self.name
     def __repr__(self):
@@ -49,6 +53,8 @@ class SimpleObservation(pomdp_py.Observation):
         if isinstance(other, SimpleObservation):
             return self.data == other.data
         return False
+    def __ne__(self, other):
+        return not self.__eq__(other)
     def __str__(self):
         return str(self.data)
     def __repr__(self):

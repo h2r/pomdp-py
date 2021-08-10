@@ -7,6 +7,7 @@
   your own type when implementing its `mpe` and `random` functions.
 * Reorganized `util` by breaking it into different modules.
 * Color texts when printing POUCT tree.
+* Added `__ne__` methods to framework classes.
 
 ### Version 1.2.4.6 (pending)
 * Fix `setup.py` so that `pip install -e .` works.

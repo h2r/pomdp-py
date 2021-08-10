@@ -23,6 +23,7 @@ cdef class OOPOMDP(POMDP):
     """
     def __init__(self, agent, env, name="OOPOMDP"):
         super().__init__(agent, env, name=name)
+
 cdef class ObjectState(State):
     """
     This is the result of OOState factoring; A state
