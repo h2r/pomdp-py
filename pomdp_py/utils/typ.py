@@ -48,6 +48,9 @@ def success(content):
 def bold(content):
     return bcolors.BOLD + content
 
+def white(content):
+    return bcolors.s(bcolors.WHITE, content)
+
 def green(content):
     return bcolors.s(bcolors.GREEN, content)
 
