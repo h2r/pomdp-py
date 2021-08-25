@@ -39,7 +39,7 @@ class SimpleAction(pomdp_py.Action):
     def __str__(self):
         return self.name
     def __repr__(self):
-        return "SimpleAction(%s)" % self.name
+        return "SimpleAction({})".format(self.name)
 
 class SimpleObservation(pomdp_py.Observation):
     """A SimpleObservation is an observation
@@ -58,7 +58,7 @@ class SimpleObservation(pomdp_py.Observation):
     def __str__(self):
         return str(self.data)
     def __repr__(self):
-        return "SimpleObservation(%s)" % self.data
+        return "SimpleObservation({})".format(self.data)
 
 class DetTransitionModel(pomdp_py.TransitionModel):
     """A DetTransitionModel is a deterministic transition model.
