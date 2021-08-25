@@ -1,11 +1,35 @@
 """
 Utility functions making it easier to debug POMDP planning.
 """
+import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
 from pomdp_py.utils import typ
 
 def sorted_nodes(nodes):
     return sorted(nodes, key=lambda n: str(n))
+
+
+class _QNodePP(QNode):
+    """QNode for better printing"""
+    def __init__(self, qnode, parent_edge=None):
+        super().__init__(qnode.num_visits, qnode.value)
+        self.parent_edge = parent_edge
+        self.children = qnode.children
+
+    def __str__(self):
+        return TreeDebugger.single_node_str(self,
+                                            parent_edge=self.parent_edge)
+
+class _VNodePP(VNode):
+    """VNode for better printing"""
+    def __init__(self, vnode, parent_edge=None):
+        super().__init__(vnode.num_visits)
+        self.parent_edge = parent_edge
+        self.children = vnode.children
+
+    def __str__(self):
+        return TreeDebugger.single_node_str(self,
+                                            parent_edge=self.parent_edge)
 
 
 class TreeDebugger:
@@ -24,43 +48,11 @@ class TreeDebugger:
         """
         if not isinstance(tree, TreeNode):
             raise ValueError("Expecting tree to be a TreeNode, but got {}".format(type(tree)))
-        self.tree = tree
+
+        self.tree = TreeDebugger._node_pp(tree)
         self.current = self.tree   # points to the node the user is interacting with
         self.parent_edge = None    # stores the edge that leads to current
         self._stats_cache = {}
-
-    @staticmethod
-    def single_node_str(node, parent_edge=None, indent=1, include_children=True):
-        """
-        Returns a string for printing given a single vnode.
-        """
-        if isinstance(node, VNode):
-            color = typ.green
-        else:
-            assert isinstance(node, QNode)
-            color = typ.red
-
-        output = ""
-        if parent_edge is not None:
-            output += "- {} -".format(typ.white(str(parent_edge)))
-
-        output += color(str(node.__class__.__name__))\
-            + "(n={}, v={:.3f})".format(node.num_visits,
-                                    node.value)
-        if include_children:
-            output += "\n"
-            for i, action in enumerate(sorted_nodes(node.children)):
-                child = node.children[action]
-                child_info = TreeDebugger.single_node_str(child, include_children=False)
-
-                spaces = "    " * indent
-                output += "{}- {}: {}".format(spaces,
-                                              typ.white(str(action)),
-                                              child_info)
-                if i < len(node.children) - 1:
-                    output += "\n"
-        return output
-
 
     def __str__(self):
         return str(self.current)
@@ -68,38 +60,6 @@ class TreeDebugger:
     def __repr__(self):
         nodestr = TreeDebugger.single_node_str(self.current, parent_edge=self.parent_edge)
         return "TreeDebugger@\n{}".format(nodestr)
-
-    @staticmethod
-    def tree_stats(root, max_depth=None):
-        stats = {
-            'total_vnodes': 0,
-            'total_qnodes': 0,
-            'total_vnodes_children': 0,
-            'total_qnodes_children': 0,
-            'max_vnodes_children': 0,
-            'max_qnodes_children': 0
-        }
-        TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
-        stats['num_visits'] = root.num_visits
-        stats['value'] = root.value
-        return stats
-
-    @staticmethod
-    def _tree_stats_helper(root, depth, stats, max_depth=None):
-        if max_depth is not None and depth >= max_depth:
-            return
-        else:
-            if isinstance(root, VNode):
-                stats['total_vnodes'] += 1
-                stats['total_vnodes_children'] += len(root.children)
-                stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
-            else:
-                stats['total_qnodes'] += 1
-                stats['total_qnodes_children'] += len(root.children)
-                stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
-
-            for c in root.children:
-                TreeDebugger._tree_stats_helper(root[c], depth+1, stats, max_depth=max_depth)
 
     def _get_stats(self):
         if id(self.current) in self._stats_cache:
@@ -160,6 +120,82 @@ class TreeDebugger:
     @property
     def c(self):
         return self.current
+
+    @staticmethod
+    def _node_pp(node):
+        # We want to return the node, but we don't want to print it on pdb with
+        # its default string. But instead, we want to print it with our own
+        # string formatting.
+        if isinstance(node, VNode):
+            return _VNodePP(node)
+        else:
+            return _QNodePP(node)
+
+
+    @staticmethod
+    def single_node_str(node, parent_edge=None, indent=1, include_children=True):
+        """
+        Returns a string for printing given a single vnode.
+        """
+        if isinstance(node, VNode):
+            color = typ.green
+        else:
+            assert isinstance(node, QNode)
+            color = typ.red
+
+        output = ""
+        if parent_edge is not None:
+            output += "- {} -".format(typ.white(str(parent_edge)))
+
+        output += color(str(node.__class__.__name__))\
+            + "(n={}, v={:.3f})".format(node.num_visits,
+                                    node.value)
+        if include_children:
+            output += "\n"
+            for i, action in enumerate(sorted_nodes(node.children)):
+                child = node.children[action]
+                child_info = TreeDebugger.single_node_str(child, include_children=False)
+
+                spaces = "    " * indent
+                output += "{}- [{}] {}: {}".format(spaces, i,
+                                                   typ.white(str(action)),
+                                                   child_info)
+                if i < len(node.children) - 1:
+                    output += "\n"
+        return output
+
+    @staticmethod
+    def tree_stats(root, max_depth=None):
+        stats = {
+            'total_vnodes': 0,
+            'total_qnodes': 0,
+            'total_vnodes_children': 0,
+            'total_qnodes_children': 0,
+            'max_vnodes_children': 0,
+            'max_qnodes_children': 0
+        }
+        TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
+        stats['num_visits'] = root.num_visits
+        stats['value'] = root.value
+        return stats
+
+    @staticmethod
+    def _tree_stats_helper(root, depth, stats, max_depth=None):
+        if max_depth is not None and depth >= max_depth:
+            return
+        else:
+            if isinstance(root, VNode):
+                stats['total_vnodes'] += 1
+                stats['total_vnodes_children'] += len(root.children)
+                stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
+            else:
+                stats['total_qnodes'] += 1
+                stats['total_qnodes_children'] += len(root.children)
+                stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
+
+            for c in root.children:
+                TreeDebugger._tree_stats_helper(root[c], depth+1, stats, max_depth=max_depth)
+
 
 
 def print_tree(tree, max_depth=None, complete=False):
