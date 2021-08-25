@@ -3,7 +3,7 @@ Utility functions making it easier to debug POMDP planning.
 """
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
-from pomdp_py.utils import typ, similar
+from pomdp_py.utils import typ, similar, special_char
 
 SIMILAR_THRESH = 0.6
 
@@ -11,14 +11,14 @@ def sorted_by_str(enumerable):
     return sorted(enumerable, key=lambda n: str(n))
 
 
-def _node_pp(node):
+def _node_pp(node, p=None):
     # We want to return the node, but we don't want to print it on pdb with
     # its default string. But instead, we want to print it with our own
     # string formatting.
     if isinstance(node, VNode):
-        return _VNodePP(node)
+        return _VNodePP(node, parent_edge=p)
     else:
-        return _QNodePP(node)
+        return _QNodePP(node, parent_edge=p)
 
 class _NodePP:
     def __getitem__(self, key):
@@ -35,15 +35,15 @@ class _NodePP:
           of similarity is SIMILAR_THRESH
         """
         if key in self.children:
-            return _node_pp(self.children[key])
+            return _node_pp(self.children[key], p=key)
         if type(key) == int:
             edges = list(sorted_by_str(self.children.keys()))
-            return _node_pp(self.children[edges[key]])
+            return _node_pp(self.children[edges[key]], p=edges[key])
         if type(key) == str:
             chosen = max(self.children.keys(),
                          key=lambda edge: similar(str(edge), key))
-            if similar(chosen, key) >= SIMILAR_THRESH:
-                return _node_pp(self.children[chosen])
+            if similar(str(chosen), key) >= SIMILAR_THRESH:
+                return _node_pp(self.children[chosen], p=chosen)
         raise ValueError("Cannot access children with key {}".format(key))
 
 
@@ -175,7 +175,7 @@ class TreeDebugger:
 
         output = ""
         if parent_edge is not None:
-            output += "- {} -".format(typ.white(str(parent_edge)))
+            output += typ.yellow(str(parent_edge)) + special_char.longright
 
         output += color(str(node.__class__.__name__))\
             + "(n={}, v={:.3f})".format(node.num_visits,

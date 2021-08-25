@@ -28,3 +28,12 @@ def safe_slice(arr, start, end):
 def similar(a, b):
     # Reference: https://stackoverflow.com/questions/17388213/find-the-similarity-metric-between-two-strings
     return SequenceMatcher(None, a, b).ratio()
+
+
+class special_char:
+    left = '\u2190'
+    up = '\u2191'
+    right = '\u2192'
+    down = '\u2193'
+    longleft = '\u27F5'
+    longright = '\u27F6'
