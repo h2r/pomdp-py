@@ -1,8 +1,9 @@
 """Plot the light dark environment"""
-import pomdp_problems.util as util
 import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 import pomdp_problems.light_dark as ld
+from pomdp_py.utils import plotting, colors
+from pomdp_py.utils.misc import remap
 
 class LightDarkViz:
     """This class deals with visualizing a light dark domain"""
@@ -51,7 +52,7 @@ class LightDarkViz:
 
     def _plot_robot(self):
         cur_pos = self._env.state.position
-        util.plot_circle(self._ax, cur_pos,
+        plotting.plot_circle(self._ax, cur_pos,
                          0.25, # tentative
                          color="black", fill=False,
                          linewidth=1, edgecolor="black",
@@ -59,20 +60,20 @@ class LightDarkViz:
 
     def _plot_initial_belief_pos(self):
         if self._m_0 is not None:
-            util.plot_circle(self._ax, self._m_0,
-                             0.25, # tentative
-                             color="black", fill=False,
-                             linewidth=1, edgecolor="black",
-                             zorder=3)
+            plotting.plot_circle(self._ax, self._m_0,
+                                 0.25, # tentative
+                                 color="black", fill=False,
+                                 linewidth=1, edgecolor="black",
+                                 zorder=3)
 
     def _plot_goal(self):
         if self._goal_pos is not None:
-            util.plot_circle(self._ax,
-                             self._goal_pos,
-                             0.25,  # tentative
-                             linewidth=1, edgecolor="blue",
-                             zorder=3)
-        
+            plotting.plot_circle(self._ax,
+                                 self._goal_pos,
+                                 0.25,  # tentative
+                                 linewidth=1, edgecolor="blue",
+                                 zorder=3)
+
     def _plot_path(self, colors, styles, linewidths):
         """Plot robot path"""
         # Plot line segments
@@ -82,9 +83,9 @@ class LightDarkViz:
             else:
                 if len(colors[path]) == 2:
                     c1, c2 = colors[path]
-                    path_color = util.linear_color_gradient(c1, c2,
-                                                            len(self._log_paths[path]),
-                                                            normalize=True)
+                    path_color = colors.linear_color_gradient(c1, c2,
+                                                              len(self._log_paths[path]),
+                                                              normalize=True)
                 else:
                     path_color = [colors[path]] * len(self._log_paths[path])
 
@@ -102,7 +103,7 @@ class LightDarkViz:
                 p1 = self._log_paths[path][i-1]
                 p2 = self._log_paths[path][i]
                 try:
-                    util.plot_line(self._ax, p1, p2, color=path_color[i],
+                    plotting.plot_line(self._ax, p1, p2, color=path_color[i],
                                    linestyle=path_style, zorder=2, linewidth=path_width)
                 except Exception:
                     import pdb; pdb.set_trace()
@@ -126,13 +127,13 @@ class LightDarkViz:
             # compute brightness based on equation in the paper
             brightness = 0.5 * (self._env.light - x)**2 + self._env.const
             # map brightness to a grayscale color
-            grayscale = int(round(util.remap(brightness, hi_brightness, lo_brightness, 255, 0)))
-            grayscale_hex = util.rgb_to_hex((grayscale, grayscale, grayscale))
+            grayscale = int(round(remap(brightness, hi_brightness, lo_brightness, 255, 0)))
+            grayscale_hex = colors.rgb_to_hex((grayscale, grayscale, grayscale))
             colors.append(grayscale_hex)
             x = x_next
-        util.plot_polygons(verts, colors, ax=self._ax)
+        plotting.plot_polygons(verts, colors, ax=self._ax)
         self._ax.set_xlim(xmin, xmax)
-        self._ax.set_ylim(ymin, ymax)        
+        self._ax.set_ylim(ymin, ymax)
 
 if __name__ == "__main__":
     env = ld.LightDarkEnvironment(ld.State((0.5, 2.5)),  # init state
@@ -144,5 +145,5 @@ if __name__ == "__main__":
     viz.log_position((5,0))
     viz.log_position((4,-1))
     viz.plot()
-    
+
     plt.show()

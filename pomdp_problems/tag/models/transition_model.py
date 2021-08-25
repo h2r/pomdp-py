@@ -8,7 +8,6 @@ Transition model: the robot moves deterministically. The target's movement
 """
 import copy
 import pomdp_py
-import pomdp_problems.util as util
 import pomdp_problems.tag.constants as constants
 from pomdp_problems.tag.domain.action import *
 
@@ -56,7 +55,7 @@ class TagTransitionModel(pomdp_py.TransitionModel):
                                                      state.target_position,
                                                      state.robot_position,
                                                      valid_target_motion_actions)
-    
+
     def sample(self, state, action, argmax=False):
         # Robot motion
         next_state = copy.deepcopy(state)
@@ -72,7 +71,7 @@ class TagTransitionModel(pomdp_py.TransitionModel):
             return next_state
 
         # Target motion
-        valid_target_motion_actions = self._grid_map.valid_motions(state.target_position)        
+        valid_target_motion_actions = self._grid_map.valid_motions(state.target_position)
         if not argmax:
             next_state.target_position = self.target_motion_policy.random(state.robot_position,
                                                                           state.target_position,
@@ -85,4 +84,3 @@ class TagTransitionModel(pomdp_py.TransitionModel):
 
     def argmax(self, state, action, **kwargs):
         return self.sample(state, action, argmax=True)
-        

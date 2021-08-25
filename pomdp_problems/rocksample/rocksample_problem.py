@@ -446,7 +446,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     return total_reward, total_discounted_reward
 
 
-def init_particles_belief(num_particles, init_state, belief="uniform"):
+def init_particles_belief(k, num_particles, init_state, belief="uniform"):
     num_particles = 200
     particles = []
     for _ in range(num_particles):
@@ -461,9 +461,7 @@ def init_particles_belief(num_particles, init_state, belief="uniform"):
     init_belief = pomdp_py.Particles(particles)
     return init_belief
 
-
-if __name__ == '__main__':
-
+def main():
     n, k = 5, 5
     init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
     # # For debugging purpose
@@ -483,7 +481,7 @@ if __name__ == '__main__':
 
     # init belief (uniform), represented in particles;
     # We don't factor the state here; We are also not doing any action prior.
-    init_belief = init_particles_belief(200, init_state, belief=belief)
+    init_belief = init_particles_belief(k, 200, init_state, belief=belief)
 
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
     rocksample.print_state()
@@ -498,5 +496,9 @@ if __name__ == '__main__':
     rocksample.env.state.position = init_state_copy.position
     rocksample.env.state.rocktypes = init_state_copy.rocktypes
     rocksample.env.state.terminal = False
-    init_belief = init_particles_belief(200, rocksample.env.state, belief=belief)
+    init_belief = init_particles_belief(k, 200, rocksample.env.state, belief=belief)
     rocksample.agent.set_belief(init_belief)
+
+
+if __name__ == '__main__':
+    main()
