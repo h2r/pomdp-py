@@ -20,10 +20,10 @@ from pomdp_py.algorithms.value_function import value, qvalue, belief_update
 from pomdp_py.algorithms.pomcp import POMCP
 from pomdp_py.algorithms.po_rollout import PORollout
 from pomdp_py.algorithms.po_uct import POUCT, QNode, VNode, RootVNode,\
-    RolloutPolicy, RandomRollout, print_preferred_actions, print_tree,\
-    tree_stats, ActionPrior
+    RolloutPolicy, RandomRollout, ActionPrior
 from pomdp_py.algorithms.bsp.blqr import BLQR
 from pomdp_py.visual import visual
 
-# Templates
+# Templates & Utilities
 from pomdp_py.utils.templates import *
+from pomdp_py.utils.debugging import print_preferred_actions, print_tree, tree_stats
