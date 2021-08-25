@@ -113,12 +113,12 @@ def belief_update(b, a, o, T, O):
 
 
 # Tests
-def create_case(noise=0.15, init_state="tiger-left"):
+def _create_case(noise=0.15, init_state="tiger-left"):
     """Create a tiger problem instance with uniform belief"""
-    from pomdp_problems.tiger.tiger_problem import TigerProblem, State
-    tiger = TigerProblem(noise, State(init_state),
-                         pomdp_py.Histogram({State("tiger-left"): 0.5,
-                                             State("tiger-right"): 0.5}))
+    from pomdp_problems.tiger.tiger_problem import TigerProblem, TigerState
+    tiger = TigerProblem(noise, TigerState(init_state),
+                         pomdp_py.Histogram({TigerState("tiger-left"): 0.5,
+                                             TigerState("tiger-right"): 0.5}))
     T = tiger.agent.transition_model
     O = tiger.agent.observation_model
     S = list(T.get_all_states())
@@ -131,9 +131,9 @@ def create_case(noise=0.15, init_state="tiger-left"):
     s0 = tiger.env.state
     return b0, s0, S, A, Z, T, O, R, gamma
 
-def test_basic():
-    b0, s0, S, A, Z, T, O, R, gamma = create_case(noise=0.15,
-                                                  init_state="tiger-left")
+def _test_basic():
+    b0, s0, S, A, Z, T, O, R, gamma = _create_case(noise=0.15,
+                                                   init_state="tiger-left")
     horizon = 3
     qvs = {}
     for a in A:
@@ -144,9 +144,9 @@ def test_basic():
     print("Pass.")
 
 
-def test_planning():
-    b0, s0, S, A, Z, T, O, R, gamma = create_case(noise=0.15,
-                                                  init_state="tiger-left")
+def _test_planning():
+    b0, s0, S, A, Z, T, O, R, gamma = _create_case(noise=0.15,
+                                                   init_state="tiger-left")
     horizon = 3
 
     # Do planning with qvalue
@@ -173,5 +173,5 @@ def test_planning():
 
 
 if __name__ == "__main__":
-    test_basic()
-    test_planning()
+    _test_basic()
+    _test_planning()
