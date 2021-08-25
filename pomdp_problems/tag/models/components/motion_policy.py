@@ -1,6 +1,6 @@
 import pomdp_py
 import random
-import pomdp_problems.util as util
+from pomdp_py.utils.math import euclidean_dist
 import pomdp_problems.tag.constants as constants
 from pomdp_problems.tag.models.transition_model import TagTransitionModel
 
@@ -17,16 +17,16 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
                                    target_position,
                                    valid_target_motion_actions):
         candidate_actions = set({})
-        cur_dist = util.euclidean_dist(robot_position, target_position)
+        cur_dist = euclidean_dist(robot_position, target_position)
         for action in valid_target_motion_actions:
             next_target_position = TagTransitionModel.if_move_by(self._grid_map,
                                                                  target_position,
                                                                  action)
-            next_dist = util.euclidean_dist(robot_position, next_target_position)
+            next_dist = euclidean_dist(robot_position, next_target_position)
             if next_dist > cur_dist:
                 candidate_actions.add(action)
         return candidate_actions
-        
+
 
     def probability(self, next_target_position,
                     target_position, robot_position,
@@ -45,7 +45,7 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
                                                             valid_target_motion_actions)
         if len(candidate_actions) == 0:
             # No action possible, yet next_target_position is a valid
-            # transition from current. 
+            # transition from current.
             if next_target_position == target_position:
                 # That means the target is either
                 # stuck or staying. Either way, this is the only thing that
@@ -75,7 +75,7 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
                                                                 valid_target_motion_actions)
             if len(candidate_actions) == 0:
                 return target_position
-            
+
             chosen_action = random.sample(candidate_actions, 1)[0]
             return TagTransitionModel.if_move_by(self._grid_map,
                                                  target_position,
@@ -88,4 +88,3 @@ class TagTargetMotionPolicy(pomdp_py.GenerativeDistribution):
         return self.random(robot_position, target_position,
                            valid_target_motion_actions,
                            mpe=True)
-            

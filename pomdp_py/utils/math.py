@@ -1,5 +1,5 @@
 # Assorted utilities for math
-
+import math
 import numpy as np
 
 # Math
@@ -77,3 +77,6 @@ def approx_equal(v1, v2, epsilon=1e-6):
         if abs(v1[i] - v2[i]) > epsilon:
             return False
     return True
+
+def euclidean_dist(p1, p2):
+    return math.sqrt(sum([(a - b)** 2 for a, b in zip(p1, p2)]))

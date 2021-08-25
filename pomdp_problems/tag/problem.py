@@ -37,7 +37,7 @@ class TagProblem(pomdp_py.POMDP):
             init_belief = initialize_particles_belief(grid_map, init_robot_position,
                                                       prior=prior, num_particles=num_particles)
         else:
-            init_belief = initialize_belief(grid_map, init_robot_position, prior=prior)            
+            init_belief = initialize_belief(grid_map, init_robot_position, prior=prior)
         agent = TagAgent(init_belief,
                          grid_map,
                          pr_stay=pr_stay,
@@ -74,7 +74,7 @@ def solve(problem,
             raise Exception("Environment failed to initialize")
         viz.update(None,
                    None,
-                   problem.agent.cur_belief)                
+                   problem.agent.cur_belief)
         viz.on_render()
 
     _discount = 1.0
@@ -109,7 +109,7 @@ def solve(problem,
         # Info and render
         _total_reward += reward
         _total_discounted_reward += reward * _discount
-        _discount = _discount * discount_factor        
+        _discount = _discount * discount_factor
         print("==== Step %d ====" % (i+1))
         print("Action: %s" % str(real_action))
         print("Observation: %s" % str(real_observation))
@@ -119,14 +119,14 @@ def solve(problem,
         print("Find Actions Count: %d" %  _find_actions_count)
         if isinstance(planner, pomdp_py.POUCT):
             print("__num_sims__: %d" % planner.last_num_sims)
-            
+
         if visualize:
             viz.update(real_action,
                        real_observation,
                        problem.agent.cur_belief)
             viz.on_loop()
             viz.on_render()
-            
+
         # Termination check
         if problem.env.state.target_found:
             print("Done!")
@@ -137,16 +137,17 @@ def solve(problem,
         if _discount*10 < 1e-4:
             print("Discount factor already too small")
             break
-        
+
     return _total_discounted_reward
-        
-if __name__ == "__main__":
+
+
+def main():
     worldstr, robotstr = world0
     grid_map = GridMap.from_str(worldstr)
     free_cells = grid_map.free_cells()
     init_robot_position = random.sample(free_cells, 1)[0]
     init_target_position = random.sample(free_cells, 1)[0]
-    
+
     problem = TagProblem(init_robot_position,
                          init_target_position,
                          grid_map,
@@ -164,3 +165,7 @@ if __name__ == "__main__":
           max_time=360,
           max_steps=251,
           planner_type="pouct")
+
+
+if __name__ == "__main__":
+    main()
