@@ -22,7 +22,7 @@ from pomdp_py.algorithms.po_rollout import PORollout
 from pomdp_py.algorithms.po_uct import POUCT, QNode, VNode, RootVNode,\
     RolloutPolicy, RandomRollout, ActionPrior
 from pomdp_py.algorithms.bsp.blqr import BLQR
-from pomdp_py.visual import visual
+from pomdp_py import visual
 
 # Templates & Utilities
 from pomdp_py.utils.templates import *
