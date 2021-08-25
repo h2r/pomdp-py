@@ -1,4 +1,5 @@
 # Misc python utilities
+from difflib import SequenceMatcher
 
 def remap(oldvalue, oldmin, oldmax, newmin, newmax):
     if oldmax - oldmin == 0:
@@ -23,3 +24,7 @@ def safe_slice(arr, start, end):
     true_start = max(0, min(len(arr)-1, start))
     true_end = max(0, min(len(arr)-1, end))
     return arr[true_start:true_end]
+
+def similar(a, b):
+    # Reference: https://stackoverflow.com/questions/17388213/find-the-similarity-metric-between-two-strings
+    return SequenceMatcher(None, a, b).ratio()

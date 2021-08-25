@@ -3,13 +3,51 @@ Utility functions making it easier to debug POMDP planning.
 """
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
-from pomdp_py.utils import typ
+from pomdp_py.utils import typ, similar
 
-def sorted_nodes(nodes):
-    return sorted(nodes, key=lambda n: str(n))
+SIMILAR_THRESH = 0.6
+
+def sorted_by_str(enumerable):
+    return sorted(enumerable, key=lambda n: str(n))
 
 
-class _QNodePP(QNode):
+def _node_pp(node):
+    # We want to return the node, but we don't want to print it on pdb with
+    # its default string. But instead, we want to print it with our own
+    # string formatting.
+    if isinstance(node, VNode):
+        return _VNodePP(node)
+    else:
+        return _QNodePP(node)
+
+class _NodePP:
+    def __getitem__(self, key):
+        """
+        When debugging, you can access the child of a node by the key
+        of the following types:
+        - the key is an action or observation object that points to a child;
+          that is, key in self.children is True.
+        - the key is an integer corresponding to the list of children shown
+          when printing the node in the debugger
+        - the key is a string that is similar to the string
+          version of any of the action or observation edges;
+          the most similar one will be chosen; The threshold
+          of similarity is SIMILAR_THRESH
+        """
+        if key in self.children:
+            return _node_pp(self.children[key])
+        if type(key) == int:
+            edges = list(sorted_by_str(self.children.keys()))
+            return _node_pp(self.children[edges[key]])
+        if type(key) == str:
+            chosen = max(self.children.keys(),
+                         key=lambda edge: similar(str(edge), key))
+            if similar(chosen, key) >= SIMILAR_THRESH:
+                return _node_pp(self.children[chosen])
+        raise ValueError("Cannot access children with key {}".format(key))
+
+
+class _QNodePP(_NodePP, QNode):
     """QNode for better printing"""
     def __init__(self, qnode, parent_edge=None):
         super().__init__(qnode.num_visits, qnode.value)
@@ -20,7 +58,7 @@ class _QNodePP(QNode):
         return TreeDebugger.single_node_str(self,
                                             parent_edge=self.parent_edge)
 
-class _VNodePP(VNode):
+class _VNodePP(_NodePP, VNode):
     """VNode for better printing"""
     def __init__(self, vnode, parent_edge=None):
         super().__init__(vnode.num_visits)
@@ -49,7 +87,7 @@ class TreeDebugger:
         if not isinstance(tree, TreeNode):
             raise ValueError("Expecting tree to be a TreeNode, but got {}".format(type(tree)))
 
-        self.tree = TreeDebugger._node_pp(tree)
+        self.tree = _node_pp(tree)
         self.current = self.tree   # points to the node the user is interacting with
         self.parent_edge = None    # stores the edge that leads to current
         self._stats_cache = {}
@@ -84,6 +122,9 @@ class TreeDebugger:
         else:
             raise ValueError("Invalid value for kind={}; Valid values are {}"\
                              .format(kind, list(res.keys())))
+
+    def __getitem__(self, key):
+        return self.current[key]
 
     @property
     def nn(self):
@@ -122,17 +163,6 @@ class TreeDebugger:
         return self.current
 
     @staticmethod
-    def _node_pp(node):
-        # We want to return the node, but we don't want to print it on pdb with
-        # its default string. But instead, we want to print it with our own
-        # string formatting.
-        if isinstance(node, VNode):
-            return _VNodePP(node)
-        else:
-            return _QNodePP(node)
-
-
-    @staticmethod
     def single_node_str(node, parent_edge=None, indent=1, include_children=True):
         """
         Returns a string for printing given a single vnode.
@@ -152,7 +182,7 @@ class TreeDebugger:
                                     node.value)
         if include_children:
             output += "\n"
-            for i, action in enumerate(sorted_nodes(node.children)):
+            for i, action in enumerate(sorted_by_str(node.children)):
                 child = node.children[action]
                 child_info = TreeDebugger.single_node_str(child, include_children=False)
 
