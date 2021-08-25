@@ -71,3 +71,6 @@ def yellow(content):
 
 def red(content):
     return bcolors.s(bcolors.RED, content)
+
+def white(content):
+    return bcolors.s(bcolors.WHITE, content)

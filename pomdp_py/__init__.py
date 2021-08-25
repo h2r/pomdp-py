@@ -26,4 +26,4 @@ from pomdp_py import visual
 
 # Templates & Utilities
 from pomdp_py.utils.templates import *
-from pomdp_py.utils.debugging import print_preferred_actions, print_tree, tree_stats
+from pomdp_py.utils.debugging import TreeDebugger
