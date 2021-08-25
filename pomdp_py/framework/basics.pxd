@@ -14,12 +14,12 @@ cdef class RewardModel:
     pass
 
 cdef class POMDP:
-    cpdef public Agent agent
-    cpdef public Environment env
-    cpdef public str name
+    cdef public Agent agent
+    cdef public Environment env
+    cdef public str name
 
 cdef class Action:
-    cpdef public str name
+    cdef public str name
 
 cdef class State:
     pass

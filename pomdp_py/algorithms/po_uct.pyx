@@ -48,13 +48,7 @@ cdef class TreeNode:
     def __init__(self):
         self.children = {}
     def __getitem__(self, key):
-        if key not in self.children and type(key) == int:
-            clist = list(self.children)
-            if key >= 0 and key < len(clist):
-                return self.children[clist[key]]
-            else:
-                return None
-        return self.children.get(key,None)
+        return self.children.get(key, None)
     def __setitem__(self, key, value):
         self.children[key] = value
     def __contains__(self, key):
