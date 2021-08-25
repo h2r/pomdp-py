@@ -3,7 +3,7 @@ from networkx.drawing.nx_agraph import graphviz_layout
 import matplotlib.pyplot as plt
 from pomdp_py import QNode, VNode, RootVNode, util
 
-# ---- POMCP Visualization ---- #
+# ---- POUCT Visualization ---- #
 
 def _build_graph(G, root, parent, conn, depth,
                  max_depth=None, visit_threshold=0,
@@ -64,6 +64,10 @@ def visualize_pouct_search_tree(root, max_depth=1,
     """
     Visualize the given tree up to depth `max_depth`. Display nodes
     with number of visits >= `visit_threshold`.
+
+    Caveat: This only works well if the search tree depth is shallow.
+    For larger trees, please use a combination of tree debugger (utils.debugging.TreeDebugger)
+    and visualizer (custom in heritance of visual.visualizer.Visualizer).
 
     If anonymize is True, will only display actions as a1,a2,... and observations
     as o1,o2,... .
