@@ -6,20 +6,48 @@ from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
 from pomdp_py.utils import typ, similar, special_char
 
 SIMILAR_THRESH = 0.6
+MARKED = set()  # tracks marked nodes on tree
 
 def sorted_by_str(enumerable):
     return sorted(enumerable, key=lambda n: str(n))
 
-def _node_pp(node, p=None):
+def _node_pp(node, e=None, p=None):
     # We want to return the node, but we don't want to print it on pdb with
     # its default string. But instead, we want to print it with our own
     # string formatting.
     if isinstance(node, VNode):
-        return _VNodePP(node, parent_edge=p)
+        return _VNodePP(node, parent_edge=e, parent=p)
     else:
-        return _QNodePP(node, parent_edge=p)
+        return _QNodePP(node, parent_edge=e, parent=p)
 
 class _NodePP:
+
+    def __init__(self, node, parent_edge=None, parent=None):
+        """node: either VNode or QNode (the actual node on the tree) """
+        self.parent_edge = parent_edge
+        self.parent = parent
+        self.children = node.children
+        self.print_children = True
+        self.original = node
+
+    @property
+    def marked(self):
+        return id(self.original) in MARKED
+
+    def to_edge(self, key):
+        if key in self.children:
+            return key
+        elif type(key) == int:
+            edges = list(sorted_by_str(self.children.keys()))
+            return edges[key]
+        elif type(key) == str:
+            chosen = max(self.children.keys(),
+                         key=lambda edge: similar(str(edge), key))
+            if similar(str(chosen), key) >= SIMILAR_THRESH:
+                return chosen
+        raise ValueError("Cannot access children with key {}".format(key))
+
+
     def __getitem__(self, key):
         """
         When debugging, you can access the child of a node by the key
@@ -33,17 +61,8 @@ class _NodePP:
           the most similar one will be chosen; The threshold
           of similarity is SIMILAR_THRESH
         """
-        if key in self.children:
-            return _node_pp(self.children[key], p=key)
-        if type(key) == int:
-            edges = list(sorted_by_str(self.children.keys()))
-            return _node_pp(self.children[edges[key]], p=edges[key])
-        if type(key) == str:
-            chosen = max(self.children.keys(),
-                         key=lambda edge: similar(str(edge), key))
-            if similar(str(chosen), key) >= SIMILAR_THRESH:
-                return _node_pp(self.children[chosen], p=chosen)
-        raise ValueError("Cannot access children with key {}".format(key))
+        edge = self.to_edge(key)
+        return _node_pp(self.children[edge], e=edge, p=self)
 
     def p(self, max_depth=None, print_type="summary"):
         self.print_tree(max_depth=max_depth,
@@ -99,7 +118,16 @@ class _NodePP:
         print(line)
 
         for i, c in enumerate(sorted_by_str(root.children)):
-            if print_type == "complete" or (root[c].num_visits > 1):
+
+            skip = True
+            if root[c].marked:
+                skip = False
+            elif print_type == "complete":
+                skip = False
+            elif (root[c].num_visits > 1):
+                skip = False
+
+            if not skip:
                 if isinstance(root[c], QNode):
                     next_depth = depth
                 else:
@@ -122,11 +150,9 @@ class _NodePP:
 
 class _QNodePP(_NodePP, QNode):
     """QNode for better printing"""
-    def __init__(self, qnode, parent_edge=None):
-        super().__init__(qnode.num_visits, qnode.value)
-        self.parent_edge = parent_edge
-        self.children = qnode.children
-        self.print_children = True
+    def __init__(self, qnode, **kwargs):
+        QNode.__init__(self, qnode.num_visits, qnode.value)
+        _NodePP.__init__(self, qnode, **kwargs)
 
     def __str__(self):
         return TreeDebugger.single_node_str(self,
@@ -135,11 +161,9 @@ class _QNodePP(_NodePP, QNode):
 
 class _VNodePP(_NodePP, VNode):
     """VNode for better printing"""
-    def __init__(self, vnode, parent_edge=None):
-        super().__init__(vnode.num_visits)
-        self.parent_edge = parent_edge
-        self.children = vnode.children
-        self.print_children = True
+    def __init__(self, vnode, **kwargs):
+        VNode.__init__(self, vnode.num_visits)
+        _NodePP.__init__(self, vnode, **kwargs)
 
     def __str__(self):
         return TreeDebugger.single_node_str(self,
@@ -166,14 +190,14 @@ class TreeDebugger:
 
         self.tree = _node_pp(tree)
         self.current = self.tree   # points to the node the user is interacting with
-        self.parent_edge = None    # stores the edge that leads to current
         self._stats_cache = {}
 
     def __str__(self):
         return str(self.current)
 
     def __repr__(self):
-        nodestr = TreeDebugger.single_node_str(self.current, parent_edge=self.parent_edge)
+        nodestr = TreeDebugger.single_node_str(self.current,
+                                               parent_edge=self.current.parent_edge)
         return "TreeDebugger@\n{}".format(nodestr)
 
     def __getitem__(self, key):
@@ -206,6 +230,7 @@ class TreeDebugger:
 
     @property
     def depth(self):
+        """Tree depth starts from 0 (root node only)"""
         stats = self._get_stats()
         return stats['max_depth']
 
@@ -225,7 +250,7 @@ class TreeDebugger:
     def nv(self):
         return self.num_nodes(kind='v')
 
-    def layer(self, depth, as_debuggers=False):
+    def layer(self, depth, as_debuggers=True):
         """
         Returns a list of nodes at the given depth. Will only return VNodes.
         Warning: If depth is high, there will likely be a huge number of nodes.
@@ -236,15 +261,18 @@ class TreeDebugger:
                 one for each tree on the layer.
         """
         if depth < 0 or depth > self.depth:
-            raise ValueError("Depth {} is out of range (maximum: {})".format(depth, self.depth))
+            raise ValueError("Depth {} is out of range (0-{})".format(depth, self.depth))
         nodes = []
         self._layer_helper(self.current, 0, depth, nodes)
         return nodes
 
-    def _layer_helper(self, root, current_depth, target_depth, nodes):
+    def _layer_helper(self, root, current_depth, target_depth, nodes, as_debuggers=True):
         if current_depth == target_depth:
             if isinstance(root, VNode):
-                nodes.append(root)
+                if as_debuggers:
+                    nodes.append(TreeDebugger(root))
+                else:
+                    nodes.append(root)
         else:
             for c in sorted_by_str(root.children):
                 if isinstance(root[c], QNode):
@@ -256,6 +284,23 @@ class TreeDebugger:
                                    target_depth,
                                    nodes)
 
+    def step(self, key):
+        """Updates current interaction node to follow the
+        edge along key"""
+        edge = self.current.to_edge(key)
+        self.current = self[edge]
+        print("step: " + str(edge))
+
+
+    def s(self, key):
+        return self.step(key)
+
+    def back(self):
+        self.current = self.current.parent
+
+    @property
+    def b(self):
+        self.back()
 
     @property
     def root(self):
@@ -279,12 +324,37 @@ class TreeDebugger:
         """print tree, with preset options"""
         return self.current.pp
 
+    def mark_sequence(self, seq):
+        """
+        Given a list of keys (understandable by __getitem__ in _NodePP),
+        mark nodes (both QNode and VNode) along the path in the tree.
+        Note this sequence starts from self.current; So self.current will
+        also be marked.
+        """
+        node = self.current
+        MARKED.add(id(node.original))
+        for key in seq:
+            MARKED.add(id(node[key].original))
+            node = node[key]
+
+    def mark(self, seq):
+        return self.mark_sequence(seq)
+
+    @property
+    def a(self):
+        return self.preferred_actions(self.current, max_depth=None)
+
+    def ad(self, max_depth):
+        return self.preferred_actions(self.current, max_depth=max_depth)
+
     @staticmethod
     def single_node_str(node, parent_edge=None, indent=1, include_children=True):
         """
         Returns a string for printing given a single vnode.
         """
-        if isinstance(node, VNode):
+        if node.marked:
+            opposite_color = color = typ.yellow
+        elif isinstance(node, VNode):
             color = typ.green
             opposite_color = typ.red
         else:
@@ -346,35 +416,48 @@ class TreeDebugger:
                 stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
 
             for c in root.children:
-                TreeDebugger._tree_stats_helper(root[c], depth+1, stats, max_depth=max_depth)
+                if isinstance(root[c], QNode):
+                    next_depth = depth
+                else:
+                    next_depth = depth + 1
+                TreeDebugger._tree_stats_helper(root[c], next_depth, stats, max_depth=max_depth)
 
+    @staticmethod
+    def preferred_actions(root, max_depth=None):
+        """
+        Print out the currently preferred actions up to given `max_depth`
+        """
+        seq = []
+        TreeDebugger._preferred_actions_helper(root, 0, seq, max_depth=max_depth)
+        return seq
 
-
-
-def print_preferred_actions(tree, max_depth=None):
-    """
-    Print out the currently preferred actions up to given `max_depth`
-    """
-    _print_preferred_actions_helper(tree, 0, max_depth=max_depth)
-
-def _print_preferred_actions_helper(root, depth, max_depth=None):
-    if max_depth is not None and depth >= max_depth:
-        return
-    best_child = None
-    best_value = float('-inf')
-    if root is None:
-        return
-    for c in root.children:
-        if root[c].value > best_value:
-            best_child = c
-            best_value = root[c].value
-    equally_good = []
-    if isinstance(root, VNode):
+    @staticmethod
+    def _preferred_actions_helper(root, depth, seq, max_depth=None):
+        # don't care about last layer action because it's outside of planning
+        # horizon and only has initial value.
+        if max_depth is not None and depth > max_depth:
+            return
+        best_child = None
+        best_value = float('-inf')
+        if root is None or len(root.children) == 0:
+            return
         for c in root.children:
-            if not(c == best_child) and root[c].value == best_value:
-                equally_good.append(c)
+            if root[c].value > best_value:
+                best_child = c
+                best_value = root[c].value
+        seq.append(best_child)
+        equally_good = []
+        if isinstance(root, VNode):
+            for c in root.children:
+                if not(c == best_child) and root[c].value == best_value:
+                    equally_good.append(c)
 
-    if best_child is not None and root[best_child] is not None:
-        if isinstance(root[best_child], QNode):
-            print("  %s  %s" % (str(best_child), str(equally_good)))
-        _print_preferred_actions_helper(root[best_child], depth+1, max_depth=max_depth)
+        if best_child is not None and root[best_child] is not None:
+            if isinstance(root[best_child], QNode):
+                print("  %s  %s" % (typ.yellow(str(best_child)), str(equally_good)))
+                next_depth = depth
+            else:
+                next_depth = depth + 1
+
+            TreeDebugger._preferred_actions_helper(root[best_child], next_depth, seq,
+                                                   max_depth=max_depth)
