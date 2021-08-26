@@ -404,6 +404,12 @@ class TreeDebugger:
         return self.mark_sequence(seq)
 
     @property
+    def clear(self):
+        """Clear the marks"""
+        global MARKED
+        MARKED = set()
+
+    @property
     def bestseq(self):
         """Returns a list of actions, observation sequence
         that have the highest value for each step. Such
