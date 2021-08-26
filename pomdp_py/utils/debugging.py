@@ -10,7 +10,6 @@ SIMILAR_THRESH = 0.6
 def sorted_by_str(enumerable):
     return sorted(enumerable, key=lambda n: str(n))
 
-
 def _node_pp(node, p=None):
     # We want to return the node, but we don't want to print it on pdb with
     # its default string. But instead, we want to print it with our own
@@ -46,6 +45,80 @@ class _NodePP:
                 return _node_pp(self.children[chosen], p=chosen)
         raise ValueError("Cannot access children with key {}".format(key))
 
+    def p(self, max_depth=None, print_type="summary"):
+        self.print_tree(max_depth=max_depth,
+                        print_type=print_type)
+
+    @property
+    def pp(self):
+        self.print_tree(max_depth=None,
+                        print_type="summary")
+
+    def print_tree(self, **options):
+        """Prints the tree, rooted at self"""
+        _NodePP._print_tree_helper(self, "", [None], 0, **options)
+
+    @staticmethod
+    def _print_tree_helper(root,
+                           parent_edge,
+                           branch_positions,  # list of 'first', 'middle', 'last' for each level prior to root
+                           depth,   # depth of root
+                           max_depth=None,
+                           print_type="summary"):
+        """
+        pos_among_children is either 'first', 'middle', or 'last'
+        """
+        if max_depth is not None and depth > max_depth:
+            return
+        if root is None:
+            return
+
+        # Print the tree branches for all levels up to current root
+        branches = ""
+        preceding_positions = branch_positions[:-1]  # all positions except for current root
+        for pos in preceding_positions:
+            if pos is None:
+                continue
+            elif pos == "first" or pos == "middle":
+                branches += "│   "
+            else:  # "last"
+                branches += "    "
+
+        last_position = branch_positions[-1]
+        if last_position is None:
+            pass
+        elif last_position == "first" or last_position == "middle":
+            branches += "├───"
+        else:  # last
+            branches += "└───"
+
+        if print_type == "summary":
+            root.print_children = False
+        else:
+            root.print_children = True
+        print("{} {}".format(branches, str(root)))#, typ.cyan("(depth="+str(depth)+")")))
+
+        for i, c in enumerate(sorted_by_str(root.children)):
+            if print_type == "complete" or (root[c].num_visits > 1):
+                if isinstance(root[c], QNode):
+                    next_depth = depth
+                else:
+                    next_depth = depth + 1
+
+                if i == len(root.children) - 1:
+                    next_pos = "last"
+                elif i == 0:
+                    next_pos = "first"
+                else:
+                    next_pos = "middle"
+
+                _NodePP._print_tree_helper(root[c],
+                                           c,
+                                           branch_positions + [next_pos],
+                                           next_depth,
+                                           max_depth=max_depth,
+                                           print_type=print_type)
+
 
 class _QNodePP(_NodePP, QNode):
     """QNode for better printing"""
@@ -53,10 +126,12 @@ class _QNodePP(_NodePP, QNode):
         super().__init__(qnode.num_visits, qnode.value)
         self.parent_edge = parent_edge
         self.children = qnode.children
+        self.print_children = True
 
     def __str__(self):
         return TreeDebugger.single_node_str(self,
-                                            parent_edge=self.parent_edge)
+                                            parent_edge=self.parent_edge,
+                                            include_children=self.print_children)
 
 class _VNodePP(_NodePP, VNode):
     """VNode for better printing"""
@@ -67,7 +142,8 @@ class _VNodePP(_NodePP, VNode):
 
     def __str__(self):
         return TreeDebugger.single_node_str(self,
-                                            parent_edge=self.parent_edge)
+                                            parent_edge=self.parent_edge,
+                                            include_children=self.print_children)
 
 
 class TreeDebugger:
@@ -99,9 +175,12 @@ class TreeDebugger:
         nodestr = TreeDebugger.single_node_str(self.current, parent_edge=self.parent_edge)
         return "TreeDebugger@\n{}".format(nodestr)
 
+    def __getitem__(self, key):
+        return self.current[key]
+
     def _get_stats(self):
         if id(self.current) in self._stats_cache:
-            stats = self._stats_cache
+            stats = self._stats_cache[id(self.current)]
         else:
             stats = TreeDebugger.tree_stats(self.current)
             self._stats_cache[id(self.current)] = stats
@@ -123,8 +202,15 @@ class TreeDebugger:
             raise ValueError("Invalid value for kind={}; Valid values are {}"\
                              .format(kind, list(res.keys())))
 
-    def __getitem__(self, key):
-        return self.current[key]
+
+    @property
+    def depth(self):
+        stats = self._get_stats()
+        return stats['max_depth']
+
+    @property
+    def d(self):
+        return self.depth
 
     @property
     def nn(self):
@@ -162,6 +248,15 @@ class TreeDebugger:
     def c(self):
         return self.current
 
+    def p(self, *args, **kwargs):
+        """print tree"""
+        return self.current.p(*args, **kwargs)
+
+    @property
+    def pp(self):
+        """print tree, with preset options"""
+        return self.current.pp
+
     @staticmethod
     def single_node_str(node, parent_edge=None, indent=1, include_children=True):
         """
@@ -169,13 +264,15 @@ class TreeDebugger:
         """
         if isinstance(node, VNode):
             color = typ.green
+            opposite_color = typ.red
         else:
             assert isinstance(node, QNode)
             color = typ.red
+            opposite_color = typ.green
 
         output = ""
         if parent_edge is not None:
-            output += typ.yellow(str(parent_edge)) + special_char.longright
+            output += opposite_color(str(parent_edge)) + "⟶"
 
         output += color(str(node.__class__.__name__))\
             + "(n={}, v={:.3f})".format(node.num_visits,
@@ -202,7 +299,8 @@ class TreeDebugger:
             'total_vnodes_children': 0,
             'total_qnodes_children': 0,
             'max_vnodes_children': 0,
-            'max_qnodes_children': 0
+            'max_qnodes_children': 0,
+            'max_depth': -1
         }
         TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
         stats['num_visits'] = root.num_visits
@@ -211,13 +309,14 @@ class TreeDebugger:
 
     @staticmethod
     def _tree_stats_helper(root, depth, stats, max_depth=None):
-        if max_depth is not None and depth >= max_depth:
+        if max_depth is not None and depth > max_depth:
             return
         else:
             if isinstance(root, VNode):
                 stats['total_vnodes'] += 1
                 stats['total_vnodes_children'] += len(root.children)
                 stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
+                stats['max_depth'] = depth
             else:
                 stats['total_qnodes'] += 1
                 stats['total_qnodes_children'] += len(root.children)
@@ -228,25 +327,6 @@ class TreeDebugger:
 
 
 
-def print_tree(tree, max_depth=None, complete=False):
-    """
-    Prints out the POUCT tree.
-    """
-    _print_tree_helper(tree, "", 0, max_depth=max_depth, complete=complete)
-
-def _print_tree_helper(root, parent_edge, depth, max_depth=None, complete=False):
-    if max_depth is not None and depth >= max_depth:
-        return
-    print("%s%s" % ("    "*depth, str(parent_edge)))
-    print("%s-%s" % ("    "*depth, str(root)))
-    if root is None:
-        return
-    for c in root.children:
-        if complete or (root[c].num_visits > 1):
-            if isinstance(root[c], QNode):
-                _print_tree_helper(root[c], c, depth+1, max_depth=max_depth, complete=complete)
-            else:
-                _print_tree_helper(root[c], c, depth, max_depth=max_depth, complete=complete)
 
 def print_preferred_actions(tree, max_depth=None):
     """
