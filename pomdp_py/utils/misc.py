@@ -37,3 +37,22 @@ class special_char:
     down = '\u2193'
     longleft = '\u27F5'
     longright = '\u27F6'
+
+    hline = "─"
+    vline = "│"
+
+    bottomleft = "└"
+    longbottomleft = "└─"
+    topleft = "┌"
+    longtopleft = "┌─"
+    topright = "┐"
+    longtopright = "─┐"
+    bottomright = "┘"
+    longbottomright = "─┘"
+
+    intersect = "┼"
+    topt = "┬"
+    leftt = "├"
+    rightt = "┤"
+    bottomt = "┴"
+    shadebar = "▒"
