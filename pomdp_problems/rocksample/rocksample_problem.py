@@ -412,7 +412,6 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     for i in range(nsteps):
         print("==== Step %d ====" % (i+1))
         action = planner.plan(rocksample.agent)
-
         # pomdp_py.visual.visualize_pouct_search_tree(rocksample.agent.tree,
         #                                             max_depth=5, anonymize=False)
 

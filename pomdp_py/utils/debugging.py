@@ -126,6 +126,8 @@ class _NodePP:
                 skip = False
             elif (root[c].num_visits > 1):
                 skip = False
+            if print_type == "bold-only" and not root[c].marked:
+                skip = True
 
             if not skip:
                 if isinstance(root[c], QNode):
@@ -388,7 +390,7 @@ class TreeDebugger:
         Returns a string for printing given a single vnode.
         """
         if hasattr(node, "marked") and node.marked:
-            opposite_color = color = typ.yellow
+            opposite_color = color = lambda s: typ.bold(typ.yellow(s))
         elif isinstance(node, VNode):
             color = typ.green
             opposite_color = typ.red

@@ -199,7 +199,7 @@ class TigerProblem(pomdp_py.POMDP):
         super().__init__(agent, env, name="TigerProblem")
 
 
-def test_planner(tiger_problem, planner, nsteps=3):
+def test_planner(tiger_problem, planner, nsteps=3, debug_tree=False):
     """
     Runs the action-feedback loop of Tiger problem POMDP
 
@@ -210,6 +210,11 @@ def test_planner(tiger_problem, planner, nsteps=3):
     """
     for i in range(nsteps):
         action = planner.plan(tiger_problem.agent)
+        if debug_tree:
+            from pomdp_py.utils import TreeDebugger
+            dd = TreeDebugger(tiger_problem.agent.tree)
+            import pdb; pdb.set_trace()
+
         print("==== Step %d ====" % (i+1))
         print("True state: %s" % tiger_problem.env.state)
         print("Belief: %s" % str(tiger_problem.agent.cur_belief))

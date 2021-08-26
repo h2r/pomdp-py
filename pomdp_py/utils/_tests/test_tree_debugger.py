@@ -1,5 +1,5 @@
 import random
-from pomdp_problems.tiger.tiger_problem import TigerState, TigerProblem
+from pomdp_problems.tiger.tiger_problem import TigerState, TigerProblem, test_planner
 import pomdp_py
 from pomdp_py.utils.debugging import TreeDebugger
 
@@ -27,7 +27,7 @@ def test_tree_debugger_tiger():
     assert dd.nn == dd.nv + dd.nq
 
     print("Passed tests.")
-    import pdb; pdb.set_trace()
+    test_planner(tiger_problem, pouct, nsteps=3, debug_tree=True)
 
 
 if __name__ == "__main__":

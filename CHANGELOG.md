@@ -1,13 +1,14 @@
 ### Version 1.3.0 (Pending)
-* Code refactoring: Remove unnecessary `*args, **kwargs` in interface signature. **Backwards compatible**.
+* Added `utils.debugging.Treedebugger`, which makes it easier to inspect the search tree.
+* Reorganized `util` by breaking it into different modules.
 * Can initialize `Environment` with  `BlackboxModel`.
 * For the `OOBelief` class in `oopomdp.pyx`, now `mpe` and `random` can take an
   argument `return_oostate` (default True), which returns a sampled state as type `OOState`.
   This can be useful if you would like to inherit `OOBelief` and return a state of
   your own type when implementing its `mpe` and `random` functions.
-* Reorganized `util` by breaking it into different modules.
-* Color texts when printing POUCT tree.
 * Added `__ne__` methods to framework classes.
+* Code refactoring: Remove unnecessary `*args, **kwargs` in interface signature. **Backwards compatible**.
+
 
 ### Version 1.2.4.6 (pending)
 * Fix `setup.py` so that `pip install -e .` works.
