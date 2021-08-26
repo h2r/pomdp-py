@@ -64,9 +64,32 @@ class _NodePP:
         edge = self.to_edge(key)
         return _node_pp(self.children[edge], e=edge, p=self)
 
-    def p(self, max_depth=None, print_type="summary"):
+    @staticmethod
+    def interpret_print_type(opt):
+        if opt.startswith("b") or opt.startswith("m"):
+            opt = "bold-only"
+        elif opt.startswith("s"):
+            opt = "summary"
+        elif opt.startswith("c"):
+            opt = "complete"
+        else:
+            raise ValueError("Cannot understand print type: {}".format(opt))
+        return opt
+
+    def p(self, opt=None, **kwargs):
+        if opt is None:
+            max_depth = None
+            print_type_opt = kwargs.get('t', "summary")
+        elif type(opt) == int:
+            max_depth = opt
+            print_type_opt = kwargs.get('t', "summary")
+        elif type(opt) == str:
+            print_type_opt = opt
+            max_depth = kwargs.get('d', None)
+        else:
+            raise ValueError("Cannot deal with opt of type {}".format(type(opt)))
         self.print_tree(max_depth=max_depth,
-                        print_type=print_type)
+                        print_type=_NodePP.interpret_print_type(print_type_opt))
 
     @property
     def pp(self):
