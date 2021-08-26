@@ -23,7 +23,7 @@ door and vice versa.
 
 States: tiger-left, tiger-right
 Actions: open-left, open-right, listen
-Rewards: 
+Rewards:
     +10 for opening treasure door. -100 for opening tiger door.
     -1 for listening.
 Observations: You can hear either "tiger-left", or "tiger-right".
@@ -51,7 +51,7 @@ def build_observations(strings):
     return {TigerObservation(s) for s in strings}
 
 cdef class TigerState(State):
-    cpdef public str name
+    cdef public str name
     def __init__(self, name):
         if name != "tiger-left" and name != "tiger-right":
             raise ValueError("Invalid state: %s" % name)
@@ -67,12 +67,12 @@ cdef class TigerState(State):
         return self.name
     def __repr__(self):
         return "TigerState(%s)" % self.name
-    
+
 cdef class TigerAction(Action):
     def __init__(self, name):
         if name != "open-left" and name != "open-right"\
            and name != "listen":
-            raise ValueError("Invalid action: %s" % name)        
+            raise ValueError("Invalid action: %s" % name)
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -85,12 +85,12 @@ cdef class TigerAction(Action):
         return self.name
     def __repr__(self):
         return "TigerAction(%s)" % self.name
-    
+
 cdef class TigerObservation(Observation):
-    cpdef public str name
+    cdef public str name
     def __init__(self, name):
         if name != "tiger-left" and name != "tiger-right":
-            raise ValueError("Invalid action: %s" % name)                
+            raise ValueError("Invalid action: %s" % name)
         self.name = name
     def __hash__(self):
         return hash(self.name)
@@ -108,7 +108,7 @@ cdef class TigerObservation(Observation):
 cdef class TigerObservationModel(ObservationModel):
     """This problem is small enough for the probabilities to be directly given
     externally"""
-    cpdef dict _probs
+    cdef dict _probs
     def __init__(self, probs):
         self._probs = probs
 
@@ -133,7 +133,7 @@ cdef class TigerObservationModel(ObservationModel):
 cdef class TigerTransitionModel(TransitionModel):
     """This problem is small enough for the probabilities to be directly given
             externally"""
-    cpdef dict _probs
+    cdef dict _probs
     def __init__(self, probs):
         self._probs = probs
 
@@ -145,7 +145,7 @@ cdef class TigerTransitionModel(TransitionModel):
 
     def argmax(self, state, action, normalized=False, **kwargs):
         """Returns the most likely next state"""
-        return max(self._probs[state][action], key=self._probs[state][action].get) 
+        return max(self._probs[state][action], key=self._probs[state][action].get)
 
     cpdef get_distribution(self, State state, Action action):
         """Returns the underlying distribution of the model"""
@@ -156,7 +156,7 @@ cdef class TigerTransitionModel(TransitionModel):
 
 # Reward Model
 cdef class TigerRewardModel(RewardModel):
-    cpdef int _scale
+    cdef int _scale
     def __init__(self, scale=1):
         self._scale = scale
     cpdef _reward_func(self, State state, Action action):
@@ -200,18 +200,18 @@ cdef class TigerPolicyModel(RandomRollout):
     with the framework."""
     def probability(self, action, state, normalized=False, **kwargs):
         raise NotImplementedError  # Never used
-    
+
     def sample(self, state, normalized=False, **kwargs):
         return self.get_all_actions().random()
-    
+
     def argmax(self, state, normalized=False, **kwargs):
         """Returns the most likely reward"""
         raise NotImplementedError
-    
+
     def get_all_actions(self, **kwargs):
         return TigerProblem.ACTIONS
 
-        
+
 class TigerProblem(POMDP):
 
     STATES = build_states({"tiger-left", "tiger-right"})
@@ -223,7 +223,7 @@ class TigerProblem(POMDP):
         self._obs_probs = obs_probs
         self._trans_probs = trans_probs
 
-        
+
         agent = Agent(init_belief,
                                TigerPolicyModel(),
                                TigerTransitionModel(self._trans_probs),
@@ -258,7 +258,7 @@ def test_planner(tiger_problem, planner, nsteps=3):
         real_observation = TigerObservation(tiger_problem.env.state.name)
         print(">> Observation: %s" % real_observation)
         tiger_problem.agent.update_history(action, real_observation)
-        
+
         planner.update(tiger_problem.agent, action, real_observation)
         if isinstance(planner, POUCT):
             print("Num sims: %d" % planner.last_num_sims)
@@ -285,13 +285,13 @@ def build_setting(setting):
                 {TigerState(sp):setting['trans_probs'][s][a][sp]
                  for sp in setting['trans_probs'][s][a]}
     return result
-            
+
 def main():
     ## Setting 1:
     ## The values are set according to the paper.
     setting1 = {
         "obs_probs": {  # next_state -> action -> observation
-            "tiger-left":{ 
+            "tiger-left":{
                 "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
                 "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
                 "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
@@ -302,9 +302,9 @@ def main():
                 "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
             }
         },
-        
+
         "trans_probs": {  # state -> action -> next_state
-            "tiger-left":{ 
+            "tiger-left":{
                 "open-left": {"tiger-left": 0.5, "tiger-right": 0.5},
                 "open-right": {"tiger-left": 0.5, "tiger-right": 0.5},
                 "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
@@ -321,7 +321,7 @@ def main():
     ## Based on my understanding of T and O; Treat the state as given.
     setting2 = {
         "obs_probs": {  # next_state -> action -> observation
-            "tiger-left":{ 
+            "tiger-left":{
                 "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
                 "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
                 "listen": {"tiger-left": 0.85, "tiger-right": 0.15}
@@ -332,9 +332,9 @@ def main():
                 "listen": {"tiger-left": 0.15, "tiger-right": 0.85}
             }
         },
-        
+
         "trans_probs": {  # state -> action -> next_state
-            "tiger-left":{ 
+            "tiger-left":{
                 "open-left": {"tiger-left": 1.0, "tiger-right": 0.0},
                 "open-right": {"tiger-left": 1.0, "tiger-right": 0.0},
                 "listen": {"tiger-left": 1.0, "tiger-right": 0.0}
@@ -366,7 +366,7 @@ def main():
                            num_sims=4096, exploration_const=110,
                            rollout_policy=tiger_problem.agent.policy_model)
     test_planner(tiger_problem, pouct, nsteps=10)
-    
+
 
 if __name__ == '__main__':
     main()
