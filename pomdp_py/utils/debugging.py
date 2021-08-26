@@ -139,6 +139,7 @@ class _VNodePP(_NodePP, VNode):
         super().__init__(vnode.num_visits)
         self.parent_edge = parent_edge
         self.children = vnode.children
+        self.print_children = True
 
     def __str__(self):
         return TreeDebugger.single_node_str(self,
@@ -226,14 +227,35 @@ class TreeDebugger:
 
     def layer(self, depth, as_debuggers=False):
         """
-        Returns a list of nodes at the given depth.
+        Returns a list of nodes at the given depth. Will only return VNodes.
+        Warning: If depth is high, there will likely be a huge number of nodes.
 
         Args:
             depth (int): Depth of the tree
             as_debuggers (bool): True if return a list of TreeDebugger objects,
                 one for each tree on the layer.
         """
-        pass
+        if depth < 0 or depth > self.depth:
+            raise ValueError("Depth {} is out of range (maximum: {})".format(depth, self.depth))
+        nodes = []
+        self._layer_helper(self.current, 0, depth, nodes)
+        return nodes
+
+    def _layer_helper(self, root, current_depth, target_depth, nodes):
+        if current_depth == target_depth:
+            if isinstance(root, VNode):
+                nodes.append(root)
+        else:
+            for c in sorted_by_str(root.children):
+                if isinstance(root[c], QNode):
+                    next_depth = current_depth
+                else:
+                    next_depth = current_depth + 1
+                self._layer_helper(root[c],
+                                   next_depth,
+                                   target_depth,
+                                   nodes)
+
 
     @property
     def root(self):
@@ -289,6 +311,7 @@ class TreeDebugger:
                                                    child_info)
                 if i < len(node.children) - 1:
                     output += "\n"
+            output += "\n"
         return output
 
     @staticmethod
