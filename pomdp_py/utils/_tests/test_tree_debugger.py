@@ -19,8 +19,7 @@ def test_tree_debugger_tiger():
 
     pouct.plan(tiger_problem.agent)
     dd = TreeDebugger(tiger_problem.agent.tree)
-    # import pdb; pdb.set_trace()
-    dd.p(2)
+    import pdb; pdb.set_trace()
 
 
 if __name__ == "__main__":

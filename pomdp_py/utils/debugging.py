@@ -51,8 +51,7 @@ class _NodePP:
 
     @property
     def pp(self):
-        self.print_tree(max_depth=None,
-                        print_type="summary")
+        self.print_tree(max_depth=None)
 
     def print_tree(self, **options):
         """Prints the tree, rooted at self"""
@@ -80,23 +79,24 @@ class _NodePP:
             if pos is None:
                 continue
             elif pos == "first" or pos == "middle":
-                branches += "│   "
+                branches += "│    "
             else:  # "last"
-                branches += "    "
+                branches += "     "
 
         last_position = branch_positions[-1]
         if last_position is None:
             pass
         elif last_position == "first" or last_position == "middle":
-            branches += "├───"
+            branches += "├─── "
         else:  # last
-            branches += "└───"
+            branches += "└─── "
 
-        if print_type == "summary":
-            root.print_children = False
-        else:
-            root.print_children = True
-        print("{} {}".format(branches, str(root)))#, typ.cyan("(depth="+str(depth)+")")))
+        root.print_children = False
+        line = branches + str(root)
+        if isinstance(root, VNode):
+            line += typ.cyan("(depth="+str(depth)+")")
+
+        print(line)
 
         for i, c in enumerate(sorted_by_str(root.children)):
             if print_type == "complete" or (root[c].num_visits > 1):
