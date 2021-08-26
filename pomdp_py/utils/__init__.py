@@ -8,3 +8,4 @@ from pomdp_py.utils.colors import (lighter, rgb_to_hex, hex_to_rgb,
                                    inverse_color_rgb, inverse_color_hex,
                                    random_unique_color)
 from pomdp_py.utils import typ
+from pomdp_py.utils.debugging import TreeDebugger

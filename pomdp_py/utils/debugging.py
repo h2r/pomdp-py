@@ -230,7 +230,8 @@ class TreeDebugger:
 
     @property
     def depth(self):
-        """Tree depth starts from 0 (root node only)"""
+        """Tree depth starts from 0 (root node only).
+        It is the largest number of edges on a path from root to leaf."""
         stats = self._get_stats()
         return stats['max_depth']
 
@@ -238,6 +239,17 @@ class TreeDebugger:
     def d(self):
         """alias for depth"""
         return self.depth
+
+    @property
+    def num_layers(self):
+        """Returns the number of layers;
+        It is the number of layers of nodes, which equals to depth + 1"""
+        return self.depth + 1
+
+    @property
+    def nl(self):
+        """alias for num_layers"""
+        return self.num_layers
 
     @property
     def nn(self):
@@ -253,6 +265,10 @@ class TreeDebugger:
     def nv(self):
         """Returns the total number of VNodes in the tree"""
         return self.num_nodes(kind='v')
+
+    def l(self, depth, as_debuggers=True):
+        """alias for layer"""
+        return self.layer(depth, as_debuggers=as_debuggers)
 
     def layer(self, depth, as_debuggers=True):
         """
@@ -453,7 +469,7 @@ class TreeDebugger:
             'total_qnodes_children': 0,
             'max_vnodes_children': 0,
             'max_qnodes_children': 0,
-            'max_depth': -1
+            'max_depth': 0
         }
         TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
         stats['num_visits'] = root.num_visits
@@ -469,7 +485,7 @@ class TreeDebugger:
                 stats['total_vnodes'] += 1
                 stats['total_vnodes_children'] += len(root.children)
                 stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
-                stats['max_depth'] = depth
+                stats['max_depth'] = max(stats['max_depth'], depth)
             else:
                 stats['total_qnodes'] += 1
                 stats['total_qnodes_children'] += len(root.children)
