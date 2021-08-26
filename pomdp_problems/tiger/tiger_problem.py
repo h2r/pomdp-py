@@ -263,7 +263,8 @@ def main():
     print("\n** Testing POUCT **")
     pouct = pomdp_py.POUCT(max_depth=3, discount_factor=0.95,
                            num_sims=4096, exploration_const=200,
-                           rollout_policy=tiger_problem.agent.policy_model)
+                           rollout_policy=tiger_problem.agent.policy_model,
+                           show_progress=True)
     test_planner(tiger_problem, pouct, nsteps=10)
 
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
@@ -277,7 +278,8 @@ def main():
     tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
     pomcp = pomdp_py.POMCP(max_depth=3, discount_factor=0.95,
                            num_sims=1000, exploration_const=200,
-                           rollout_policy=tiger_problem.agent.policy_model)
+                           rollout_policy=tiger_problem.agent.policy_model,
+                           show_progress=True, pbar_update_interval=500)
     test_planner(tiger_problem, pomcp, nsteps=10)
 
     pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,

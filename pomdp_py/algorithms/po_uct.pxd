@@ -28,6 +28,8 @@ cdef class POUCT(Planner):
     cdef Agent _agent
     cdef int _last_num_sims
     cdef float _last_planning_time
+    cdef bint _show_progress
+    cdef int _pbar_update_interval
 
     cpdef _search(self)
     cpdef _simulate(POUCT self,

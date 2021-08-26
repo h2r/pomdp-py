@@ -43,6 +43,7 @@ import copy
 import time
 import random
 import math
+from tqdm import tqdm
 
 cdef class TreeNode:
     def __init__(self):
@@ -160,7 +161,7 @@ cdef class POUCT(Planner):
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(),
-                 action_prior=None):
+                 action_prior=None, show_progress=False, pbar_update_interval=5):
         """
         __init__(self,
                  max_depth=5, planning_time=1., num_sims=-1,
@@ -179,6 +180,10 @@ cdef class POUCT(Planner):
                 If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
             rollout_policy (RolloutPolicy): rollout policy. Default: RandomRollout.
             action_prior (ActionPrior): a prior over preferred actions given state and history.
+            show_progress (bool): True if print a progress bar for simulations.
+            pbar_update_interval (int): The number of simulations to run after each update of the progress bar,
+                Only useful if show_progress is True; You can set this parameter even if your stopping criteria
+                is time.
         """
         self._max_depth = max_depth
         self._planning_time = planning_time
@@ -191,6 +196,9 @@ cdef class POUCT(Planner):
         self._discount_factor = discount_factor
         self._exploration_const = exploration_const
         self._action_prior = action_prior
+
+        self._show_progress = show_progress
+        self._pbar_update_interval = pbar_update_interval
 
         # to simplify function calls; plan only for one agent at a time
         self._agent = None
@@ -273,10 +281,19 @@ cdef class POUCT(Planner):
 
     cpdef _search(self):
         cdef State state
+        cdef Action best_action
         cdef int sims_count = 0
         cdef float time_taken = 0
-        cdef Action best_action
         cdef float best_value
+        cdef bint stop_by_sims = self._num_sims > 0
+        cdef object pbar
+
+        if self._show_progress:
+            if stop_by_sims:
+                total = int(self._num_sims)
+            else:
+                total = self._planning_time
+            pbar = tqdm(total=total)
 
         start_time = time.time()
         while True:
@@ -287,12 +304,23 @@ cdef class POUCT(Planner):
                            None, None, 0)
             sims_count +=1
             time_taken = time.time() - start_time
-            if self._planning_time > 0\
-               and time_taken > self._planning_time:
-                break
-            if self._num_sims > 0\
-               and sims_count >= self._num_sims:
-                break
+
+            if self._show_progress and sims_count % self._pbar_update_interval == 0:
+                if stop_by_sims:
+                    pbar.n = sims_count
+                else:
+                    pbar.n = time_taken/1000
+                pbar.refresh()
+
+            if stop_by_sims:
+                if sims_count >= self._num_sims:
+                    break
+            else:
+                if time_taken > self._planning_time:
+                    break
+
+        if self._show_progress:
+            pbar.close()
 
         best_action = self._agent.tree.argmax()
         return best_action, time_taken, sims_count

@@ -62,8 +62,8 @@ cdef class POMCP(POUCT):
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=0, value_init=0,
-                 rollout_policy=RandomRollout(),
-                 action_prior=None):
+                 rollout_policy=RandomRollout(), action_prior=None,
+                 show_progress=False, pbar_update_interval=5):
         """
         rollout_policy(vnode, state=?) -> a; default random rollout.
         action_prior (ActionPrior), see above.
@@ -76,7 +76,9 @@ cdef class POMCP(POUCT):
                          num_visits_init=num_visits_init,
                          value_init=value_init,
                          rollout_policy=rollout_policy,
-                         action_prior=action_prior)
+                         action_prior=action_prior,
+                         show_progress=show_progress,
+                         pbar_update_interval=pbar_update_interval)
 
     @property
     def update_agent_belief(self):
