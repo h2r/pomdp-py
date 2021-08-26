@@ -1,6 +1,7 @@
 ### Version 1.3.0 (Pending)
 * Added `utils.debugging.Treedebugger`, which makes it easier to inspect the search tree.
 * Reorganized `util` by breaking it into different modules.
+* Optionally show progress bar while simulating in POUCT/POMCP.
 * Can initialize `Environment` with  `BlackboxModel`.
 * For the `OOBelief` class in `oopomdp.pyx`, now `mpe` and `random` can take an
   argument `return_oostate` (default True), which returns a sampled state as type `OOState`.
