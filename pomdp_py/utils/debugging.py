@@ -67,7 +67,7 @@ class _NodePP:
     @staticmethod
     def interpret_print_type(opt):
         if opt.startswith("b") or opt.startswith("m"):
-            opt = "bold-only"
+            opt = "marked-only"
         elif opt.startswith("s"):
             opt = "summary"
         elif opt.startswith("c"):
@@ -97,13 +97,14 @@ class _NodePP:
 
     def print_tree(self, **options):
         """Prints the tree, rooted at self"""
-        _NodePP._print_tree_helper(self, "", [None], 0, **options)
+        _NodePP._print_tree_helper(self, 0, "", [None], -1, **options)
 
     @staticmethod
     def _print_tree_helper(root,
+                           depth,   # depth of root
                            parent_edge,
                            branch_positions,  # list of 'first', 'middle', 'last' for each level prior to root
-                           depth,   # depth of root
+                           child_index,  # Index of the root as a child of parent
                            max_depth=None,
                            print_type="summary"):
         """
@@ -134,7 +135,10 @@ class _NodePP:
             branches += "└─── "
 
         root.print_children = False
-        line = branches + str(root)
+        if child_index >= 0:
+            line = branches + str(child_index).translate(special_char.SUBSCRIPT) + str(root)
+        else:
+            line = branches + str(root)
         if isinstance(root, VNode):
             line += typ.cyan("(depth="+str(depth)+")")
 
@@ -149,7 +153,7 @@ class _NodePP:
                 skip = False
             elif (root[c].num_visits > 1):
                 skip = False
-            if print_type == "bold-only" and not root[c].marked:
+            if print_type == "marked-only" and not root[c].marked:
                 skip = True
 
             if not skip:
@@ -166,9 +170,10 @@ class _NodePP:
                     next_pos = "middle"
 
                 _NodePP._print_tree_helper(root[c],
+                                           next_depth,
                                            c,
                                            branch_positions + [next_pos],
-                                           next_depth,
+                                           i,
                                            max_depth=max_depth,
                                            print_type=print_type)
 
@@ -373,6 +378,13 @@ class TreeDebugger:
     def pp(self):
         """print tree, with preset options"""
         return self.current.pp
+
+    @property
+    def mp(self):
+        """Mark and print.
+        Mark the best sequence, and then print with only the marked nodes"""
+        self.mark(self.bestseq)
+        self.p("marked-only")
 
     def mark_sequence(self, seq):
         """

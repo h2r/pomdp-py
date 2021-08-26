@@ -56,3 +56,5 @@ class special_char:
     rightt = "┤"
     bottomt = "┴"
     shadebar = "▒"
+
+    SUBSCRIPT = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
