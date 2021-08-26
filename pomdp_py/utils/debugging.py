@@ -236,18 +236,22 @@ class TreeDebugger:
 
     @property
     def d(self):
+        """alias for depth"""
         return self.depth
 
     @property
     def nn(self):
+        """Returns the total number of nodes in the tree"""
         return self.num_nodes(kind='all')
 
     @property
     def nq(self):
+        """Returns the total number of QNodes in the tree"""
         return self.num_nodes(kind='q')
 
     @property
     def nv(self):
+        """Returns the total number of VNodes in the tree"""
         return self.num_nodes(kind='v')
 
     def layer(self, depth, as_debuggers=True):
@@ -293,26 +297,31 @@ class TreeDebugger:
 
 
     def s(self, key):
+        """alias for step"""
         return self.step(key)
 
     def back(self):
+        """move current node of interaction back to parent"""
         self.current = self.current.parent
 
     @property
     def b(self):
+        """alias for back"""
         self.back()
 
     @property
     def root(self):
+        """The root node when first creating this TreeDebugger"""
         return self.tree
 
     @property
     def r(self):
-        """For convenience during debugging"""
+        """alias for root"""
         return self.root
 
     @property
     def c(self):
+        """Current node of interaction"""
         return self.current
 
     def p(self, *args, **kwargs):
@@ -338,13 +347,23 @@ class TreeDebugger:
             node = node[key]
 
     def mark(self, seq):
+        """alias for mark_sequence"""
         return self.mark_sequence(seq)
 
     @property
-    def a(self):
+    def bestseq(self):
+        """Returns a list of actions, observation sequence
+        that have the highest value for each step. Such
+        a sequence is "preferred".
+
+        Also, prints out the list of preferred actions for each step
+        into the future"""
         return self.preferred_actions(self.current, max_depth=None)
 
-    def ad(self, max_depth):
+    def bestseqd(self, max_depth):
+        """
+        alias for bestseq except with
+        """
         return self.preferred_actions(self.current, max_depth=max_depth)
 
     @staticmethod
@@ -352,7 +371,7 @@ class TreeDebugger:
         """
         Returns a string for printing given a single vnode.
         """
-        if node.marked:
+        if hasattr(node, "marked") and node.marked:
             opposite_color = color = typ.yellow
         elif isinstance(node, VNode):
             color = typ.green
@@ -383,44 +402,6 @@ class TreeDebugger:
                     output += "\n"
             output += "\n"
         return output
-
-    @staticmethod
-    def tree_stats(root, max_depth=None):
-        stats = {
-            'total_vnodes': 0,
-            'total_qnodes': 0,
-            'total_vnodes_children': 0,
-            'total_qnodes_children': 0,
-            'max_vnodes_children': 0,
-            'max_qnodes_children': 0,
-            'max_depth': -1
-        }
-        TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
-        stats['num_visits'] = root.num_visits
-        stats['value'] = root.value
-        return stats
-
-    @staticmethod
-    def _tree_stats_helper(root, depth, stats, max_depth=None):
-        if max_depth is not None and depth > max_depth:
-            return
-        else:
-            if isinstance(root, VNode):
-                stats['total_vnodes'] += 1
-                stats['total_vnodes_children'] += len(root.children)
-                stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
-                stats['max_depth'] = depth
-            else:
-                stats['total_qnodes'] += 1
-                stats['total_qnodes_children'] += len(root.children)
-                stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
-
-            for c in root.children:
-                if isinstance(root[c], QNode):
-                    next_depth = depth
-                else:
-                    next_depth = depth + 1
-                TreeDebugger._tree_stats_helper(root[c], next_depth, stats, max_depth=max_depth)
 
     @staticmethod
     def preferred_actions(root, max_depth=None):
@@ -461,3 +442,42 @@ class TreeDebugger:
 
             TreeDebugger._preferred_actions_helper(root[best_child], next_depth, seq,
                                                    max_depth=max_depth)
+
+    @staticmethod
+    def tree_stats(root, max_depth=None):
+        """Gether statistics about the tree"""
+        stats = {
+            'total_vnodes': 0,
+            'total_qnodes': 0,
+            'total_vnodes_children': 0,
+            'total_qnodes_children': 0,
+            'max_vnodes_children': 0,
+            'max_qnodes_children': 0,
+            'max_depth': -1
+        }
+        TreeDebugger._tree_stats_helper(root, 0, stats, max_depth=max_depth)
+        stats['num_visits'] = root.num_visits
+        stats['value'] = root.value
+        return stats
+
+    @staticmethod
+    def _tree_stats_helper(root, depth, stats, max_depth=None):
+        if max_depth is not None and depth > max_depth:
+            return
+        else:
+            if isinstance(root, VNode):
+                stats['total_vnodes'] += 1
+                stats['total_vnodes_children'] += len(root.children)
+                stats['max_vnodes_children'] = max(stats['max_vnodes_children'], len(root.children))
+                stats['max_depth'] = depth
+            else:
+                stats['total_qnodes'] += 1
+                stats['total_qnodes_children'] += len(root.children)
+                stats['max_qnodes_children'] = max(stats['max_qnodes_children'], len(root.children))
+
+            for c in root.children:
+                if isinstance(root[c], QNode):
+                    next_depth = depth
+                else:
+                    next_depth = depth + 1
+                TreeDebugger._tree_stats_helper(root[c], next_depth, stats, max_depth=max_depth)
