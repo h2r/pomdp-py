@@ -36,6 +36,7 @@ examples.)
 """
 
 import pomdp_py
+from pomdp_py.utils import TreeDebugger
 import random
 import numpy as np
 import sys
@@ -266,9 +267,7 @@ def main():
                            rollout_policy=tiger_problem.agent.policy_model,
                            show_progress=True)
     test_planner(tiger_problem, pouct, nsteps=10)
-
-    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=5, anonymize=False)
+    TreeDebugger(tiger_problem.agent.tree).pp
 
     # Reset agent belief
     tiger_problem.agent.set_belief(init_belief, prior=True)
@@ -281,9 +280,7 @@ def main():
                            rollout_policy=tiger_problem.agent.policy_model,
                            show_progress=True, pbar_update_interval=500)
     test_planner(tiger_problem, pomcp, nsteps=10)
-
-    pomdp_py.visual.visualize_pouct_search_tree(tiger_problem.agent.tree,
-                                                max_depth=5, anonymize=False)
+    TreeDebugger(tiger_problem.agent.tree).pp
 
 if __name__ == '__main__':
     main()
