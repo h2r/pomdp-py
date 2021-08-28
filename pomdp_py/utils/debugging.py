@@ -47,29 +47,49 @@ from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
 from pomdp_py.utils import typ, similar, special_char
 
 SIMILAR_THRESH = 0.6
-MARKED = set()  # tracks marked nodes on tree
+DEFAULT_MARK_COLOR = "blue"
+MARKED = {}  # tracks marked nodes on tree
 
 def sorted_by_str(enumerable):
     return sorted(enumerable, key=lambda n: str(n))
 
-def _node_pp(node, e=None, p=None):
+def interpret_color(colorstr):
+    if colorstr.lower() in typ.colors:
+        return eval("typ.{}".format(colorstr))
+    else:
+        raise ValueError("Invalid color: {};\n"
+                         "The available ones are {}".format(colorstr, typ.colors))
+
+def _node_pp(node, e=None, p=None, o=None):
     # We want to return the node, but we don't want to print it on pdb with
     # its default string. But instead, we want to print it with our own
     # string formatting.
     if isinstance(node, VNode):
-        return _VNodePP(node, parent_edge=e, parent=p)
+        return _VNodePP(node, parent_edge=e, parent=p, original=o)
     else:
-        return _QNodePP(node, parent_edge=e, parent=p)
+        return _QNodePP(node, parent_edge=e, parent=p, original=o)
 
 class _NodePP:
 
-    def __init__(self, node, parent_edge=None, parent=None):
+    def __init__(self, node, parent_edge=None, parent=None, original=None):
         """node: either VNode or QNode (the actual node on the tree) """
         self.parent_edge = parent_edge
         self.parent = parent
         self.children = node.children
         self.print_children = True
-        self.original = node
+        if original is None:
+            self.original = node
+        else:
+            self.original = original
+
+    def __hash__(self):
+        return id(self.original)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return id(self.original) == id(other.original)
+        else:
+            return False
 
     @property
     def marked(self):
@@ -88,7 +108,6 @@ class _NodePP:
                 return chosen
         raise ValueError("Cannot access children with key {}".format(key))
 
-
     def __getitem__(self, key):
         """
         When debugging, you can access the child of a node by the key
@@ -103,7 +122,19 @@ class _NodePP:
           of similarity is SIMILAR_THRESH
         """
         edge = self.to_edge(key)
-        return _node_pp(self.children[edge], e=edge, p=self)
+        c = self.children[edge]
+        if isinstance(c, _NodePP):
+            original = c.original
+        else:
+            original = None
+        return _node_pp(c, e=edge, p=self, o=original)
+
+    def __contains__(self, key):
+        try:
+            self.to_edge(key)
+            return True
+        except ValueError:
+            return False
 
     @staticmethod
     def interpret_print_type(opt):
@@ -272,7 +303,13 @@ class TreeDebugger:
         return "TreeDebugger@\n{}".format(nodestr)
 
     def __getitem__(self, key):
-        return self.current[key]
+        if type(key) == tuple:
+            n = self.current
+            for k in key:
+                n = n[k]
+            return n
+        else:
+            return self.current[key]
 
     def _get_stats(self):
         if id(self.current) in self._stats_cache:
@@ -361,7 +398,7 @@ class TreeDebugger:
         if current_depth == target_depth:
             if isinstance(root, VNode):
                 if as_debuggers:
-                    nodes.append(TreeDebugger(root))
+                    nodes.append(TreeDebugger(root.original))
                 else:
                     nodes.append(root)
         else:
@@ -421,13 +458,18 @@ class TreeDebugger:
         return self.current.pp
 
     @property
-    def mp(self):
-        """Mark and print.
+    def mbp(self):
+        """Mark Best and Print.
         Mark the best sequence, and then print with only the marked nodes"""
-        self.mark(self.bestseq)
+        self.mark(self.bestseq, color="yellow")
         self.p("marked-only")
 
-    def mark_sequence(self, seq):
+    @property
+    def pm(self):
+        """Print marked only"""
+        self.p("marked-only")
+
+    def mark_sequence(self, seq, color=DEFAULT_MARK_COLOR):
         """
         Given a list of keys (understandable by __getitem__ in _NodePP),
         mark nodes (both QNode and VNode) along the path in the tree.
@@ -435,20 +477,28 @@ class TreeDebugger:
         also be marked.
         """
         node = self.current
-        MARKED.add(id(node.original))
+        MARKED[id(node.original)] = interpret_color(color)
         for key in seq:
-            MARKED.add(id(node[key].original))
+            MARKED[id(node[key].original)] = interpret_color(color)
             node = node[key]
 
-    def mark(self, seq):
+    def mark(self, seq, **kwargs):
         """alias for mark_sequence"""
-        return self.mark_sequence(seq)
+        return self.mark_sequence(seq, **kwargs)
+
+    def mark_path(self, dest, **kwargs):
+        """paths the path to dest node"""
+        return self.mark(self.path_to(dest), **kwargs)
+
+    def markp(self, dest, **kwargs):
+        """alias to mark_path"""
+        return self.mark_path(dest, **kwargs)
 
     @property
     def clear(self):
         """Clear the marks"""
         global MARKED
-        MARKED = set()
+        MARKED = {}
 
     @property
     def bestseq(self):
@@ -472,7 +522,8 @@ class TreeDebugger:
         Returns a string for printing given a single vnode.
         """
         if hasattr(node, "marked") and node.marked:
-            opposite_color = color = lambda s: typ.bold(typ.yellow(s))
+            color_fn = MARKED[id(node.original)]
+            opposite_color = color = lambda s: typ.bold(color_fn(s))
         elif isinstance(node, VNode):
             color = typ.green
             opposite_color = typ.red
@@ -518,10 +569,10 @@ class TreeDebugger:
         # horizon and only has initial value.
         if max_depth is not None and depth > max_depth:
             return
-        best_child = None
-        best_value = float('-inf')
         if root is None or len(root.children) == 0:
             return
+        best_child = root.to_edge(0)
+        best_value = root[0].value
         for c in root.children:
             if root[c].value > best_value:
                 best_child = c
@@ -542,6 +593,48 @@ class TreeDebugger:
 
             TreeDebugger._preferred_actions_helper(root[best_child], next_depth, seq,
                                                    max_depth=max_depth)
+
+    def path(self, dest):
+        """alias for path_to;
+        Example usage:
+
+        marking path from root to the first node on the second layer:
+
+            dd.mark(dd.path(dd.layer(2)[0]))
+        """
+        return self.path_to(dest)
+
+    def path_to(self, dest):
+        """Returns a list of keys (actions / observations) that represents the path from
+        self.current to the given node `dest`. Returns None if the path does not
+        exist.  Uses DFS. Can be useful for marking path to a node to a specific
+        layer. Note that the returned path is a list of keys (i.e. edges), not nodes.
+        """
+        # dest may be in the returned list of layer() which could be a TreeDebugger.
+        if isinstance(dest, TreeDebugger):
+            dest = dest.current
+        worklist = [self.current]
+        seen = set({self.current})
+        parent = {self.current: None}
+        while len(worklist) > 0:
+            node = worklist.pop()
+            if node == dest:
+                return self._get_path(self.current, dest, parent)
+            for c in node.children:
+                if node[c] not in seen:
+                    worklist.append(node[c])
+                    seen.add(node[c])
+                    parent[node[c]] = (node, c)
+        return None
+
+    def _get_path(self, start, dest, parent):
+        """Helper method for path_to"""
+        v = dest
+        path = []
+        while v != start:
+            v, edge = parent[v]
+            path.append(edge)
+        return list(reversed(path))
 
     @staticmethod
     def tree_stats(root, max_depth=None):

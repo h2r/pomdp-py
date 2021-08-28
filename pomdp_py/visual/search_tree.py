@@ -1,3 +1,9 @@
+################################################################################
+# WARNING: The library does require the installation of networkx and pygraphviz
+# any more. But this code will be kept. If you would like to plot the MCTS
+# search tree, you should install networkx and pygraphviz yourself.
+################################################################################
+
 import networkx as nx
 from networkx.drawing.nx_agraph import graphviz_layout
 import matplotlib.pyplot as plt

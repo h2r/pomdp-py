@@ -74,3 +74,15 @@ def red(content):
 
 def white(content):
     return bcolors.s(bcolors.WHITE, content)
+
+colors = {
+    "white",
+    "green",
+    "cyan",
+    "magenta",
+    "blue",
+    "green",
+    "yellow",
+    "red",
+    "white",
+}

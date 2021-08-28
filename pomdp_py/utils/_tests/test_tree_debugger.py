@@ -14,9 +14,22 @@ def test_tree_debugger_tiger():
 
     # The number of VNodes equals to the sum of VNodes per layer
     assert dd.nv == sum([len(dd.l(i)) for i in range(dd.nl)])
+    print("test 1.")
 
     # The total number of nodes equal to the number of VNodes plus QNodes
     assert dd.nn == dd.nv + dd.nq
+    print("test 2.")
+
+    # Test example usage
+    dd.mark(dd.path(dd.layer(2)[0]))
+    print("test 3.")
+
+    # There exists a path from the root to nodes in the tree
+    for i in range(dd.nl):
+        n = dd.l(i)[0]
+        path = dd.path_to(n)
+        assert path is not None
+    print("test 4.")
 
     print("Passed tests.")
     test_planner(tiger_problem, pouct, nsteps=3, debug_tree=True)
