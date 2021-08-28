@@ -412,6 +412,22 @@ class TreeDebugger:
                                    target_depth,
                                    nodes)
 
+    @property
+    def leaf(self):
+        worklist = [self.current]
+        seen = set({self.current})
+        leafs = []
+        while len(worklist) > 0:
+            node = worklist.pop()
+            if len(node.children) == 0:
+                leafs.append(node)
+            else:
+                for c in node.children:
+                    if node[c] not in seen:
+                        worklist.append(node[c])
+                        seen.add(node[c])
+        return leafs
+
     def step(self, key):
         """Updates current interaction node to follow the
         edge along key"""
