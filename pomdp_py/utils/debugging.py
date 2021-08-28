@@ -3,7 +3,7 @@ Utility functions making it easier to debug POMDP planning.
 
 The core functionality is incorporated into the TreeDebugger.
 It is designed for ease of use during a pdb or ipdb debugging
-session. Here is a minimum usage:
+session. Here is a minimal example usage:
 
 .. code-block:: python
 
