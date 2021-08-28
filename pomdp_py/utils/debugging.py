@@ -1,5 +1,46 @@
 """
 Utility functions making it easier to debug POMDP planning.
+
+The core functionality is incorporated into the TreeDebugger.
+It is designed for ease of use during a pdb or ipdb debugging
+session. Here is a minimum usage:
+
+.. code-block:: python
+
+   from pomdp_py.utils import TreeDebugger
+   from pomdp_py.tiger import TigerProblem
+
+   # pomdp_py.Agent
+   agent = TigerProblem.create("tiger-left", 0.5, 0.15).agent
+
+   # suppose pouct is a pomdp_py.POUCT object
+   pouct = pomdp_py.POUCT ...
+
+   action = pouct.plan(agent)
+   dd = TreeDebugger(agent.tree)
+   import pdb; pdb.set_trace()
+
+When the program executes, you enter the pdb debugger
+
+.. code-block:: text
+
+    (Pdb) dd.pp
+    _VNodePP(n=8191, v=-39.174)(depth=0)
+    ├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
+    │    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
+    │    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
+    │    │    │    ├─── ₀tiger-left⟶_VNodePP(n=2676, v=-27.748)(depth=2)
+    ... # prints out the entire tree; Colored in terminal.
+
+    (Pdb) dd.p(1)
+    _VNodePP(n=8191, v=-39.174)(depth=0)
+    ├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
+    │    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
+    │    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
+    │    │    ├─── ₁open-left⟶_QNodePP(n=18, v=-165.216)
+    │    │    ├─── ₂open-right⟶_QNodePP(n=121, v=-79.970)
+    │    │    └─── ₃stay⟶_QNodePP(n=299, v=-60.744)
+    ... # prints up to depth 1
 """
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode

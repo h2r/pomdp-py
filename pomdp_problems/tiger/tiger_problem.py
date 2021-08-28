@@ -198,6 +198,24 @@ class TigerProblem(pomdp_py.POMDP):
                                    RewardModel())
         super().__init__(agent, env, name="TigerProblem")
 
+    @staticmethod
+    def create(state="tiger-left", belief=0.5, obs_noise=0.15):
+        """
+        Args:
+            state (str): could be 'tiger-left' or 'tiger-right'; True state of the environment
+            belief (float): Initial belief that the target is on the left; Between 0-1.
+            obs_noise (float): Noise for the observation model (default 0.15)
+        """
+        init_true_state = TigerState(state)
+        init_belief = pomdp_py.Histogram({TigerState("tiger-left"): belief,
+                                          TigerState("tiger-right"): 1.0 - belief})
+        tiger_problem = TigerProblem(obs_noise,  # observation noise
+                                     init_true_state, init_belief)
+        tiger_problem.agent.set_belief(init_belief, prior=True)
+        return tiger_problem
+
+
+
 
 def test_planner(tiger_problem, planner, nsteps=3, debug_tree=False):
     """
