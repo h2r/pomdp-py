@@ -174,7 +174,7 @@ class PolicyModel(pomdp_py.RandomRollout):
                                         "listen", "stay"}}
 
     def sample(self, state, **kwargs):
-        return self.get_all_actions().random()
+        return random.sample(self.get_all_actions(), 1)[0]
 
     def get_all_actions(self, **kwargs):
         return PolicyModel.ACTIONS
