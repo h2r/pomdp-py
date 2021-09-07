@@ -2,9 +2,13 @@ from pomdp_py.framework.basics cimport GenerativeDistribution
 import random
 
 cdef class Particles(GenerativeDistribution):
-    def __init__(self, particles):
+    #TODO: inherit WeightedParticles
+    def __init__(self, particles, _hash_seed=100):
         self._particles = particles  # each particle is a value
-        
+        if len(particles) > 0:
+            self._rnd_hash_idx = random.Random(_hash_seed)\
+                                       .randint(0, len(particles)-1)
+
     @property
     def particles(self):
         return self._particles
@@ -16,54 +20,37 @@ cdef class Particles(GenerativeDistribution):
 
     def __len__(self):
         return len(self._particles)
-    
+
     def __getitem__(self, value):
         """__getitem__(self, value)
-        Returns the probability of `value`."""        
+        Returns the probability of `value`."""
         belief = 0
         for s in self._particles:
             if s == value:
                 belief += 1
         return belief / len(self._particles)
-    
+
     def __setitem__(self, value, prob):
         """__setitem__(self, value, prob)
-        Sets probability of value to `prob`.
-        Assume that value is between 0 and 1"""        
-        particles = [s for s in self._particles if s != value]
-        len_not_value = len(particles)
-        amount_to_add = prob * len_not_value / (1 - prob)
-        for i in range(amount_to_add):
-            particles.append(value)
-        self._particles = particles
-        
+        The particle representation is assumed to be not mutable"""
+        raise NotImplementedError
+
     def __hash__(self):
         if len(self._particles) == 0:
             return hash(0)
         else:
             # if the value space is large, a random particle would differentiate enough
-            indx = random.randint(0, len(self._particles-1))
-            return hash(self._particles[indx])
-        
+            return hash(self._particles[self._rnd_hash_idx])
+
     def __eq__(self, other):
         if not isinstance(other, Particles):
             return False
         else:
             if len(self._particles) != len(other.praticles):
                 return False
-            value_counts_self = {}
-            value_counts_other = {}
-            for s in self._particles:
-                if s not in value_counts_self:
-                    value_counts_self[s] = 0
-                value_counts_self[s] += 1
-            for s in other.particles:
-                if s not in value_counts_self:
-                    return False
-                if s not in value_counts_other:
-                    value_counts_other[s] = 0
-                value_counts_other[s] += 1
-            return value_counts_self == value_counts_other
+            hist = self.get_histogram()
+            other_hist = other.get_histogram()
+            return hist == other_hist
 
     def mpe(self, hist=None):
         """
@@ -89,7 +76,7 @@ cdef class Particles(GenerativeDistribution):
 
     def get_histogram(self):
         """get_histogram(self)
-        Returns a dictionary from value to probability of the histogram"""        
+        Returns a dictionary from value to probability of the histogram"""
         value_counts_self = {}
         for s in self._particles:
             if s not in value_counts_self:
@@ -117,4 +104,3 @@ cdef class Particles(GenerativeDistribution):
         for i in range(num_particles):
             particles.append(histogram.random())
         return Particles(particles)
-        

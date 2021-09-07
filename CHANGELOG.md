@@ -8,6 +8,7 @@
   This can be useful if you would like to inherit `OOBelief` and return a state of
   your own type when implementing its `mpe` and `random` functions.
 * Added `__ne__` methods to framework classes.
+* Added `WeightedParticles`; Refactored `Particles`.
 * Code refactoring: Remove unnecessary `*args, **kwargs` in interface signature. **Backwards compatible**.
 
 
