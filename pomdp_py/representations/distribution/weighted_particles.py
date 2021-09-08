@@ -2,7 +2,8 @@ from pomdp_py.framework.basics import GenerativeDistribution
 import random
 
 class WeightedParticles(GenerativeDistribution):
-    def __init__(self, particles, _hash_seed=100):
+    def __init__(self, particles, approx_method="none", distance_func=None,
+                 _hash_seed=100):
         """
         Represents a distribution Pr(X) with weighted particles
         'value' means a value for the random variable X. If multiple
@@ -13,10 +14,17 @@ class WeightedParticles(GenerativeDistribution):
             particles (list): List of (value, weight) tuples.
                 The weight represents the likelihood that the
                 value is drawn from the underlying distribution.
+           approx_method (str): 'nearest' if when querying the probability
+                of a value, and there is no matching particle for it, return
+                the probability of the value closest to it. Assuming values
+                are comparable; "none" if no approximation, return 0.
+           distance_func: Used when approx_method is 'nearest'. Returns
+               a number given two values in this particle set.
         """
         self._particles = particles
         self._rnd_hash_idx = random.Random(_hash_seed).randint(0, len(particles)-1)
-        self._hist = self.get_histogram()
+        self._approx_method = approx_method
+        self._distance_func = distance_func
 
     @property
     def particles(self):
@@ -31,24 +39,46 @@ class WeightedParticles(GenerativeDistribution):
         return [weight for _, weight in self._particles]
 
     def __str__(self):
-        hist = [(k, self._hist[k]) for k in list(reversed(sorted(self._hist, key=hist.get)))]
-        return str(hist)
+        return str(self.condense().particles)
 
     def __len__(self):
         return len(self._particles)
 
     def __getitem__(self, value):
         """Returns the probability of `value`"""
-        return self._hist[value]
+        if len(self.particles) == 0:
+            raise ValueError("Particles is empty.")
+
+        sum_weights = 0.0
+        count = 0
+        for s, w in self.particles:
+            if s == value:
+                sum_weights += w
+                count += 1
+        if count > 0:
+            # return the average
+            return sum_weights / count
+        else:
+            if self._approx_method == "none":
+                return 0.0
+            elif self._approx_method == "nearest":
+                nearest_dist = float('inf')
+                nearest = self.particles[0][0]
+                for s, w in self.particles[1:]:
+                    dist = self._distance_func(s, nearest)
+                    if dist < nearest_dist:
+                        nearest_dist = dist
+                        nearest = s
+                return self[nearest]
+            else:
+                raise ValueError("Cannot handle approx_method:",
+                                 self._approx_method)
 
     def __setitem__(self, value, prob):
         """
         The particle representation is assumed to be not mutable
         """
         raise NotImplementedError
-
-    def __contains__(self, value):
-        return value in self._hist
 
     def __hash__(self):
         if len(self._particles) == 0:
