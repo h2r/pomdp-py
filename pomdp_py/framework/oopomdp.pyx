@@ -54,6 +54,8 @@ cdef class ObjectState(State):
         return self._hashcode
 
     def __eq__(self, other):
+        if not isinstance(other, ObjectState):
+            return False
         return self.objclass == other.objclass\
             and self.attributes == other.attributes
 
@@ -147,6 +149,10 @@ cdef class OOState(State):
         """copy(self)
         Copies the state."""
         return OOState(copy.deepcopy(self.object_states))
+
+    def s(self, objid):
+        """convenient alias function"""
+        return self.object_states[objid]
 
 cdef class OOTransitionModel(TransitionModel):
 
@@ -378,3 +384,7 @@ cdef class OOBelief(GenerativeDistribution):
     def object_beliefs(self):
         """object_beliefs(self)"""
         return self._object_beliefs
+
+    def b(self, objid):
+        """convenient alias function call"""
+        return self._object_beliefs[objid]
