@@ -309,7 +309,7 @@ cdef class POUCT(Planner):
                 if stop_by_sims:
                     pbar.n = sims_count
                 else:
-                    pbar.n = time_taken/1000
+                    pbar.n = time_taken
                 pbar.refresh()
 
             if stop_by_sims:
@@ -317,6 +317,9 @@ cdef class POUCT(Planner):
                     break
             else:
                 if time_taken > self._planning_time:
+                    if self._show_progress:
+                        pbar.n = self._planning_time
+                        pbar.refresh()
                     break
 
         if self._show_progress:
