@@ -7,12 +7,12 @@ cdef class OOPOMDP(POMDP):
 cdef class ObjectState(State):
     cdef public str objclass
     cdef public dict attributes
-    cdef int _hashcode
-    
+    cdef int _hashcache
+
 cdef class OOState(State):
     cdef public dict object_states
     cdef frozenset _situation
-    cdef int _hashcode
+    cdef int _hashcache
 
 cdef class OOTransitionModel(TransitionModel):
     cpdef dict _transition_models

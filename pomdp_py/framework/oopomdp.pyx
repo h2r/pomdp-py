@@ -40,6 +40,7 @@ cdef class ObjectState(State):
         """
         self.objclass = objclass
         self.attributes = attributes
+        self._hashcache = -1
 
     def __repr__(self):
         return self.__str__()
@@ -50,7 +51,9 @@ cdef class ObjectState(State):
                                 str(self.attributes))
 
     def __hash__(self):
-        return hash(frozenset(self.attributes.items()))
+        if self._hashcache == -1:
+            self._hashcache = hash(frozenset(self.attributes.items()))
+        return self._hashcache
 
     def __eq__(self, other):
         if not isinstance(other, ObjectState):
@@ -92,6 +95,7 @@ cdef class OOState(State):
         """
         # internally, objects are sorted by ID.
         self.object_states = object_states
+        self._hashcache = -1
 
     @property
     def situation(self):
@@ -112,7 +116,9 @@ cdef class OOState(State):
             and self.object_states == other.object_states
 
     def __hash__(self):
-        return hash(frozenset(self.object_states.items()))
+        if self._hashcache == -1:
+            self._hashcache = hash(frozenset(self.object_states.items()))
+        return self._hashcache
 
     def __getitem__(self, index):
         raise NotImplemented
@@ -130,6 +136,7 @@ cdef class OOState(State):
         Sets the state of the given
         object to be the given object state (ObjectState)
         """
+        # Deprecation Warning: set_object_state is not valid because OOState is not mutable.
         self.object_states[objid] = object_state
 
     def get_object_class(self, objid):
