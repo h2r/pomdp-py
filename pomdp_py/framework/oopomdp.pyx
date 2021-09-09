@@ -40,6 +40,8 @@ cdef class ObjectState(State):
         """
         self.objclass = objclass
         self.attributes = attributes
+        #TODO: REMOVE THIS - this causes problems when pickling/unpickling the object
+        #because the hashcode changes!
         self._hashcode = hash(frozenset(self.attributes.items()))
 
     def __repr__(self):
