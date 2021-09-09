@@ -40,9 +40,6 @@ cdef class ObjectState(State):
         """
         self.objclass = objclass
         self.attributes = attributes
-        #TODO: REMOVE THIS - this causes problems when pickling/unpickling the object
-        #because the hashcode changes!
-        self._hashcode = hash(frozenset(self.attributes.items()))
 
     def __repr__(self):
         return self.__str__()
@@ -53,7 +50,7 @@ cdef class ObjectState(State):
                                 str(self.attributes))
 
     def __hash__(self):
-        return self._hashcode
+        return hash(frozenset(self.attributes.items()))
 
     def __eq__(self, other):
         if not isinstance(other, ObjectState):
@@ -95,8 +92,6 @@ cdef class OOState(State):
         """
         # internally, objects are sorted by ID.
         self.object_states = object_states
-        self._situation = frozenset(self.object_states.items())
-        self._hashcode = hash(self._situation)
 
     @property
     def situation(self):
@@ -117,7 +112,7 @@ cdef class OOState(State):
             and self.object_states == other.object_states
 
     def __hash__(self):
-        return self._hashcode
+        return hash(frozenset(self.object_states.items()))
 
     def __getitem__(self, index):
         raise NotImplemented
