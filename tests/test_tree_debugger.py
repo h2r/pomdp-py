@@ -3,7 +3,9 @@ from pomdp_problems.tiger import TigerProblem, test_planner
 import pomdp_py
 from pomdp_py.utils.debugging import TreeDebugger
 
-def test_tree_debugger_tiger():
+description="testing pomdp_py.utils.TreeDebugger"
+
+def test_tree_debugger_tiger(debug_tree=False):
     tiger_problem = TigerProblem.create("tiger-left", 0.5, 0.15)
     pouct = pomdp_py.POUCT(max_depth=6, discount_factor=0.95,
                            num_sims=4096, exploration_const=200,
@@ -14,26 +16,26 @@ def test_tree_debugger_tiger():
 
     # The number of VNodes equals to the sum of VNodes per layer
     assert dd.nv == sum([len(dd.l(i)) for i in range(dd.nl)])
-    print("test 1.")
 
     # The total number of nodes equal to the number of VNodes plus QNodes
     assert dd.nn == dd.nv + dd.nq
-    print("test 2.")
 
     # Test example usage
     dd.mark(dd.path(dd.layer(2)[0]))
-    print("test 3.")
+    print("Printing tree up to depth 1")
+    dd.p(1)
 
     # There exists a path from the root to nodes in the tree
     for i in range(dd.nl):
         n = dd.l(i)[0]
         path = dd.path_to(n)
         assert path is not None
-    print("test 4.")
 
-    print("Passed tests.")
-    test_planner(tiger_problem, pouct, nsteps=3, debug_tree=True)
+    test_planner(tiger_problem, pouct, nsteps=3, debug_tree=debug_tree)
+
+def run(debug_tree=False):
+    test_tree_debugger_tiger(debug_tree=debug_tree)
 
 
 if __name__ == "__main__":
-    test_tree_debugger_tiger()
+    run(debug_tree=True)

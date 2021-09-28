@@ -1,6 +1,5 @@
 import pomdp_py
 import random
-from tqdm import tqdm
 
 description = "testing particle representation"
 
@@ -60,7 +59,6 @@ def test_weighted_particles():
         assert abs(counts[v] - random_dist[v]) <= 2e-3
 
     assert particles.mpe() == pomdp_py.Histogram(random_dist).mpe()
-
 
 def run():
     test_particles()
