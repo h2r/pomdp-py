@@ -1,6 +1,5 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 import random
-from tqdm import tqdm
 
 cdef class WeightedParticles(GenerativeDistribution):
     def __init__(self, list particles, str approx_method="none", distance_func=None):
@@ -186,7 +185,7 @@ cdef class Particles(WeightedParticles):
 
     cpdef dict get_histogram(self):
         cdef dict hist = {}
-        for s in tqdm(self.particles):
+        for s in self.particles:
             hist[s] = hist.get(s, 0) + 1
         for s in hist:
             hist[s] = hist[s] / len(self.particles)
