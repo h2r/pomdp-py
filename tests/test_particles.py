@@ -2,10 +2,12 @@ import pomdp_py
 import random
 from tqdm import tqdm
 
+description = "testing particle representation"
+
 def test_particles():
     random_dist = {}
     total_prob = 0
-    for v in range(2):
+    for v in range(4):
         random_dist[f"x{v}"] = random.uniform(0, 1)
         total_prob += random_dist[f"x{v}"]
     for v in random_dist:
@@ -39,15 +41,12 @@ def test_weighted_particles():
         total_prob += random_dist[f"x{v}"]
     for v in random_dist:
         random_dist[v] /= total_prob
-    print(sum(random_dist[v] for v in random_dist))
 
     particles = pomdp_py.WeightedParticles.from_histogram(pomdp_py.Histogram(random_dist))
-    print(sum(random_dist[v] for v in random_dist))
 
     assert abs(sum(particles[v] for v, _ in particles) - 1.0) <= 1e-6
 
     for v in random_dist:
-        print(random_dist[v], particles[v])
         assert abs(particles[v] - random_dist[v]) <= 2e-3
 
     counts = {}
@@ -62,6 +61,11 @@ def test_weighted_particles():
 
     assert particles.mpe() == pomdp_py.Histogram(random_dist).mpe()
 
-if __name__ == "__main__":
+
+def run():
     test_particles()
     test_weighted_particles()
+
+
+if __name__ == "__main__":
+    run()
