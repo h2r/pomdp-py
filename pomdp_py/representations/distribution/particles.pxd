@@ -1,5 +1,14 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 
-cdef class Particles(GenerativeDistribution):
+cdef class WeightedParticles(GenerativeDistribution):
     cdef list _particles
-    cdef int _rnd_hash_idx
+    cdef list _values
+    cdef list _weights
+    cdef str _approx_method
+    cdef object _distance_func
+    cdef dict _hist
+
+    cpdef dict get_histogram(self)
+
+cdef class Particles(WeightedParticles):
+    pass

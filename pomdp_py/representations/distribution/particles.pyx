@@ -1,106 +1,200 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
 import random
+from tqdm import tqdm
 
-cdef class Particles(GenerativeDistribution):
-    #TODO: inherit WeightedParticles
-    def __init__(self, particles, _hash_seed=100):
-        self._particles = particles  # each particle is a value
-        if len(particles) > 0:
-            self._rnd_hash_idx = random.Random(_hash_seed)\
-                                       .randint(0, len(particles)-1)
+cdef class WeightedParticles(GenerativeDistribution):
+    def __init__(self, list particles, str approx_method="none", distance_func=None):
+        """
+        Represents a distribution Pr(X) with weighted particles
+        'value' means a value for the random variable X. If multiple
+        values are present for the same value, will interpret the
+        probability at X=x as the average of those weights.
+
+        Args:
+            particles (list): List of (value, weight) tuples.
+                The weight represents the likelihood that the
+                value is drawn from the underlying distribution.
+           approx_method (str): 'nearest' if when querying the probability
+                of a value, and there is no matching particle for it, return
+                the probability of the value closest to it. Assuming values
+                are comparable; "none" if no approximation, return 0.
+           distance_func: Used when approx_method is 'nearest'. Returns
+               a number given two values in this particle set.
+        """
+        self._values = [value for value, _ in particles]
+        self._weights = [weight for _, weight in particles]
+        self._particles = particles
+
+        self._hist = self.get_histogram()
+
+        self._approx_method = approx_method
+        self._distance_func = distance_func
 
     @property
     def particles(self):
         return self._particles
 
+    @property
+    def values(self):
+        return self._values
+
+    @property
+    def weights(self):
+        return self._weights
+
+    def add(self, particle):
+        """add(self, particle)
+        particle: (value, weight) tuple"""
+        self._particles.append(particle)
+        s, w = particle
+        self._values.append(s)
+        self._weights.append(w)
+
     def __str__(self):
-        hist = self.get_histogram()
-        hist = [(k,hist[k]) for k in list(reversed(sorted(hist, key=hist.get)))]
-        return str(hist)
+        return str(self.condense().particles)
 
     def __len__(self):
         return len(self._particles)
 
     def __getitem__(self, value):
-        """__getitem__(self, value)
-        Returns the probability of `value`."""
-        belief = 0
-        for s in self._particles:
-            if s == value:
-                belief += 1
-        return belief / len(self._particles)
+        """Returns the probability of `value`; normalized"""
+        if len(self.particles) == 0:
+            raise ValueError("Particles is empty.")
+
+        cdef float sum_weights = 0.0
+        cdef int count = 0
+        cdef float w   # weight
+
+        if value in self._hist:
+            return self._hist[value]
+        else:
+            if self._approx_method == "none":
+                return 0.0
+            elif self._approx_method == "nearest":
+                nearest_dist = float('inf')
+                nearest = self._values[0]
+                for s in self._values[1:]:
+                    dist = self._distance_func(s, nearest)
+                    if dist < nearest_dist:
+                        nearest_dist = dist
+                        nearest = s
+                return self[nearest]
+            else:
+                raise ValueError("Cannot handle approx_method:",
+                                 self._approx_method)
 
     def __setitem__(self, value, prob):
-        """__setitem__(self, value, prob)
-        The particle representation is assumed to be not mutable"""
+        """
+        The particle belief does not support assigning an exact probability to a value.
+        """
         raise NotImplementedError
 
-    def __hash__(self):
-        if len(self._particles) == 0:
-            return hash(0)
-        else:
-            # if the value space is large, a random particle would differentiate enough
-            return hash(self._particles[self._rnd_hash_idx])
-
-    def __eq__(self, other):
-        if not isinstance(other, Particles):
-            return False
-        else:
-            if len(self._particles) != len(other.praticles):
-                return False
-            hist = self.get_histogram()
-            other_hist = other.get_histogram()
-            return hist == other_hist
-
-    def mpe(self, hist=None):
-        """
-        mpe(self, hist=None)
-        Choose a particle that is most likely to be sampled.
-        """
-        if hist is None:
-            hist = self.get_histogram()
-        return max(hist, key=hist.get)
-
     def random(self):
-        """random(self)
-        Randomly choose a particle"""
-        if len(self._particles) > 0:
-            return random.choice(self._particles)
-        else:
-            return None
+        """Samples a value based on the particles"""
+        value = random.choices(self._values, weights=self._weights, k=1)[0]
+        return value
+
+    def mpe(self):
+        return max(self._hist, key=self._hist.get)
+
+    def __iter__(self):
+        return iter(self._particles)
+
+    cpdef dict get_histogram(self):
+        """
+        get_histogram(self)
+        Returns a mapping from value to probability, normalized."""
+        cdef dict hist = {}
+        cdef dict counts = {}
+        cdef float w
+        # first, sum the weights
+        for s, w in self._particles:
+            hist[s] = hist.get(s, 0) + w
+            counts[s] = counts.get(s, 0) + 1
+        # then, average the sums
+        total_weights = 0.0
+        for s in hist:
+            hist[s] = hist[s] / counts[s]
+            total_weights += hist[s]
+        # finally, normalize
+        for s in hist:
+            hist[s] /= total_weights
+        return hist
+
+    @classmethod
+    def from_histogram(cls, histogram):
+        """Given a pomdp_py.Histogram return a particle representation of it,
+        which is an approximation"""
+        particles = []
+        for v in histogram:
+            particles.append((v, histogram[v]))
+        return WeightedParticles(particles)
+
+    def condense(self):
+        """
+        Returns a new set of weighted particles with unique values
+        and weights aggregated (taken average).
+        """
+        return WeightedParticles.from_histogram(self.get_histogram())
+
+
+cdef class Particles(WeightedParticles):
+    """
+    Particles is a set of unweighted particles; Or equivalently,
+    a set of particles with the same weight. This set of particles
+    represent a distribution Pr(X). Each particle takes on a specific
+    value of X.
+    """
+    def __init__(self, particles):
+        """
+        particles (list): List of values.
+        """
+        super().__init__(list(zip(particles, [1.0]*len(particles))))
+
+    def __iter__(self):
+        return iter(self.particles)
 
     def add(self, particle):
         """add(self, particle)
-        Add a particle."""
-        self._particles.append(particle)
+        particle: just a value"""
+        self._particles.append((particle, 1.0))
+        self._values.append(particle)
+        self._weights.append(1.0)
 
-    def get_histogram(self):
-        """get_histogram(self)
-        Returns a dictionary from value to probability of the histogram"""
-        value_counts_self = {}
-        for s in self._particles:
-            if s not in value_counts_self:
-                value_counts_self[s] = 0
-            value_counts_self[s] += 1
-        for s in value_counts_self:
-            value_counts_self[s] = value_counts_self[s] / len(self._particles)
-        return value_counts_self
+    @property
+    def particles(self):
+        """For unweighted particles, the particles are just values."""
+        return self._values
 
     def get_abstraction(self, state_mapper):
+
         """get_abstraction(self, state_mapper)
         feeds all particles through a state abstraction function.
         Or generally, it could be any function.
         """
-        particles = [state_mapper(s) for s in self._particles]
+        particles = [state_mapper(s) for s in self.particles]
         return particles
 
     @classmethod
-    def from_histogram(self, histogram, num_particles=1000):
-        """from_histogram(self, histogram, num_particles=1000)
-        Given a Histogram distribution `histogram`, return
-        a particle representation of it, which is an approximation.
-        """
+    def from_histogram(cls, histogram, num_particles=1000):
+        """Given a pomdp_py.Histogram return a particle representation of it,
+        which is an approximation"""
         particles = []
-        for i in range(num_particles):
+        for _ in range(num_particles):
             particles.append(histogram.random())
         return Particles(particles)
+
+    cpdef dict get_histogram(self):
+        cdef dict hist = {}
+        for s in tqdm(self.particles):
+            hist[s] = hist.get(s, 0) + 1
+        for s in hist:
+            hist[s] = hist[s] / len(self.particles)
+        return hist
+
+    def random(self):
+        """Samples a value based on the particles"""
+        if len(self._particles) > 0:
+            return random.choice(self._values)
+        else:
+            return None

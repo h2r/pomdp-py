@@ -6,8 +6,7 @@ from pomdp_py.framework.oopomdp import *
 from pomdp_py.framework.planner import *
 
 # Representations
-from pomdp_py.representations.distribution.particles import Particles
-from pomdp_py.representations.distribution.weighted_particles import WeightedParticles
+from pomdp_py.representations.distribution.particles import Particles, WeightedParticles
 from pomdp_py.representations.distribution.histogram import Histogram
 from pomdp_py.representations.distribution.gaussian import Gaussian
 from pomdp_py.representations.belief.histogram import update_histogram_belief
