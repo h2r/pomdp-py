@@ -144,11 +144,11 @@ cdef class Particles(WeightedParticles):
     represent a distribution Pr(X). Each particle takes on a specific
     value of X.
     """
-    def __init__(self, particles):
+    def __init__(self, particles, **kwargs):
         """
         particles (list): List of values.
         """
-        super().__init__(list(zip(particles, [None]*len(particles))))
+        super().__init__(list(zip(particles, [None]*len(particles))), **kwargs)
 
     def __iter__(self):
         return iter(self.particles)
