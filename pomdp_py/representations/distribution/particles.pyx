@@ -25,6 +25,7 @@ cdef class WeightedParticles(GenerativeDistribution):
         self._particles = particles
 
         self._hist = self.get_histogram()
+        self._hist_valid = True
 
         self._approx_method = approx_method
         self._distance_func = distance_func
@@ -48,6 +49,7 @@ cdef class WeightedParticles(GenerativeDistribution):
         s, w = particle
         self._values.append(s)
         self._weights.append(w)
+        self._hist_valid = False
 
     def __str__(self):
         return str(self.condense().particles)
@@ -63,6 +65,10 @@ cdef class WeightedParticles(GenerativeDistribution):
         cdef float sum_weights = 0.0
         cdef int count = 0
         cdef float w   # weight
+
+        if not self._hist_valid:
+            self._hist = self.get_histogram()
+            self._hist_valid = True
 
         if value in self._hist:
             return self._hist[value]
@@ -94,6 +100,9 @@ cdef class WeightedParticles(GenerativeDistribution):
         return value
 
     def mpe(self):
+        if not self._hist_valid:
+            self._hist = self.get_histogram()
+            self._hist_valid = True
         return max(self._hist, key=self._hist.get)
 
     def __iter__(self):

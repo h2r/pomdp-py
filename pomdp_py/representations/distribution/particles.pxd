@@ -7,6 +7,7 @@ cdef class WeightedParticles(GenerativeDistribution):
     cdef str _approx_method
     cdef object _distance_func
     cdef dict _hist
+    cdef bint _hist_valid
 
     cpdef dict get_histogram(self)
 
