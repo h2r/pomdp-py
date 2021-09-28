@@ -148,7 +148,7 @@ cdef class Particles(WeightedParticles):
         """
         particles (list): List of values.
         """
-        super().__init__(list(zip(particles, [1.0]*len(particles))))
+        super().__init__(list(zip(particles, [None]*len(particles))))
 
     def __iter__(self):
         return iter(self.particles)
@@ -156,9 +156,9 @@ cdef class Particles(WeightedParticles):
     def add(self, particle):
         """add(self, particle)
         particle: just a value"""
-        self._particles.append((particle, 1.0))
+        self._particles.append((particle, None))
         self._values.append(particle)
-        self._weights.append(1.0)
+        self._weights.append(None)
 
     @property
     def particles(self):
