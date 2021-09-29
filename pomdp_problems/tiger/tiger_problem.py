@@ -170,8 +170,7 @@ class PolicyModel(pomdp_py.RandomRollout):
     with the framework."""
     # A stay action can be added to test that POMDP solver is
     # able to differentiate information gathering actions.
-    ACTIONS = {TigerAction(s) for s in {"open-left", "open-right",
-                                        "listen", "stay"}}
+    ACTIONS = {TigerAction(s) for s in {"open-left", "open-right", "listen"}}
 
     def sample(self, state, **kwargs):
         return random.sample(self.get_all_actions(), 1)[0]
