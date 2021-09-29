@@ -7,10 +7,9 @@ from pomdp_py.utils.interfaces.solvers import sarsop
 import os
 import io
 
-
 description="testing sarsop"
 
-def test_sarsop(pomdpsol_path):
+def test_sarsop(pomdpsol_path, logfile=None):
     print("[testing] test_sarsop")
     tiger = make_tiger()
 
@@ -19,7 +18,7 @@ def test_sarsop(pomdpsol_path):
     policy = sarsop(tiger.agent, pomdpsol_path, discount_factor=0.95,
                     timeout=10, memory=20, precision=0.000001,
                     remove_generated_files=True,
-                    logfile="test_sarsop.log")
+                    logfile=logfile)
 
     assert str(policy.plan(tiger.agent)) == "listen",\
         "Bad solution. Test failed."
@@ -62,10 +61,10 @@ def _check_pomdpsol():
                        "/path/to/sarsop/src/pomdpsol")
     return pomdpsol_path
 
-def run():
+def run(logfile=None):
     pomdpsol_path = _check_pomdpsol()
-    test_sarsop(pomdpsol_path)
+    test_sarsop(pomdpsol_path, logfile=logfile)
 
 
 if __name__ == "__main__":
-    run()
+    run(logfile="test_sarsop.log")

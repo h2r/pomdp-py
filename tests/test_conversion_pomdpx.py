@@ -31,13 +31,13 @@ def test_pomdpx_file_conversion(pomdpconvert_path):
 def _check_pomdpconvert():
     pomdpconvert_path = os.getenv("POMDPCONVERT_PATH")
     if pomdpconvert_path is None or not os.path.exists(pomdpconvert_path):
-        raise KeyError("To run this test, download sarsop from "
-                       "https://github.com/AdaCompNUS/sarsop. Then, follow the "
-                       "instructions on this web page to compile this software. "
-                       "Finally, set the environment variable POMDPCONVERT_PATH "
-                       "to be the path to the pomdpconvert binary file "
-                       "generated after compilation, likely located at "
-                       "/path/to/sarsop/src/pomdpconvert")
+        raise FileNotFoundError("To run this test, download sarsop from "
+                                "https://github.com/AdaCompNUS/sarsop. Then, follow the "
+                                "instructions on this web page to compile this software. "
+                                "Finally, set the environment variable POMDPCONVERT_PATH "
+                                "to be the path to the pomdpconvert binary file "
+                                "generated after compilation, likely located at "
+                                "/path/to/sarsop/src/pomdpconvert")
     return pomdpconvert_path
 
 def run():

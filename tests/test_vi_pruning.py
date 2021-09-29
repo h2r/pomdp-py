@@ -17,7 +17,7 @@ def test_vi_pruning(pomdp_solve_path, return_policy_graph=True):
     print("[testing] solving the tiger problem...")
     policy = vi_pruning(tiger.agent, pomdp_solve_path, discount_factor=0.95,
                         options=["-horizon", "100"],
-                        remove_generated_files=False,
+                        remove_generated_files=True,
                         return_policy_graph=return_policy_graph)
 
     assert str(policy.plan(tiger.agent)) == "listen",\
@@ -54,13 +54,13 @@ def test_vi_pruning(pomdp_solve_path, return_policy_graph=True):
 def _check_pomdp_solve():
     pomdp_solve_path = os.getenv("POMDP_SOLVE_PATH")
     if pomdp_solve_path is None or not os.path.exists(pomdp_solve_path):
-        raise KeyError("To run this test, download pomdp-solve from "
-                       "https://www.pomdp.org/code/. Then, follow the "
-                       "instructions on this web page to compile this software. "
-                       "Finally, set the environment variable POMDP_SOLVE_PATH "
-                       "to be the path to the pomdp-solve binary file "
-                       "generated after compilation, likely located at "
-                       "/path/to/pomdp-solve-<version>/src/pomdp-solve ")
+        raise FileNotFoundError("To run this test, download pomdp-solve from "
+                                "https://www.pomdp.org/code/. Then, follow the "
+                                "instructions on this web page to compile this software. "
+                                "Finally, set the environment variable POMDP_SOLVE_PATH "
+                                "to be the path to the pomdp-solve binary file "
+                                "generated after compilation, likely located at "
+                                "/path/to/pomdp-solve-<version>/src/pomdp-solve ")
     return pomdp_solve_path
 
 def run():

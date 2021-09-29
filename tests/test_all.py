@@ -27,7 +27,7 @@ def main():
         old_stdout = sys.stdout
         try:
             test_module.run()
-        except KeyError as ex:
+        except FileNotFoundError as ex:
             sys.stdout = old_stdout
             print("   Error:", str(ex))
 

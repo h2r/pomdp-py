@@ -41,13 +41,13 @@ def test_pomdp_file_conversion(pomdp_solve_path):
 def _check_pomdp_solve():
     pomdp_solve_path = os.getenv("POMDP_SOLVE_PATH")
     if pomdp_solve_path is None or not os.path.exists(pomdp_solve_path):
-        raise KeyError("To run this test, download pomdp-solve from "
-                       "https://www.pomdp.org/code/. Then, follow the "
-                       "instructions on this web page to compile this software. "
-                       "Finally, set the environment variable POMDP_SOLVE_PATH "
-                       "to be the path to the pomdp-solve binary file "
-                       "generated after compilation, likely located at "
-                       "/path/to/pomdp-solve-<version>/src/pomdp-solve ")
+        raise FileNotFoundError("To run this test, download pomdp-solve from "
+                                "https://www.pomdp.org/code/. Then, follow the "
+                                "instructions on this web page to compile this software. "
+                                "Finally, set the environment variable POMDP_SOLVE_PATH "
+                                "to be the path to the pomdp-solve binary file "
+                                "generated after compilation, likely located at "
+                                "/path/to/pomdp-solve-<version>/src/pomdp-solve ")
     return pomdp_solve_path
 
 def run():
