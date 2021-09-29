@@ -5,6 +5,7 @@ from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdpx_file
 import os
 
+description="testing conversion to .pomdpx file"
 
 def test_pomdpx_file_conversion(pomdpconvert_path):
     """
@@ -27,10 +28,22 @@ def test_pomdpx_file_conversion(pomdpconvert_path):
     # Remove file
     os.remove(filename)
 
+def _check_pomdpconvert():
+    pomdpconvert_path = os.getenv("POMDPCONVERT_PATH")
+    if pomdpconvert_path is None or not os.path.exists(pomdpconvert_path):
+        raise KeyError("To run this test, download sarsop from "
+                       "https://github.com/AdaCompNUS/sarsop. Then, follow the "
+                       "instructions on this web page to compile this software. "
+                       "Finally, set the environment variable POMDPCONVERT_PATH "
+                       "to be the path to the pomdpconvert binary file "
+                       "generated after compilation, likely located at "
+                       "/path/to/sarsop/src/pomdpconvert")
+    return pomdpconvert_path
+
+def run():
+    pomdpconvert_path = _check_pomdpconvert()
+    test_pomdpx_file_conversion(pomdpconvert_path)
+
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("To run test, do: %s <pomdpconvert-path>" % sys.argv[0])
-        print("Download pomdpconvert from https://github.com/AdaCompNUS/sarsop")
-        exit(1)
-    converter_path = sys.argv[1]
-    test_pomdpx_file_conversion(converter_path)
+    run()

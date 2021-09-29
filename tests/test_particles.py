@@ -15,7 +15,7 @@ def test_particles():
     particles = pomdp_py.Particles.from_histogram(pomdp_py.Histogram(random_dist), num_particles=int(1e6))
 
     for v in random_dist:
-        assert abs(particles[v] - random_dist[v]) <= 1e-3
+        assert abs(particles[v] - random_dist[v]) <= 2e-3
 
     counts = {}
     total = int(1e6)

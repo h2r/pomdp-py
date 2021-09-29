@@ -7,6 +7,7 @@ from pomdp_py.utils.interfaces.solvers import vi_pruning
 import os
 import io
 
+description="testing vi_pruning (pomdp-solve)"
 
 def test_vi_pruning(pomdp_solve_path, return_policy_graph=True):
     print("[testing] test_vi_pruning")
@@ -50,11 +51,21 @@ def test_vi_pruning(pomdp_solve_path, return_policy_graph=True):
     assert got_high_reward, "Should have gotten high reward. Failed."
     print("Pass.")
 
+def _check_pomdp_solve():
+    pomdp_solve_path = os.getenv("POMDP_SOLVE_PATH")
+    if pomdp_solve_path is None or not os.path.exists(pomdp_solve_path):
+        raise KeyError("To run this test, download pomdp-solve from "
+                       "https://www.pomdp.org/code/. Then, follow the "
+                       "instructions on this web page to compile this software. "
+                       "Finally, set the environment variable POMDP_SOLVE_PATH "
+                       "to be the path to the pomdp-solve binary file "
+                       "generated after compilation, likely located at "
+                       "/path/to/pomdp-solve-<version>/src/pomdp-solve ")
+    return pomdp_solve_path
+
+def run():
+    pomdp_solve_path = _check_pomdp_solve()
+    test_vi_pruning(pomdp_solve_path, return_policy_graph=False)
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("To run test, do: %s <pomdp-solver-path>" % sys.argv[0])
-        print("Download pomdp-solve from https://www.pomdp.org/code/")
-        exit(1)
-    solver_path = sys.argv[1]
-    # test_vi_pruning(solver_path, return_policy_graph=True)
-    test_vi_pruning(solver_path, return_policy_graph=False)
+    run()
