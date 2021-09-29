@@ -1,6 +1,6 @@
 import pomdp_py
 from pomdp_problems.tiger.tiger_problem import TigerProblem
-from pomdp_problems.tiger.tiger_problem import State as TigerState
+from pomdp_problems.tiger.tiger_problem import TigerState
 import os
 import glob
 
