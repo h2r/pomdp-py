@@ -321,6 +321,7 @@ Total execution time = 0 hrs., 0 mins, 1.25 secs. (= 1.25 secs)
 [testing] simulating computed policy graph(step=7, action=open-right, observation=tiger-left, reward=10)
 [testing] simulating computed policy graph(step=8, action=listen, observation=tiger-left, reward=-1)
 [testing] simulating computed policy graph(step=9, action=listen, observation=tiger-left, reward=-1)
+Pass.
 ```
 ## Testing external solvers
 The purpose of some tests is to test external solvers using pomdp_py.
