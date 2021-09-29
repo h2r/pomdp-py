@@ -14,6 +14,7 @@ from pomdp_py.framework.basics cimport POMDP, State, Action, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution
 import collections
 import copy
+import hashlib
 
 cdef class OOPOMDP(POMDP):
     """
@@ -51,8 +52,12 @@ cdef class ObjectState(State):
                                 str(self.attributes))
 
     def __hash__(self):
+        """__hash__(self)
+        Hash the ObjectState.
+        For more efficient hashing for your specific domain, please overwrite this function."""
         if self._hashcache == -1:
-            self._hashcache = hash(frozenset(self.attributes.items()))
+            content = str(list(sorted(self.attributes.items()))).encode()
+            self._hashcache = int(str(int(hashlib.sha1(content).hexdigest(), 16))[:9])
         return self._hashcache
 
     def __eq__(self, other):
@@ -116,8 +121,12 @@ cdef class OOState(State):
             and self.object_states == other.object_states
 
     def __hash__(self):
+        """__hash__(self)
+        Hash the ObjectState.
+        For more efficient hashing for your specific domain, please overwrite this function."""
         if self._hashcache == -1:
-            self._hashcache = hash(frozenset(self.object_states.items()))
+            content = str(list(sorted(self.object_states.items()))).encode()
+            self._hashcache = int(str(int(hashlib.sha1(content).hexdigest(), 16))[:9])
         return self._hashcache
 
     def __getitem__(self, index):
