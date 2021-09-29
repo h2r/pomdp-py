@@ -9,7 +9,7 @@ import io
 
 description="testing sarsop"
 
-def test_sarsop(pomdpsol_path, logfile=None):
+def test_sarsop(pomdpsol_path):
     print("[testing] test_sarsop")
     tiger = make_tiger()
 
@@ -18,12 +18,13 @@ def test_sarsop(pomdpsol_path, logfile=None):
     policy = sarsop(tiger.agent, pomdpsol_path, discount_factor=0.95,
                     timeout=10, memory=20, precision=0.000001,
                     remove_generated_files=True,
-                    logfile=logfile)
+                    logfile="test_sarsop.log")
 
     assert str(policy.plan(tiger.agent)) == "listen",\
         "Bad solution. Test failed."
 
     assert os.path.exists("test_sarsop.log")
+    os.remove("test_sarsop.log")
 
     # Plan with the graph for several steps. So we should get high rewards
     # eventually in the tiger domain.
@@ -61,10 +62,10 @@ def _check_pomdpsol():
                        "/path/to/sarsop/src/pomdpsol")
     return pomdpsol_path
 
-def run(logfile=None):
+def run():
     pomdpsol_path = _check_pomdpsol()
-    test_sarsop(pomdpsol_path, logfile=logfile)
+    test_sarsop(pomdpsol_path)
 
 
 if __name__ == "__main__":
-    run(logfile="test_sarsop.log")
+    run()
