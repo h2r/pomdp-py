@@ -18,6 +18,12 @@ def test_hashing_pickling():
     assert hash(objstate2.copy()) == hash(objstate2)
     assert hash(objstate2.copy()) == hash(objstate2.copy())
 
+    objstate3 = objstate1.copy()
+    assert hash(objstate3) == hash(objstate1)
+    objstate3["color"] = "green"
+    assert hash(objstate3) != hash(objstate1)
+    assert objstate3 != objstate1
+
     oos1 = pomdp_py.OOState({1:objstate1, 2:objstate2})
     assert hash(oos1.copy()) == hash(oos1)
 

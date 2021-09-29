@@ -74,6 +74,7 @@ cdef class ObjectState(State):
         """__setitem__(self, attr, value)
         Sets the attribute `attr` to the given value."""
         self.attributes[attr] = value
+        self._hashcache = -1
 
     def __len__(self):
         return len(self.attributes)
@@ -88,6 +89,11 @@ cdef class OOState(State):
 
     """
     State that can be factored by objects, that is, to ObjectState(s).
+
+    Note: to change the state of an object, you can use set_object_state.  Do
+    not directly assign the object state by e.g. oostate.object_states[objid] =
+    object_state, because it will cause the hashcode to be incorrect in the
+    oostate after the change.
 
     __init__(self, object_states)
     """
@@ -145,6 +151,7 @@ cdef class OOState(State):
         """
         # Deprecation Warning: set_object_state is not valid because OOState is not mutable.
         self.object_states[objid] = object_state
+        self._hashcache = -1
 
     def get_object_class(self, objid):
         """get_object_class(self, objid)
