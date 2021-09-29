@@ -49,14 +49,6 @@ cdef class Histogram(GenerativeDistribution):
         Sets probability of value to `prob`."""
         self._histogram[value] = prob
 
-    def __hash__(self):
-        if len(self._histogram) == 0:
-            return hash(0)
-        else:
-            # if the domain is large, a random state would differentiate enough
-            value = self.random()
-            return hash(self._histogram[value])
-
     def __eq__(self, other):
         if not isinstance(other, Histogram):
             return False
