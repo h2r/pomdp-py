@@ -12,9 +12,9 @@ of objects increases. See :cite:`wandzel2019multi`."""
 
 from pomdp_py.framework.basics cimport POMDP, State, Action, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution
+from pomdp_py.utils.cython_utils cimport det_dict_hash
 import collections
 import copy
-import hashlib
 
 cdef class OOPOMDP(POMDP):
     """
@@ -56,8 +56,7 @@ cdef class ObjectState(State):
         Hash the ObjectState.
         For more efficient hashing for your specific domain, please overwrite this function."""
         if self._hashcache == -1:
-            content = str(list(sorted(self.attributes.items()))).encode()
-            self._hashcache = int(str(int(hashlib.sha1(content).hexdigest(), 16))[:9])
+            self._hashcache = det_dict_hash(self.attributes)
         return self._hashcache
 
     def __eq__(self, other):
@@ -125,8 +124,7 @@ cdef class OOState(State):
         Hash the ObjectState.
         For more efficient hashing for your specific domain, please overwrite this function."""
         if self._hashcache == -1:
-            content = str(list(sorted(self.object_states.items()))).encode()
-            self._hashcache = int(str(int(hashlib.sha1(content).hexdigest(), 16))[:9])
+            self._hashcache = det_dict_hash(self.object_states)
         return self._hashcache
 
     def __getitem__(self, index):

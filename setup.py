@@ -24,6 +24,7 @@ def build_extensions(pkg_name, major_submodules):
 
 extensions = build_extensions("pomdp_py", ["framework",
                                            "algorithms",
+                                           "utils",
                                            "representations.distribution",
                                            "representations.belief"])
 extensions += [
