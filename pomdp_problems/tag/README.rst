@@ -9,4 +9,6 @@ For description, see:
 * `DESPOT: Online POMDP Planning with Regularization <https://papers.nips.cc/paper/5189-despot-online-pomdp-planning-with-regularization.pdf>`_.
   This includes "Laser Tag", an extension to original Tag.
 
-**TODO**
+.. code-block::
+
+   python -m pomdp_py -r tag

@@ -1,9 +1,12 @@
-"""
-Utility functions making it easier to debug POMDP planning.
+"""This module contains utility functions making it easier to debug POMDP
+planning.
 
-The core functionality is incorporated into the TreeDebugger.
-It is designed for ease of use during a pdb or ipdb debugging
-session. Here is a minimal example usage:
+TreeDebugger
+************
+
+The core debugging functionality for POMCP/POUCT search trees is incorporated
+into the TreeDebugger.  It is designed for ease of use during a :code:`pdb` or
+:code:`ipdb` debugging session. Here is a minimal example usage:
 
 .. code-block:: python
 
@@ -41,6 +44,7 @@ When the program executes, you enter the pdb debugger
     │    │    ├─── ₂open-right⟶_QNodePP(n=121, v=-79.970)
     │    │    └─── ₃stay⟶_QNodePP(n=299, v=-60.744)
     ... # prints up to depth 1
+
 """
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
@@ -49,16 +53,6 @@ from pomdp_py.utils import typ, similar, special_char
 SIMILAR_THRESH = 0.6
 DEFAULT_MARK_COLOR = "blue"
 MARKED = {}  # tracks marked nodes on tree
-
-def sorted_by_str(enumerable):
-    return sorted(enumerable, key=lambda n: str(n))
-
-def interpret_color(colorstr):
-    if colorstr.lower() in typ.colors:
-        return eval("typ.{}".format(colorstr))
-    else:
-        raise ValueError("Invalid color: {};\n"
-                         "The available ones are {}".format(colorstr, typ.colors))
 
 def _node_pp(node, e=None, p=None, o=None):
     # We want to return the node, but we don't want to print it on pdb with
@@ -690,3 +684,13 @@ class TreeDebugger:
                 else:
                     next_depth = depth + 1
                 TreeDebugger._tree_stats_helper(root[c], next_depth, stats, max_depth=max_depth)
+
+def sorted_by_str(enumerable):
+    return sorted(enumerable, key=lambda n: str(n))
+
+def interpret_color(colorstr):
+    if colorstr.lower() in typ.colors:
+        return eval("typ.{}".format(colorstr))
+    else:
+        raise ValueError("Invalid color: {};\n"
+                         "The available ones are {}".format(colorstr, typ.colors))

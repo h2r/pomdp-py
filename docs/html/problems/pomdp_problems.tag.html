@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_problems.tag package &#8212; pomdp_py 1.0 documentation</title>
+    <title>Tag &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,6 +16,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_problems.tag.agent package" href="pomdp_problems.tag.agent.html" />
+    <link rel="prev" title="Load/Unload" href="pomdp_problems.load_unload.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -36,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -53,8 +55,14 @@
 
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">pomdp_problems.tag package</a><ul>
-<li><a class="reference internal" href="#tag">Tag</a></li>
+<li><a class="reference internal" href="#">Tag</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tag.constants">pomdp_problems.tag.constants module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tag.example_worlds">pomdp_problems.tag.example_worlds module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tag.experiment">pomdp_problems.tag.experiment module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tag.problem">pomdp_problems.tag.problem module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tag">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -65,12 +73,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">problems</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_problems.html">pomdp_problems package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">Multi-Object Search (MOS) Task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">RockSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">Tiger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.light_dark.html">Light-Dark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.load_unload.html">Load/Unload</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Tag</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -86,6 +105,12 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pomdp_problems</a><ul>
+  <li><a href="pomdp_problems.html">pomdp_problems package</a><ul>
+      <li>Previous: <a href="pomdp_problems.load_unload.html" title="previous chapter">Load/Unload</a></li>
+      <li>Next: <a href="pomdp_problems.tag.agent.html" title="next chapter">pomdp_problems.tag.agent package</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -123,10 +148,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-pomdp_problems.tag">
-<span id="pomdp-problems-tag-package"></span><h1>pomdp_problems.tag package<a class="headerlink" href="#module-pomdp_problems.tag" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="tag">
-<h2>Tag<a class="headerlink" href="#tag" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="tag">
+<h1>Tag<a class="headerlink" href="#tag" title="Permalink to this headline">¶</a></h1>
 <p>For description, see:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://www.fore.robot.cc/papers/Pineau03a.pdf">Point-based value iteration: An anytime algorithm for POMDPs</a>
@@ -134,7 +157,100 @@ The original Tag problem.</p></li>
 <li><p><a class="reference external" href="https://papers.nips.cc/paper/5189-despot-online-pomdp-planning-with-regularization.pdf">DESPOT: Online POMDP Planning with Regularization</a>.
 This includes “Laser Tag”, an extension to original Tag.</p></li>
 </ul>
-<p><strong>Not yet implemented</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pomdp_py</span> <span class="o">-</span><span class="n">r</span> <span class="n">tag</span>
+</pre></div>
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pomdp_problems.tag.agent.html">pomdp_problems.tag.agent package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.agent.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.agent.html#module-pomdp_problems.tag.agent.agent">pomdp_problems.tag.agent.agent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.agent.html#module-pomdp_problems.tag.agent">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pomdp_problems.tag.domain.html">pomdp_problems.tag.domain package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.domain.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.domain.html#module-pomdp_problems.tag.domain.action">pomdp_problems.tag.domain.action module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.domain.html#module-pomdp_problems.tag.domain.observation">pomdp_problems.tag.domain.observation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.domain.html#module-pomdp_problems.tag.domain.state">pomdp_problems.tag.domain.state module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.domain.html#module-pomdp_problems.tag.domain">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pomdp_problems.tag.env.html">pomdp_problems.tag.env package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.env.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.env.html#module-pomdp_problems.tag.env.env">pomdp_problems.tag.env.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.env.html#module-pomdp_problems.tag.env.visual">pomdp_problems.tag.env.visual module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.env.html#module-pomdp_problems.tag.env">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pomdp_problems.tag.models.html">pomdp_problems.tag.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tag.models.components.html">pomdp_problems.tag.models.components package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tag.models.components.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tag.models.components.html#module-pomdp_problems.tag.models.components.grid_map">pomdp_problems.tag.models.components.grid_map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tag.models.components.html#module-pomdp_problems.tag.models.components.motion_policy">pomdp_problems.tag.models.components.motion_policy module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tag.models.components.html#module-pomdp_problems.tag.models.components">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#module-pomdp_problems.tag.models.observation_model">pomdp_problems.tag.models.observation_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#module-pomdp_problems.tag.models.policy_model">pomdp_problems.tag.models.policy_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#module-pomdp_problems.tag.models.reward_model">pomdp_problems.tag.models.reward_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#module-pomdp_problems.tag.models.transition_model">pomdp_problems.tag.models.transition_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tag.models.html#module-pomdp_problems.tag.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pomdp_problems.tag.constants">
+<span id="pomdp-problems-tag-constants-module"></span><h2>pomdp_problems.tag.constants module<a class="headerlink" href="#module-pomdp_problems.tag.constants" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pomdp_problems.tag.example_worlds">
+<span id="pomdp-problems-tag-example-worlds-module"></span><h2>pomdp_problems.tag.example_worlds module<a class="headerlink" href="#module-pomdp_problems.tag.example_worlds" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pomdp_problems.tag.experiment">
+<span id="pomdp-problems-tag-experiment-module"></span><h2>pomdp_problems.tag.experiment module<a class="headerlink" href="#module-pomdp_problems.tag.experiment" title="Permalink to this headline">¶</a></h2>
+<p>Simple experiment to get mean</p>
+<dl class="function">
+<dt id="pomdp_problems.tag.experiment.trial">
+<code class="sig-prename descclassname">pomdp_problems.tag.experiment.</code><code class="sig-name descname">trial</code><span class="sig-paren">(</span><em class="sig-param">worldstr</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tag/experiment.html#trial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tag.experiment.trial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.tag.experiment.main">
+<code class="sig-prename descclassname">pomdp_problems.tag.experiment.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tag/experiment.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tag.experiment.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_problems.tag.problem">
+<span id="pomdp-problems-tag-problem-module"></span><h2>pomdp_problems.tag.problem module<a class="headerlink" href="#module-pomdp_problems.tag.problem" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pomdp_problems.tag.problem.TagProblem">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tag.problem.</code><code class="sig-name descname">TagProblem</code><span class="sig-paren">(</span><em class="sig-param">init_robot_position</em>, <em class="sig-param">init_target_position</em>, <em class="sig-param">grid_map</em>, <em class="sig-param">pr_stay=0.2</em>, <em class="sig-param">small=1</em>, <em class="sig-param">big=10</em>, <em class="sig-param">prior='uniform'</em>, <em class="sig-param">belief_type='hist'</em>, <em class="sig-param">num_particles=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tag/problem.html#TagProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tag.problem.TagProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.tag.problem.solve">
+<code class="sig-prename descclassname">pomdp_problems.tag.problem.</code><code class="sig-name descname">solve</code><span class="sig-paren">(</span><em class="sig-param">problem</em>, <em class="sig-param">planner_type='pouct'</em>, <em class="sig-param">max_depth=10</em>, <em class="sig-param">discount_factor=0.99</em>, <em class="sig-param">planning_time=1.0</em>, <em class="sig-param">exploration_const=1000</em>, <em class="sig-param">visualize=True</em>, <em class="sig-param">max_time=120</em>, <em class="sig-param">max_steps=500</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tag/problem.html#solve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tag.problem.solve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.tag.problem.main">
+<code class="sig-prename descclassname">pomdp_problems.tag.problem.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tag/problem.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.tag.problem.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_problems.tag">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.tag" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -146,7 +262,7 @@ This includes “Laser Tag”, an extension to original Tag.</p></li>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

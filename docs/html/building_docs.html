@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Building Documentations &#8212; pomdp_py 1.0 documentation</title>
+    <title>Building Documentations &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -36,13 +36,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -66,12 +66,12 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -176,6 +176,14 @@ Here we explain steps to build documentations from source, that is, to generate 
 <p>This outputs to <code class="code docutils literal notranslate"><span class="pre">pomdp-py/docs/html</span></code></p>
 </li>
 </ol>
+<p>Note that when creating the documentation for a problem under <code class="code docutils literal notranslate"><span class="pre">pomdp_problems</span></code>,
+you may want to re-use the README file on github for the documentation. To do that,
+first create a read-me file at <code class="code docutils literal notranslate"><span class="pre">pomdp_problems/&lt;problem&gt;/README.rst</span></code> with desirable
+content that describes the problem. Then, include this read-me file at the top of the
+generated <code class="code docutils literal notranslate"><span class="pre">pomdp_problems.&lt;problem&gt;.rst</span></code>, like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">include</span><span class="p">::</span> <span class="o">../../../</span><span class="n">pomdp_problems</span><span class="o">/&lt;</span><span class="n">problem</span><span class="o">&gt;/</span><span class="n">README</span><span class="o">.</span><span class="n">rst</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -187,7 +195,7 @@ Here we explain steps to build documentations from source, that is, to generate 
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -38,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -69,7 +69,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -83,7 +83,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -206,31 +206,20 @@ in the histogram</p>
 <dl class="class">
 <dt id="pomdp_py.representations.distribution.particles.Particles">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.particles.</code><code class="sig-name descname">Particles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
-<dl class="method">
-<dt id="pomdp_py.representations.distribution.particles.Particles.__getitem__">
-<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the probability of <cite>value</cite>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pomdp_py.representations.distribution.particles.Particles.__setitem__">
-<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em>, <em class="sig-param">prob</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.__setitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets probability of value to <cite>prob</cite>.
-Assume that value is between 0 and 1</p>
-</dd></dl>
-
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.representations.distribution.particles.WeightedParticles</span></code></a></p>
+<p>Particles is a set of unweighted particles; This set of particles represent
+a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span>. Each particle takes on a specific value of <span class="math notranslate nohighlight">\(X\)</span>.</p>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.add">
 <code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">particle</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a particle.</p>
+<dd><p>particle: just a value</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.from_histogram">
-<code class="sig-name descname">from_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">histogram</em>, <em class="sig-param">num_particles=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a Histogram distribution <cite>histogram</cite>, return
-a particle representation of it, which is an approximation.</p>
+<code class="sig-name descname">from_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a pomdp_py.Histogram return a particle representation of it,
+which is an approximation</p>
 </dd></dl>
 
 <dl class="method">
@@ -243,25 +232,95 @@ Or generally, it could be any function.</p>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.get_histogram">
 <code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.get_histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary from value to probability of the histogram</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pomdp_py.representations.distribution.particles.Particles.mpe">
-<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">hist=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.mpe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose a particle that is most likely to be sampled.</p>
+<dd><p>Returns a mapping from value to probability, normalized.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pomdp_py.representations.distribution.particles.Particles.particles">
 <code class="sig-name descname">particles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.particles" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>For unweighted particles, the particles are just values.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.random">
-<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.random" title="Permalink to this definition">¶</a></dt>
-<dd><p>Randomly choose a particle</p>
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Samples a value based on the particles</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.particles.</code><code class="sig-name descname">WeightedParticles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
+<p>Represents a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span> with weighted particles, each is a
+tuple (value, weight). “value” means a value for the random variable X. If
+multiple values are present for the same value, will interpret the
+probability at X=x as the average of those weights.</p>
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__">
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <cite>value</cite>; normalized</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.__setitem__">
+<code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The particle belief does not support assigning an exact probability to a value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.add">
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">particle</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>particle: (value, weight) tuple</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.condense">
+<code class="sig-name descname">condense</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.condense" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new set of weighted particles with unique values
+and weights aggregated (taken average).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram">
+<code class="sig-name descname">from_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a pomdp_py.Histogram return a particle representation of it,
+which is an approximation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram">
+<code class="sig-name descname">get_histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a mapping from value to probability, normalized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.mpe">
+<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.mpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the variable that has the highest probability.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.particles">
+<code class="sig-name descname">particles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.particles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.random">
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Samples a value based on the particles</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.values">
+<code class="sig-name descname">values</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pomdp_py.representations.distribution.particles.WeightedParticles.weights">
+<code class="sig-name descname">weights</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -343,7 +402,7 @@ a Gaussian distribution to have a given probability.</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

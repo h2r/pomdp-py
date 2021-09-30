@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Examples &#8212; pomdp_py 1.0 documentation</title>
+    <title>Examples &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tiger Problem" href="examples.tiger.html" />
+    <link rel="next" title="Tiger" href="examples.tiger.html" />
     <link rel="prev" title="Installation" href="installation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -38,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -72,12 +72,12 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -94,7 +94,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
-      <li>Next: <a href="examples.tiger.html" title="next chapter">Tiger Problem</a></li>
+      <li>Next: <a href="examples.tiger.html" title="next chapter">Tiger</a></li>
   </ul></li>
 </ul>
 </div>
@@ -135,7 +135,7 @@
   <div class="section" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
 <p>In this document, we discuss some examples of using <cite>pomdp_py</cite> to define POMDP problems and solve them using <a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a>. We will go over two examples: the simpler Tiger problem, and the more complicated but interesting Multi-Object Search (MOS) problem. The former represents how one could quickly implement a simple POMDP, and the latter represents how one may structure their project (as a convention) when using <cite>pomdp_py</cite> for more complicated domains.</p>
-<p>We refer the reader to the following problems that have been implemented:</p>
+<p>Several domains have been implemented:</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -151,14 +151,18 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.rocksample.html#module-pomdp_problems.rocksample.rocksample_problem" title="pomdp_problems.rocksample.rocksample_problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.rocksample_problem</span></code></a></p></td>
 <td><p>RockSample(n,k) problem</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="problems/pomdp_problems.tag.html#module-pomdp_problems.tag" title="pomdp_problems.tag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.tag</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.load_unload.html#module-pomdp_problems.load_unload" title="pomdp_problems.load_unload"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.load_unload</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
-<p>There are a number of problems that we hope to implement. There are even more examples <a class="reference external" href="http://www.pomdp.org/examples/">here</a>.</p>
+<p>Some problems that we hope to implement are below. There are even more examples <a class="reference external" href="http://www.pomdp.org/examples/">here</a>. Contribution is welcomed.</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="problems/pomdp_problems.light_dark.html"><span class="doc">pomdp_problems.light_dark package</span></a></p></li>
-<li><p><a class="reference internal" href="problems/pomdp_problems.load_unload.html"><span class="doc">pomdp_problems.load_unload package</span></a></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.light_dark.html"><span class="doc">Light-Dark</span></a></p></li>
 <li><p><a class="reference internal" href="problems/pomdp_problems.maze.html"><span class="doc">pomdp_problems.maze package</span></a></p></li>
-<li><p><a class="reference internal" href="problems/pomdp_problems.tag.html"><span class="doc">pomdp_problems.tag package</span></a></p></li>
 </ul>
 <p>In addition, the interfaces in <cite>pomdp_py</cite> are general enough to be extended to e.g. learning, multi-agent POMDPs; see <a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a>. <cite>Contributions are always welcomed!</cite></p>
 <div class="section" id="tiger">
@@ -166,7 +170,7 @@
 <p>This example describes how one could quickly implement a simple POMDP.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.tiger.html">Tiger Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.tiger.html">Tiger</a></li>
 </ul>
 </div>
 </div>
@@ -189,7 +193,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

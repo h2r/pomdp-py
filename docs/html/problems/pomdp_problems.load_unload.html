@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_problems.load_unload package &#8212; pomdp_py 1.0 documentation</title>
+    <title>Load/Unload &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,6 +16,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tag" href="pomdp_problems.tag.html" />
+    <link rel="prev" title="pomdp_problems.light_dark.models package" href="pomdp_problems.light_dark.models.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -36,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -53,8 +55,10 @@
 
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">pomdp_problems.load_unload package</a><ul>
-<li><a class="reference internal" href="#load-unload-problem">Load/Unload Problem</a></li>
+<li><a class="reference internal" href="#">Load/Unload</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.load_unload.load_unload">pomdp_problems.load_unload.load_unload module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.load_unload">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -65,12 +69,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">problems</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_problems.html">pomdp_problems package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">Multi-Object Search (MOS) Task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">RockSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">Tiger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.light_dark.html">Light-Dark</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Load/Unload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tag.html">Tag</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -86,6 +101,12 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pomdp_problems</a><ul>
+  <li><a href="pomdp_problems.html">pomdp_problems package</a><ul>
+      <li>Previous: <a href="pomdp_problems.light_dark.models.html" title="previous chapter">pomdp_problems.light_dark.models package</a></li>
+      <li>Next: <a href="pomdp_problems.tag.html" title="next chapter">Tag</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -123,10 +144,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-pomdp_problems.load_unload">
-<span id="pomdp-problems-load-unload-package"></span><h1>pomdp_problems.load_unload package<a class="headerlink" href="#module-pomdp_problems.load_unload" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="load-unload-problem">
-<h2>Load/Unload Problem<a class="headerlink" href="#load-unload-problem" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="load-unload">
+<h1>Load/Unload<a class="headerlink" href="#load-unload" title="Permalink to this headline">¶</a></h1>
 <p>Problem originally introduced in <a class="reference external" href="https://arxiv.org/pdf/1301.6720.pdf">Solving POMDPs by Searching the Space of Finite Policies</a></p>
 <p><cite>Quoting from the original paper on problem description</cite>:</p>
 <blockquote>
@@ -137,7 +156,298 @@
 <img alt="Load/Unload Problem." src="https://i.imgur.com/3OYqqko.png" />
 <p class="caption"><span class="caption-text">Load/Unload problem</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
-<p><strong>Not yet implemented</strong></p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pomdp_problems.load_unload.load_unload">
+<span id="pomdp-problems-load-unload-load-unload-module"></span><h2>pomdp_problems.load_unload.load_unload module<a class="headerlink" href="#module-pomdp_problems.load_unload.load_unload" title="Permalink to this headline">¶</a></h2>
+<p>The load unload problem. An agent is placed on a one dimensional grid world
+and is tasked with loading itself up on the right side of the world and
+unloading on the left. The agent can observe whether or not it is in the load or
+unload block but can not tell its exact location of whether it is loaded or
+unloaded. Therefore the agent must maintain belief about it’s location and load
+status.</p>
+<p>States are defined by the location of the agent and whether or not it is loaded
+Actions: “move-left”, “move-right”
+Rewards:</p>
+<blockquote>
+<div><p>+100 for moving into the unload block while loaded
+-1 otherwise</p>
+</div></blockquote>
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUState">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUState</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">loaded</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUAction">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUAction</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUObservation">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUObservation</code><span class="sig-paren">(</span><em class="sig-param">obs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUObservation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUObservation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUObservationModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUObservationModel</code><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUObservationModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
+<p>This problem is small enough for the probabilities to be directly given
+externally</p>
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUObservationModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observation</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – the observation <span class="math notranslate nohighlight">\(o\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUObservationModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns observation randomly sampled according to the
+distribution of this observation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUObservationModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most likely observation</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUTransitionModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUTransitionModel</code><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<p>This problem is small enough for the probabilities to be directly given
+externally</p>
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUTransitionModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUTransitionModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns next state randomly sampled according to the
+distribution of this transition model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUTransitionModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most likely next state</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LURewardModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LURewardModel</code><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LURewardModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LURewardModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LURewardModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">reward</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LURewardModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LURewardModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reward</strong> (<em>float</em>) – the reward <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LURewardModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LURewardModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LURewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns reward randomly sampled according to the
+distribution of this reward model. This is required,
+i.e. assumed to be implemented for a reward model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the reward <span class="math notranslate nohighlight">\(r\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LURewardModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LURewardModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LURewardModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most likely reward</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LUPolicyModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LUPolicyModel</code><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUPolicyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUPolicyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RandomRollout" title="pomdp_py.algorithms.po_uct.RandomRollout"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RandomRollout</span></code></a></p>
+<p>This is an extremely dumb policy model; To keep consistent
+with the framework.</p>
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUPolicyModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUPolicyModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUPolicyModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\pi(a|s)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+<li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\pi(a|s)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUPolicyModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUPolicyModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUPolicyModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns action randomly sampled according to the
+distribution of this policy model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the action <span class="math notranslate nohighlight">\(a\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action">Action</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUPolicyModel.argmax">
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUPolicyModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUPolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most likely reward</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_problems.load_unload.load_unload.LUPolicyModel.get_all_actions">
+<code class="sig-name descname">get_all_actions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LUPolicyModel.get_all_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LUPolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a set of all possible actions, if feasible.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_problems.load_unload.load_unload.LoadUnloadProblem">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">LoadUnloadProblem</code><span class="sig-paren">(</span><em class="sig-param">init_state</em>, <em class="sig-param">init_belief</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#LoadUnloadProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.LoadUnloadProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.load_unload.load_unload.generate_random_state">
+<code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">generate_random_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#generate_random_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.generate_random_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.load_unload.load_unload.generate_init_belief">
+<code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">generate_init_belief</code><span class="sig-paren">(</span><em class="sig-param">num_particles</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#generate_init_belief"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.generate_init_belief" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.load_unload.load_unload.test_planner">
+<code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">test_planner</code><span class="sig-paren">(</span><em class="sig-param">load_unload_problem</em>, <em class="sig-param">planner</em>, <em class="sig-param">nsteps=3</em>, <em class="sig-param">discount=0.95</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#test_planner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.test_planner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pomdp_problems.load_unload.load_unload.main">
+<code class="sig-prename descclassname">pomdp_problems.load_unload.load_unload.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/load_unload/load_unload.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.load_unload.load_unload.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_problems.load_unload">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.load_unload" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -149,7 +459,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

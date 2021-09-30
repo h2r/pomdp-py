@@ -2,13 +2,15 @@ from pomdp_py.framework.basics cimport GenerativeDistribution
 import random
 
 cdef class WeightedParticles(GenerativeDistribution):
+    """
+    Represents a distribution :math:`\Pr(X)` with weighted particles, each is a
+    tuple (value, weight). "value" means a value for the random variable X. If
+    multiple values are present for the same value, will interpret the
+    probability at X=x as the average of those weights.
+    """
     def __init__(self, list particles, str approx_method="none", distance_func=None):
         """
-        Represents a distribution Pr(X) with weighted particles
-        'value' means a value for the random variable X. If multiple
-        values are present for the same value, will interpret the
-        probability at X=x as the average of those weights.
-
+        __init__(self, list particles, str approx_method="none", distance_func=None)
         Args:
             particles (list): List of (value, weight) tuples.
                 The weight represents the likelihood that the
@@ -147,11 +149,8 @@ cdef class WeightedParticles(GenerativeDistribution):
 
 
 cdef class Particles(WeightedParticles):
-    """
-    Particles is a set of unweighted particles; Or equivalently,
-    a set of particles with the same weight. This set of particles
-    represent a distribution Pr(X). Each particle takes on a specific
-    value of X.
+    """ Particles is a set of unweighted particles; This set of particles represent
+    a distribution :math:`\Pr(X)`. Each particle takes on a specific value of :math:`X`.
     """
     def __init__(self, particles, **kwargs):
         """

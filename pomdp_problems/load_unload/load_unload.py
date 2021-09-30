@@ -1,16 +1,16 @@
-"""
-The load unload problem is as follows: An agent is placed on a one dimensional
-grid world and is tasked with loading itself up on the right side of the world
-and unloading on the left. The agent can observe whether or not it is in the
-load or unload block but can not tell its exact location of whether it is loaded
-or unloaded. Therefore the agent must maintain belief about it's location and
-load status.
+"""The load unload problem. An agent is placed on a one dimensional grid world
+and is tasked with loading itself up on the right side of the world and
+unloading on the left. The agent can observe whether or not it is in the load or
+unload block but can not tell its exact location of whether it is loaded or
+unloaded. Therefore the agent must maintain belief about it's location and load
+status.
 
 States are defined by the location of the agent and whether or not it is loaded
 Actions: "move-left", "move-right"
 Rewards:
     +100 for moving into the unload block while loaded
     -1 otherwise
+
 """
 
 import pomdp_py

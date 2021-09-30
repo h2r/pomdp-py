@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.utils.typ &#8212; pomdp_py 1.3.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">pomdp_problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pomdp_py.utils.typ</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Utilties for typography, i.e. dealing with</span>
+<span class="sd">strings for the purpose of displaying them.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Colors on terminal https://stackoverflow.com/a/287944/2893053</span>
+<div class="viewcode-block" id="bcolors"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.bcolors">[docs]</a><span class="k">class</span> <span class="nc">bcolors</span><span class="p">:</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[97m&#39;</span>
+    <span class="n">CYAN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[96m&#39;</span>
+    <span class="n">MAGENTA</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[95m&#39;</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[94m&#39;</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[92m&#39;</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[93m&#39;</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[91m&#39;</span>
+    <span class="n">BOLD</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span>
+    <span class="n">ENDC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
+
+<div class="viewcode-block" id="bcolors.disable"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.disable">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">disable</span><span class="p">():</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">WHITE</span>   <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">CYAN</span>    <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">MAGENTA</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">BLUE</span>    <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">GREEN</span>   <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">YELLOW</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">RED</span>     <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span>    <span class="o">=</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="bcolors.s"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.s">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a string with color when shown on terminal.</span>
+<span class="sd">        `color` is a constant in `bcolors` class.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">color</span> <span class="o">+</span> <span class="n">content</span> <span class="o">+</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">ENDC</span></div></div>
+
+<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.info">[docs]</a><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">BLUE</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="note"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.note">[docs]</a><span class="k">def</span> <span class="nf">note</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="error"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.error">[docs]</a><span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="warning"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.warning">[docs]</a><span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="success"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.success">[docs]</a><span class="k">def</span> <span class="nf">success</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="bold"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.bold">[docs]</a><span class="k">def</span> <span class="nf">bold</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">BOLD</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">white</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">green</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+<div class="viewcode-block" id="cyan"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.cyan">[docs]</a><span class="k">def</span> <span class="nf">cyan</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">CYAN</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="magenta"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.magenta">[docs]</a><span class="k">def</span> <span class="nf">magenta</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">MAGENTA</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="blue"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.blue">[docs]</a><span class="k">def</span> <span class="nf">blue</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">BLUE</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="green"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.green">[docs]</a><span class="k">def</span> <span class="nf">green</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="yellow"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.yellow">[docs]</a><span class="k">def</span> <span class="nf">yellow</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="red"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.red">[docs]</a><span class="k">def</span> <span class="nf">red</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">RED</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="white"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.typ.white">[docs]</a><span class="k">def</span> <span class="nf">white</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bcolors</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">bcolors</span><span class="o">.</span><span class="n">WHITE</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;magenta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.algorithms.visual package &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_py.algorithms.visual package &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,13 +36,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -55,7 +55,7 @@
   <ul>
 <li><a class="reference internal" href="#">pomdp_py.algorithms.visual package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.algorithms.visual.visual">pomdp_py.algorithms.visual.visual module</a></li>
+<li><a class="reference internal" href="#pomdp-py-algorithms-visual-visual-module">pomdp_py.algorithms.visual.visual module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.visual">Module contents</a></li>
 </ul>
 </li>
@@ -67,12 +67,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -130,17 +130,8 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pomdp_py.algorithms.visual.visual">
-<span id="pomdp-py-algorithms-visual-visual-module"></span><h2>pomdp_py.algorithms.visual.visual module<a class="headerlink" href="#module-pomdp_py.algorithms.visual.visual" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree">
-<code class="sig-prename descclassname">pomdp_py.algorithms.visual.visual.</code><code class="sig-name descname">visualize_pouct_search_tree</code><span class="sig-paren">(</span><em class="sig-param">root</em>, <em class="sig-param">max_depth=1</em>, <em class="sig-param">visit_threshold=1</em>, <em class="sig-param">anonymize=False</em>, <em class="sig-param">anonymize_actions=False</em>, <em class="sig-param">anonymize_observations=False</em>, <em class="sig-param">output_file=None</em>, <em class="sig-param">use_dot=False</em>, <em class="sig-param">ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/visual/visual.html#visualize_pouct_search_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Visualize the given tree up to depth <cite>max_depth</cite>. Display nodes
-with number of visits &gt;= <cite>visit_threshold</cite>.</p>
-<p>If anonymize is True, will only display actions as a1,a2,… and observations
-as o1,o2,… .</p>
-</dd></dl>
-
+<div class="section" id="pomdp-py-algorithms-visual-visual-module">
+<h2>pomdp_py.algorithms.visual.visual module<a class="headerlink" href="#pomdp-py-algorithms-visual-visual-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pomdp_py.algorithms.visual">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.algorithms.visual" title="Permalink to this headline">¶</a></h2>
@@ -155,7 +146,7 @@ as o1,o2,… .</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

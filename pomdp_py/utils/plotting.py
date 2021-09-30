@@ -1,4 +1,4 @@
-# Plotting utilties
+"""Plotting utilties"""
 import matplotlib.pyplot as plt
 
 def plot_points(xvals, yvals, color=None,

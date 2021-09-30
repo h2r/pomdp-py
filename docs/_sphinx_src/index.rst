@@ -23,21 +23,23 @@ The code is available `on github <https://github.com/h2r/pomdp-py>`_. We welcome
 Getting Started
 ---------------
 * :doc:`installation`
-* :doc:`examples` (:doc:`examples.tiger`, :doc:`examples.mos`).
-  The Tiger example represents how one could quickly implement a simple POMDP; The Multi-Object Search domain represents how one may structure their project (as a convention) when using `pomdp_py` for more complicated domains.
+* :doc:`Examples <examples>`:
+
+  (1) :doc:`examples.tiger`: The Tiger domain shows how one could quickly implement a simple POMDP.
+  (2) :doc:`examples.mos` The Multi-Object Search domain is an example for how one may structure their project (as a convention) when using `pomdp_py` for more complicated domains.
 
 * :doc:`design_principles`
 * :doc:`existing_solvers`
 * :doc:`examples.external_solvers`
+* :doc:`Debugging <api/pomdp_py.utils.debugging>`
+* :doc:`What's New? <changelog>`
 
 Further
 -------
-* :doc:`design_principles`
-* :doc:`existing_solvers`
 * :doc:`extensions`
 * :doc:`other_libraries`
-* :doc:`simple_rl_integration`
 * :doc:`building_docs`
+* :doc:`simple_rl_integration`
 
 .. toctree::
    :maxdepth: 2
@@ -48,7 +50,7 @@ Further
    examples
    design_principles
    existing_solvers
-   extensions
+   What's New? <changelog>
 
 
 Citation

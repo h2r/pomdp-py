@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_problems.tiger.tiger_problem &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_problems.tiger.tiger_problem &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -36,13 +36,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -57,12 +57,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -156,6 +156,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">TreeDebugger</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -289,11 +290,10 @@
 <span class="sd">    with the framework.&quot;&quot;&quot;</span>
     <span class="c1"># A stay action can be added to test that POMDP solver is</span>
     <span class="c1"># able to differentiate information gathering actions.</span>
-    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">TigerAction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span>
-                                        <span class="s2">&quot;listen&quot;</span><span class="p">,</span> <span class="s2">&quot;stay&quot;</span><span class="p">}}</span>
+    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">TigerAction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}}</span>
 
 <div class="viewcode-block" id="PolicyModel.sample"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">()</span><span class="o">.</span><span class="n">random</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="PolicyModel.get_all_actions"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.get_all_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">PolicyModel</span><span class="o">.</span><span class="n">ACTIONS</span></div></div>
@@ -316,10 +316,28 @@
         <span class="n">env</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Environment</span><span class="p">(</span><span class="n">init_true_state</span><span class="p">,</span>
                                    <span class="n">TransitionModel</span><span class="p">(),</span>
                                    <span class="n">RewardModel</span><span class="p">())</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TigerProblem&quot;</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TigerProblem&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TigerProblem.create"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem.create">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="n">belief</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">obs_noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state (str): could be &#39;tiger-left&#39; or &#39;tiger-right&#39;; True state of the environment</span>
+<span class="sd">            belief (float): Initial belief that the target is on the left; Between 0-1.</span>
+<span class="sd">            obs_noise (float): Noise for the observation model (default 0.15)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_true_state</span> <span class="o">=</span> <span class="n">TigerState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">init_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">({</span><span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">):</span> <span class="n">belief</span><span class="p">,</span>
+                                          <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">):</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">belief</span><span class="p">})</span>
+        <span class="n">tiger_problem</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="p">(</span><span class="n">obs_noise</span><span class="p">,</span>  <span class="c1"># observation noise</span>
+                                     <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">)</span>
+        <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tiger_problem</span></div></div>
 
 
-<div class="viewcode-block" id="test_planner"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.test_planner">[docs]</a><span class="k">def</span> <span class="nf">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">planner</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="test_planner"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.test_planner">[docs]</a><span class="k">def</span> <span class="nf">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">planner</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">debug_tree</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs the action-feedback loop of Tiger problem POMDP</span>
 
@@ -330,6 +348,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">debug_tree</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">TreeDebugger</span>
+            <span class="n">dd</span> <span class="o">=</span> <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+            <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Belief: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">))</span>
@@ -377,12 +400,11 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** Testing POUCT **&quot;</span><span class="p">)</span>
     <span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
+                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">,</span>
+                           <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">pouct</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-    <span class="n">pomdp_py</span><span class="o">.</span><span class="n">visual</span><span class="o">.</span><span class="n">visualize_pouct_search_tree</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span>
-                                                <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">anonymize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span><span class="o">.</span><span class="n">pp</span>
 
     <span class="c1"># Reset agent belief</span>
     <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -391,12 +413,11 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;** Testing POMCP **&quot;</span><span class="p">)</span>
     <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Particles</span><span class="o">.</span><span class="n">from_histogram</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">num_particles</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
+                           <span class="n">num_sims</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                           <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">,</span>
+                           <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pbar_update_interval</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
     <span class="n">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">pomcp</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-    <span class="n">pomdp_py</span><span class="o">.</span><span class="n">visual</span><span class="o">.</span><span class="n">visualize_pouct_search_tree</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span>
-                                                <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">anonymize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+    <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span><span class="o">.</span><span class="n">pp</span></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -409,7 +430,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

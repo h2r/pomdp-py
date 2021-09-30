@@ -1,6 +1,3 @@
-pomdp_problems.multi\_object\_search package
-============================================
-
 Multi-Object Search (MOS) Task
 ******************************
 
@@ -23,14 +20,14 @@ instead of based on topological graph and room connectivity.
    ~pomdp_problems.multi_object_search.domain.action
    ~pomdp_problems.multi_object_search.domain.observation
    ~pomdp_problems.multi_object_search.models
-   ~pomdp_problems.multi_object_search.models.transition_model   
+   ~pomdp_problems.multi_object_search.models.transition_model
    ~pomdp_problems.multi_object_search.models.observation_model
    ~pomdp_problems.multi_object_search.models.reward_model
    ~pomdp_problems.multi_object_search.models.policy_model
    ~pomdp_problems.multi_object_search.models.components.sensor
-   ~pomdp_problems.multi_object_search.models.components.grid_map   
+   ~pomdp_problems.multi_object_search.models.components.grid_map
 
-   
+
 pomdp_problems.multi\_object\_search.problem module
 ---------------------------------------------------
 
@@ -50,6 +47,5 @@ pomdp_problems.multi\_object\_search.example\_worlds module
 .. toctree::
 
    pomdp_problems.multi_object_search.env
-   pomdp_problems.multi_object_search.domain   
+   pomdp_problems.multi_object_search.domain
    pomdp_problems.multi_object_search.models
-

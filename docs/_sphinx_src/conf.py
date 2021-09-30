@@ -16,15 +16,19 @@ sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../pomdp_py'))
 sys.path.insert(0, os.path.abspath('../../problems'))
 
+# get pomdp-py version
+from pkg_resources import get_distribution
+pomdp_py_version = get_distribution('pomdp_py').version
+
 
 # -- Project information -----------------------------------------------------
 
 project = 'pomdp_py'
-copyright = '2020, H2R@Brown'
+copyright = '2020-2021, H2R@Brown'
 author = 'Kaiyu Zheng'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = pomdp_py_version
 
 
 # -- General configuration ---------------------------------------------------
@@ -75,18 +79,18 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    'description': 'A framework to build and solve POMDP problems.',
+    'description': 'A framework to build and solve POMDP problems (v{}).'.format(pomdp_py_version),
     'logo': 'logo.png',
     'github_user': 'h2r',
     'github_repo': 'pomdp-py',
     'github_button': True,
+    'github_type': 'star',
     'sidebar_collapse': True,
     'fixed_sidebar': True,
     'donate_url': "paypal.me/zkytony/10",
     'extra_nav_links': {
         "H2R lab": "https://h2r.cs.brown.edu/",
         "Kaiyu's homepage": "http://kaiyuzh.me",
-        # "bigAI initiative": "http://bigai.cs.brown.edu/"
     },
     # Colors
     'narrow_sidebar_bg': "#330000",

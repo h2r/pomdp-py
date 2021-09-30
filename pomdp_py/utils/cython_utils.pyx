@@ -1,3 +1,5 @@
+"""Utility functions for Cython code."""
+
 import hashlib
 
 cpdef det_dict_hash(dct, keep=9):

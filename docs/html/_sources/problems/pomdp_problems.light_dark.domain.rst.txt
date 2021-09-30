@@ -1,6 +1,3 @@
-pomdp\_problems.light\_dark.domain package
-==========================================
-
 Submodules
 ----------
 

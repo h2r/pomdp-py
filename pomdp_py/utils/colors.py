@@ -1,4 +1,4 @@
-# Utilities for dealing with colors
+"""Utilities for dealing with colors"""
 
 import numpy as np
 import random

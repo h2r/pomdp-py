@@ -1,4 +1,4 @@
-# Misc python utilities
+"""Misc Python utilities"""
 from difflib import SequenceMatcher
 
 def remap(oldvalue, oldmin, oldmax, newmin, newmax):

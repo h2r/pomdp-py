@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_problems.multi_object_search.agent package &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_problems.multi_object_search.agent package &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,13 +36,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -66,12 +66,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -152,13 +152,13 @@
 type of State for this problem.</p>
 <dl class="method">
 <dt id="pomdp_problems.multi_object_search.agent.belief.MosOOBelief.mpe">
-<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/agent/belief.html#MosOOBelief.mpe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.agent.belief.MosOOBelief.mpe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mpe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">return_oostate=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/agent/belief.html#MosOOBelief.mpe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.agent.belief.MosOOBelief.mpe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns most likely state.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pomdp_problems.multi_object_search.agent.belief.MosOOBelief.random">
-<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/agent/belief.html#MosOOBelief.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.agent.belief.MosOOBelief.random" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">random</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">return_oostate=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/agent/belief.html#MosOOBelief.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.agent.belief.MosOOBelief.random" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a random state</p>
 </dd></dl>
 
@@ -207,7 +207,7 @@ Assumed to be 0 if robot id not in this dictionary.</p></li>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

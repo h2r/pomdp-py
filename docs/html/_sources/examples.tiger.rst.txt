@@ -1,5 +1,5 @@
-Tiger Problem
-*************
+Tiger
+*****
 
 This is a classic POMDP problem, introduced in :cite:`kaelbling1998planning`. The description of the tiger problem is as follows: (Quote from `POMDP:
 Introduction to Partially Observable Markov Decision Processes

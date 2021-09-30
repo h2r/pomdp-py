@@ -1,5 +1,5 @@
-problems
-========
+pomdp_problems
+==============
 
 .. toctree::
    :maxdepth: 4

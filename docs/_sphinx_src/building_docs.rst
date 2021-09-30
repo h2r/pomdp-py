@@ -52,3 +52,13 @@ Building docs for `pomdp_problems`
     make html
 
    This outputs to :code:`pomdp-py/docs/html`
+
+Note that when creating the documentation for a problem under :code:`pomdp_problems`,
+you may want to re-use the README file on github for the documentation. To do that,
+first create a read-me file at :code:`pomdp_problems/<problem>/README.rst` with desirable
+content that describes the problem. Then, include this read-me file at the top of the
+generated :code:`pomdp_problems.<problem>.rst`, like so:
+
+.. code-block::
+
+   .. include:: ../../../pomdp_problems/<problem>/README.rst

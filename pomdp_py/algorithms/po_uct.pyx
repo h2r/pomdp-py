@@ -23,9 +23,9 @@ A note on the exploration constant. Quote from :cite:`gusmao2012towards`:
 
 In the POMCP paper, they set this constant following:
 
-    "The exploration constant for POMCP was set to c = Rhi - Rlo,
+    "The exploration constant for POMCP was set to :math:`c = R_{hi} - R_{lo}`,
     where Rhi was the highest return achieved during sample runs of POMCP
-    with c = 0, and Rlo was the lowest return achieved during sample rollouts"
+    with :math:`c = 0`, and Rlo was the lowest return achieved during sample rollouts"
 
 It is then clear that the POMCP paper is indeed setting this constant
 based on prior knowledge. Note the difference between `sample runs` and
@@ -134,7 +134,8 @@ cdef class ActionPrior:
         and in DESPOT, this acts as a belief-based prior policy.
         For example, given certain state or history, only it
         is possible that only a subset of all actions is legal;
-        This is particularly true in the RockSample problem."""
+        This is useful when there is domain knowledge that can
+        be used as a heuristic for planning. """
         raise NotImplementedError
 
 
@@ -144,6 +145,8 @@ cdef class RolloutPolicy(PolicyModel):
         pass
 
 cdef class RandomRollout(RolloutPolicy):
+    """A rollout policy that chooses actions uniformly at random from the set of
+    possible actions."""
     cpdef Action rollout(self, State state, tuple history):
         """rollout(self, State state, tuple history=None)"""
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
@@ -168,7 +171,7 @@ cdef class POUCT(Planner):
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=1, value_init=0,
                  rollout_policy=RandomRollout(),
-                 action_prior=None)
+                 action_prior=None, show_progress=False, pbar_update_interval=5)
 
         Args:
             max_depth (int): Depth of the MCTS tree. Default: 5.

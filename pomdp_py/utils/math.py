@@ -1,4 +1,4 @@
-# Assorted utilities for math
+"""Assorted utilities for math"""
 import math
 import numpy as np
 

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_py &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_py package" href="pomdp_py.html" />
-    <link rel="prev" title="Use Case Extensions" href="../extensions.html" />
+    <link rel="prev" title="Changelog" href="../changelog.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -38,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -59,7 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -67,7 +67,7 @@
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -83,7 +83,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../extensions.html" title="previous chapter">Use Case Extensions</a></li>
+      <li>Previous: <a href="../changelog.html" title="previous chapter">Changelog</a></li>
       <li>Next: <a href="pomdp_py.html" title="next chapter">pomdp_py package</a></li>
   </ul></li>
 </ul>
@@ -133,7 +133,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.bsp.blqr">pomdp_py.algorithms.bsp.blqr module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.visual.visual">pomdp_py.algorithms.visual.visual module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp-py-algorithms-visual-visual-module">pomdp_py.algorithms.visual.visual module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html">pomdp_py.framework package</a><ul>
@@ -157,11 +157,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html">pomdp_py.utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.interfaces.html">pomdp_py.utils.interfaces package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.interfaces.html#module-pomdp_py.utils.interfaces.simple_rl">pomdp_py.utils.interfaces.simple_rl module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.debugging">pomdp_py.utils.debugging module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#treedebugger">TreeDebugger</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.util">pomdp_py.utils.util module</a></li>
 </ul>
 </li>
 </ul>
@@ -178,7 +177,7 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

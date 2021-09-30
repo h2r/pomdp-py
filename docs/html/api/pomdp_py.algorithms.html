@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.algorithms package &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_py.algorithms package &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -38,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -61,7 +61,7 @@
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.algorithms.bsp.blqr">pomdp_py.algorithms.bsp.blqr module</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.algorithms.visual.visual">pomdp_py.algorithms.visual.visual module</a></li>
+<li><a class="reference internal" href="#pomdp-py-algorithms-visual-visual-module">pomdp_py.algorithms.visual.visual module</a></li>
 </ul>
 </li>
 </ul>
@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -86,7 +86,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -258,9 +258,9 @@ the amount of exploration required.”</p>
 </div></blockquote>
 <p>In the POMCP paper, they set this constant following:</p>
 <blockquote>
-<div><p>“The exploration constant for POMCP was set to c = Rhi - Rlo,
+<div><p>“The exploration constant for POMCP was set to <span class="math notranslate nohighlight">\(c = R_{hi} - R_{lo}\)</span>,
 where Rhi was the highest return achieved during sample runs of POMCP
-with c = 0, and Rlo was the lowest return achieved during sample rollouts”</p>
+with <span class="math notranslate nohighlight">\(c = 0\)</span>, and Rlo was the lowest return achieved during sample rollouts”</p>
 </div></blockquote>
 <p>It is then clear that the POMCP paper is indeed setting this constant
 based on prior knowledge. Note the difference between <cite>sample runs</cite> and
@@ -284,7 +284,8 @@ In POMCP, this acts as a history-based prior policy,
 and in DESPOT, this acts as a belief-based prior policy.
 For example, given certain state or history, only it
 is possible that only a subset of all actions is legal;
-This is particularly true in the RockSample problem.</p>
+This is useful when there is domain knowledge that can
+be used as a heuristic for planning.</p>
 </dd></dl>
 
 </dd></dl>
@@ -347,6 +348,8 @@ belief.</p>
 <dt id="pomdp_py.algorithms.po_uct.RandomRollout">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">RandomRollout</code><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RandomRollout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RolloutPolicy</span></code></a></p>
+<p>A rollout policy that chooses actions uniformly at random from the set of
+possible actions.</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.po_uct.RandomRollout.rollout">
 <code class="sig-name descname">rollout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">State state</em>, <em class="sig-param">tuple history=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.RandomRollout.rollout" title="Permalink to this definition">¶</a></dt>
@@ -424,36 +427,6 @@ belief.</p>
 
 </dd></dl>
 
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.print_preferred_actions">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_preferred_actions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_preferred_actions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.print_preferred_actions_helper">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_preferred_actions_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_preferred_actions_helper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.print_tree">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_tree</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_tree" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.print_tree_helper">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">print_tree_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.print_tree_helper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.tree_stats">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">tree_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.tree_stats" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.algorithms.po_uct.tree_stats_helper">
-<code class="sig-prename descclassname">pomdp_py.algorithms.po_uct.</code><code class="sig-name descname">tree_stats_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.tree_stats_helper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-pomdp_py.algorithms.pomcp">
 <span id="pomdp-py-algorithms-pomcp-module"></span><h2>pomdp_py.algorithms.pomcp module<a class="headerlink" href="#module-pomdp_py.algorithms.pomcp" title="Permalink to this headline">¶</a></h2>
@@ -523,7 +496,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="#kaelbling1998planning" id="id10">[2]</a></p>
+domains</cite> <a class="bibtex reference internal" href="../index.html#kaelbling1998planning" id="id10">[2]</a></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.value_iteration.ValueIteration">
@@ -616,17 +589,8 @@ Reference: <a class="reference external" href="https://docs.scipy.org/doc/scipy/
 </dd></dl>
 
 </div>
-<div class="section" id="module-pomdp_py.algorithms.visual.visual">
-<span id="pomdp-py-algorithms-visual-visual-module"></span><h2>pomdp_py.algorithms.visual.visual module<a class="headerlink" href="#module-pomdp_py.algorithms.visual.visual" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree">
-<code class="sig-prename descclassname">pomdp_py.algorithms.visual.visual.</code><code class="sig-name descname">visualize_pouct_search_tree</code><span class="sig-paren">(</span><em class="sig-param">root</em>, <em class="sig-param">max_depth=1</em>, <em class="sig-param">visit_threshold=1</em>, <em class="sig-param">anonymize=False</em>, <em class="sig-param">anonymize_actions=False</em>, <em class="sig-param">anonymize_observations=False</em>, <em class="sig-param">output_file=None</em>, <em class="sig-param">use_dot=False</em>, <em class="sig-param">ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/visual/visual.html#visualize_pouct_search_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.algorithms.visual.visual.visualize_pouct_search_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Visualize the given tree up to depth <cite>max_depth</cite>. Display nodes
-with number of visits &gt;= <cite>visit_threshold</cite>.</p>
-<p>If anonymize is True, will only display actions as a1,a2,… and observations
-as o1,o2,… .</p>
-</dd></dl>
-
+<div class="section" id="pomdp-py-algorithms-visual-visual-module">
+<h2>pomdp_py.algorithms.visual.visual module<a class="headerlink" href="#pomdp-py-algorithms-visual-visual-module" title="Permalink to this headline">¶</a></h2>
 <p id="bibtex-bibliography-api/pomdp_py.algorithms-0"><dl class="citation">
 <dt class="bibtex label" id="silver2010monte"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>,<a href="#id9">4</a>)</span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
@@ -662,7 +626,7 @@ as o1,o2,… .</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>

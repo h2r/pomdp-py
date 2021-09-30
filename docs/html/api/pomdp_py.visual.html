@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pomdp_py.visual package &#8212; pomdp_py 1.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pomdp_py.visual package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.visual.search_tree">pomdp_py.visual.search_tree module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.visual">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pomdp-py-visual-package">
+<h1>pomdp_py.visual package<a class="headerlink" href="#pomdp-py-visual-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pomdp_py.visual.search_tree">
+<span id="pomdp-py-visual-search-tree-module"></span><h2>pomdp_py.visual.search_tree module<a class="headerlink" href="#module-pomdp_py.visual.search_tree" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pomdp_py.visual.search_tree.visualize_pouct_search_tree">
+<code class="sig-prename descclassname">pomdp_py.visual.search_tree.</code><code class="sig-name descname">visualize_pouct_search_tree</code><span class="sig-paren">(</span><em class="sig-param">root</em>, <em class="sig-param">max_depth=1</em>, <em class="sig-param">visit_threshold=1</em>, <em class="sig-param">anonymize=False</em>, <em class="sig-param">anonymize_actions=False</em>, <em class="sig-param">anonymize_observations=False</em>, <em class="sig-param">output_file=None</em>, <em class="sig-param">use_dot=False</em>, <em class="sig-param">ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/visual/search_tree.html#visualize_pouct_search_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.visual.search_tree.visualize_pouct_search_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the given tree up to depth <cite>max_depth</cite>. Display nodes
+with number of visits &gt;= <cite>visit_threshold</cite>.</p>
+<p>Caveat: This only works well if the search tree depth is shallow.
+For larger trees, please use a combination of tree debugger (utils.debugging.TreeDebugger)
+and visualizer (custom in heritance of visual.visualizer.Visualizer).</p>
+<p>If anonymize is True, will only display actions as a1,a2,… and observations
+as o1,o2,… .</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pomdp_py.visual">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.visual" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/pomdp_py.visual.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

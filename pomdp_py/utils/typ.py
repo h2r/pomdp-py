@@ -1,5 +1,7 @@
-# Utilties for typography, i.e. dealing with
-# strings for the purpose of displaying them.
+"""
+Utilties for typography, i.e. dealing with
+strings for the purpose of displaying them.
+"""
 
 # Colors on terminal https://stackoverflow.com/a/287944/2893053
 class bcolors:

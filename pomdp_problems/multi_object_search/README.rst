@@ -8,3 +8,5 @@ following paper
 
 In this implementation, we consider a different (simpler) motion action scheme,
 instead of based on topological graph and room connectivity.
+
+Refer to :doc:`examples.mos` for more details.

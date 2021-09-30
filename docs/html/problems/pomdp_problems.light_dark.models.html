@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_problems.light_dark.models package &#8212; pomdp_py 1.0 documentation</title>
+    <title>pomdp_problems.light_dark.models package &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,6 +16,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Load/Unload" href="pomdp_problems.load_unload.html" />
     <link rel="prev" title="pomdp_problems.light_dark.env package" href="pomdp_problems.light_dark.env.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -37,13 +38,13 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems.</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
 
 
 
 
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=watch&count=true&size=large&v=2"
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
 
@@ -69,17 +70,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../extensions.html">Use Case Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_problems</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="pomdp_problems.html">pomdp_problems package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">pomdp_problems.multi_object_search package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">pomdp_problems.rocksample package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">pomdp_problems.tiger package</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="pomdp_problems.light_dark.html">pomdp_problems.light_dark package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.html">Multi-Object Search (MOS) Task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.rocksample.html">RockSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.html">Tiger</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pomdp_problems.light_dark.html">Light-Dark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.load_unload.html">Load/Unload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tag.html">Tag</a></li>
 </ul>
 </li>
 </ul>
@@ -99,10 +102,11 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="modules.html">problems</a><ul>
+  <li><a href="modules.html">pomdp_problems</a><ul>
   <li><a href="pomdp_problems.html">pomdp_problems package</a><ul>
-  <li><a href="pomdp_problems.light_dark.html">pomdp_problems.light_dark package</a><ul>
+  <li><a href="pomdp_problems.light_dark.html">Light-Dark</a><ul>
       <li>Previous: <a href="pomdp_problems.light_dark.env.html" title="previous chapter">pomdp_problems.light_dark.env package</a></li>
+      <li>Next: <a href="pomdp_problems.load_unload.html" title="next chapter">Load/Unload</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -190,7 +194,7 @@ of <span class="math notranslate nohighlight">\(\omega\)</span> which follows th
 
 <dl class="method">
 <dt id="pomdp_problems.light_dark.models.observation_model.ObservationModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/observation_model.html#ObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.observation_model.ObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely observation</p>
 </dd></dl>
 
@@ -236,7 +240,7 @@ deterministic.</p>
 
 <dl class="method">
 <dt id="pomdp_problems.light_dark.models.transition_model.TransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/light_dark/models/transition_model.html#TransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.light_dark.models.transition_model.TransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
@@ -250,7 +254,7 @@ distribution of this transition model.</p>
 <dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="pomdp_problems.light_dark.domain.html#pomdp_problems.light_dark.domain.state.State" title="pomdp_problems.light_dark.domain.state.State">State</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -305,7 +309,7 @@ function with respect to the state vector mt: (mt, ut) -&gt; Bt</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020, H2R@Brown.
+      &copy;2020-2021, H2R@Brown.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
