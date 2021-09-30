@@ -13,8 +13,6 @@ Pre-installation
 
 1. install Python 3.7+ from `official website <https://www.python.org/downloads/>`_.
 
-2. Install Graphviz, following `these official instructions <https://graphviz.org/download/>`_ (Optional for visualizing search tree)
-
 
 Install pomdp-py
 ----------------
@@ -46,84 +44,94 @@ Install `pomdp-py` by::
 Test things out
 ---------------
 
-Verify that **Tiger**, **RockSample**, and **Multi-Object Search** problems work::
+1. Verify that **Tiger**, **RockSample**, and **Multi-Object Search** problems work::
 
-     python -m pomdp_problems.tiger.tiger_problem
-     python -m pomdp_problems.rocksample.rocksample_problem
-     python -m pomdp_problems.multi_object_search.problem
-
-
-For the **Tiger** problem, you should see output like
-
-.. code-block:: text
-
-    ** Testing value iteration **
-    ==== Step 1 ====
-    True state: tiger-left
-    Belief: [(State(tiger-right), 0.5), (State(tiger-left), 0.5)]
-    Action: listen
-    Reward: -1
-    >> Observation: tiger-left
-    ...
-
-There will be plots that visualize the MCTS trees displayed, like below (could be more messy):
+     python -m pomdp_py -r tiger
+     python -m pomdp_py -r rocksample
+     python -m pomdp_py -r mos
 
 
-For the **RockSample** problem, you should see something like::
+  For the **Tiger** problem, you should see output like::
 
-    *** Testing POMCP ***
-    ==== Step 1 ====
-    Particle reinvigoration for 66 particles
-    True state: State((0, 4) | ('bad', 'good', 'bad', 'good', 'good') | False)
-    Action: sample
-    Observation: None
-    Reward: 0.0
-    Reward (Cumulative): 0.0
-    Reward (Cumulative Discounted): 0.0
-    __num_sims__: 1217
-    World:
+      ** Testing value iteration **
+      ==== Step 1 ====
+      True state: tiger-left
+      Belief: [(State(tiger-right), 0.5), (State(tiger-left), 0.5)]
+      Action: listen
+      Reward: -1
+      >> Observation: tiger-left
+      ...
 
-    ______ID______
-    .....>
-    4....>
-    ..210>
-    .3...>
-    R....>
-    _____G/B_____
-    .....>
-    $....>
-    ..x$x>
-    .$...>
-    R....>
+  There will be plots that visualize the MCTS trees displayed, like below (could be more messy):
 
-For **Multi-Object Search**, you should see a plot like below,
 
-.. image:: images/mos_window.png
-   :alt: MOS window
-   :scale: 75 %
+  For the **RockSample** problem, you should see something like::
 
-and the agent (a green circle) starts acting:
+      *** Testing POMCP ***
+      ==== Step 1 ====
+      Particle reinvigoration for 66 particles
+      True state: State((0, 4) | ('bad', 'good', 'bad', 'good', 'good') | False)
+      Action: sample
+      Observation: None
+      Reward: 0.0
+      Reward (Cumulative): 0.0
+      Reward (Cumulative Discounted): 0.0
+      __num_sims__: 1217
+      World:
 
-.. code-block:: text
+      ______ID______
+      .....>
+      4....>
+      ..210>
+      .3...>
+      R....>
+      _____G/B_____
+      .....>
+      $....>
+      ..x$x>
+      .$...>
+      R....>
 
-    $ python -m pomdp_problems.multi_object_search.problem
-    pygame 1.9.6
-    Hello from the pygame community. https://www.pygame.org/contribute.html
-    ==== Step 1 ====
-    Action: move-xyth-North
-    Observation: MosOOObservation({})
-    Reward: -2
-    Reward (Cumulative): -2
-    Find Actions Count: 0
-    __num_sims__: 542
-    ==== Step 2 ====
-    Action: look
-    Observation: MosOOObservation({3: None, 8: None, 11: (0, 6), 12: None, 14: None})
-    Reward: -1
-    Reward (Cumulative): -3
-    Find Actions Count: 0
-    __num_sims__: 506
-    ...
+  For **Multi-Object Search**, you should see a plot like below,
+
+  .. image:: images/mos_window.png
+     :alt: MOS window
+     :scale: 75 %
+
+  and the agent (a green circle) starts acting::
+
+      $ python -m pomdp_problems.multi_object_search.problem
+      pygame 1.9.6
+      Hello from the pygame community. https://www.pygame.org/contribute.html
+      ==== Step 1 ====
+      Action: move-xyth-North
+      Observation: MosOOObservation({})
+      Reward: -2
+      Reward (Cumulative): -2
+      Find Actions Count: 0
+      __num_sims__: 542
+      ==== Step 2 ====
+      Action: look
+      Observation: MosOOObservation({3: None, 8: None, 11: (0, 6), 12: None, 14: None})
+      Reward: -1
+      Reward (Cumulative): -3
+      Find Actions Count: 0
+      __num_sims__: 506
+      ...
+
+2. You can additionally run some tests (assuming you are at the root directory of the repository).
+   Note that some tests
+   requires installing external software (`pomdp-solve <https://www.pomdp.org/code/>`_
+   and `sarsop <https://github.com/AdaCompNUS/sarsop>`_).
+
+   .. code-block::
+
+       python tests/test_all.py
+
+   Expected output can be found `here <_static/expected_test_output.txt>`_.
+
+
+
 
 
 Docker image
