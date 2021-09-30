@@ -3,8 +3,8 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
-Version 1.3.0 (09/30/2021)
------------------------
+Version 1.3.0.1 (09/30/2021)
+----------------------------
 
 * Removed dependency on :code:`pygraphviz`;
 * Added :code:`utils.debugging.Treedebugger`, which makes it easier to inspect the search tree.
