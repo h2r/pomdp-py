@@ -11,40 +11,81 @@ into the TreeDebugger.  It is designed for ease of use during a :code:`pdb` or
 .. code-block:: python
 
    from pomdp_py.utils import TreeDebugger
-   from pomdp_py.tiger import TigerProblem
+   from pomdp_problems.tiger import TigerProblem
 
    # pomdp_py.Agent
    agent = TigerProblem.create("tiger-left", 0.5, 0.15).agent
 
-   # suppose pouct is a pomdp_py.POUCT object
-   pouct = pomdp_py.POUCT ...
+   # suppose pouct is a pomdp_py.POUCT object (POMCP works too)
+   pouct = pomdp_py.POUCT(max_depth=4, discount_factor=0.95,
+                          num_sims=4096, exploration_const=200,
+                          rollout_policy=tiger_problem.agent.policy_model)
 
    action = pouct.plan(agent)
    dd = TreeDebugger(agent.tree)
    import pdb; pdb.set_trace()
 
-When the program executes, you enter the pdb debugger
+When the program executes, you enter the pdb debugger, and you can:
 
 .. code-block:: text
 
     (Pdb) dd.pp
-    _VNodePP(n=8191, v=-39.174)(depth=0)
-    ├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
-    │    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
-    │    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
-    │    │    │    ├─── ₀tiger-left⟶_VNodePP(n=2676, v=-27.748)(depth=2)
+    _VNodePP(n=4095, v=-19.529)(depth=0)
+    ├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+    │    ├─── ₀tiger-left⟶_VNodePP(n=2013, v=-16.586)(depth=1)
+    │    │    ├─── ₀listen⟶_QNodePP(n=1883, v=-16.586)
+    │    │    │    ├─── ₀tiger-left⟶_VNodePP(n=1441, v=-8.300)(depth=2)
     ... # prints out the entire tree; Colored in terminal.
 
     (Pdb) dd.p(1)
-    _VNodePP(n=8191, v=-39.174)(depth=0)
-    ├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
-    │    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
-    │    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
-    │    │    ├─── ₁open-left⟶_QNodePP(n=18, v=-165.216)
-    │    │    ├─── ₂open-right⟶_QNodePP(n=121, v=-79.970)
-    │    │    └─── ₃stay⟶_QNodePP(n=299, v=-60.744)
+    _VNodePP(n=4095, v=-19.529)(depth=0)
+    ├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+    │    ├─── ₀tiger-left⟶_VNodePP(n=2013, v=-16.586)(depth=1)
+    │    │    ├─── ₀listen⟶_QNodePP(n=1883, v=-16.586)
+    │    │    ├─── ₁open-left⟶_QNodePP(n=18, v=-139.847)
+    │    │    └─── ₂open-right⟶_QNodePP(n=112, v=-57.191)
     ... # prints up to depth 1
 
+Note that the printed texts are colored in the terminal.
+
+You can retrieve the subtree through indexing:
+
+.. code-block:: text
+
+    (Pdb) dd[0]
+    listen⟶_QNodePP(n=4059, v=-19.529)
+        - [0] tiger-left: VNode(n=2013, v=-16.586)
+        - [1] tiger-right: VNode(n=2044, v=-16.160)
+
+    (Pdb) dd[0][1][2]
+    open-right⟶_QNodePP(n=15, v=-148.634)
+        - [0] tiger-left: VNode(n=7, v=-20.237)
+        - [1] tiger-right: VNode(n=6, v=8.500)
+
+You can obtain the currently preferred action sequence by:
+
+.. code-block:: text
+
+    (Pdb) dd.mbp
+       listen  []
+       listen  []
+       listen  []
+       listen  []
+       open-left  []
+     _VNodePP(n=4095, v=-19.529)(depth=0)
+     ├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+     │    └─── ₁tiger-right⟶_VNodePP(n=2044, v=-16.160)(depth=1)
+     │         ├─── ₀listen⟶_QNodePP(n=1955, v=-16.160)
+     │         │    └─── ₁tiger-right⟶_VNodePP(n=1441, v=-8.300)(depth=2)
+     │         │         ├─── ₀listen⟶_QNodePP(n=947, v=-8.300)
+     │         │         │    └─── ₁tiger-right⟶_VNodePP(n=768, v=0.022)(depth=3)
+     │         │         │         ├─── ₀listen⟶_QNodePP(n=462, v=0.022)
+     │         │         │         │    └─── ₁tiger-right⟶_VNodePP(n=395, v=10.000)(depth=4)
+     │         │         │         │         ├─── ₁open-left⟶_QNodePP(n=247, v=10.000)
+
+:code:`mbp` stands for "mark best plan".
+
+To explore more features, browse the list of methods in the documentation.
 """
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode

@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
@@ -132,39 +133,74 @@ planning.</p>
 into the TreeDebugger.  It is designed for ease of use during a <code class="code docutils literal notranslate"><span class="pre">pdb</span></code> or
 <code class="code docutils literal notranslate"><span class="pre">ipdb</span></code> debugging session. Here is a minimal example usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">TreeDebugger</span>
-<span class="kn">from</span> <span class="nn">pomdp_py.tiger</span> <span class="kn">import</span> <span class="n">TigerProblem</span>
+<span class="kn">from</span> <span class="nn">pomdp_problems.tiger</span> <span class="kn">import</span> <span class="n">TigerProblem</span>
 
 <span class="c1"># pomdp_py.Agent</span>
 <span class="n">agent</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span><span class="o">.</span><span class="n">agent</span>
 
-<span class="c1"># suppose pouct is a pomdp_py.POUCT object</span>
-<span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span> <span class="o">...</span>
+<span class="c1"># suppose pouct is a pomdp_py.POUCT object (POMCP works too)</span>
+<span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                       <span class="n">num_sims</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">exploration_const</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                       <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">)</span>
 
 <span class="n">action</span> <span class="o">=</span> <span class="n">pouct</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
 <span class="n">dd</span> <span class="o">=</span> <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>When the program executes, you enter the pdb debugger</p>
+<p>When the program executes, you enter the pdb debugger, and you can:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(Pdb) dd.pp
-_VNodePP(n=8191, v=-39.174)(depth=0)
-├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
-│    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
-│    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
-│    │    │    ├─── ₀tiger-left⟶_VNodePP(n=2676, v=-27.748)(depth=2)
+_VNodePP(n=4095, v=-19.529)(depth=0)
+├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+│    ├─── ₀tiger-left⟶_VNodePP(n=2013, v=-16.586)(depth=1)
+│    │    ├─── ₀listen⟶_QNodePP(n=1883, v=-16.586)
+│    │    │    ├─── ₀tiger-left⟶_VNodePP(n=1441, v=-8.300)(depth=2)
 ... # prints out the entire tree; Colored in terminal.
 
 (Pdb) dd.p(1)
-_VNodePP(n=8191, v=-39.174)(depth=0)
-├─── ₀listen⟶_QNodePP(n=8026, v=-39.174)
-│    ├─── ₀tiger-left⟶_VNodePP(n=4015, v=-36.147)(depth=1)
-│    │    ├─── ₀listen⟶_QNodePP(n=3577, v=-36.147)
-│    │    ├─── ₁open-left⟶_QNodePP(n=18, v=-165.216)
-│    │    ├─── ₂open-right⟶_QNodePP(n=121, v=-79.970)
-│    │    └─── ₃stay⟶_QNodePP(n=299, v=-60.744)
+_VNodePP(n=4095, v=-19.529)(depth=0)
+├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+│    ├─── ₀tiger-left⟶_VNodePP(n=2013, v=-16.586)(depth=1)
+│    │    ├─── ₀listen⟶_QNodePP(n=1883, v=-16.586)
+│    │    ├─── ₁open-left⟶_QNodePP(n=18, v=-139.847)
+│    │    └─── ₂open-right⟶_QNodePP(n=112, v=-57.191)
 ... # prints up to depth 1
 </pre></div>
 </div>
+<p>Note that the printed texts are colored in the terminal.</p>
+<p>You can retrieve the subtree through indexing:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(Pdb) dd[0]
+listen⟶_QNodePP(n=4059, v=-19.529)
+    - [0] tiger-left: VNode(n=2013, v=-16.586)
+    - [1] tiger-right: VNode(n=2044, v=-16.160)
+
+(Pdb) dd[0][1][2]
+open-right⟶_QNodePP(n=15, v=-148.634)
+    - [0] tiger-left: VNode(n=7, v=-20.237)
+    - [1] tiger-right: VNode(n=6, v=8.500)
+</pre></div>
+</div>
+<p>You can obtain the currently preferred action sequence by:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(Pdb) dd.mbp
+   listen  []
+   listen  []
+   listen  []
+   listen  []
+   open-left  []
+ _VNodePP(n=4095, v=-19.529)(depth=0)
+ ├─── ₀listen⟶_QNodePP(n=4059, v=-19.529)
+ │    └─── ₁tiger-right⟶_VNodePP(n=2044, v=-16.160)(depth=1)
+ │         ├─── ₀listen⟶_QNodePP(n=1955, v=-16.160)
+ │         │    └─── ₁tiger-right⟶_VNodePP(n=1441, v=-8.300)(depth=2)
+ │         │         ├─── ₀listen⟶_QNodePP(n=947, v=-8.300)
+ │         │         │    └─── ₁tiger-right⟶_VNodePP(n=768, v=0.022)(depth=3)
+ │         │         │         ├─── ₀listen⟶_QNodePP(n=462, v=0.022)
+ │         │         │         │    └─── ₁tiger-right⟶_VNodePP(n=395, v=10.000)(depth=4)
+ │         │         │         │         ├─── ₁open-left⟶_QNodePP(n=247, v=10.000)
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">mbp</span></code> stands for “mark best plan”.</p>
+<p>To explore more features, browse the list of methods in the documentation.</p>
 <dl class="class">
 <dt id="pomdp_py.utils.debugging.TreeDebugger">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.utils.debugging.</code><code class="sig-name descname">TreeDebugger</code><span class="sig-paren">(</span><em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger" title="Permalink to this definition">¶</a></dt>
