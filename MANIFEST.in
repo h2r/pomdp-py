@@ -10,3 +10,4 @@ include ./pomdp_py/framework/basics.pxd
 include ./pomdp_py/framework/planner.pxd
 include ./pomdp_py/framework/oopomdp.pxd
 include ./pomdp_py/utils/cython_utils.pxd
+include ./pomdp_py/utils/cython_utils.pyx
