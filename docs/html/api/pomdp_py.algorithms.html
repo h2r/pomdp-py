@@ -161,7 +161,7 @@
 <td><p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="#silver2010monte" id="id1">[1]</a> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></td>
-<td><p>This POMCP version only works for problems with action space that can be enumerated.</p></td>
+<td><p>POMCP is POUCT + particle belief representation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pomdp_py.algorithms.value_iteration.ValueIteration" title="pomdp_py.algorithms.value_iteration.ValueIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueIteration</span></code></a></p></td>
 <td><p>This algorithm is only feasible for small problems where states, actions, and observations can be explicitly enumerated.</p></td>
@@ -298,6 +298,33 @@ be used as a heuristic for planning.</p>
 paper as an extension of the UCT algorithm to partially-observable domains
 that combines MCTS and UCB1 for action selection.</p>
 <p>POUCT only works for problems with action space that can be enumerated.</p>
+<dl class="simple">
+<dt>__init__(self,</dt><dd><p>max_depth=5, planning_time=1., num_sims=-1,
+discount_factor=0.9, exploration_const=math.sqrt(2),
+num_visits_init=1, value_init=0,
+rollout_policy=RandomRollout(),
+action_prior=None, show_progress=False, pbar_update_interval=5)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_depth</strong> (<em>int</em>) – Depth of the MCTS tree. Default: 5.</p></li>
+<li><p><strong>planning_time</strong> (<em>float</em><em>)</em><em>, </em><em>amount of time given to each planning step</em><em> (</em><em>seconds</em>) – -1.
+if negative, then planning terminates when number of simulations <cite>num_sims</cite> reached.
+If both <cite>num_sims</cite> and <cite>planning_time</cite> are negative, then the planner will run for 1 second.</p></li>
+<li><p><strong>num_sims</strong> (<em>int</em>) – Number of simulations for each planning step. If negative,
+then will terminate when planning_time is reached.
+If both <cite>num_sims</cite> and <cite>planning_time</cite> are negative, then the planner will run for 1 second.</p></li>
+<li><p><strong>rollout_policy</strong> (<a class="reference internal" href="#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><em>RolloutPolicy</em></a>) – rollout policy. Default: RandomRollout.</p></li>
+<li><p><strong>action_prior</strong> (<a class="reference internal" href="#pomdp_py.algorithms.po_uct.ActionPrior" title="pomdp_py.algorithms.po_uct.ActionPrior"><em>ActionPrior</em></a>) – a prior over preferred actions given state and history.</p></li>
+<li><p><strong>show_progress</strong> (<em>bool</em>) – True if print a progress bar for simulations.</p></li>
+<li><p><strong>pbar_update_interval</strong> (<em>int</em>) – The number of simulations to run after each update of the progress bar,
+Only useful if show_progress is True; You can set this parameter even if your stopping criteria
+is time.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="method">
 <dt id="pomdp_py.algorithms.po_uct.POUCT.clear_agent">
 <code class="sig-name descname">clear_agent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT.clear_agent" title="Permalink to this definition">¶</a></dt>
@@ -430,11 +457,30 @@ possible actions.</p>
 </div>
 <div class="section" id="module-pomdp_py.algorithms.pomcp">
 <span id="pomdp-py-algorithms-pomcp-module"></span><h2>pomdp_py.algorithms.pomcp module<a class="headerlink" href="#module-pomdp_py.algorithms.pomcp" title="Permalink to this headline">¶</a></h2>
+<p>We implement POMCP as described in the original paper
+Monte-Carlo Planning in Large POMDPs
+<a class="reference external" href="https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps">https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps</a></p>
+<p>One thing to note is that, in this algorithm, belief
+update happens as the simulation progresses. The new
+belief is stored in the vnodes at the level after
+executing the next action. These particles will
+be reinvigorated if they are not enough.</p>
+<p>However, it is possible to separate MCTS completely
+from the belief update. This means the belief nodes
+no longer keep track of particles, and belief update
+and particle reinvogration happen for once after MCTS
+is completed. I have previously implemented this version.
+This version is also implemented in BasicPOMCP.jl
+(<a class="reference external" href="https://github.com/JuliaPOMDP/BasicPOMCP.jl">https://github.com/JuliaPOMDP/BasicPOMCP.jl</a>)
+The two should be EQUIVALENT. In general, it doesn’t
+hurt to do the belief update during MCTS, a feature
+of using particle representation.</p>
 <dl class="class">
 <dt id="pomdp_py.algorithms.pomcp.POMCP">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.algorithms.pomcp.</code><code class="sig-name descname">POMCP</code><a class="headerlink" href="#pomdp_py.algorithms.pomcp.POMCP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.POUCT</span></code></a></p>
-<p>This POMCP version only works for problems
+<p>POMCP is POUCT + particle belief representation.
+This POMCP version only works for problems
 with action space that can be enumerated.</p>
 <dl class="method">
 <dt id="pomdp_py.algorithms.pomcp.POMCP.plan">

@@ -1,22 +1,25 @@
-# We implement POMCP as described in the original paper
-# Monte-Carlo Planning in Large POMDPs
-# https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps
-#
-# One thing to note is that, in this algorithm, belief
-# update happens as the simulation progresses. The new
-# belief is stored in the vnodes at the level after
-# executing the next action. These particles will
-# be reinvigorated if they are not enough.
-#     However, it is possible to separate MCTS completely
-# from the belief update. This means the belief nodes
-# no longer keep track of particles, and belief update
-# and particle reinvogration happen for once after MCTS
-# is completed. I have previously implemented this version.
-# This version is also implemented in BasicPOMCP.jl
-# (https://github.com/JuliaPOMDP/BasicPOMCP.jl)
-# The two should be EQUIVALENT. In general, it doesn't
-# hurt to do the belief update during MCTS, a feature
-# of using particle representation.
+"""
+We implement POMCP as described in the original paper
+Monte-Carlo Planning in Large POMDPs
+https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps
+
+One thing to note is that, in this algorithm, belief
+update happens as the simulation progresses. The new
+belief is stored in the vnodes at the level after
+executing the next action. These particles will
+be reinvigorated if they are not enough.
+
+However, it is possible to separate MCTS completely
+from the belief update. This means the belief nodes
+no longer keep track of particles, and belief update
+and particle reinvogration happen for once after MCTS
+is completed. I have previously implemented this version.
+This version is also implemented in BasicPOMCP.jl
+(https://github.com/JuliaPOMDP/BasicPOMCP.jl)
+The two should be EQUIVALENT. In general, it doesn't
+hurt to do the belief update during MCTS, a feature
+of using particle representation.
+"""
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel
@@ -55,7 +58,8 @@ cdef class RootVNodeParticles(RootVNode):
 
 cdef class POMCP(POUCT):
 
-    """This POMCP version only works for problems
+    """POMCP is POUCT + particle belief representation.
+    This POMCP version only works for problems
     with action space that can be enumerated."""
 
     def __init__(self,
@@ -64,10 +68,6 @@ cdef class POMCP(POUCT):
                  num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(), action_prior=None,
                  show_progress=False, pbar_update_interval=5):
-        """
-        rollout_policy(vnode, state=?) -> a; default random rollout.
-        action_prior (ActionPrior), see above.
-        """
         super().__init__(max_depth=max_depth,
                          planning_time=planning_time,
                          num_sims=num_sims,

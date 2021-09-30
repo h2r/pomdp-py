@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Examples &#8212; pomdp_py 1.3.0 documentation</title>
+    <title>Existing POMDP Domains &#8212; pomdp_py 1.3.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,6 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tiger" href="examples.tiger.html" />
-    <link rel="prev" title="Installation" href="installation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -52,24 +50,11 @@
 
 
 
-
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Examples</a><ul>
-<li><a class="reference internal" href="#tiger">Tiger</a></li>
-<li><a class="reference internal" href="#multi-object-search-mos">Multi-Object Search (MOS)</a></li>
-</ul>
-</li>
-</ul>
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Overview</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tiger">Tiger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#multi-object-search-mos">Multi-Object Search (MOS)</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
@@ -93,8 +78,6 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
-      <li>Next: <a href="examples.tiger.html" title="next chapter">Tiger</a></li>
   </ul></li>
 </ul>
 </div>
@@ -132,27 +115,38 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<p>In this document, we discuss some examples of using <cite>pomdp_py</cite> to define POMDP problems and solve them using <a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a>. We will go over two examples: the simpler Tiger problem, and the more complicated but interesting Multi-Object Search (MOS) problem. The former represents how one could quickly implement a simple POMDP, and the latter represents how one may structure their project (as a convention) when using <cite>pomdp_py</cite> for more complicated domains.</p>
-<div class="section" id="tiger">
-<h2>Tiger<a class="headerlink" href="#tiger" title="Permalink to this headline">¶</a></h2>
-<p>This example describes how one could quickly implement a simple POMDP.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.tiger.html">Tiger</a></li>
+  <div class="section" id="existing-pomdp-domains">
+<h1>Existing POMDP Domains<a class="headerlink" href="#existing-pomdp-domains" title="Permalink to this headline">¶</a></h1>
+<p>Several domains have been implemented:</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.multi_object_search.html#module-pomdp_problems.multi_object_search.problem" title="pomdp_problems.multi_object_search.problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.problem</span></code></a></p></td>
+<td><p>2D Multi-Object Search (MOS) Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="problems/pomdp_problems.tiger.html#module-pomdp_problems.tiger.tiger_problem" title="pomdp_problems.tiger.tiger_problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.tiger.tiger_problem</span></code></a></p></td>
+<td><p>The classic Tiger problem.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.rocksample.html#module-pomdp_problems.rocksample.rocksample_problem" title="pomdp_problems.rocksample.rocksample_problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.rocksample_problem</span></code></a></p></td>
+<td><p>RockSample(n,k) problem</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="problems/pomdp_problems.tag.html#module-pomdp_problems.tag" title="pomdp_problems.tag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.tag</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="problems/pomdp_problems.load_unload.html#module-pomdp_problems.load_unload" title="pomdp_problems.load_unload"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_problems.load_unload</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Some problems that we hope to implement are below. There are even more examples <a class="reference external" href="http://www.pomdp.org/examples/">here</a>. Contribution is welcomed.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="problems/pomdp_problems.light_dark.html"><span class="doc">Light-Dark</span></a></p></li>
+<li><p><a class="reference internal" href="problems/pomdp_problems.maze.html"><span class="doc">pomdp_problems.maze package</span></a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="multi-object-search-mos">
-<h2>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h2>
-<p>This example describes the convention of how one structures their project when using <cite>pomdp_py</cite> for more complicated domains.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.mos.html">Multi-Object Search (MOS)</a></li>
-</ul>
-</div>
-</div>
+<p>In addition, the interfaces in <cite>pomdp_py</cite> are general enough to be extended to e.g. learning, multi-agent POMDPs; see <a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a>. <cite>Contributions are always welcomed!</cite></p>
 </div>
 
 
@@ -170,7 +164,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/examples.rst.txt"
+      <a href="_sources/existing_domains.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

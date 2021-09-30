@@ -9,7 +9,7 @@ Version 1.3.0 (Pending)
 * Removed dependency on :code:`pygraphviz`;
 * Added :code:`utils.debugging.Treedebugger`, which makes it easier to inspect the search tree.
   See :py:mod:`~pomdp_py.utils.debugging`.
-* Added :code:`WeightedParticles`; Refactored :code:`Particles`.
+* Added :code:`WeightedParticles`; Refactored :code:`Particles`. (:py:mod:`~pomdp_py.representations.distribution.particles`)
 * Optionally show progress bar while simulating in POUCT/POMCP.
 * Added a CLI interface to simplify running example domains, e.g. :code:`python -m pomdp_py -r tiger` runs Tiger.
 * Can initialize :code:`Environment` with  :code:`BlackboxModel`.

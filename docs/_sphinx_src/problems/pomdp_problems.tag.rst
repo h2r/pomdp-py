@@ -1,3 +1,8 @@
+.. automodule:: pomdp_problems.tag
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. include:: ../../../pomdp_problems/tag/README.rst
 
 Subpackages
@@ -41,15 +46,6 @@ pomdp\_problems.tag.problem module
 ----------------------------------
 
 .. automodule:: pomdp_problems.tag.problem
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pomdp_problems.tag
    :members:
    :undoc-members:
    :show-inheritance:

@@ -29,9 +29,10 @@ Getting Started
   (2) :doc:`examples.mos` The Multi-Object Search domain is an example for how one may structure their project (as a convention) when using `pomdp_py` for more complicated domains.
 
 * :doc:`design_principles`
+* :doc:`existing_domains`
 * :doc:`existing_solvers`
 * :doc:`examples.external_solvers`
-* :doc:`Debugging <api/pomdp_py.utils.debugging>`
+* :doc:`Debugging Tools<api/pomdp_py.utils.debugging>`
 * :doc:`What's New? <changelog>`
 
 Further

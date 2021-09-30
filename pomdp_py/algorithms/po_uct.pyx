@@ -157,7 +157,30 @@ cdef class POUCT(Planner):
     paper as an extension of the UCT algorithm to partially-observable domains
     that combines MCTS and UCB1 for action selection.
 
-    POUCT only works for problems with action space that can be enumerated."""
+    POUCT only works for problems with action space that can be enumerated.
+
+    __init__(self,
+             max_depth=5, planning_time=1., num_sims=-1,
+             discount_factor=0.9, exploration_const=math.sqrt(2),
+             num_visits_init=1, value_init=0,
+             rollout_policy=RandomRollout(),
+             action_prior=None, show_progress=False, pbar_update_interval=5)
+
+    Args:
+        max_depth (int): Depth of the MCTS tree. Default: 5.
+        planning_time (float), amount of time given to each planning step (seconds). Default: -1.
+            if negative, then planning terminates when number of simulations `num_sims` reached.
+            If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
+        num_sims (int): Number of simulations for each planning step. If negative,
+            then will terminate when planning_time is reached.
+            If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
+        rollout_policy (RolloutPolicy): rollout policy. Default: RandomRollout.
+        action_prior (ActionPrior): a prior over preferred actions given state and history.
+        show_progress (bool): True if print a progress bar for simulations.
+        pbar_update_interval (int): The number of simulations to run after each update of the progress bar,
+            Only useful if show_progress is True; You can set this parameter even if your stopping criteria
+            is time.
+    """
 
     def __init__(self,
                  max_depth=5, planning_time=-1., num_sims=-1,
@@ -165,29 +188,6 @@ cdef class POUCT(Planner):
                  num_visits_init=0, value_init=0,
                  rollout_policy=RandomRollout(),
                  action_prior=None, show_progress=False, pbar_update_interval=5):
-        """
-        __init__(self,
-                 max_depth=5, planning_time=1., num_sims=-1,
-                 discount_factor=0.9, exploration_const=math.sqrt(2),
-                 num_visits_init=1, value_init=0,
-                 rollout_policy=RandomRollout(),
-                 action_prior=None, show_progress=False, pbar_update_interval=5)
-
-        Args:
-            max_depth (int): Depth of the MCTS tree. Default: 5.
-            planning_time (float), amount of time given to each planning step (seconds). Default: -1.
-                if negative, then planning terminates when number of simulations `num_sims` reached.
-                If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
-            num_sims (int): Number of simulations for each planning step. If negative,
-                then will terminate when planning_time is reached.
-                If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
-            rollout_policy (RolloutPolicy): rollout policy. Default: RandomRollout.
-            action_prior (ActionPrior): a prior over preferred actions given state and history.
-            show_progress (bool): True if print a progress bar for simulations.
-            pbar_update_interval (int): The number of simulations to run after each update of the progress bar,
-                Only useful if show_progress is True; You can set this parameter even if your stopping criteria
-                is time.
-        """
         self._max_depth = max_depth
         self._planning_time = planning_time
         self._num_sims = num_sims

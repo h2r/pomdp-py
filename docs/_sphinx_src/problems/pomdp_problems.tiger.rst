@@ -33,12 +33,3 @@ pomdp\_problems.tiger.tiger\_problem module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pomdp_problems.tiger
-   :members:
-   :undoc-members:
-   :show-inheritance:
