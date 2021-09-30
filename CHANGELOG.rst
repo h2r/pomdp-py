@@ -3,7 +3,7 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
-Version 1.3.0 (Pending)
+Version 1.3.0 (09/29/2021)
 -----------------------
 
 * Removed dependency on :code:`pygraphviz`;
