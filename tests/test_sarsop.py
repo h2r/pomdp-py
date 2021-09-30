@@ -53,13 +53,13 @@ def test_sarsop(pomdpsol_path):
 def _check_pomdpsol():
     pomdpsol_path = os.getenv("POMDPSOL_PATH")
     if pomdpsol_path is None or not os.path.exists(pomdpsol_path):
-        raise KeyError("To run this test, download sarsop from"
-                       "https://github.com/AdaCompNUS/sarsop. Then, follow the "
-                       "instructions on this web page to compile this software. "
-                       "Finally, set the environment variable POMDPSOL_PATH "
-                       "to be the path to the pomdpsol binary file "
-                       "generated after compilation, likely located at "
-                       "/path/to/sarsop/src/pomdpsol")
+        raise FileNotFoundError("To run this test, download sarsop from"
+                                "https://github.com/AdaCompNUS/sarsop. Then, follow the "
+                                "instructions on this web page to compile this software. "
+                                "Finally, set the environment variable POMDPSOL_PATH "
+                                "to be the path to the pomdpsol binary file "
+                                "generated after compilation, likely located at "
+                                "/path/to/sarsop/src/pomdpsol")
     return pomdpsol_path
 
 def run():

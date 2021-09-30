@@ -34,7 +34,7 @@ extensions += [
 
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.3.0',
+      version='1.3.0.1',
       description='Python POMDP Library.',
       long_description=long_description,
       long_description_content_type="text/x-rst",
@@ -42,6 +42,7 @@ setup(name='pomdp-py',
           'Cython',
           'numpy',
           'scipy',
+          'tqdm',
           'matplotlib',
           'pygame',        # for some tests
           'opencv-python',  # for some tests

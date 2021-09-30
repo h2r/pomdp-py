@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Existing POMDP Solvers &#8212; pomdp_py 1.3.0 documentation</title>
+    <title>Existing POMDP Solvers &#8212; pomdp_py 1.3.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="next" title="pomdp_py" href="api/modules.html" />
     <link rel="prev" title="Design Principles" href="design_principles.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -38,7 +38,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.0).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.0.1).</p>
 
 
 
@@ -59,7 +59,6 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul>
@@ -81,7 +80,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="design_principles.html" title="previous chapter">Design Principles</a></li>
-      <li>Next: <a href="changelog.html" title="next chapter">Changelog</a></li>
+      <li>Next: <a href="api/modules.html" title="next chapter">pomdp_py</a></li>
   </ul></li>
 </ul>
 </div>
@@ -129,13 +128,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_rollout" title="pomdp_py.algorithms.po_rollout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">po_rollout</span></code></a></p></td>
-<td><p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="api/pomdp_py.algorithms.html#silver2010monte" id="id1">[1]</a>.</p></td>
+<td><p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="examples.tiger.html#silver2010monte" id="id1">[1]</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_uct" title="pomdp_py.algorithms.po_uct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">po_uct</span></code></a></p></td>
 <td><p>This algorithm is PO-UCT (Partially Observable UCT).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/pomdp_py.algorithms.html#module-pomdp_py.algorithms.pomcp" title="pomdp_py.algorithms.pomcp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomcp</span></code></a></p></td>
-<td><p></p></td>
+<td><p>We implement POMCP as described in the original paper Monte-Carlo Planning in Large POMDPs <a class="reference external" href="https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps">https://papers.nips.cc/paper/4031-monte-carlo-planning-in-large-pomdps</a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration" title="pomdp_py.algorithms.value_iteration.ValueIteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueIteration</span></code></a></p></td>
 <td><p>This algorithm is only feasible for small problems where states, actions, and observations can be explicitly enumerated.</p></td>
