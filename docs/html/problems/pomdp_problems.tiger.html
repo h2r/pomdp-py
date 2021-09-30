@@ -71,7 +71,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -364,7 +363,7 @@ i.e. assumed to be implemented for a reward model.</p>
 with the framework.</p>
 <dl class="attribute">
 <dt id="pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS">
-<code class="sig-name descname">ACTIONS</code><em class="property"> = {TigerAction(open-right), TigerAction(open-left), TigerAction(listen)}</em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ACTIONS</code><em class="property"> = {TigerAction(listen), TigerAction(open-left), TigerAction(open-right)}</em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -423,7 +422,7 @@ of how such a class can be created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem" title="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – an instance of the tiger problem.</p></li>
+<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem" title="pomdp_problems.tiger.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – an instance of the tiger problem.</p></li>
 <li><p><strong>planner</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><em>Planner</em></a>) – a planner</p></li>
 <li><p><strong>nsteps</strong> (<em>int</em>) – Maximum number of steps to run this loop.</p></li>
 </ul>

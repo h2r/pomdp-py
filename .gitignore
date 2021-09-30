@@ -91,6 +91,7 @@ _build
 # sphinx html generation in docs/
 docs/doctrees
 docs/html/.buildinfo
+docs/_sphinx_src/changelog.rst
 
 # Compiled source #
 ###################

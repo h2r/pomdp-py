@@ -56,6 +56,7 @@
 <li><a class="reference internal" href="#">Building Documentations</a><ul>
 <li><a class="reference internal" href="#building-docs-for-pomdp-py">Building docs for <cite>pomdp_py</cite></a></li>
 <li><a class="reference internal" href="#building-docs-for-pomdp-problems">Building docs for <cite>pomdp_problems</cite></a></li>
+<li><a class="reference internal" href="#note-on-changelog">Note on Changelog</a></li>
 </ul>
 </li>
 </ul>
@@ -184,6 +185,18 @@ generated <code class="code docutils literal notranslate"><span class="pre">pomd
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">include</span><span class="p">::</span> <span class="o">../../../</span><span class="n">pomdp_problems</span><span class="o">/&lt;</span><span class="n">problem</span><span class="o">&gt;/</span><span class="n">README</span><span class="o">.</span><span class="n">rst</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="note-on-changelog">
+<h2>Note on Changelog<a class="headerlink" href="#note-on-changelog" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="changelog.html"><span class="doc">Changelog</span></a> is generated based on <code class="code docutils literal notranslate"><span class="pre">CHANGELOG.rst</span></code> in the repository’s root directory.
+When the website is constructed, the <code class="code docutils literal notranslate"><span class="pre">_sphinx_src/changelog.rst</span></code> is a symbolic
+link to <code class="code docutils literal notranslate"><span class="pre">CHANGELOG.rst</span></code>, created by</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">_sphinx_src</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">../../</span><span class="n">CHANGELOG</span><span class="o">.</span><span class="n">rst</span> <span class="n">changelog</span><span class="o">.</span><span class="n">rst</span>
+</pre></div>
+</div>
+<p>But because github pages cannot access <code class="code docutils literal notranslate"><span class="pre">../../CHANGELOG.rst</span></code>, this symbolic has to be removed
+when the site is deployed.</p>
 </div>
 </div>
 

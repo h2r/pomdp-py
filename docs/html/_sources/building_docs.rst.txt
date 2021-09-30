@@ -4,7 +4,6 @@ Building Documentations
 Documentations are based on `Sphinx <https://www.sphinx-doc.org/en/master/>`_.
 Here we explain steps to build documentations from source, that is, to generate the documentation web pages.
 
-
 There are two packages: `pomdp_py` and `pomdp_problems`. Their documentations are built separately.
 
 Building docs for `pomdp_py`
@@ -62,3 +61,18 @@ generated :code:`pomdp_problems.<problem>.rst`, like so:
 .. code-block::
 
    .. include:: ../../../pomdp_problems/<problem>/README.rst
+
+
+Note on Changelog
+-----------------
+:doc:`changelog` is generated based on :code:`CHANGELOG.rst` in the repository's root directory.
+When the website is constructed, the :code:`_sphinx_src/changelog.rst` is a symbolic
+link to :code:`CHANGELOG.rst`, created by
+
+.. code-block::
+
+   cd _sphinx_src
+   ln -s ../../CHANGELOG.rst changelog.rst
+
+But because github pages cannot access :code:`../../CHANGELOG.rst`, this symbolic has to be removed
+when the site is deployed.
