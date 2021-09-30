@@ -9,6 +9,7 @@ cdef class Histogram(GenerativeDistribution):
     Histogram representation of a probability distribution.
 
     __init__(self, histogram)
+
     Args:
         histogram (dict) is a dictionary mapping from
             variable value to probability

@@ -153,9 +153,12 @@
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.histogram.</code><code class="sig-name descname">Histogram</code><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
 <p>Histogram representation of a probability distribution.</p>
-<p>__init__(self, histogram)
-:param histogram: variable value to probability
-:type histogram: dict</p>
+<p>__init__(self, histogram)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>histogram</strong> (<em>dict</em>) – variable value to probability</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.histogram.Histogram.__getitem__">
 <code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.__getitem__" title="Permalink to this definition">¶</a></dt>
@@ -206,9 +209,18 @@ in the histogram</p>
 <dl class="class">
 <dt id="pomdp_py.representations.distribution.particles.Particles">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.particles.</code><code class="sig-name descname">Particles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.representations.distribution.particles.WeightedParticles</span></code></a></p>
-<p>Particles is a set of unweighted particles; This set of particles represent
-a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span>. Each particle takes on a specific value of <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<dd><p>Particles is a set of unweighted particles; This set of particles represent
+a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span>. Each particle takes on a specific value of <span class="math notranslate nohighlight">\(X\)</span>.
+Inherits <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a>.</p>
+<p>__init__(self, particles, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particles</strong> (<em>list</em>) – List of values.</p></li>
+<li><p><strong>kwargs</strong> – see __init__() of <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.Particles.add">
 <code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">particle</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.add" title="Permalink to this definition">¶</a></dt>
@@ -252,11 +264,25 @@ Or generally, it could be any function.</p>
 <dl class="class">
 <dt id="pomdp_py.representations.distribution.particles.WeightedParticles">
 <em class="property">class </em><code class="sig-prename descclassname">pomdp_py.representations.distribution.particles.</code><code class="sig-name descname">WeightedParticles</code><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
-<p>Represents a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span> with weighted particles, each is a
+<dd><p>Represents a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span> with weighted particles, each is a
 tuple (value, weight). “value” means a value for the random variable X. If
 multiple values are present for the same value, will interpret the
 probability at X=x as the average of those weights.</p>
+<p>__init__(self, list particles, str approx_method=”none”, distance_func=None)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particles</strong> (<em>list</em>) – List of (value, weight) tuples. The weight represents
+the likelihood that the value is drawn from the underlying distribution.</p></li>
+<li><p><strong>approx_method</strong> (<em>str</em>) – ‘nearest’ if when querying the probability
+of a value, and there is no matching particle for it, return
+the probability of the value closest to it. Assuming values
+are comparable; “none” if no approximation, return 0.</p></li>
+<li><p><strong>distance_func</strong> – Used when approx_method is ‘nearest’. Returns
+a number given two values in this particle set.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="method">
 <dt id="pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__">
 <code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__" title="Permalink to this definition">¶</a></dt>

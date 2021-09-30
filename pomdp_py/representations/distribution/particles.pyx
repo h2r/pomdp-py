@@ -7,21 +7,20 @@ cdef class WeightedParticles(GenerativeDistribution):
     tuple (value, weight). "value" means a value for the random variable X. If
     multiple values are present for the same value, will interpret the
     probability at X=x as the average of those weights.
+
+    __init__(self, list particles, str approx_method="none", distance_func=None)
+
+    Args:
+       particles (list): List of (value, weight) tuples. The weight represents
+           the likelihood that the value is drawn from the underlying distribution.
+       approx_method (str): 'nearest' if when querying the probability
+            of a value, and there is no matching particle for it, return
+            the probability of the value closest to it. Assuming values
+            are comparable; "none" if no approximation, return 0.
+       distance_func: Used when approx_method is 'nearest'. Returns
+           a number given two values in this particle set.
     """
     def __init__(self, list particles, str approx_method="none", distance_func=None):
-        """
-        __init__(self, list particles, str approx_method="none", distance_func=None)
-        Args:
-            particles (list): List of (value, weight) tuples.
-                The weight represents the likelihood that the
-                value is drawn from the underlying distribution.
-           approx_method (str): 'nearest' if when querying the probability
-                of a value, and there is no matching particle for it, return
-                the probability of the value closest to it. Assuming values
-                are comparable; "none" if no approximation, return 0.
-           distance_func: Used when approx_method is 'nearest'. Returns
-               a number given two values in this particle set.
-        """
         self._values = [value for value, _ in particles]
         self._weights = [weight for _, weight in particles]
         self._particles = particles
@@ -63,10 +62,6 @@ cdef class WeightedParticles(GenerativeDistribution):
         """Returns the probability of `value`; normalized"""
         if len(self.particles) == 0:
             raise ValueError("Particles is empty.")
-
-        cdef float sum_weights = 0.0
-        cdef int count = 0
-        cdef float w   # weight
 
         if not self._hist_valid:
             self._hist = self.get_histogram()
@@ -116,7 +111,6 @@ cdef class WeightedParticles(GenerativeDistribution):
         Returns a mapping from value to probability, normalized."""
         cdef dict hist = {}
         cdef dict counts = {}
-        cdef float w
         # first, sum the weights
         for s, w in self._particles:
             hist[s] = hist.get(s, 0) + w
@@ -151,11 +145,15 @@ cdef class WeightedParticles(GenerativeDistribution):
 cdef class Particles(WeightedParticles):
     """ Particles is a set of unweighted particles; This set of particles represent
     a distribution :math:`\Pr(X)`. Each particle takes on a specific value of :math:`X`.
+    Inherits :py:mod:`~pomdp_py.representations.distribution.particles.WeightedParticles`.
+
+    __init__(self, particles, **kwargs)
+
+    Args:
+        particles (list): List of values.
+        kwargs: see __init__() of :py:mod:`~pomdp_py.representations.distribution.particles.WeightedParticles`.
     """
     def __init__(self, particles, **kwargs):
-        """
-        particles (list): List of values.
-        """
         super().__init__(list(zip(particles, [None]*len(particles))), **kwargs)
 
     def __iter__(self):
