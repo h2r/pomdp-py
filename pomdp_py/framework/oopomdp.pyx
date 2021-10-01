@@ -74,7 +74,6 @@ cdef class ObjectState(State):
         """__setitem__(self, attr, value)
         Sets the attribute `attr` to the given value."""
         self.attributes[attr] = value
-        self._hashcache = -1
 
     def __len__(self):
         return len(self.attributes)
@@ -109,10 +108,10 @@ cdef class OOState(State):
 
     @property
     def situation(self):
-        """situation(self)
+        """situation(selppf)
         This is a `frozenset` which can be used to identify
         the situation of this state since it supports hashing."""
-        return self._situation
+        return frozenset(self.object_states.items())
 
     def __str__(self):
         return '%s::[%s]' % (str(self.__class__.__name__),

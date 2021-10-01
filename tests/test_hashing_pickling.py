@@ -21,7 +21,8 @@ def test_hashing_pickling():
     objstate3 = objstate1.copy()
     assert hash(objstate3) == hash(objstate1)
     objstate3["color"] = "green"
-    assert hash(objstate3) != hash(objstate1)
+    # hashcode should be kept constant after the object's creation
+    assert hash(objstate3) == hash(objstate1)
     assert objstate3 != objstate1
 
     oos1 = pomdp_py.OOState({1:objstate1, 2:objstate2})
