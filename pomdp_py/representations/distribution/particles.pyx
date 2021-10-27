@@ -97,9 +97,11 @@ cdef class WeightedParticles(GenerativeDistribution):
         return value
 
     def mpe(self):
+        print(self._hist_valid)
         if not self._hist_valid:
             self._hist = self.get_histogram()
             self._hist_valid = True
+        print(self._hist)
         return max(self._hist, key=self._hist.get)
 
     def __iter__(self):
@@ -165,6 +167,7 @@ cdef class Particles(WeightedParticles):
         self._particles.append((particle, None))
         self._values.append(particle)
         self._weights.append(None)
+        self._hist_valid = False
 
     @property
     def particles(self):

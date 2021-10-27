@@ -3,6 +3,10 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
+Version 1.3.0.2 (pending)
+-------------------------
+* bug fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`add`)
+
 Version 1.3.0.1 (09/30/2021)
 ----------------------------
 
