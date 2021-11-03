@@ -3,9 +3,12 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
-Version 1.3.0.2 (pending)
+Version 1.3.1 (pending)
 -------------------------
-* bug fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`add`)
+* Bug fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`add`)
+* Added classes for tabular models :py:mod:`~pomdp_py.utils.templates.TabularTransitionModel`,
+  :py:mod:`~pomdp_py.utils.templates.TabularObservationModel`,
+  :py:mod:`~pomdp_py.utils.templates.TabularRewardModel`
 
 Version 1.3.0.1 (09/30/2021)
 ----------------------------

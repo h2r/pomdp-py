@@ -23,6 +23,7 @@ The code is available `on github <https://github.com/h2r/pomdp-py>`_. We welcome
 Getting Started
 ---------------
 * :doc:`installation`
+* :doc:`What's New? <changelog>` (Changelog)
 * :doc:`Examples <examples>`:
 
   (1) :doc:`examples.tiger`: The Tiger domain shows how one could quickly implement a simple POMDP.
@@ -33,7 +34,6 @@ Getting Started
 * :doc:`existing_solvers`
 * :doc:`examples.external_solvers`
 * :doc:`Debugging Tools<api/pomdp_py.utils.debugging>`
-* :doc:`What's New? <changelog>`
 
 Further
 -------

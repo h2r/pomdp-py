@@ -169,7 +169,7 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.interfaces</span></code></p></td>
 <td><p>Utilities for interfacing with external libraries</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="pomdp_py.utils.debugging.html#module-pomdp_py.utils.debugging" title="pomdp_py.utils.debugging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.debugging</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#module-pomdp_py.utils.debugging" title="pomdp_py.utils.debugging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.debugging</span></code></a></p></td>
 <td><p>This module contains utility functions making it easier to debug POMDP planning.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#module-pomdp_py.utils.templates" title="pomdp_py.utils.templates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.templates</span></code></a></p></td>
@@ -868,9 +868,23 @@ A probability of 1 - epsilon is given for correct transition,
 and epsilon is given for incorrect transition.</p>
 <dl class="method">
 <dt id="pomdp_py.utils.templates.DetTransitionModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
-<dd><p>According to problem spec, the world resets once
-action is open-left/open-right. Otherwise, stays the same</p>
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -905,9 +919,23 @@ A probability of 1 - epsilon is given for correct transition,
 and epsilon is given for incorrect transition.</p>
 <dl class="method">
 <dt id="pomdp_py.utils.templates.DetObservationModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.probability" title="Permalink to this definition">¶</a></dt>
-<dd><p>According to problem spec, the world resets once
-action is open-left/open-right. Otherwise, stays the same</p>
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observation</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – the observation <span class="math notranslate nohighlight">\(o\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1006,6 +1034,138 @@ distribution of this policy model.</p>
 <dt id="pomdp_py.utils.templates.UniformPolicyModel.rollout">
 <code class="sig-name descname">rollout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">State state</em>, <em class="sig-param">tuple history=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.rollout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.rollout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.utils.templates.TabularTransitionModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.utils.templates.</code><code class="sig-name descname">TabularTransitionModel</code><span class="sig-paren">(</span><em class="sig-param">weights</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<p>This tabular transition model is built given a dictionary that maps a tuple
+(state, action, next_state) to a probability.  This model assumes that the
+given <cite>weights</cite> is complete, that is, it specifies the probability of all
+state-action-nextstate combinations</p>
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularTransitionModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularTransitionModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns next state randomly sampled according to the
+distribution of this transition model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularTransitionModel.get_all_states">
+<code class="sig-name descname">get_all_states</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.get_all_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.get_all_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a set of all possible states, if feasible.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.utils.templates.TabularObservationModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.utils.templates.</code><code class="sig-name descname">TabularObservationModel</code><span class="sig-paren">(</span><em class="sig-param">weights</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
+<p>This tabular observation model is built given a dictionary that maps a tuple
+(next_state, action, observation) to a probability.  This model assumes that the
+given <cite>weights</cite> is complete.</p>
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularObservationModel.probability">
+<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dd><p>observation is emitted from state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularObservationModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns observation randomly sampled according to the
+distribution of this observation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>next_state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularObservationModel.get_all_observations">
+<code class="sig-name descname">get_all_observations</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.get_all_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.get_all_observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a set of all possible observations, if feasible.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pomdp_py.utils.templates.TabularRewardModel">
+<em class="property">class </em><code class="sig-prename descclassname">pomdp_py.utils.templates.</code><code class="sig-name descname">TabularRewardModel</code><span class="sig-paren">(</span><em class="sig-param">rewards</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
+<p>This tabular reward model is built given a dictionary that maps a state or a
+tuple (state, action), or (state, action, next_state) to a probability.  This
+model assumes that the given <cite>rewards</cite> is complete.</p>
+<dl class="method">
+<dt id="pomdp_py.utils.templates.TabularRewardModel.sample">
+<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns reward randomly sampled according to the
+distribution of this reward model. This is required,
+i.e. assumed to be implemented for a reward model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
+<li><p><strong>next_state</strong> (<a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the reward <span class="math notranslate nohighlight">\(r\)</span></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
