@@ -68,8 +68,6 @@ class DetTransitionModel(pomdp_py.TransitionModel):
         self.epsilon = epsilon
 
     def probability(self, next_state, state, action):
-        """According to problem spec, the world resets once
-        action is open-left/open-right. Otherwise, stays the same"""
         if self.sample(state, action) == next_state:
             return 1.0 - self.epsilon
         else:
@@ -87,8 +85,6 @@ class DetObservationModel(pomdp_py.ObservationModel):
         self.epsilon = epsilon
 
     def probability(self, observation, next_state, action):
-        """According to problem spec, the world resets once
-        action is open-left/open-right. Otherwise, stays the same"""
         if self.sample(next_state, action) == observation:
             return 1.0 - self.epsilon
         else:
@@ -122,3 +118,88 @@ class UniformPolicyModel(pomdp_py.RolloutPolicy):
 
     def rollout(self, state, history=None):
         return random.sample(self.actions, 1)[0]
+
+
+# Tabular models
+class TabularTransitionModel(pomdp_py.TransitionModel):
+    """This tabular transition model is built given a dictionary that maps a tuple
+    (state, action, next_state) to a probability.  This model assumes that the
+    given `weights` is complete, that is, it specifies the probability of all
+    state-action-nextstate combinations
+    """
+    def __init__(self, weights):
+        self.weights = weights
+        self._states = set()
+        for s, _, sp in weights:
+            self._states.add(s)
+            self._states.add(sp)
+
+    def probability(self, next_state, state, action):
+        if (state, action, next_state) in self.weights:
+            return self.weights[(state, action, next_state)]
+        raise ValueError("The transition probability for"\
+                         f"{(state, action, next_state)} is not defined")
+
+    def sample(self, state, action):
+        next_states = list(self._states)
+        probs = [self.probability(next_state, state, action)
+                 for next_state in next_states]
+        return random.choices(next_states, weights=probs, k=1)[0]
+
+    def get_all_states(self):
+        return self._states
+
+
+class TabularObservationModel(pomdp_py.ObservationModel):
+    """This tabular observation model is built given a dictionary that maps a tuple
+    (next_state, action, observation) to a probability.  This model assumes that the
+    given `weights` is complete.
+    """
+    def __init__(self, weights):
+        self.weights = weights
+        self._observations = set()
+        for _, _, z in weights:
+            self._observations.add(z)
+
+    def probability(self, observation, next_state, action):
+        """observation is emitted from state"""
+        if (next_state, action, observation) in self.weights:
+            return self.weights[(next_state, action, observation)]
+        elif (next_state, observation) in self.weights:
+            return self.weights[(next_state, observation)]
+        raise ValueError("The observation probability for"
+                         f"{(next_state, action, observation)} or {(next_state, observation)}"
+                         "is not defined")
+
+    def sample(self, next_state, action):
+        observations = list(self._observations)
+        probs = [self.probability(observation, next_state, action)
+                 for observation in observations]
+        return random.choices(observations, weights=probs, k=1)[0]
+
+    def get_all_observations(self):
+        return self._observations
+
+
+class TabularRewardModel(pomdp_py.RewardModel):
+    """This tabular reward model is built given a dictionary that maps a state or a
+    tuple (state, action), or (state, action, next_state) to a probability.  This
+    model assumes that the given `rewards` is complete.
+    """
+    def __init__(self, rewards):
+        self.rewards = rewards
+
+    def sample(self, state, action, *args):
+        if state in self.rewards:
+            return self.rewards[state]
+        elif (state, action) in self.rewards:
+            return self.rewards[(state, action)]
+        else:
+            if len(args) > 0:
+                next_state = args[0]
+                if (state, action, next_state) in self.rewards:
+                    return self.rewards[(state, action, next_state)]
+
+            raise ValueError("The reward is undefined for"
+                             f"state={state}, action={action}"
+                             f"next_state={args}")
