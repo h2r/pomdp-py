@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.utils.debugging &#8212; pomdp_py 1.3.0.1 documentation</title>
+    <title>pomdp_py.utils.debugging &#8212; pomdp_py 1.3.1 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -36,7 +36,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.0.1).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.1).</p>
 
 
 
@@ -428,7 +428,7 @@
                                             <span class="n">include_children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_children</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="TreeDebugger"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger">[docs]</a><span class="k">class</span> <span class="nc">TreeDebugger</span><span class="p">:</span>
+<div class="viewcode-block" id="TreeDebugger"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger">[docs]</a><span class="k">class</span> <span class="nc">TreeDebugger</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helps you debug the search tree; A search tree is a tree</span>
 <span class="sd">    that contains a subset of future histories, organized into</span>
@@ -474,7 +474,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stats_cache</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">)]</span> <span class="o">=</span> <span class="n">stats</span>
         <span class="k">return</span> <span class="n">stats</span>
 
-<div class="viewcode-block" id="TreeDebugger.num_nodes"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.num_nodes"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the total number of nodes in the tree rooted at &quot;current&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -529,11 +529,11 @@
         <span class="sd">&quot;&quot;&quot;Returns the total number of VNodes in the tree&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.l"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.l">[docs]</a>    <span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.l"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.l">[docs]</a>    <span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;alias for layer&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="n">as_debuggers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.layer"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.layer">[docs]</a>    <span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.layer"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.layer">[docs]</a>    <span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of nodes at the given depth. Will only return VNodes.</span>
 <span class="sd">        Warning: If depth is high, there will likely be a huge number of nodes.</span>
@@ -583,7 +583,7 @@
                         <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">leafs</span>
 
-<div class="viewcode-block" id="TreeDebugger.step"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.step"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates current interaction node to follow the</span>
 <span class="sd">        edge along key&quot;&quot;&quot;</span>
         <span class="n">edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">to_edge</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -591,11 +591,11 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="TreeDebugger.s"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.s">[docs]</a>    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.s"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.s">[docs]</a>    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;alias for step&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.back"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.back">[docs]</a>    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.back"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.back">[docs]</a>    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;move current node of interaction back to parent&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">parent</span></div>
 
@@ -619,7 +619,7 @@
         <span class="sd">&quot;&quot;&quot;Current node of interaction&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span>
 
-<div class="viewcode-block" id="TreeDebugger.p"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.p">[docs]</a>    <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.p"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.p">[docs]</a>    <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;print tree&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -640,7 +640,7 @@
         <span class="sd">&quot;&quot;&quot;Print marked only&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;marked-only&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.mark_sequence"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">mark_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">DEFAULT_MARK_COLOR</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.mark_sequence"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">mark_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">DEFAULT_MARK_COLOR</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a list of keys (understandable by __getitem__ in _NodePP),</span>
 <span class="sd">        mark nodes (both QNode and VNode) along the path in the tree.</span>
@@ -653,15 +653,15 @@
             <span class="n">MARKED</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">original</span><span class="p">)]</span> <span class="o">=</span> <span class="n">interpret_color</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.mark"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark">[docs]</a>    <span class="k">def</span> <span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.mark"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark">[docs]</a>    <span class="k">def</span> <span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;alias for mark_sequence&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_sequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.mark_path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_path">[docs]</a>    <span class="k">def</span> <span class="nf">mark_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.mark_path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark_path">[docs]</a>    <span class="k">def</span> <span class="nf">mark_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;paths the path to dest node&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to</span><span class="p">(</span><span class="n">dest</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.markp"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.markp">[docs]</a>    <span class="k">def</span> <span class="nf">markp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.markp"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.markp">[docs]</a>    <span class="k">def</span> <span class="nf">markp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;alias to mark_path&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_path</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -681,13 +681,13 @@
 <span class="sd">        into the future&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferred_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.bestseqd"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.bestseqd">[docs]</a>    <span class="k">def</span> <span class="nf">bestseqd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.bestseqd"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.bestseqd">[docs]</a>    <span class="k">def</span> <span class="nf">bestseqd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        alias for bestseq except with</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferred_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.single_node_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.single_node_str">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TreeDebugger.single_node_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.single_node_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">single_node_str</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string for printing given a single vnode.</span>
@@ -725,7 +725,7 @@
             <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">output</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.preferred_actions"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.preferred_actions">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TreeDebugger.preferred_actions"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.preferred_actions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">preferred_actions</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print out the currently preferred actions up to given `max_depth`</span>
@@ -765,7 +765,7 @@
             <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_preferred_actions_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">best_child</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span>
                                                    <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;alias for path_to;</span>
 <span class="sd">        Example usage:</span>
 
@@ -775,7 +775,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_to</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.path_to"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path_to">[docs]</a>    <span class="k">def</span> <span class="nf">path_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+<div class="viewcode-block" id="TreeDebugger.path_to"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.path_to">[docs]</a>    <span class="k">def</span> <span class="nf">path_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of keys (actions / observations) that represents the path from</span>
 <span class="sd">        self.current to the given node `dest`. Returns None if the path does not</span>
 <span class="sd">        exist.  Uses DFS. Can be useful for marking path to a node to a specific</span>
@@ -807,7 +807,7 @@
             <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
 
-<div class="viewcode-block" id="TreeDebugger.tree_stats"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.tree_stats">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TreeDebugger.tree_stats"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.tree_stats">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">tree_stats</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gether statistics about the tree&quot;&quot;&quot;</span>
         <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
@@ -846,10 +846,10 @@
                     <span class="n">next_depth</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
                 <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_tree_stats_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sorted_by_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.sorted_by_str">[docs]</a><span class="k">def</span> <span class="nf">sorted_by_str</span><span class="p">(</span><span class="n">enumerable</span><span class="p">):</span>
+<div class="viewcode-block" id="sorted_by_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.sorted_by_str">[docs]</a><span class="k">def</span> <span class="nf">sorted_by_str</span><span class="p">(</span><span class="n">enumerable</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">enumerable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="interpret_color"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.interpret_color">[docs]</a><span class="k">def</span> <span class="nf">interpret_color</span><span class="p">(</span><span class="n">colorstr</span><span class="p">):</span>
+<div class="viewcode-block" id="interpret_color"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.interpret_color">[docs]</a><span class="k">def</span> <span class="nf">interpret_color</span><span class="p">(</span><span class="n">colorstr</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">colorstr</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">typ</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;typ.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colorstr</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
