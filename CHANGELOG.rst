@@ -8,7 +8,7 @@ Version 1.3.1 (11/03/2021)
 * Bug fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`add`)
 * Added classes for tabular models :py:mod:`~pomdp_py.utils.templates.TabularTransitionModel`,
   :py:mod:`~pomdp_py.utils.templates.TabularObservationModel`,
-  :py:mod:`~pomdp_py.utils.templates.TabularRewardModel`
+  :py:mod:`~pomdp_py.utils.templates.TabularRewardModel`. See an example in `this Github Gist <https://gist.github.com/zkytony/51d43ee6818375434eb3b84a77a47a5c>`_ for defining and solving the CryingBaby domain, a small POMDP.
 
 Version 1.3.0.1 (09/30/2021)
 ----------------------------
