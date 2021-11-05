@@ -21,6 +21,9 @@ Install `pomdp-py` by::
 
     pip install pomdp-py
 
+This should just work for Linux and MacOS. On Windows, you may need to first run :code:`pip install Cython` then run the above command.
+See `this wiki page <https://github.com/h2r/pomdp-py/wiki/Installing-pomdp%E2%80%90py-on-Windows>`_ for installation instructions on Windows.
+
 .. _install_dev:
 
 | Or, **install as developer**
