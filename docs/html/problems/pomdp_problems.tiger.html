@@ -185,8 +185,8 @@ domains</a></p>
 <p>This is a POMDP problem; Namely, it specifies both
 the POMDP (i.e. state, action, observation space)
 and the T/O/R for the agent as well as the environment.</p>
-<p>The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
-Introduction to Partially Observable Markov Decision Processes</a> by
+<p>The description of the tiger problem is as follows: (Quote from
+<a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP: Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler )</p>
 <p>A tiger is put with equal probability behind one
 of two doors, while treasure is put behind the other one.
@@ -209,8 +209,8 @@ Rewards:</p>
 <p>Observations: You can hear either “tiger-left”, or “tiger-right”.</p>
 <p>Note that in this example, the TigerProblem is a POMDP that
 also contains the agent and the environment as its fields. In
-general this doesn’t need to be the case. (Refer to more complicated
-examples.)</p>
+general this doesn’t need to be the case. (Refer to more
+complicated examples.)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerState">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerState" title="Permalink to this definition">¶</a></dt>
@@ -284,7 +284,8 @@ distribution of this observation model.</p>
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.ObservationModel.get_all_observations">
 <span class="sig-name descname"><span class="pre">get_all_observations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel.get_all_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.ObservationModel.get_all_observations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only need to implement this if you’re using
-a solver that needs to enumerate over the observation space (e.g. value iteration)</p>
+a solver that needs to enumerate over the observation space
+(e.g. value iteration)</p>
 </dd></dl>
 
 </dd></dl>
@@ -367,7 +368,7 @@ i.e. assumed to be implemented for a reward model.</p>
 small, finite action space</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS">
-<span class="sig-name descname"><span class="pre">ACTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerAction(listen),</span> <span class="pre">TigerAction(open-right),</span> <span class="pre">TigerAction(open-left)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ACTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerAction(open-right),</span> <span class="pre">TigerAction(listen),</span> <span class="pre">TigerAction(open-left)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -415,9 +416,12 @@ of how such a class can be created.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> (<em>str</em>) – could be ‘tiger-left’ or ‘tiger-right’; True state of the environment</p></li>
-<li><p><strong>belief</strong> (<em>float</em>) – Initial belief that the target is on the left; Between 0-1.</p></li>
-<li><p><strong>obs_noise</strong> (<em>float</em>) – Noise for the observation model (default 0.15)</p></li>
+<li><p><strong>state</strong> (<em>str</em>) – could be ‘tiger-left’ or ‘tiger-right’;
+True state of the environment</p></li>
+<li><p><strong>belief</strong> (<em>float</em>) – Initial belief that the target is
+on the left; Between 0-1.</p></li>
+<li><p><strong>obs_noise</strong> (<em>float</em>) – Noise for the observation
+model (default 0.15)</p></li>
 </ul>
 </dd>
 </dl>
@@ -432,9 +436,11 @@ of how such a class can be created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem" title="pomdp_problems.tiger.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – an instance of the tiger problem.</p></li>
+<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem" title="pomdp_problems.tiger.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – a problem instance</p></li>
 <li><p><strong>planner</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><em>Planner</em></a>) – a planner</p></li>
 <li><p><strong>nsteps</strong> (<em>int</em>) – Maximum number of steps to run this loop.</p></li>
+<li><p><strong>debug_tree</strong> (<em>bool</em>) – True if get into the pdb with a
+TreeDebugger created as ‘dd’ variable.</p></li>
 </ul>
 </dd>
 </dl>

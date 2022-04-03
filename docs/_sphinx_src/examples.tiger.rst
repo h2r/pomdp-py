@@ -345,9 +345,10 @@ To solve a POMDP with `pomdp_py`, here are the basic steps:
 2. Agent plans an action :math:`a_t`.
 
 3. Environment state transitions :math:`s_t \rightarrow s_{t+1}`
-   according to its transition model.
+   according to its transition model. Reward :math:`r_t` is returned as a result of the
+   transition.
 
-4. Agent receives an observation :math:`o_t` and reward :math:`r_t` from the environment.
+4. Agent receives an observation :math:`o_t`.
 
 5. Agent updates history and belief :math:`h_t,b_t \rightarrow h_{t+1},b_{t+1}` where :math:`h_{t+1} = h_t \cup (a_t, o_t)`.
 
@@ -380,19 +381,38 @@ For the Tiger problem, we implemented this procedure as follows:
         for i in range(nsteps):  # Step 6
             # Step 2
             action = planner.plan(tiger_problem.agent)
+
             print("==== Step %d ====" % (i+1))
-            print("True state: %s" % tiger_problem.env.state)
-            print("Belief: %s" % str(tiger_problem.agent.cur_belief))
-            print("Action: %s" % str(action))
+            print("True state:", tiger_problem.env.state)
+            print("Belief:", tiger_problem.agent.cur_belief)
+            print("Action:", action)
             # Step 3; no transition since actions in Tiger problem
-            # does not change environment state (i.e. tiger location).
-            print("Reward: %s" % str(tiger_problem.env.reward_model.sample(tiger_problem.env.state, action, None)))
+            # In general, the ennvironment state can be transitioned
+            # using
+            #
+            #   reward = tiger_problem.env.state_transition(action, execute=True)
+            #
+            # Or, it is possible that you don't have control
+            # over the environment change (e.g. robot acting
+            # in real world); In that case, you could skip
+            # the state transition and re-estimate the state
+            # (e.g. through the perception stack on the robot).
+            reward = tiger_problem.env.reward_model.sample(tiger_problem.env.state, action, None)
+            print("Reward:", reward)
 
             # Step 4
-            # Let's create some simulated real observation; Update the belief
-            # Creating true observation for sanity checking solver behavior.
-            # In general, this observation should be sampled from agent's observation model.
-                real_observation = Observation(tiger_problem.env.state.name)
+            # Let's create some simulated real observation;
+            # Update the belief Creating true observation for
+            # sanity checking solver behavior. In general, this
+            # observation should be sampled from agent's observation
+            # model, as
+            #
+            #    real_observation = tiger_problem.agent.observation_model.sample(tiger_problem.env.state, action)
+            #
+            # or coming from an external source (e.g. robot sensor
+            # reading). Note that tiger_problem.env.state should store
+            # the environment state after transition.
+            real_observation = Observation(tiger_problem.env.state.name)
             print(">> Observation: %s" % real_observation)
 
             # Step 5

@@ -432,8 +432,9 @@ and <span class="math notranslate nohighlight">\(O\)</span>, which have been des
 <li><p>Create a planner (<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Planner</span></code></a>)</p></li>
 <li><p>Agent plans an action <span class="math notranslate nohighlight">\(a_t\)</span>.</p></li>
 <li><p>Environment state transitions <span class="math notranslate nohighlight">\(s_t \rightarrow s_{t+1}\)</span>
-according to its transition model.</p></li>
-<li><p>Agent receives an observation <span class="math notranslate nohighlight">\(o_t\)</span> and reward <span class="math notranslate nohighlight">\(r_t\)</span> from the environment.</p></li>
+according to its transition model. Reward <span class="math notranslate nohighlight">\(r_t\)</span> is returned as a result of the
+transition.</p></li>
+<li><p>Agent receives an observation <span class="math notranslate nohighlight">\(o_t\)</span>.</p></li>
 <li><p>Agent updates history and belief <span class="math notranslate nohighlight">\(h_t,b_t \rightarrow h_{t+1},b_{t+1}\)</span> where <span class="math notranslate nohighlight">\(h_{t+1} = h_t \cup (a_t, o_t)\)</span>.</p>
 <ul class="simple">
 <li><p>This could be done either by updating the <code class="code docutils literal notranslate"><span class="pre">belief</span></code> of
@@ -463,19 +464,38 @@ will result in the agent belief update as well. But for
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>  <span class="c1"># Step 6</span>
         <span class="c1"># Step 2</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Belief: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True state:&quot;</span><span class="p">,</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Belief:&quot;</span><span class="p">,</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action:&quot;</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
         <span class="c1"># Step 3; no transition since actions in Tiger problem</span>
-        <span class="c1"># does not change environment state (i.e. tiger location).</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reward: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="kc">None</span><span class="p">)))</span>
+        <span class="c1"># In general, the ennvironment state can be transitioned</span>
+        <span class="c1"># using</span>
+        <span class="c1">#</span>
+        <span class="c1">#   reward = tiger_problem.env.state_transition(action, execute=True)</span>
+        <span class="c1">#</span>
+        <span class="c1"># Or, it is possible that you don&#39;t have control</span>
+        <span class="c1"># over the environment change (e.g. robot acting</span>
+        <span class="c1"># in real world); In that case, you could skip</span>
+        <span class="c1"># the state transition and re-estimate the state</span>
+        <span class="c1"># (e.g. through the perception stack on the robot).</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reward:&quot;</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
 
         <span class="c1"># Step 4</span>
-        <span class="c1"># Let&#39;s create some simulated real observation; Update the belief</span>
-        <span class="c1"># Creating true observation for sanity checking solver behavior.</span>
-        <span class="c1"># In general, this observation should be sampled from agent&#39;s observation model.</span>
-            <span class="n">real_observation</span> <span class="o">=</span> <span class="n">Observation</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># Let&#39;s create some simulated real observation;</span>
+        <span class="c1"># Update the belief Creating true observation for</span>
+        <span class="c1"># sanity checking solver behavior. In general, this</span>
+        <span class="c1"># observation should be sampled from agent&#39;s observation</span>
+        <span class="c1"># model, as</span>
+        <span class="c1">#</span>
+        <span class="c1">#    real_observation = tiger_problem.agent.observation_model.sample(tiger_problem.env.state, action)</span>
+        <span class="c1">#</span>
+        <span class="c1"># or coming from an external source (e.g. robot sensor</span>
+        <span class="c1"># reading). Note that tiger_problem.env.state should store</span>
+        <span class="c1"># the environment state after transition.</span>
+        <span class="n">real_observation</span> <span class="o">=</span> <span class="n">Observation</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; Observation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">real_observation</span><span class="p">)</span>
 
         <span class="c1"># Step 5</span>
