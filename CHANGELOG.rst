@@ -3,6 +3,14 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
+Version 1.3.2 (04/03/2021)
+-------------------------
+* Fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`__str__`):
+  Print all of histogram as is instead of printing top 5 to avoid confusion.
+* Improve documentation for `the tiger tutorial <https://h2r.github.io/pomdp-py/html/examples.tiger.html>`_;
+  Specifically, clarified :py:mod:`~pomdp_py.framework.basics.PolicyModel`
+  and gave a reference to :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior`.
+
 Version 1.3.1 (11/03/2021)
 -------------------------
 * Bug fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`add`)
@@ -12,7 +20,6 @@ Version 1.3.1 (11/03/2021)
 
 Version 1.3.0.1 (09/30/2021)
 ----------------------------
-
 * Removed dependency on :code:`pygraphviz`;
 * Added :code:`utils.debugging.Treedebugger`, which makes it easier to inspect the search tree.
   See :py:mod:`~pomdp_py.utils.debugging`.

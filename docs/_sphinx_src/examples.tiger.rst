@@ -183,17 +183,41 @@ it becomes important.
 
 .. code-block:: python
 
-   class PolicyModel(pomdp_py.RandomRollout):
+   class PolicyModel(pomdp_py.RolloutPolicy):
        """A simple policy model with uniform prior over a
           small, finite action space"""
        ACTIONS = {Action(s)
                  for s in {"open-left", "open-right", "listen"}}
 
-       def sample(self, state, **kwargs):
-           return self.get_all_actions().random()
+       def sample(self, state):
+           # This function is not used directly during planning with
+           # POMCP or POUCT; Instead, the rollout policy's
+           # sampling process is defined through the rollout()
+           # function below.
+           return random.sample(self.get_all_actions())
+
+       def rollout(self, state, **kwargs):
+           # Indeed, you could explicitly say that the
+           # rollout sampling is just sampling from
+           # this policy model through this sample function.
+           #
+           # If you would like to implement pi(a|h) instead,
+           # you can define this function as:
+           #   def rollout(self, state, history)
+           # and you would have access to a partial history
+           # that contains the [(action, observation), ...]
+           # sequence starting from the first step of the
+           # online search tree created when using POMCP/POUCT.
+           return self.sample(state)
 
        def get_all_actions(self, **kwargs):
            return PolicyModel.ACTIONS
+
+       def probability(self, action, state):
+           # You do not need to implement this to use POMCP or POUCT;
+           # Indeed you could represent the distribution
+           # pi(a|s) explicitly for some other reason.
+           raise NotImplementedError
 
 `[source] <_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel>`_
 
