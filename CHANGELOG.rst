@@ -5,7 +5,7 @@ Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>
 
 Version 1.3.2 (04/03/2021)
 -------------------------
-* Fix in :py:mod:`~pomdp_py.representations.distribution.particles` (in :code:`__str__`):
+* Fix in :py:mod:`~pomdp_py.representations.distribution.histogram` (in :code:`__str__`):
   Print all of histogram as is instead of printing top 5 to avoid confusion.
 * Improve documentation for `the tiger tutorial <https://h2r.github.io/pomdp-py/html/examples.tiger.html>`_;
   Specifically, clarified :py:mod:`~pomdp_py.framework.basics.PolicyModel`
