@@ -46,3 +46,9 @@ In general, you could express a prior over the action distribution
 explicitly through the :code:`sample` and :code:`rollout` function in
 :py:mod:`~pomdp_py.framework.basics.PolicyModel`. Refer to the `Tiger <https://h2r.github.io/pomdp-py/html/examples.tiger.html#:~:text=e.g.%20continuous).-,Next,-%2C%20we%20define%20the>`_
 tutorial for more details (the paragraph on PolicyModel).
+
+As described in :cite:`silver2010monte`, you could choose to set an initial visit count and initial value corresponding
+to a preferred action; To take this into account during POMDP planning using POUCT or POMCP,
+you need to supply the :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior` object
+when you initialize the :py:mod:`~pomdp_py.algorithms.po_uct.POUCT`
+or :py:mod:`~pomdp_py.algorithms.pomcp.POMCP` objects through the :code:`action_prior` argument.
