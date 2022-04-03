@@ -10,6 +10,7 @@ Version 1.3.2 (04/03/2021)
 * Improve documentation for `the tiger tutorial <https://h2r.github.io/pomdp-py/html/examples.tiger.html>`_;
   Specifically, clarified :py:mod:`~pomdp_py.framework.basics.PolicyModel`
   and gave a reference to :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior`.
+* Built documentation with new Sphinx version (4.5.0)
 
 Version 1.3.1 (11/03/2021)
 -------------------------
