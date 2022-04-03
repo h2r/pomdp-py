@@ -213,8 +213,7 @@ this policy model through the :code:`sample` function.
    provides a way to inject problem-specific action prior
    to POMDP planning; pomdp_py allows the user to do this through
    defining :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior`.
-   See :doc:`examples.action_prior`
-   for an example.
+   See :doc:`examples.action_prior` for an example.
 
 .. note::
 

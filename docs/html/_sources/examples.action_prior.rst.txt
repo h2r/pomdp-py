@@ -1,5 +1,5 @@
-Preference-based Action Prior Example
-*************************************
+Preference-based Action Prior
+*****************************
 
 The code below is a minimum example of defining a
 :py:mod:`~pomdp_py.framework.basics.PolicyModel`
