@@ -194,7 +194,7 @@ it becomes important.
            # POMCP or POUCT; Instead, the rollout policy's
            # sampling process is defined through the rollout()
            # function below.
-           return random.sample(self.get_all_actions())
+           return random.sample(self.get_all_actions(), 1)[0]
 
        def rollout(self, state, **kwargs):
            # Indeed, you could explicitly say that the
@@ -220,6 +220,15 @@ it becomes important.
            raise NotImplementedError
 
 `[source] <_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel>`_
+
+.. note::
+
+   The original POMCP/POUCT paper :cite:`silver2010monte`
+   provides a way to inject problem-specific action prior
+   to POMDP planning; pomdp_py allows the user to do this through
+   defining :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior`.
+   See :doc:`examples.action_prior`
+   for an example.
 
 Finally, we define the :py:mod:`~pomdp_py.framework.basics.RewardModel`.
 It is straightforward according to the problem description. In this case,
