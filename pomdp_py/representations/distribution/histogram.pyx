@@ -29,10 +29,7 @@ cdef class Histogram(GenerativeDistribution):
         return self._histogram
 
     def __str__(self):
-        if isinstance(self._histogram, dict):
-            return str([(k,self._histogram[k])
-                        for k in list(reversed(sorted(self._histogram,
-                                                      key=self._histogram.get)))[:5]])
+        return str(self._histogram)
 
     def __len__(self):
         return len(self._histogram)
