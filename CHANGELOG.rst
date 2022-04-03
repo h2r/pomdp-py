@@ -3,7 +3,7 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
-Version 1.3.2 (04/03/2021)
+Version 1.3.2 (04/03/2022)
 -------------------------
 * Fix in :py:mod:`~pomdp_py.representations.distribution.histogram` (in :code:`__str__`):
   Print all of histogram as is instead of printing top 5 to avoid confusion.
