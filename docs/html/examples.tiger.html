@@ -305,37 +305,22 @@ it becomes important.</p>
               <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}}</span>
 
     <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="c1"># This function is not used directly during planning with</span>
-        <span class="c1"># POMCP or POUCT; Instead, the rollout policy&#39;s</span>
-        <span class="c1"># sampling process is defined through the rollout()</span>
-        <span class="c1"># function below.</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># Indeed, you could explicitly say that the</span>
-        <span class="c1"># rollout sampling is just sampling from</span>
-        <span class="c1"># this policy model through this sample function.</span>
-        <span class="c1">#</span>
-        <span class="c1"># If you would like to implement pi(a|h) instead,</span>
-        <span class="c1"># you can define this function as:</span>
-        <span class="c1">#   def rollout(self, state, history)</span>
-        <span class="c1"># and you would have access to a partial history</span>
-        <span class="c1"># that contains the [(action, observation), ...]</span>
-        <span class="c1"># sequence starting from the first step of the</span>
-        <span class="c1"># online search tree created when using POMCP/POUCT.</span>
+    <span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Treating this PolicyModel as a rollout policy&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">PolicyModel</span><span class="o">.</span><span class="n">ACTIONS</span>
-
-    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="c1"># You do not need to implement this to use POMCP or POUCT;</span>
-        <span class="c1"># Indeed you could represent the distribution</span>
-        <span class="c1"># pi(a|s) explicitly for some other reason.</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel">[source]</a></p>
+<p>Note that the <code class="code docutils literal notranslate"><span class="pre">sample</span></code> function is not used directly during planning with
+POMCP or POUCT; Instead, the rollout policy’s sampling process is defined
+through the <code class="code docutils literal notranslate"><span class="pre">rollout</span></code> function; In the example here, indeed,
+you could explicitly say that the rollout sampling is just sampling from
+this policy model through the <code class="code docutils literal notranslate"><span class="pre">sample</span></code> function.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The original POMCP/POUCT paper <a class="bibtex reference internal" href="#silver2010monte" id="id10">[1]</a>
@@ -344,6 +329,18 @@ to POMDP planning; pomdp_py allows the user to do this through
 defining <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior" title="pomdp_py.algorithms.po_uct.ActionPrior"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ActionPrior</span></code></a>.
 See <a class="reference internal" href="examples.action_prior.html"><span class="doc">Preference-based Action Prior Example</span></a>
 for an example.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Also, regarding <code class="code docutils literal notranslate"><span class="pre">rollout</span></code>, you can implement the rollout policy as
+<span class="math notranslate nohighlight">\(\pi(a|h)\)</span> by defining that function as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and you would have access to a partial history
+that contains the <code class="code docutils literal notranslate"><span class="pre">[(action,</span> <span class="pre">observation),</span> <span class="pre">...]</span></code>
+sequence starting from the first step of the
+online search tree created when using POMCP/POUCT.</p>
 </div>
 <p>Finally, we define the <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">RewardModel</span></code></a>.
 It is straightforward according to the problem description. In this case,

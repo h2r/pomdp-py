@@ -190,36 +190,22 @@ it becomes important.
                  for s in {"open-left", "open-right", "listen"}}
 
        def sample(self, state):
-           # This function is not used directly during planning with
-           # POMCP or POUCT; Instead, the rollout policy's
-           # sampling process is defined through the rollout()
-           # function below.
            return random.sample(self.get_all_actions(), 1)[0]
 
-       def rollout(self, state, **kwargs):
-           # Indeed, you could explicitly say that the
-           # rollout sampling is just sampling from
-           # this policy model through this sample function.
-           #
-           # If you would like to implement pi(a|h) instead,
-           # you can define this function as:
-           #   def rollout(self, state, history)
-           # and you would have access to a partial history
-           # that contains the [(action, observation), ...]
-           # sequence starting from the first step of the
-           # online search tree created when using POMCP/POUCT.
+       def rollout(self, state, *args):
+           """Treating this PolicyModel as a rollout policy"""
            return self.sample(state)
 
-       def get_all_actions(self, **kwargs):
+       def get_all_actions(self, state=None, history=None):
            return PolicyModel.ACTIONS
 
-       def probability(self, action, state):
-           # You do not need to implement this to use POMCP or POUCT;
-           # Indeed you could represent the distribution
-           # pi(a|s) explicitly for some other reason.
-           raise NotImplementedError
-
 `[source] <_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel>`_
+
+Note that the :code:`sample` function is not used directly during planning with
+POMCP or POUCT; Instead, the rollout policy's sampling process is defined
+through the :code:`rollout` function; In the example here, indeed,
+you could explicitly say that the rollout sampling is just sampling from
+this policy model through the :code:`sample` function.
 
 .. note::
 
@@ -229,6 +215,21 @@ it becomes important.
    defining :py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior`.
    See :doc:`examples.action_prior`
    for an example.
+
+.. note::
+
+   Also, regarding :code:`rollout`, you can implement the rollout policy as
+   :math:`\pi(a|h)` by defining that function as:
+
+   .. code-block::
+
+      def rollout(self, state, history)
+
+   and you would have access to a partial history
+   that contains the :code:`[(action, observation), ...]`
+   sequence starting from the first step of the
+   online search tree created when using POMCP/POUCT.
+
 
 Finally, we define the :py:mod:`~pomdp_py.framework.basics.RewardModel`.
 It is straightforward according to the problem description. In this case,

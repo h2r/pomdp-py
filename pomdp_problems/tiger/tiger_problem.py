@@ -165,17 +165,20 @@ class RewardModel(pomdp_py.RewardModel):
         return self._reward_func(state, action)
 
 # Policy Model
-class PolicyModel(pomdp_py.RandomRollout):
-    """This is an extremely dumb policy model; To keep consistent
-    with the framework."""
-    # A stay action can be added to test that POMDP solver is
-    # able to differentiate information gathering actions.
-    ACTIONS = {TigerAction(s) for s in {"open-left", "open-right", "listen"}}
+class PolicyModel(pomdp_py.RolloutPolicy):
+    """A simple policy model with uniform prior over a
+       small, finite action space"""
+    ACTIONS = {TigerAction(s)
+              for s in {"open-left", "open-right", "listen"}}
 
-    def sample(self, state, **kwargs):
+    def sample(self, state):
         return random.sample(self.get_all_actions(), 1)[0]
 
-    def get_all_actions(self, **kwargs):
+    def rollout(self, state, history=None):
+        """Treating this PolicyModel as a rollout policy"""
+        return self.sample(state)
+
+    def get_all_actions(self, state=None, history=None):
         return PolicyModel.ACTIONS
 
 
