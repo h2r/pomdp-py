@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Multi-Object Search (MOS) &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -53,8 +54,9 @@
 
 
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Multi-Object Search (MOS)</a><ul>
 <li><a class="reference internal" href="#problem-overview">Problem overview</a></li>
 <li><a class="reference internal" href="#implementing-this-pomdp-conventions">Implementing this POMDP: Conventions</a></li>
@@ -62,8 +64,9 @@
 </ul>
 </li>
 </ul>
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
@@ -75,7 +78,7 @@
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="problems/modules.html">pomdp_problems</a></li>
@@ -105,12 +108,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -135,7 +138,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="multi-object-search-mos">
+  <section id="multi-object-search-mos">
 <h1>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h1>
 <p>The purpose of this example is to <strong>introduce the conventions</strong> when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
 We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.</p>
@@ -144,11 +147,11 @@ We will first introduce this task at relatively high level, then introduce the c
 <li><p><a class="reference internal" href="#conventions"><span class="std std-ref">Implementing this POMDP: Conventions</span></a></p></li>
 <li><p><a class="reference internal" href="#try-it"><span class="std std-ref">Try it</span></a></p></li>
 </ul>
-<div class="section" id="problem-overview">
+<section id="problem-overview">
 <span id="overview"></span><h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="MOS illustration" src="_images/mos.png" />
-</div>
+</figure>
 <p>This task was introduced in Wandzel et al. <a class="bibtex reference internal" href="#wandzel2019multi" id="id1">[1]</a>. We provide a slightly different implementation without considering rooms or topological graph.</p>
 <p>The problem is formulated as an Object-Oriented POMDP (OO-POMDP). As in the paper, we implemented this task as an OO-POMDP; <cite>pomdp_py</cite> provides necessary interfaces to describe an OO-POMDP (see <a class="reference internal" href="api/pomdp_py.framework.html#module-pomdp_py.framework.oopomdp" title="pomdp_py.framework.oopomdp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp</span></code></a> module).</p>
 <p>In our implementation, an agent searches for <span class="math notranslate nohighlight">\(n\)</span> objects
@@ -163,8 +166,8 @@ three categories of actions:</p>
 <p>The sensing region has a fan-shape; Our implementation allows adjusting the angle of the fan as well as sensing range. It is implemented based on a laser scanner model. When the angle is set to 360 degrees, the sensor projects a disk-shape sensing region. Occlusion (i.e. blocking of laser scan beams) is implemented, but there are artifacts due to discretization of the search space.</p>
 <p>The transition, observation and reward models are implemented according to the original paper.</p>
 <p>In the figure above, screenshots of frames in a run of the MOS task implemented in <cite>pomdp_py</cite> are shown. The solver is <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a>. From the first to the second image, the robot takes <cite>Look</cite> action and projects a fan-shaped sensing region. This leads to belief update (i.e. clearing of the red circles). A perfect observation model is used in this example run. The third image shows a later frame.</p>
-</div>
-<div class="section" id="implementing-this-pomdp-conventions">
+</section>
+<section id="implementing-this-pomdp-conventions">
 <span id="conventions"></span><h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this headline">¶</a></h2>
 <p>As described in the <a class="reference external" href="examples.tiger.html#Summary">Summary</a> section of
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger</span></a>, the procedure of using <cite>pomdp_py</cite> to implement a POMDP problem is:</p>
@@ -210,8 +213,8 @@ As in the above package tree, files such as <code class="code docutils literal n
 <a class="reference internal" href="problems/pomdp_problems.multi_object_search.html#pomdp_problems.multi_object_search.problem.MosOOPOMDP" title="pomdp_problems.multi_object_search.problem.MosOOPOMDP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MosOOPOMDP</span></code></a> class is defined, and
 where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger</span></a> for more detail).</p>
-</div>
-<div class="section" id="try-it">
+</section>
+<section id="try-it">
 <span id="id2"></span><h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
 <p>To try out the MOS example problem:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m pomdp_problems.multi_object_search.problem
@@ -223,14 +226,14 @@ where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.make_proximity_sensor" title="pomdp_problems.multi_object_search.env.env.make_proximity_sensor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">make_proximity_sensor</span></code></a>
 as well as previously linked source code
 for details about how to create your custom instance of the problem.</p>
-<p id="bibtex-bibliography-examples.mos-0"><dl class="citation">
+<p id="bibtex-bibliography-examples.mos-0"><dl class="bibtex citation">
 <dt class="bibtex label" id="wandzel2019multi"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In <em>2019 International Conference on Robotics and Automation (ICRA)</em>, 7194–7200. IEEE, 2019.</p>
 </dd>
 </dl>
 </p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -243,7 +246,7 @@ for details about how to create your custom instance of the problem.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

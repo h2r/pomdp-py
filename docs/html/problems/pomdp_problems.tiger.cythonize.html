@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>pomdp_problems.tiger.cythonize package &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -53,11 +54,12 @@
 
 
 
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">pomdp_problems.tiger.cythonize package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.tiger.cythonize.run_tiger">pomdp_problems.tiger.cythonize.run_tiger module</a></li>
+<li><a class="reference internal" href="#pomdp-problems-tiger-cythonize-run-tiger-module">pomdp_problems.tiger.cythonize.run_tiger module</a></li>
 <li><a class="reference internal" href="#pomdp-problems-tiger-cythonize-tiger-problem-cpython-37m-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.tiger_problem.cpython-37m-x86_64-linux-gnu module</a></li>
 <li><a class="reference internal" href="#pomdp-problems-tiger-cythonize-tiger-problem-cpython-38-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.tiger_problem.cpython-38-x86_64-linux-gnu module</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.tiger.cythonize.tiger_problem">pomdp_problems.tiger.cythonize.tiger_problem module</a></li>
@@ -65,8 +67,9 @@
 </ul>
 </li>
 </ul>
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
@@ -74,7 +77,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_problems</a><ul class="current">
@@ -119,12 +122,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -149,21 +152,21 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pomdp-problems-tiger-cythonize-package">
+  <section id="pomdp-problems-tiger-cythonize-package">
 <h1>pomdp_problems.tiger.cythonize package<a class="headerlink" href="#pomdp-problems-tiger-cythonize-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-pomdp_problems.tiger.cythonize.run_tiger">
-<span id="pomdp-problems-tiger-cythonize-run-tiger-module"></span><h2>pomdp_problems.tiger.cythonize.run_tiger module<a class="headerlink" href="#module-pomdp_problems.tiger.cythonize.run_tiger" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="pomdp-problems-tiger-cythonize-tiger-problem-cpython-37m-x86-64-linux-gnu-module">
+</section>
+<section id="pomdp-problems-tiger-cythonize-run-tiger-module">
+<h2>pomdp_problems.tiger.cythonize.run_tiger module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-run-tiger-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pomdp-problems-tiger-cythonize-tiger-problem-cpython-37m-x86-64-linux-gnu-module">
 <h2>pomdp_problems.tiger.cythonize.tiger_problem.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-tiger-problem-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="pomdp-problems-tiger-cythonize-tiger-problem-cpython-38-x86-64-linux-gnu-module">
+</section>
+<section id="pomdp-problems-tiger-cythonize-tiger-problem-cpython-38-x86-64-linux-gnu-module">
 <h2>pomdp_problems.tiger.cythonize.tiger_problem.cpython-38-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-tiger-problem-cpython-38-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-pomdp_problems.tiger.cythonize.tiger_problem">
+</section>
+<section id="module-pomdp_problems.tiger.cythonize.tiger_problem">
 <span id="pomdp-problems-tiger-cythonize-tiger-problem-module"></span><h2>pomdp_problems.tiger.cythonize.tiger_problem module<a class="headerlink" href="#module-pomdp_problems.tiger.cythonize.tiger_problem" title="Permalink to this headline">¶</a></h2>
 <p>The classic Tiger problem.</p>
 <p>This is a POMDP problem; Namely, it specifies both
@@ -195,50 +198,50 @@ Rewards:</p>
 also contains the agent and the environment as its fields. In
 general this doesn’t need to be the case. (Refer to more complicated
 examples.)</p>
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerAction">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerAction</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerAction" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerAction</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerObservation</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerObservation</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
-<dl class="attribute">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation.name">
-<code class="sig-name descname">name</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation.name" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerObservationModel</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerObservationModel</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
 <p>This problem is small enough for the probabilities to be directly given
 externally</p>
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely observation</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_all_observations">
-<code class="sig-name descname">get_all_observations</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_all_observations" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_all_observations">
+<span class="sig-name descname"><span class="pre">get_all_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_all_observations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible observations, if feasible.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_distribution">
-<code class="sig-name descname">get_distribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_distribution" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_distribution">
+<span class="sig-name descname"><span class="pre">get_distribution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_distribution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the underlying distribution of the model; In this case, it’s just a histogram</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -257,9 +260,9 @@ externally</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
@@ -280,27 +283,27 @@ distribution of this observation model.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerPolicyModel</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerPolicyModel</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RandomRollout" title="pomdp_py.algorithms.po_uct.RandomRollout"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RandomRollout</span></code></a></p>
 <p>This is an extremely dumb policy model; To keep consistent
 with the framework.</p>
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely reward</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.get_all_actions">
-<code class="sig-name descname">get_all_actions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.get_all_actions">
+<span class="sig-name descname"><span class="pre">get_all_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible actions, if feasible.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\pi(a|s)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -318,9 +321,9 @@ with the framework.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
@@ -338,46 +341,46 @@ distribution of this policy model.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerProblem</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obs_probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans_probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_true_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_belief</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
-<dl class="attribute">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.ACTIONS">
-<code class="sig-name descname">ACTIONS</code><em class="property"> = {TigerAction(open-left), TigerAction(listen), TigerAction(open-right)}</em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.ACTIONS" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.ACTIONS">
+<span class="sig-name descname"><span class="pre">ACTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerAction(open-right),</span> <span class="pre">TigerAction(listen),</span> <span class="pre">TigerAction(open-left)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.ACTIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.OBSERVATIONS">
-<code class="sig-name descname">OBSERVATIONS</code><em class="property"> = {TigerObservation(tiger-left), TigerObservation(tiger-right)}</em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.OBSERVATIONS" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.OBSERVATIONS">
+<span class="sig-name descname"><span class="pre">OBSERVATIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerObservation(tiger-left),</span> <span class="pre">TigerObservation(tiger-right)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.OBSERVATIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.STATES">
-<code class="sig-name descname">STATES</code><em class="property"> = {TigerState(tiger-left), TigerState(tiger-right)}</em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.STATES" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.STATES">
+<span class="sig-name descname"><span class="pre">STATES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerState(tiger-left),</span> <span class="pre">TigerState(tiger-right)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.STATES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerRewardModel</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerRewardModel</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely reward</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.get_distribution">
-<code class="sig-name descname">get_distribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.get_distribution" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.get_distribution">
+<span class="sig-name descname"><span class="pre">get_distribution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.get_distribution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the underlying distribution of the model</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">reward</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -397,9 +400,9 @@ distribution of this policy model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns reward randomly sampled according to the
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
@@ -422,44 +425,44 @@ i.e. assumed to be implemented for a reward model.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerState">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerState</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerState" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerState</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
-<dl class="attribute">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerState.name">
-<code class="sig-name descname">name</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerState.name" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerState.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerState.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">TigerTransitionModel</code><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerTransitionModel</span></span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
 <p>This problem is small enough for the probabilities to be directly given
 externally</p>
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next state</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_all_states">
-<code class="sig-name descname">get_all_states</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_all_states" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_all_states">
+<span class="sig-name descname"><span class="pre">get_all_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_all_states" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible states, if feasible.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_distribution">
-<code class="sig-name descname">get_distribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_distribution" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_distribution">
+<span class="sig-name descname"><span class="pre">get_distribution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_distribution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the underlying distribution of the model</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -478,9 +481,9 @@ externally</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
@@ -501,39 +504,39 @@ distribution of this transition model.</p>
 
 </dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.build_actions">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">build_actions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_actions" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.build_actions">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">build_actions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_actions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.build_observations">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">build_observations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_observations" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.build_observations">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">build_observations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_observations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.build_setting">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">build_setting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_setting" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.build_setting">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">build_setting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_setting" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.build_states">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">build_states</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_states" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.build_states">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">build_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.build_states" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.main">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.main" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.main">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.main" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.tiger.cythonize.tiger_problem.test_planner">
-<code class="sig-prename descclassname">pomdp_problems.tiger.cythonize.tiger_problem.</code><code class="sig-name descname">test_planner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.test_planner" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.tiger.cythonize.tiger_problem.test_planner">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.cythonize.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">test_planner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.tiger.cythonize.tiger_problem.test_planner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the action-feedback loop of Tiger problem POMDP</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.TigerProblem" title="pomdp_problems.tiger.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – an instance of the tiger problem.</p></li>
+<li><p><strong>tiger_problem</strong> (<a class="reference internal" href="#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem" title="pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – an instance of the tiger problem.</p></li>
 <li><p><strong>planner</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><em>Planner</em></a>) – a planner</p></li>
 <li><p><strong>nsteps</strong> (<em>int</em>) – Maximum number of steps to run this loop.</p></li>
 </ul>
@@ -541,11 +544,11 @@ distribution of this transition model.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-pomdp_problems.tiger.cythonize">
+</section>
+<section id="module-pomdp_problems.tiger.cythonize">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.tiger.cythonize" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -558,7 +561,7 @@ distribution of this transition model.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>pomdp_problems.multi_object_search.models package &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -53,8 +54,9 @@
 
 
 
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">pomdp_problems.multi_object_search.models package</a><ul>
 <li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.observation_model">pomdp_problems.multi_object_search.models.observation_model module</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.policy_model">pomdp_problems.multi_object_search.models.policy_model module</a></li>
@@ -63,8 +65,9 @@
 </ul>
 </li>
 </ul>
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
@@ -72,7 +75,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_problems</a><ul class="current">
@@ -117,12 +120,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -147,9 +150,9 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pomdp-problems-multi-object-search-models-package">
+  <section id="pomdp-problems-multi-object-search-models-package">
 <h1>pomdp_problems.multi_object_search.models package<a class="headerlink" href="#pomdp-problems-multi-object-search-models-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pomdp_problems.multi_object_search.models.observation_model">
+<section id="module-pomdp_problems.multi_object_search.models.observation_model">
 <span id="pomdp-problems-multi-object-search-models-observation-model-module"></span><h2>pomdp_problems.multi_object_search.models.observation_model module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.observation_model" title="Permalink to this headline">¶</a></h2>
 <p>Defines the ObservationModel for the 2D Multi-Object Search domain.</p>
 <p>Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
@@ -167,26 +170,26 @@ should be a map from object id to observed pose or NULL (not observed).</p>
 that are within its sensor range. We only need to model object
 observation.</p>
 </div></blockquote>
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.MosObservationModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.observation_model.</code><code class="sig-name descname">MosObservationModel</code><span class="sig-paren">(</span><em class="sig-param">dim</em>, <em class="sig-param">sensor</em>, <em class="sig-param">object_ids</em>, <em class="sig-param">sigma=0.01</em>, <em class="sig-param">epsilon=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.MosObservationModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.observation_model.</span></span><span class="sig-name descname"><span class="pre">MosObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel" title="pomdp_py.framework.oopomdp.OOObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.OOObservationModel</span></code></a></p>
 <p>Object-oriented transition model</p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#MosObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns random observation</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.observation_model.</code><code class="sig-name descname">ObjectObservationModel</code><span class="sig-paren">(</span><em class="sig-param">objid</em>, <em class="sig-param">sensor</em>, <em class="sig-param">dim</em>, <em class="sig-param">sigma=0</em>, <em class="sig-param">epsilon=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.observation_model.</span></span><span class="sig-name descname"><span class="pre">ObjectObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">observation</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of Pr (observation | next_state, action).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -199,39 +202,39 @@ observation.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">next_state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns observation</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#ObjectObservationModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely observation</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.multi_object_search.models.observation_model.unittest">
-<code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.observation_model.</code><code class="sig-name descname">unittest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#unittest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.unittest" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.observation_model.unittest">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.observation_model.</span></span><span class="sig-name descname"><span class="pre">unittest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/observation_model.html#unittest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.observation_model.unittest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-pomdp_problems.multi_object_search.models.policy_model">
+</section>
+<section id="module-pomdp_problems.multi_object_search.models.policy_model">
 <span id="pomdp-problems-multi-object-search-models-policy-model-module"></span><h2>pomdp_problems.multi_object_search.models.policy_model module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.policy_model" title="Permalink to this headline">¶</a></h2>
 <p>Policy model for 2D Multi-Object Search domain.
 It is optional for the agent to be equipped with an occupancy
 grid map of the environment.</p>
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.policy_model.</code><code class="sig-name descname">PolicyModel</code><span class="sig-paren">(</span><em class="sig-param">robot_id</em>, <em class="sig-param">grid_map=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.policy_model.</span></span><span class="sig-name descname"><span class="pre">PolicyModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RolloutPolicy</span></code></a></p>
 <p>Simple policy model. All actions are possible at any state.</p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
@@ -247,9 +250,9 @@ distribution of this policy model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">action</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\pi(a|s)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -267,36 +270,36 @@ distribution of this policy model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely action</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.get_all_actions">
-<code class="sig-name descname">get_all_actions</code><span class="sig-paren">(</span><em class="sig-param">state=None</em>, <em class="sig-param">history=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.get_all_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.get_all_actions">
+<span class="sig-name descname"><span class="pre">get_all_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.get_all_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
 <dd><p>note: find can only happen after look.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.rollout">
-<code class="sig-name descname">rollout</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">State state</em>, <em class="sig-param">tuple history=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.rollout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.rollout" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.policy_model.PolicyModel.rollout">
+<span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">State</span> <span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tuple</span> <span class="pre">history=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/policy_model.html#PolicyModel.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.rollout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-pomdp_problems.multi_object_search.models.reward_model">
+</section>
+<section id="module-pomdp_problems.multi_object_search.models.reward_model">
 <span id="pomdp-problems-multi-object-search-models-reward-model-module"></span><h2>pomdp_problems.multi_object_search.models.reward_model module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.reward_model" title="Permalink to this headline">¶</a></h2>
 <p>Reward model for 2D Multi-object Search domain</p>
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.reward_model.</code><code class="sig-name descname">MosRewardModel</code><span class="sig-paren">(</span><em class="sig-param">target_objects</em>, <em class="sig-param">big=1000</em>, <em class="sig-param">small=1</em>, <em class="sig-param">robot_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.reward_model.</span></span><span class="sig-name descname"><span class="pre">MosRewardModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">big</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">small</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">reward</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -316,9 +319,9 @@ distribution of this policy model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns reward randomly sampled according to the
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
@@ -339,23 +342,23 @@ i.e. assumed to be implemented for a reward model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">next_state</em>, <em class="sig-param">normalized=False</em>, <em class="sig-param">robot_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#MosRewardModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely reward</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.reward_model.GoalRewardModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.reward_model.</code><code class="sig-name descname">GoalRewardModel</code><span class="sig-paren">(</span><em class="sig-param">target_objects</em>, <em class="sig-param">big=1000</em>, <em class="sig-param">small=1</em>, <em class="sig-param">robot_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#GoalRewardModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.GoalRewardModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.reward_model.GoalRewardModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.reward_model.</span></span><span class="sig-name descname"><span class="pre">GoalRewardModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">big</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">small</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/reward_model.html#GoalRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.reward_model.GoalRewardModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel" title="pomdp_problems.multi_object_search.models.reward_model.MosRewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.models.reward_model.MosRewardModel</span></code></a></p>
 <p>This is a reward where the agent gets reward only for detect-related actions.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-pomdp_problems.multi_object_search.models.transition_model">
+</section>
+<section id="module-pomdp_problems.multi_object_search.models.transition_model">
 <span id="pomdp-problems-multi-object-search-models-transition-model-module"></span><h2>pomdp_problems.multi_object_search.models.transition_model module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.transition_model" title="Permalink to this headline">¶</a></h2>
 <p>Defines the TransitionModel for the 2D Multi-Object Search domain.</p>
 <p>Origin: Multi-Object Search using Object-Oriented POMDPs (ICRA 2019)
@@ -363,36 +366,36 @@ i.e. assumed to be implemented for a reward model.</p>
 topological graph)</p>
 <p>Description: Multi-Object Search in a 2D grid world.</p>
 <p>Transition: deterministic</p>
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.transition_model.</code><code class="sig-name descname">MosTransitionModel</code><span class="sig-paren">(</span><em class="sig-param">dim</em>, <em class="sig-param">sensors</em>, <em class="sig-param">object_ids</em>, <em class="sig-param">epsilon=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.transition_model.</span></span><span class="sig-name descname"><span class="pre">MosTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel" title="pomdp_py.framework.oopomdp.OOTransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.OOTransitionModel</span></code></a></p>
 <p>Object-oriented transition model; The transition model supports the
 multi-robot case, where each robot is equipped with a sensor; The
 multi-robot transition model should be used by the Environment, but
 not necessarily by each robot for planning.</p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">argmax=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns random next_state</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#MosTransitionModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next state</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.transition_model.</code><code class="sig-name descname">StaticObjectTransitionModel</code><span class="sig-paren">(</span><em class="sig-param">objid</em>, <em class="sig-param">epsilon=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.transition_model.</span></span><span class="sig-name descname"><span class="pre">StaticObjectTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
 <p>This model assumes the object is static.</p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -411,35 +414,35 @@ not necessarily by each robot for planning.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns next_object_state</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#StaticObjectTransitionModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next object_state</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel">
-<em class="property">class </em><code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.transition_model.</code><code class="sig-name descname">RobotTransitionModel</code><span class="sig-paren">(</span><em class="sig-param">sensor</em>, <em class="sig-param">dim</em>, <em class="sig-param">epsilon=1e-09</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.transition_model.</span></span><span class="sig-name descname"><span class="pre">RobotTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
 <p>We assume that the robot control is perfect and transitions are deterministic.</p>
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.if_move_by">
-<em class="property">classmethod </em><code class="sig-name descname">if_move_by</code><span class="sig-paren">(</span><em class="sig-param">robot_id</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em>, <em class="sig-param">dim</em>, <em class="sig-param">check_collision=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.if_move_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.if_move_by" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.if_move_by">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">if_move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.if_move_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.if_move_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines the dynamics of robot motion;
 dim (tuple): the width, length of the search world.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.probability">
-<code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">next_state</em>, <em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.probability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -458,35 +461,35 @@ dim (tuple): the width, length of the search world.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.argmax">
-<code class="sig-name descname">argmax</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.argmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.argmax">
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next robot_state</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param">state</em>, <em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#RobotTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns next_robot_state</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.valid_pose">
-<code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.transition_model.</code><code class="sig-name descname">valid_pose</code><span class="sig-paren">(</span><em class="sig-param">pose</em>, <em class="sig-param">width</em>, <em class="sig-param">length</em>, <em class="sig-param">state=None</em>, <em class="sig-param">check_collision=True</em>, <em class="sig-param">pose_objid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#valid_pose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.valid_pose" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.valid_pose">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.transition_model.</span></span><span class="sig-name descname"><span class="pre">valid_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose_objid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#valid_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.valid_pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the given <cite>pose</cite> (x,y) is a valid pose;
 If <cite>check_collision</cite> is True, then the pose is only valid
 if it is not overlapping with any object pose in the environment state.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="pomdp_problems.multi_object_search.models.transition_model.in_boundary">
-<code class="sig-prename descclassname">pomdp_problems.multi_object_search.models.transition_model.</code><code class="sig-name descname">in_boundary</code><span class="sig-paren">(</span><em class="sig-param">pose</em>, <em class="sig-param">width</em>, <em class="sig-param">length</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#in_boundary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.in_boundary" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.transition_model.in_boundary">
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.transition_model.</span></span><span class="sig-name descname"><span class="pre">in_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/transition_model.html#in_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.transition_model.in_boundary" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -499,7 +502,7 @@ if it is not overlapping with any object pose in the environment state.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Integration with simple_rl &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,16 +51,18 @@
 
 
 
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Integration with <cite>simple_rl</cite></a></li>
 <li><a class="reference internal" href="#pomdp-py-utils-interfaces-package">pomdp_py.utils.interfaces package</a><ul>
-<li><a class="reference internal" href="#module-pomdp_py.utils.interfaces.simple_rl">pomdp_py.utils.interfaces.simple_rl module</a></li>
+<li><a class="reference internal" href="#pomdp-py-utils-interfaces-simple-rl-module">pomdp_py.utils.interfaces.simple_rl module</a></li>
 </ul>
 </li>
 </ul>
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -68,7 +70,7 @@
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="problems/modules.html">pomdp_problems</a></li>
@@ -94,12 +96,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -124,42 +126,15 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="integration-with-simple-rl">
+  <section id="integration-with-simple-rl">
 <h1>Integration with <cite>simple_rl</cite><a class="headerlink" href="#integration-with-simple-rl" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="pomdp-py-utils-interfaces-package">
+</section>
+<section id="pomdp-py-utils-interfaces-package">
 <h1>pomdp_py.utils.interfaces package<a class="headerlink" href="#pomdp-py-utils-interfaces-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pomdp_py.utils.interfaces.simple_rl">
-<span id="pomdp-py-utils-interfaces-simple-rl-module"></span><h2>pomdp_py.utils.interfaces.simple_rl module<a class="headerlink" href="#module-pomdp_py.utils.interfaces.simple_rl" title="Permalink to this headline">¶</a></h2>
-<p>Provides utility functions that interfaces with <a class="reference external" href="https://github.com/david-abel/simple_rl">simple_rl</a>.</p>
-<p>Essentially, this will convert an agent in pomdp_py into a simple_rl.MDPClass
-or POMDPClass. Note that since creating these classes require enumerable
-aciton and observation spaces, this conversion is only feasible for agents
-whose ObservationModel and PolicyModel can return a list of all observations /
-actions.</p>
-<p>Note: simple_rl is a library for Reinforcement Learning developed and
-maintained by David Abel. It is also an early-stage library.</p>
-<p>Warning:
-simple_rl is simple_rl’s POMDP functionality is currently relatively
-lacking. Providing this inteface is mostly to potentially leverage the MDP
-algorithms in simple_rl.</p>
-<dl class="function">
-<dt id="pomdp_py.utils.interfaces.simple_rl.convert_to_MDPClass">
-<code class="sig-prename descclassname">pomdp_py.utils.interfaces.simple_rl.</code><code class="sig-name descname">convert_to_MDPClass</code><span class="sig-paren">(</span><em class="sig-param">pomdp</em>, <em class="sig-param">discount_factor=0.99</em>, <em class="sig-param">step_cost=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pomdp_py/utils/interfaces/simple_rl.html#convert_to_MDPClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.interfaces.simple_rl.convert_to_MDPClass" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the pomdp to the building block MDPClass of simple_rl.  There are a lot of
-variants of MDPClass in simple_rl. It is up to the user to then convert this
-MDPClass into those variants, if necessary.</p>
-<p>Clearly, if this agent is partially observable, this conversion
-will change the problem and make it no longer a POMDP.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pomdp_py.utils.interfaces.simple_rl.convert_to_POMDPClass">
-<code class="sig-prename descclassname">pomdp_py.utils.interfaces.simple_rl.</code><code class="sig-name descname">convert_to_POMDPClass</code><span class="sig-paren">(</span><em class="sig-param">pomdp</em>, <em class="sig-param">discount_factor=0.99</em>, <em class="sig-param">step_cost=0</em>, <em class="sig-param">belief_updater_type='discrete'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pomdp_py/utils/interfaces/simple_rl.html#convert_to_POMDPClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pomdp_py.utils.interfaces.simple_rl.convert_to_POMDPClass" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
-</div>
+<section id="pomdp-py-utils-interfaces-simple-rl-module">
+<h2>pomdp_py.utils.interfaces.simple_rl module<a class="headerlink" href="#pomdp-py-utils-interfaces-simple-rl-module" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
 
 
           </div>
@@ -172,7 +147,7 @@ will change the problem and make it no longer a POMDP.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

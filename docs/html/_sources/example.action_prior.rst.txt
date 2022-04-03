@@ -1,0 +1,35 @@
+Example :code:`PolicyModel` that supports a rollout policy based on action prior
+********************************************************************************
+
+The code below is a minimum example of defining a
+:py:mod:`~pomdp_py.framework.basics.PolicyModel`
+that allows an action prior to be specified through the
+:py:mod:`~pomdp_py.algorithms.po_uct.ActionPrior` object.
+
+.. code-block:: python
+
+    from pomdp_py import RolloutPolicy, ActionPrior
+
+    class PolicyModel(RolloutPolicy):
+        def __init__(self, action_prior=None):
+            """
+            action_prior is an object of type ActionPrior that implements
+            that get_preferred_actions function.
+            """
+            self.action_prior = action_prior
+
+        def sample(self, state):
+            return random.sample(self.get_all_actions(state=state), 1)[0]
+
+        def get_all_actions(self, state, history=None):
+            raise NotImplementedError
+
+        def rollout(self, state, history=None):
+            if self.action_prior is not None:
+                preferences = self.action_prior.get_preferred_actions(state, history)
+                if len(preferences) > 0:
+                    return random.sample(preferences, 1)[0][0]
+                else:
+                    return self.sample(state)
+            else:
+                return self.sample(state)
