@@ -152,7 +152,7 @@ We will first introduce this task at relatively high level, then introduce the c
 <figure class="align-default">
 <img alt="MOS illustration" src="_images/mos.png" />
 </figure>
-<p>This task was introduced in Wandzel et al. <a class="bibtex reference internal" href="#wandzel2019multi" id="id1">[1]</a>. We provide a slightly different implementation without considering rooms or topological graph.</p>
+<p>This task was introduced in Wandzel et al. <span id="id1">[<a class="reference internal" href="#id20" title="Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In 2019 International Conference on Robotics and Automation (ICRA), 7194–7200. IEEE, 2019.">1</a>]</span>. We provide a slightly different implementation without considering rooms or topological graph.</p>
 <p>The problem is formulated as an Object-Oriented POMDP (OO-POMDP). As in the paper, we implemented this task as an OO-POMDP; <cite>pomdp_py</cite> provides necessary interfaces to describe an OO-POMDP (see <a class="reference internal" href="api/pomdp_py.framework.html#module-pomdp_py.framework.oopomdp" title="pomdp_py.framework.oopomdp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp</span></code></a> module).</p>
 <p>In our implementation, an agent searches for <span class="math notranslate nohighlight">\(n\)</span> objects
 in a <span class="math notranslate nohighlight">\(W\)</span> by <span class="math notranslate nohighlight">\(L\)</span> gridworld. Both the agent and the
@@ -226,8 +226,8 @@ where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.make_proximity_sensor" title="pomdp_problems.multi_object_search.env.env.make_proximity_sensor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">make_proximity_sensor</span></code></a>
 as well as previously linked source code
 for details about how to create your custom instance of the problem.</p>
-<p id="bibtex-bibliography-examples.mos-0"><dl class="bibtex citation">
-<dt class="bibtex label" id="wandzel2019multi"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<p id="id3"><dl class="citation">
+<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In <em>2019 International Conference on Robotics and Automation (ICRA)</em>, 7194–7200. IEEE, 2019.</p>
 </dd>
 </dl>

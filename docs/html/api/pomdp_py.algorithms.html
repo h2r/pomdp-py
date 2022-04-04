@@ -161,7 +161,7 @@
 <td><p>PO-rollout: Baseline algorithm in the POMCP paper</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POUCT</span></code></a></p></td>
-<td><p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id1">[1]</a> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
+<td><p>POUCT (Partially Observable UCT) <span id="id1">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></td>
 <td><p>POMCP is POUCT + particle belief representation.</p></td>
@@ -178,14 +178,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#module-pomdp_py.algorithms.bsp.blqr" title="pomdp_py.algorithms.bsp.blqr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blqr</span></code></a></p></td>
-<td><p>Implementation of B-LQR algorithm described in &quot;Belief space planning assuming maximum likelihood observations&quot; <a class="bibtex reference internal" href="#platt2010belief" id="id2">[2]</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pomdp_py.algorithms.bsp.html#module-pomdp_py.algorithms.bsp.blqr" title="pomdp_py.algorithms.bsp.blqr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blqr</span></code></a></p></td>
+<td><p>Implementation of B-LQR algorithm described in &quot;Belief space planning assuming maximum likelihood observations&quot; <span id="id2">[<a class="reference internal" href="#id43" title="R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In Proceedings of Robotics: Science and Systems. Zaragoza, Spain, June 2010. doi:10.15607/RSS.2010.VI.037.">4</a>]</span></p></td>
 </tr>
 </tbody>
 </table>
 <section id="module-pomdp_py.algorithms.po_rollout">
 <span id="pomdp-py-algorithms-po-rollout-module"></span><h2>pomdp_py.algorithms.po_rollout module<a class="headerlink" href="#module-pomdp_py.algorithms.po_rollout" title="Permalink to this headline">¶</a></h2>
-<p>PO-rollout: Baseline algorithm in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id3">[1]</a>.</p>
+<p>PO-rollout: Baseline algorithm in the POMCP paper <span id="id3">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>.</p>
 <p>Quote from the POMCP paper:</p>
 <blockquote>
 <div><p>To provide a performance benchmark in these cases, we evaluated the
@@ -240,21 +240,21 @@ belief.</p>
 <section id="module-pomdp_py.algorithms.po_uct">
 <span id="pomdp-py-algorithms-po-uct-module"></span><h2>pomdp_py.algorithms.po_uct module<a class="headerlink" href="#module-pomdp_py.algorithms.po_uct" title="Permalink to this headline">¶</a></h2>
 <p>This algorithm is PO-UCT (Partially Observable UCT). It is
-presented in the POMCP paper <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id4">[1]</a> as an extension to the UCT
-algorithm <a class="bibtex reference internal" href="#kocsis2006bandit" id="id5">[3]</a> that combines MCTS and UCB1
+presented in the POMCP paper <span id="id4">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> as an extension to the UCT
+algorithm <span id="id5">[<a class="reference internal" href="#id42" title="Levente Kocsis and Csaba Szepesvári. Bandit based monte-carlo planning. In European conference on machine learning, 282–293. Springer, 2006.">3</a>]</span> that combines MCTS and UCB1
 for action selection.</p>
 <p>In other words, this is just POMCP without particle belief,
 but arbitrary belief representation.</p>
 <p>This planning strategy, based on MCTS with belief sampling may be referred to as
 “belief sparse sampling”; Partially Observable Sparse Sampling (POSS) is
-introduced in a recent paper <a class="bibtex reference internal" href="#lim2019sparse" id="id6">[4]</a> as an extension of sparse sampling
-for MDP by <a class="bibtex reference internal" href="#kearns2002sparse" id="id7">[5]</a>; It proposes an extension of POSS
+introduced in a recent paper <span id="id6">[<a class="reference internal" href="#id53" title="Michael H Lim, Claire J Tomlin, and Zachary N Sunberg. Sparse tree search optimality guarantees in pomdps with continuous observation spaces. arXiv preprint arXiv:1910.04332, 2019.">5</a>]</span> as an extension of sparse sampling
+for MDP by <span id="id7">[<a class="reference internal" href="#id52" title="Michael Kearns, Yishay Mansour, and Andrew Y Ng. A sparse sampling algorithm for near-optimal planning in large markov decision processes. Machine learning, 49(2-3):193–208, 2002.">6</a>]</span>; It proposes an extension of POSS
 called POWSS (partially observable weighted sparse sampling).  However, this
 line of work (POSS, POWSS) is based solely on particle belief
 representation. POSS still requires comparing observations exactly for particle
 belief update, while POWSS uses weighted particles depending on the observation
 distribution.</p>
-<p>A note on the exploration constant. Quote from <a class="bibtex reference internal" href="#gusmao2012towards" id="id8">[6]</a>:</p>
+<p>A note on the exploration constant. Quote from <span id="id8">[<a class="reference internal" href="#id54" title="António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In ECAI, 384–389. 2012.">7</a>]</span>:</p>
 <blockquote>
 <div><p>“This constant should reflect the agent’s prior knowledge regarding
 the amount of exploration required.”</p>
@@ -297,7 +297,7 @@ be used as a heuristic for planning.</p>
 <dt class="sig sig-object py" id="pomdp_py.algorithms.po_uct.POUCT">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.algorithms.po_uct.</span></span><span class="sig-name descname"><span class="pre">POUCT</span></span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.planner.Planner</span></code></a></p>
-<p>POUCT (Partially Observable UCT) <a class="bibtex reference internal" href="../examples.tiger.html#silver2010monte" id="id9">[1]</a> is presented in the POMCP
+<p>POUCT (Partially Observable UCT) <span id="id9">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP
 paper as an extension of the UCT algorithm to partially-observable domains
 that combines MCTS and UCB1 for action selection.</p>
 <p>POUCT only works for problems with action space that can be enumerated.</p>
@@ -543,7 +543,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <a class="bibtex reference internal" href="../examples.tiger.html#kaelbling1998planning" id="id10">[1]</a></p>
+domains</cite> <span id="id10">[<a class="reference internal" href="../index.html#id21" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.algorithms.value_iteration.ValueIteration">
@@ -564,7 +564,7 @@ and observations can be explicitly enumerated.</p>
 <section id="module-pomdp_py.algorithms.bsp.blqr">
 <span id="pomdp-py-algorithms-bsp-blqr-module"></span><h2>pomdp_py.algorithms.bsp.blqr module<a class="headerlink" href="#module-pomdp_py.algorithms.bsp.blqr" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of B-LQR algorithm described in “Belief space planning
-assuming maximum likelihood observations” <a class="bibtex reference internal" href="#platt2010belief" id="id11">[2]</a></p>
+assuming maximum likelihood observations” <span id="id11">[<a class="reference internal" href="#id43" title="R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In Proceedings of Robotics: Science and Systems. Zaragoza, Spain, June 2010. doi:10.15607/RSS.2010.VI.037.">4</a>]</span></p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.algorithms.bsp.blqr.BLQR">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.algorithms.bsp.blqr.</span></span><span class="sig-name descname"><span class="pre">BLQR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_sysd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac_sysd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac_obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac_sysd_u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_sysd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Qlarge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planning_horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/algorithms/bsp/blqr.html#BLQR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.algorithms.bsp.blqr.BLQR" title="Permalink to this definition">¶</a></dt>
@@ -638,27 +638,27 @@ Reference: <a class="reference external" href="https://docs.scipy.org/doc/scipy/
 </section>
 <section id="pomdp-py-algorithms-visual-visual-module">
 <h2>pomdp_py.algorithms.visual.visual module<a class="headerlink" href="#pomdp-py-algorithms-visual-visual-module" title="Permalink to this headline">¶</a></h2>
-<p id="bibtex-bibliography-api/pomdp_py.algorithms-0"><dl class="bibtex citation">
-<dt class="bibtex label" id="silver2010monte"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>,<a href="#id9">4</a>)</span></dt>
+<p id="id12"><dl class="citation">
+<dt class="label" id="id31"><span class="brackets"><a class="fn-backref" href="#id10">1</a></span></dt>
+<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
+</dd>
+<dt class="label" id="id33"><span class="brackets">2</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id1">2</a>,<a href="#id3">3</a>,<a href="#id4">4</a>,<a href="#id9">5</a>)</span></dt>
 <dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
 </dd>
-<dt class="bibtex label" id="platt2010belief"><span class="brackets">2</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id11">2</a>)</span></dt>
-<dd><p>R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In <em>Proceedings of Robotics: Science and Systems</em>. Zaragoza, Spain, June 2010. <a class="reference external" href="https://doi.org/10.15607/RSS.2010.VI.037">doi:10.15607/RSS.2010.VI.037</a>.</p>
-</dd>
-<dt class="bibtex label" id="kocsis2006bandit"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dt class="label" id="id42"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
 <dd><p>Levente Kocsis and Csaba Szepesvári. Bandit based monte-carlo planning. In <em>European conference on machine learning</em>, 282–293. Springer, 2006.</p>
 </dd>
-<dt class="bibtex label" id="lim2019sparse"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
+<dt class="label" id="id43"><span class="brackets">4</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id11">3</a>)</span></dt>
+<dd><p>R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In <em>Proceedings of Robotics: Science and Systems</em>. Zaragoza, Spain, June 2010. <a class="reference external" href="https://doi.org/10.15607/RSS.2010.VI.037">doi:10.15607/RSS.2010.VI.037</a>.</p>
+</dd>
+<dt class="label" id="id53"><span class="brackets"><a class="fn-backref" href="#id6">5</a></span></dt>
 <dd><p>Michael H Lim, Claire J Tomlin, and Zachary N Sunberg. Sparse tree search optimality guarantees in pomdps with continuous observation spaces. <em>arXiv preprint arXiv:1910.04332</em>, 2019.</p>
 </dd>
-<dt class="bibtex label" id="kearns2002sparse"><span class="brackets"><a class="fn-backref" href="#id7">5</a></span></dt>
+<dt class="label" id="id52"><span class="brackets"><a class="fn-backref" href="#id7">6</a></span></dt>
 <dd><p>Michael Kearns, Yishay Mansour, and Andrew Y Ng. A sparse sampling algorithm for near-optimal planning in large markov decision processes. <em>Machine learning</em>, 49(2-3):193–208, 2002.</p>
 </dd>
-<dt class="bibtex label" id="gusmao2012towards"><span class="brackets"><a class="fn-backref" href="#id8">6</a></span></dt>
+<dt class="label" id="id54"><span class="brackets"><a class="fn-backref" href="#id8">7</a></span></dt>
 <dd><p>António Gusmao and Tapani Raiko. Towards generalizing the success of monte-carlo tree search beyond the game of go. In <em>ECAI</em>, 384–389. 2012.</p>
-</dd>
-<dt class="bibtex label" id="kaelbling1998planning"><span class="brackets"><a class="fn-backref" href="#id10">1</a></span></dt>
-<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
 </dd>
 </dl>
 </p>

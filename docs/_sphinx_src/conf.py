@@ -102,3 +102,6 @@ html_favicon = "images/favicon.ico"
 
 # Do not sort automodule classes alphebatically but by how they appear in source.
 autodoc_member_order = 'bysource'
+
+# bibtex file
+bibtex_bibfiles = ['refs.bib']

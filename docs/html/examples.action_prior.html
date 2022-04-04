@@ -119,7 +119,7 @@
 <h1>Preference-based Action Prior<a class="headerlink" href="#preference-based-action-prior" title="Permalink to this headline">¶</a></h1>
 <p>The code below is a minimum example of defining a
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyModel</span></code></a>
-that supports a rollout policy based on preference-based action prior <a class="bibtex reference internal" href="api/pomdp_py.algorithms.html#silver2010monte" id="id1">[1]</a>.
+that supports a rollout policy based on preference-based action prior <span id="id1">[<a class="reference internal" href="examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>.
 The action prior is specified through the
 <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior" title="pomdp_py.algorithms.po_uct.ActionPrior"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ActionPrior</span></code></a> object,
 which returns a set of preferred actions given a state (and/or history).</p>
@@ -155,12 +155,12 @@ which returns a set of preferred actions given a state (and/or history).</p>
 </pre></div>
 </div>
 <p>Note that the notion of “action prior” here is narrow; It
-follows the original POMCP paper <a class="bibtex reference internal" href="api/pomdp_py.algorithms.html#silver2010monte" id="id2">[1]</a>.
+follows the original POMCP paper <span id="id2">[<a class="reference internal" href="examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>.
 In general, you could express a prior over the action distribution
 explicitly through the <code class="code docutils literal notranslate"><span class="pre">sample</span></code> and <code class="code docutils literal notranslate"><span class="pre">rollout</span></code> function in
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyModel</span></code></a>. Refer to the <a class="reference external" href="https://h2r.github.io/pomdp-py/html/examples.tiger.html#:~:text=e.g.%20continuous).-,Next,-%2C%20we%20define%20the">Tiger</a>
 tutorial for more details (the paragraph on PolicyModel).</p>
-<p>As described in <a class="bibtex reference internal" href="api/pomdp_py.algorithms.html#silver2010monte" id="id3">[1]</a>, you could choose to set an initial visit count and initial value corresponding
+<p>As described in <span id="id3">[<a class="reference internal" href="examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>, you could choose to set an initial visit count and initial value corresponding
 to a preferred action; To take this into account during POMDP planning using POUCT or POMCP,
 you need to supply the <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior" title="pomdp_py.algorithms.po_uct.ActionPrior"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ActionPrior</span></code></a> object
 when you initialize the <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a>
