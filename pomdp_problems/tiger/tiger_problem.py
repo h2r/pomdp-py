@@ -263,10 +263,9 @@ def test_planner(tiger_problem, planner, nsteps=3,
         print("Reward:", reward)
 
         # Let's create some simulated real observation;
-        # Update the belief Creating true observation for
-        # sanity checking solver behavior. In general, this
-        # observation should be sampled from agent's observation
-        # model, as
+        # Here, we use observation based on true state for sanity
+        # checking solver behavior. In general, this observation
+        # should be sampled from agent's observation model, as
         #
         #    real_observation = tiger_problem.agent.observation_model.sample(tiger_problem.env.state, action)
         #
@@ -277,7 +276,8 @@ def test_planner(tiger_problem, planner, nsteps=3,
         print(">> Observation:",  real_observation)
         tiger_problem.agent.update_history(action, real_observation)
 
-        # If the planner is POMCP, planner.update also updates agent belief.
+        # Update the belief. If the planner is POMCP, planner.update
+        # also automatically updates agent belief.
         planner.update(tiger_problem.agent, action, real_observation)
         if isinstance(planner, pomdp_py.POUCT):
             print("Num sims:", planner.last_num_sims)
