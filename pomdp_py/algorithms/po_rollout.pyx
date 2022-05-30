@@ -63,7 +63,7 @@ cdef class PORollout(Planner):
         cdef float best_reward, reward_avg, total_discounted_reward
         cdef set legal_actions
         cdef list rewards
-        
+
         best_action, best_reward = None, float("-inf")
         legal_actions = self._agent.valid_actions(history=self._agent.history)
         for action in legal_actions:
@@ -77,7 +77,7 @@ cdef class PORollout(Planner):
                 best_action = action
                 best_reward = reward_avg
         return best_action, best_reward
-            
+
     cpdef _rollout(self, State state, int depth):
         # Rollout without a tree.
         cdef Action action
@@ -88,7 +88,7 @@ cdef class PORollout(Planner):
         cdef float reward
         cdef int nsteps
         cdef tuple history = self._agent.history
-        
+
         while depth <= self._max_depth:
             action = self._rollout_policy.rollout(state, history=history)
             next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
@@ -118,7 +118,7 @@ cdef class PORollout(Planner):
             agent.set_belief(particle_reinvigoration(new_belief,
                                                      len(agent.init_belief.particles),
                                                      state_transform_func=state_transform_func))
-            
+
     @property
     def update_agent_belief(self):
         """True if planner's update function also updates agent's
@@ -129,3 +129,10 @@ cdef class PORollout(Planner):
         """clear_agent(self)"""
         self._agent = None  # forget about current agent so that can plan for another agent.
         self._last_best_reward = float('-inf')
+
+    cpdef set_rollout_policy(self, RolloutPolicy rollout_policy):
+        """
+        set_rollout_policy(self, RolloutPolicy rollout_policy)
+        Updates the rollout policy to the given one
+        """
+        self._rollout_policy = rollout_policy

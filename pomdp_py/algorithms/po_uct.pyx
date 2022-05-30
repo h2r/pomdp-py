@@ -260,6 +260,13 @@ cdef class POUCT(Planner):
         self._agent = None  # forget about current agent so that can plan for another agent.
         self._last_num_sims = -1
 
+    cpdef set_rollout_policy(self, RolloutPolicy rollout_policy):
+        """
+        set_rollout_policy(self, RolloutPolicy rollout_policy)
+        Updates the rollout policy to the given one
+        """
+        self._rollout_policy = rollout_policy
+
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
         cdef Action action
         cdef tuple preference
