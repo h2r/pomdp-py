@@ -133,10 +133,10 @@ cdef class OOState(State):
         return self._hashcache
 
     def __getitem__(self, index):
-        raise NotImplemented
+        raise NotImplementedError
 
     def __len__(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_object_state(self, objid):
         """get_object_state(self, objid)
