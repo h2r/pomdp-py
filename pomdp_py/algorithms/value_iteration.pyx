@@ -45,7 +45,7 @@ cdef class _PolicyTreeNode:
                     trans_prob = self._agent.transition_model.probability(sp, s, self.action)
                     obsrv_prob = self._agent.observation_model.probability(o, sp, self.action)
                     if len(self.children) > 0:
-                        subtree_value = self.children[o].values[s]  # corresponds to V_{oi(p)} in paper
+                        subtree_value = self.children[o].values[sp]  # corresponds to V_{oi(p)} in paper
                     else:
                         subtree_value = 0.0
                     reward = self._agent.reward_model.sample(s, self.action, sp)
