@@ -9,7 +9,7 @@ import numpy as np
 import xml.etree.ElementTree as ET
 
 def to_pomdp_file(agent, output_path=None,
-                  discount_factor=0.95):
+                  discount_factor=0.95, float_precision=9):
     """
     Pass in an Agent, and use its components to generate
     a .pomdp file to `output_path`.
@@ -30,6 +30,8 @@ def to_pomdp_file(agent, output_path=None,
         output_path (str): The path of the output file to write in. Optional.
                            Default None.
         discount_factor (float): The discount factor
+        float_precision (int): Number of decimals for float to str conversion.
+                               Default 6.
     Returns:
         (list, list, list): The list of states, actions, observations that
            are ordered in the same way as they are in the .pomdp file.
@@ -42,7 +44,7 @@ def to_pomdp_file(agent, output_path=None,
     except NotImplementedError:
         raise ValueError("S, A, O must be enumerable for a given agent to convert to .pomdp format")
 
-    content = "discount: %f\n" % discount_factor
+    content = f"discount: %.{float_precision}f\n" % discount_factor
     content += "values: reward\n" # We only consider reward, not cost.
 
     list_of_states = " ".join(str(s) for s in all_states)
@@ -62,7 +64,7 @@ def to_pomdp_file(agent, output_path=None,
 
     # Starting belief state - they need to be normalized
     total_belief = sum(agent.belief[s] for s in all_states)
-    content += "start: %s\n" % (" ".join(["%f" % (agent.belief[s]/total_belief)
+    content += "start: %s\n" % (" ".join([f"%.{float_precision}f" % (agent.belief[s]/total_belief)
                                           for s in all_states]))
 
     # State transition probabilities - they need to be normalized
@@ -75,7 +77,7 @@ def to_pomdp_file(agent, output_path=None,
             total_prob = sum(probs)
             for i, s_next in enumerate(all_states):
                 prob_norm = probs[i] / total_prob
-                content += 'T : %s : %s : %s %f\n' % (a, s, s_next, prob_norm)
+                content += f'T : %s : %s : %s %.{float_precision}f\n' % (a, s, s_next, prob_norm)
 
     # Observation probabilities - they need to be normalized
     for s_next in all_states:
@@ -90,7 +92,7 @@ def to_pomdp_file(agent, output_path=None,
                 .format(s_next, a)
             for i, o in enumerate(all_observations):
                 prob_norm = probs[i] / total_prob
-                content += 'O : %s : %s : %s %f\n' % (a, s_next, o, prob_norm)
+                content += f'O : %s : %s : %s %.{float_precision}f\n' % (a, s_next, o, prob_norm)
 
     # Immediate rewards
     for s in all_states:
@@ -98,7 +100,7 @@ def to_pomdp_file(agent, output_path=None,
             for s_next in all_states:
                 # We will take the argmax reward, which works for deterministic rewards.
                 r = agent.reward_model.sample(s, a, s_next)
-                content += 'R : %s : %s : %s : *  %f\n' % (a, s, s_next, r)
+                content += f'R : %s : %s : %s : *  %.{float_precision}f\n' % (a, s, s_next, r)
 
     if output_path is not None:
         with open(output_path, "w") as f:
