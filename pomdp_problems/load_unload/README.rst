@@ -16,4 +16,4 @@ Figure from the paper:
 
 .. code-block::
 
-   python -m pomdp_py -r tag
+   python -m pomdp_py -r load_unload
