@@ -52,7 +52,7 @@ setup(name='pomdp-py',
       ext_modules=cythonize(extensions,
                             build_dir="build",
                             compiler_directives={'language_level' : "3"}),
-      package_data={"pomdp_py": ["*.pxd", "*.pyx"],
-                    "pomdp_problems": ["*.pxd", "*.pyx"]},
+      package_data={"pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
+                    "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"]},
       zip_safe=False
 )

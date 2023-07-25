@@ -10,6 +10,7 @@ Version 1.3.3 (07/25/2023)
 * Add :code:`__init__` signature for Environment in comments to be visible in docs
 * Fix :code:`s -> sp` in :py:mod:`~pomdp_py.algorithms.value_iteration.ValueIteration` (`pomdp-py#20 <https://github.com/h2r/pomdp-py/issues/20>`_)
 * Allow updating rollout policy for :py:mod:`~pomdp_py.algorithms.po_uct.POUCT` and :py:mod:`~pomdp_py.algorithms.pomcp.POMCP`
+* Fix in :code:`setup.py` so that wheel builds properly.
 * Minor bug fixes and documentation.
 
 
