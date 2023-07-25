@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Multi-Object Search (MOS) &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <title>Multi-Object Search (MOS) &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=253395cc" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Design Principles" href="design_principles.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -76,7 +74,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
@@ -113,7 +110,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -139,7 +136,7 @@
           <div class="body" role="main">
             
   <section id="multi-object-search-mos">
-<h1>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this headline">¶</a></h1>
+<h1>Multi-Object Search (MOS)<a class="headerlink" href="#multi-object-search-mos" title="Permalink to this heading">¶</a></h1>
 <p>The purpose of this example is to <strong>introduce the conventions</strong> when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
 We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.</p>
 <ul class="simple">
@@ -148,7 +145,7 @@ We will first introduce this task at relatively high level, then introduce the c
 <li><p><a class="reference internal" href="#try-it"><span class="std std-ref">Try it</span></a></p></li>
 </ul>
 <section id="problem-overview">
-<span id="overview"></span><h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this headline">¶</a></h2>
+<span id="overview"></span><h2>Problem overview<a class="headerlink" href="#problem-overview" title="Permalink to this heading">¶</a></h2>
 <figure class="align-default">
 <img alt="MOS illustration" src="_images/mos.png" />
 </figure>
@@ -168,7 +165,7 @@ three categories of actions:</p>
 <p>In the figure above, screenshots of frames in a run of the MOS task implemented in <cite>pomdp_py</cite> are shown. The solver is <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a>. From the first to the second image, the robot takes <cite>Look</cite> action and projects a fan-shaped sensing region. This leads to belief update (i.e. clearing of the red circles). A perfect observation model is used in this example run. The third image shows a later frame.</p>
 </section>
 <section id="implementing-this-pomdp-conventions">
-<span id="conventions"></span><h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this headline">¶</a></h2>
+<span id="conventions"></span><h2>Implementing this POMDP: Conventions<a class="headerlink" href="#implementing-this-pomdp-conventions" title="Permalink to this heading">¶</a></h2>
 <p>As described in the <a class="reference external" href="examples.tiger.html#Summary">Summary</a> section of
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger</span></a>, the procedure of using <cite>pomdp_py</cite> to implement a POMDP problem is:</p>
 <ol class="arabic simple">
@@ -215,9 +212,9 @@ where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="examples.tiger.html"><span class="doc">Tiger</span></a> for more detail).</p>
 </section>
 <section id="try-it">
-<span id="id2"></span><h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Try it<a class="headerlink" href="#try-it" title="Permalink to this heading">¶</a></h2>
 <p>To try out the MOS example problem:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m pomdp_problems.multi_object_search.problem
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pomdp_problems.multi_object_search.problem
 </pre></div>
 </div>
 <p>A gridworld with randomly placed obstacles, targets and robot initial pose is generated; The robot is equipped with either a disk-shape sensor or a laser sensor <a class="reference external" href="_modules/problems/multi_object_search/problem.html#unittest">[source]</a>. A command-line interface is not yet provided; Check <code class="xref py py-mod docutils literal notranslate"><span class="pre">interpret</span></code>,
@@ -226,12 +223,14 @@ where the logic of <cite>action-feedback loop</cite> is implemented (see
 <a class="reference internal" href="problems/pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.make_proximity_sensor" title="pomdp_problems.multi_object_search.env.env.make_proximity_sensor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">make_proximity_sensor</span></code></a>
 as well as previously linked source code
 for details about how to create your custom instance of the problem.</p>
-<p id="id3"><dl class="citation">
-<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In <em>2019 International Conference on Robotics and Automation (ICRA)</em>, 7194–7200. IEEE, 2019.</p>
-</dd>
-</dl>
-</p>
+<div class="docutils container" id="id3">
+<div role="list" class="citation-list">
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Arthur Wandzel, Yoonseon Oh, Michael Fishman, Nishanth Kumar, and Stefanie Tellex. Multi-object search using object-oriented pomdps. In <em>2019 International Conference on Robotics and Automation (ICRA)</em>, 7194–7200. IEEE, 2019.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -246,8 +245,8 @@ for details about how to create your custom instance of the problem.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/examples.mos.rst.txt"

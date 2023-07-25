@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tiger &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+    <title>Tiger &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=253395cc" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Multi-Object Search (MOS)" href="examples.mos.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -79,7 +77,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
@@ -116,7 +113,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -142,7 +139,7 @@
           <div class="body" role="main">
             
   <section id="tiger">
-<h1>Tiger<a class="headerlink" href="#tiger" title="Permalink to this headline">¶</a></h1>
+<h1>Tiger<a class="headerlink" href="#tiger" title="Permalink to this heading">¶</a></h1>
 <p>This is a classic POMDP problem, introduced in <span id="id1">[<a class="reference internal" href="index.html#id21" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span>. The description of the tiger problem is as follows: (Quote from <a class="reference external" href="https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf">POMDP:
 Introduction to Partially Observable Markov Decision Processes</a> by
 Kamalzadeh and Hahsler ):</p>
@@ -170,7 +167,7 @@ In pomdp_py, to define and solve a POMDP:</p>
 <p>For a simple POMDP like Tiger, it is encouraged to place the code for all components (e.g. state, action, observation and models) under the same Python module (i.e. the same <code class="code docutils literal notranslate"><span class="pre">.py</span></code> file).</p>
 </div>
 <section id="define-the-domain">
-<span id="id2"></span><h2>Define the domain<a class="headerlink" href="#define-the-domain" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Define the domain<a class="headerlink" href="#define-the-domain" title="Permalink to this heading">¶</a></h2>
 <p>We start by defining the domain (<span class="math notranslate nohighlight">\(S, A, O\)</span>). In <cite>pomdp_py</cite>, this is
 equivalent as defining three classes that inherit
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-mod docutils literal notranslate"><span class="pre">State</span></code></a>,
@@ -205,7 +202,7 @@ equivalent as defining three classes that inherit
 <p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#State">[source]</a></p>
 </section>
 <section id="define-the-models">
-<span id="id3"></span><h2>Define the models<a class="headerlink" href="#define-the-models" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>Define the models<a class="headerlink" href="#define-the-models" title="Permalink to this heading">¶</a></h2>
 <p>Next, we define the models (<span class="math notranslate nohighlight">\(T, O, R, \pi\)</span>). In <cite>pomdp_py</cite>, this is
 equivalent as defining classes that inherit
 <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ObservationModel</span></code></a>,
@@ -244,7 +241,7 @@ equivalent as defining classes that inherit
             <span class="k">return</span> <span class="n">Observation</span><span class="p">(</span><span class="n">next_state</span><span class="o">.</span><span class="n">other</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_all_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
 <span class="sd">        a solver that needs to enumerate over the observation</span>
 <span class="sd">        space (e.g. value iteration)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Observation</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -255,7 +252,7 @@ equivalent as defining classes that inherit
 <p>The <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TransitionModel</span></code></a> is deterministic. Similarly, we implement the <code class="code docutils literal notranslate"><span class="pre">sample</span></code> and <code class="code docutils literal notranslate"><span class="pre">probability</span></code> functions in the interface for this generative model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;According to problem spec, the world resets once</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;According to problem spec, the world resets once</span>
 <span class="sd">        action is open-left/open-right. Otherwise, it</span>
 <span class="sd">        stays the same&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
@@ -273,7 +270,7 @@ equivalent as defining classes that inherit
             <span class="k">return</span> <span class="n">State</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_all_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
 <span class="sd">        a solver that needs to enumerate over the</span>
 <span class="sd">        observation space (e.g. value iteration)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">State</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">}]</span>
@@ -299,7 +296,7 @@ and (2) without those two functions. But in general, the PolicyModel could
 be learned, or the action space is large so a probability distribution over
 it becomes important.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RolloutPolicy</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple policy model with uniform prior over a</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple policy model with uniform prior over a</span>
 <span class="sd">       small, finite action space&quot;&quot;&quot;</span>
     <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Action</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
               <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}}</span>
@@ -308,7 +305,7 @@ it becomes important.</p>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Treating this PolicyModel as a rollout policy&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Treating this PolicyModel as a rollout policy&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -368,7 +365,7 @@ it as follows. The interface for reward model does allow stochastic rewards.</p>
 <p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel">[source]</a></p>
 </section>
 <section id="define-the-pomdp">
-<h2>Define the POMDP<a class="headerlink" href="#define-the-pomdp" title="Permalink to this headline">¶</a></h2>
+<h2>Define the POMDP<a class="headerlink" href="#define-the-pomdp" title="Permalink to this heading">¶</a></h2>
 <p>With the models that we have defined, it is simple to define a POMDP for the Tiger
 problem; To do this, we need to define <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Agent</span></code></a>,
 and <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.Environment" title="pomdp_py.framework.basics.Environment"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Environment</span></code></a>. Note that you could just construct an agent and an environment and still be able to plan actions and simulate the environment.
@@ -376,7 +373,7 @@ This class is mostly just for code organization and is entirely optional.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TigerProblem</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMDP</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_noise</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;init_belief is a Distribution.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;init_belief is a Distribution.&quot;&quot;&quot;</span>
         <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Agent</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span>
                                <span class="n">PolicyModel</span><span class="p">(),</span>
                                <span class="n">TransitionModel</span><span class="p">(),</span>
@@ -406,7 +403,7 @@ organize the parameters that need to be passed into the constructors of
 </div>
 </section>
 <section id="instantiate-the-pomdp">
-<span id="instantiate"></span><h2>Instantiate the POMDP<a class="headerlink" href="#instantiate-the-pomdp" title="Permalink to this headline">¶</a></h2>
+<span id="instantiate"></span><h2>Instantiate the POMDP<a class="headerlink" href="#instantiate-the-pomdp" title="Permalink to this heading">¶</a></h2>
 <p>Now we have a definition of the Tiger problem. Now, we need to <cite>instantiate</cite>
 a problem by providing <cite>parameters</cite> for the models,
 the <cite>initial state</cite> of the environment, and the <cite>initial belief</cite> of the agent.</p>
@@ -426,7 +423,7 @@ and <span class="math notranslate nohighlight">\(O\)</span>, which have been des
 <p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#main">[source]</a></p>
 </section>
 <section id="solve-the-pomdp-instance">
-<span id="solve"></span><h2>Solve the POMDP instance<a class="headerlink" href="#solve-the-pomdp-instance" title="Permalink to this headline">¶</a></h2>
+<span id="solve"></span><h2>Solve the POMDP instance<a class="headerlink" href="#solve-the-pomdp-instance" title="Permalink to this heading">¶</a></h2>
 <p>To solve a POMDP with <cite>pomdp_py</cite>, here are the basic steps:</p>
 <ol class="arabic simple">
 <li><p>Create a planner (<a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Planner</span></code></a>)</p></li>
@@ -460,7 +457,7 @@ will result in the agent belief update as well. But for
 
 <span class="c1"># Steps 2-6; called in main()</span>
 <span class="k">def</span> <span class="nf">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">planner</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-   <span class="sd">&quot;&quot;&quot;Runs the action-feedback loop of Tiger problem POMDP&quot;&quot;&quot;</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;Runs the action-feedback loop of Tiger problem POMDP&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>  <span class="c1"># Step 6</span>
         <span class="c1"># Step 2</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
@@ -515,7 +512,7 @@ will result in the agent belief update as well. But for
 <p><a class="reference external" href="_modules/pomdp_problems/tiger/tiger_problem.html#test_planner">[source]</a></p>
 </section>
 <section id="summary">
-<span id="id15"></span><h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<span id="id15"></span><h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In short, to use <cite>pomdp_py</cite> to define a POMDP problem and solve an instance of the problem,</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#define-the-domain"><span class="std std-ref">Define the domain</span></a></p></li>
@@ -523,21 +520,27 @@ will result in the agent belief update as well. But for
 <li><p><a class="reference internal" href="#instantiate"><span class="std std-ref">Instantiate the POMDP</span></a></p></li>
 <li><p><a class="reference internal" href="#solve"><span class="std std-ref">Solve the POMDP instance</span></a></p></li>
 </ol>
-<p id="id16"><dl class="citation">
-<dt class="label" id="id35"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
-</dd>
-<dt class="label" id="id37"><span class="brackets">2</span><span class="fn-backref">(<a href="#id6">1</a>,<a href="#id10">2</a>)</span></dt>
-<dd><p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
-</dd>
-<dt class="label" id="id59"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
-<dd><p>David Abel, David Ellis Hershkowitz, Gabriel Barth-Maron, Stephen Brawner, Kevin O'Farrell, James MacGlashan, and Stefanie Tellex. Goal-based action priors. In <em>Twenty-Fifth International Conference on Automated Planning and Scheduling</em>. 2015.</p>
-</dd>
-<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id8">4</a></span></dt>
-<dd><p>Yuchen Xiao, Sammie Katt, Andreas ten Pas, Shengjian Chen, and Christopher Amato. Online planning for target object search in clutter under partial observability. In <em>Proceedings of the International Conference on Robotics and Automation</em>. 2019.</p>
-</dd>
-</dl>
-</p>
+<div class="docutils container" id="id16">
+<div role="list" class="citation-list">
+<div class="citation" id="id35" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
+</div>
+<div class="citation" id="id37" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id6">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<p>David Silver and Joel Veness. Monte-carlo planning in large pomdps. In <em>Advances in neural information processing systems</em>, 2164–2172. 2010.</p>
+</div>
+<div class="citation" id="id59" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">3</a><span class="fn-bracket">]</span></span>
+<p>David Abel, David Ellis Hershkowitz, Gabriel Barth-Maron, Stephen Brawner, Kevin O'Farrell, James MacGlashan, and Stefanie Tellex. Goal-based action priors. In <em>Twenty-Fifth International Conference on Automated Planning and Scheduling</em>. 2015.</p>
+</div>
+<div class="citation" id="id22" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
+<p>Yuchen Xiao, Sammie Katt, Andreas ten Pas, Shengjian Chen, and Christopher Amato. Online planning for target object search in clutter under partial observability. In <em>Proceedings of the International Conference on Robotics and Automation</em>. 2019.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -552,8 +555,8 @@ will result in the agent belief update as well. But for
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/examples.tiger.rst.txt"

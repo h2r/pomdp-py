@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_py.utils package" href="pomdp_py.utils.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -58,9 +56,59 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">pomdp_py.representations.distribution package</a><ul>
-<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram"><code class="docutils literal notranslate"><span class="pre">Histogram</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.__getitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.__setitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.get_histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.get_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.histogram</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.is_normalized"><code class="docutils literal notranslate"><span class="pre">Histogram.is_normalized()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.mpe"><code class="docutils literal notranslate"><span class="pre">Histogram.mpe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.histogram.Histogram.random"><code class="docutils literal notranslate"><span class="pre">Histogram.random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles"><code class="docutils literal notranslate"><span class="pre">Particles</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.add"><code class="docutils literal notranslate"><span class="pre">Particles.add()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.from_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.get_abstraction"><code class="docutils literal notranslate"><span class="pre">Particles.get_abstraction()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.get_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.get_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.particles"><code class="docutils literal notranslate"><span class="pre">Particles.particles</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.Particles.random"><code class="docutils literal notranslate"><span class="pre">Particles.random()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.__setitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.add"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.add()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.condense"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.condense()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.from_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.get_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.mpe"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.mpe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.particles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.particles</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.random"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.random()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.values"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.values</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.weights"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.weights</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian"><code class="docutils literal notranslate"><span class="pre">Gaussian</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.cov"><code class="docutils literal notranslate"><span class="pre">Gaussian.cov</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.covariance"><code class="docutils literal notranslate"><span class="pre">Gaussian.covariance</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.mean"><code class="docutils literal notranslate"><span class="pre">Gaussian.mean</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.mpe"><code class="docutils literal notranslate"><span class="pre">Gaussian.mpe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.random"><code class="docutils literal notranslate"><span class="pre">Gaussian.random()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.gaussian.Gaussian.sigma"><code class="docutils literal notranslate"><span class="pre">Gaussian.sigma</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -72,7 +120,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -122,7 +169,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -148,17 +195,17 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-representations-distribution-package">
-<h1>pomdp_py.representations.distribution package<a class="headerlink" href="#pomdp-py-representations-distribution-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_py.representations.distribution package<a class="headerlink" href="#pomdp-py-representations-distribution-package" title="Permalink to this heading">¶</a></h1>
 <section id="module-pomdp_py.representations.distribution.histogram">
-<span id="pomdp-py-representations-distribution-histogram-module"></span><h2>pomdp_py.representations.distribution.histogram module<a class="headerlink" href="#module-pomdp_py.representations.distribution.histogram" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-representations-distribution-histogram-module"></span><h2>pomdp_py.representations.distribution.histogram module<a class="headerlink" href="#module-pomdp_py.representations.distribution.histogram" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.histogram.Histogram">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.representations.distribution.histogram.</span></span><span class="sig-name descname"><span class="pre">Histogram</span></span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a></p>
 <p>Histogram representation of a probability distribution.</p>
 <p>__init__(self, histogram)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>histogram</strong> (<em>dict</em>) – variable value to probability</p>
 </dd>
 </dl>
@@ -187,7 +234,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.histogram.Histogram.is_normalized">
-<span class="sig-name descname"><span class="pre">is_normalized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.is_normalized" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_normalized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.histogram.Histogram.is_normalized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if this distribution is normalized</p>
 </dd></dl>
 
@@ -208,7 +255,7 @@ in the histogram</p>
 
 </section>
 <section id="module-pomdp_py.representations.distribution.particles">
-<span id="pomdp-py-representations-distribution-particles-module"></span><h2>pomdp_py.representations.distribution.particles module<a class="headerlink" href="#module-pomdp_py.representations.distribution.particles" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-representations-distribution-particles-module"></span><h2>pomdp_py.representations.distribution.particles module<a class="headerlink" href="#module-pomdp_py.representations.distribution.particles" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.Particles">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.representations.distribution.particles.</span></span><span class="sig-name descname"><span class="pre">Particles</span></span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles" title="Permalink to this definition">¶</a></dt>
@@ -217,7 +264,7 @@ a distribution <span class="math notranslate nohighlight">\(\Pr(X)\)</span>. Eac
 Inherits <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a>.</p>
 <p>__init__(self, particles, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>particles</strong> (<em>list</em>) – List of values.</p></li>
 <li><p><strong>kwargs</strong> – see __init__() of <a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles" title="pomdp_py.representations.distribution.particles.WeightedParticles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a>.</p></li>
@@ -232,7 +279,7 @@ Inherits <a class="reference internal" href="#pomdp_py.representations.distribut
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.Particles.from_histogram">
-<span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.Particles.from_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a pomdp_py.Histogram return a particle representation of it,
 which is an approximation</p>
 </dd></dl>
@@ -273,7 +320,7 @@ multiple values are present for the same value, will interpret the
 probability at X=x as the average of those weights.</p>
 <p>__init__(self, list particles, str approx_method=”none”, distance_func=None)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>particles</strong> (<em>list</em>) – List of (value, weight) tuples. The weight represents
 the likelihood that the value is drawn from the underlying distribution.</p></li>
@@ -313,7 +360,7 @@ and weights aggregated (taken average).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram">
-<span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a pomdp_py.Histogram return a particle representation of it,
 which is an approximation</p>
 </dd></dl>
@@ -355,11 +402,11 @@ which is an approximation</p>
 
 </section>
 <section id="module-pomdp_py.representations.distribution.gaussian">
-<span id="pomdp-py-representations-distribution-gaussian-module"></span><h2>pomdp_py.representations.distribution.gaussian module<a class="headerlink" href="#module-pomdp_py.representations.distribution.gaussian" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-representations-distribution-gaussian-module"></span><h2>pomdp_py.representations.distribution.gaussian module<a class="headerlink" href="#module-pomdp_py.representations.distribution.gaussian" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.gaussian.Gaussian">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.representations.distribution.gaussian.</span></span><span class="sig-name descname"><span class="pre">Gaussian</span></span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a></p>
 <p>Note that Gaussian distribution is defined over a vector of numerical variables,
 but not a State variable.</p>
 <p>__init__(self, mean, cov)</p>
@@ -368,13 +415,13 @@ but not a State variable.</p>
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate the probability of given value</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>value</strong> (<em>list</em><em> or </em><em>array like</em>) – </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The density of multivariate Gaussian.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -434,8 +481,8 @@ a Gaussian distribution to have a given probability.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/api/pomdp_py.representations.distribution.rst.txt"

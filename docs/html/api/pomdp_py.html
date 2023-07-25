@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <title>pomdp_py package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_py.algorithms package" href="pomdp_py.algorithms.html" />
@@ -38,7 +36,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -105,7 +103,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -131,34 +129,327 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-package">
-<h1>pomdp_py package<a class="headerlink" href="#pomdp-py-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_py package<a class="headerlink" href="#pomdp-py-package" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.algorithms.html">pomdp_py.algorithms package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_rollout">pomdp_py.algorithms.po_rollout module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_uct">pomdp_py.algorithms.po_uct module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.bsp.blqr">pomdp_py.algorithms.bsp.blqr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_rollout">pomdp_py.algorithms.po_rollout module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout"><code class="docutils literal notranslate"><span class="pre">PORollout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.clear_agent"><code class="docutils literal notranslate"><span class="pre">PORollout.clear_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.last_best_reward"><code class="docutils literal notranslate"><span class="pre">PORollout.last_best_reward</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.plan"><code class="docutils literal notranslate"><span class="pre">PORollout.plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.set_rollout_policy"><code class="docutils literal notranslate"><span class="pre">PORollout.set_rollout_policy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.update"><code class="docutils literal notranslate"><span class="pre">PORollout.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_rollout.PORollout.update_agent_belief"><code class="docutils literal notranslate"><span class="pre">PORollout.update_agent_belief</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.po_uct">pomdp_py.algorithms.po_uct module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior"><code class="docutils literal notranslate"><span class="pre">ActionPrior</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior.get_preferred_actions"><code class="docutils literal notranslate"><span class="pre">ActionPrior.get_preferred_actions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT"><code class="docutils literal notranslate"><span class="pre">POUCT</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.clear_agent"><code class="docutils literal notranslate"><span class="pre">POUCT.clear_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.last_num_sims"><code class="docutils literal notranslate"><span class="pre">POUCT.last_num_sims</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.last_planning_time"><code class="docutils literal notranslate"><span class="pre">POUCT.last_planning_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.plan"><code class="docutils literal notranslate"><span class="pre">POUCT.plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.set_rollout_policy"><code class="docutils literal notranslate"><span class="pre">POUCT.set_rollout_policy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.update"><code class="docutils literal notranslate"><span class="pre">POUCT.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT.updates_agent_belief"><code class="docutils literal notranslate"><span class="pre">POUCT.updates_agent_belief</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.QNode"><code class="docutils literal notranslate"><span class="pre">QNode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RandomRollout"><code class="docutils literal notranslate"><span class="pre">RandomRollout</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RandomRollout.rollout"><code class="docutils literal notranslate"><span class="pre">RandomRollout.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="docutils literal notranslate"><span class="pre">RolloutPolicy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy.rollout"><code class="docutils literal notranslate"><span class="pre">RolloutPolicy.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RootVNode"><code class="docutils literal notranslate"><span class="pre">RootVNode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RootVNode.from_vnode"><code class="docutils literal notranslate"><span class="pre">RootVNode.from_vnode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RootVNode.history"><code class="docutils literal notranslate"><span class="pre">RootVNode.history</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode"><code class="docutils literal notranslate"><span class="pre">TreeNode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode.children"><code class="docutils literal notranslate"><span class="pre">TreeNode.children</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode.num_visits"><code class="docutils literal notranslate"><span class="pre">TreeNode.num_visits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.TreeNode.value"><code class="docutils literal notranslate"><span class="pre">TreeNode.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.VNode"><code class="docutils literal notranslate"><span class="pre">VNode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.VNode.argmax"><code class="docutils literal notranslate"><span class="pre">VNode.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.VNode.print_children_value"><code class="docutils literal notranslate"><span class="pre">VNode.print_children_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.VNode.value"><code class="docutils literal notranslate"><span class="pre">VNode.value</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.pomcp">pomdp_py.algorithms.pomcp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP"><code class="docutils literal notranslate"><span class="pre">POMCP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP.plan"><code class="docutils literal notranslate"><span class="pre">POMCP.plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP.update"><code class="docutils literal notranslate"><span class="pre">POMCP.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP.update_agent_belief"><code class="docutils literal notranslate"><span class="pre">POMCP.update_agent_belief</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.RootVNodeParticles"><code class="docutils literal notranslate"><span class="pre">RootVNodeParticles</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.RootVNodeParticles.belief"><code class="docutils literal notranslate"><span class="pre">RootVNodeParticles.belief</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.RootVNodeParticles.from_vnode"><code class="docutils literal notranslate"><span class="pre">RootVNodeParticles.from_vnode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.VNodeParticles"><code class="docutils literal notranslate"><span class="pre">VNodeParticles</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.VNodeParticles.belief"><code class="docutils literal notranslate"><span class="pre">VNodeParticles.belief</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.value_iteration">pomdp_py.algorithms.value_iteration module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration"><code class="docutils literal notranslate"><span class="pre">ValueIteration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration.plan"><code class="docutils literal notranslate"><span class="pre">ValueIteration.plan()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#module-pomdp_py.algorithms.bsp.blqr">pomdp_py.algorithms.bsp.blqr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR"><code class="docutils literal notranslate"><span class="pre">BLQR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo"><code class="docutils literal notranslate"><span class="pre">BLQR.ekf_update_mlo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.integrate_belief_segment"><code class="docutils literal notranslate"><span class="pre">BLQR.integrate_belief_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function"><code class="docutils literal notranslate"><span class="pre">BLQR.segmented_cost_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.create_plan"><code class="docutils literal notranslate"><span class="pre">BLQR.create_plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.interpret_sqp_plan"><code class="docutils literal notranslate"><span class="pre">BLQR.interpret_sqp_plan()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.algorithms.html#pomdp-py-algorithms-visual-visual-module">pomdp_py.algorithms.visual.visual module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.framework.html">pomdp_py.framework package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.basics">pomdp_py.framework.basics module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.oopomdp">pomdp_py.framework.oopomdp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.planner">pomdp_py.framework.planner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.basics">pomdp_py.framework.basics module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.add_attr"><code class="docutils literal notranslate"><span class="pre">Agent.add_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.all_actions"><code class="docutils literal notranslate"><span class="pre">Agent.all_actions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.all_observations"><code class="docutils literal notranslate"><span class="pre">Agent.all_observations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.all_states"><code class="docutils literal notranslate"><span class="pre">Agent.all_states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.belief"><code class="docutils literal notranslate"><span class="pre">Agent.belief</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.history"><code class="docutils literal notranslate"><span class="pre">Agent.history</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.init_belief"><code class="docutils literal notranslate"><span class="pre">Agent.init_belief</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.sample_belief"><code class="docutils literal notranslate"><span class="pre">Agent.sample_belief()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.set_belief"><code class="docutils literal notranslate"><span class="pre">Agent.set_belief()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.update"><code class="docutils literal notranslate"><span class="pre">Agent.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Agent.update_history"><code class="docutils literal notranslate"><span class="pre">Agent.update_history()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel"><code class="docutils literal notranslate"><span class="pre">BlackboxModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel.argmax"><code class="docutils literal notranslate"><span class="pre">BlackboxModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.BlackboxModel.sample"><code class="docutils literal notranslate"><span class="pre">BlackboxModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Distribution"><code class="docutils literal notranslate"><span class="pre">Distribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Distribution.__getitem__"><code class="docutils literal notranslate"><span class="pre">Distribution.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Distribution.__setitem__"><code class="docutils literal notranslate"><span class="pre">Distribution.__setitem__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.apply_transition"><code class="docutils literal notranslate"><span class="pre">Environment.apply_transition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.blackbox_model"><code class="docutils literal notranslate"><span class="pre">Environment.blackbox_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.cur_state"><code class="docutils literal notranslate"><span class="pre">Environment.cur_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.provide_observation"><code class="docutils literal notranslate"><span class="pre">Environment.provide_observation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.reward_model"><code class="docutils literal notranslate"><span class="pre">Environment.reward_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.state"><code class="docutils literal notranslate"><span class="pre">Environment.state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.state_transition"><code class="docutils literal notranslate"><span class="pre">Environment.state_transition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Environment.transition_model"><code class="docutils literal notranslate"><span class="pre">Environment.transition_model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution.argmax"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution.get_histogram"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.get_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution.mpe"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.mpe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation"><code class="docutils literal notranslate"><span class="pre">Observation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel"><code class="docutils literal notranslate"><span class="pre">ObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">ObservationModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_all_observations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">ObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">ObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Option"><code class="docutils literal notranslate"><span class="pre">Option</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Option.initiation"><code class="docutils literal notranslate"><span class="pre">Option.initiation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Option.policy"><code class="docutils literal notranslate"><span class="pre">Option.policy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Option.sample"><code class="docutils literal notranslate"><span class="pre">Option.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Option.termination"><code class="docutils literal notranslate"><span class="pre">Option.termination()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.POMDP"><code class="docutils literal notranslate"><span class="pre">POMDP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel"><code class="docutils literal notranslate"><span class="pre">PolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">PolicyModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_all_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">PolicyModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">PolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel.update"><code class="docutils literal notranslate"><span class="pre">PolicyModel.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel"><code class="docutils literal notranslate"><span class="pre">RewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">RewardModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">RewardModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel.probability"><code class="docutils literal notranslate"><span class="pre">RewardModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State"><code class="docutils literal notranslate"><span class="pre">State</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel"><code class="docutils literal notranslate"><span class="pre">TransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">TransitionModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_all_states()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.sample_explict_models"><code class="docutils literal notranslate"><span class="pre">sample_explict_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.sample_generative_model"><code class="docutils literal notranslate"><span class="pre">sample_generative_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.oopomdp">pomdp_py.framework.oopomdp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief"><code class="docutils literal notranslate"><span class="pre">OOBelief</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOBelief.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.__setitem__"><code class="docutils literal notranslate"><span class="pre">OOBelief.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.b"><code class="docutils literal notranslate"><span class="pre">OOBelief.b()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.mpe"><code class="docutils literal notranslate"><span class="pre">OOBelief.mpe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.object_belief"><code class="docutils literal notranslate"><span class="pre">OOBelief.object_belief()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.object_beliefs"><code class="docutils literal notranslate"><span class="pre">OOBelief.object_beliefs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.random"><code class="docutils literal notranslate"><span class="pre">OOBelief.random()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOBelief.set_object_belief"><code class="docutils literal notranslate"><span class="pre">OOBelief.set_object_belief()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservation"><code class="docutils literal notranslate"><span class="pre">OOObservation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservation.factor"><code class="docutils literal notranslate"><span class="pre">OOObservation.factor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservation.merge"><code class="docutils literal notranslate"><span class="pre">OOObservation.merge()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel"><code class="docutils literal notranslate"><span class="pre">OOObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.observation_models"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.observation_models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOPOMDP"><code class="docutils literal notranslate"><span class="pre">OOPOMDP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState"><code class="docutils literal notranslate"><span class="pre">OOState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOState.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.copy"><code class="docutils literal notranslate"><span class="pre">OOState.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.get_object_attribute"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.get_object_class"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_class()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.get_object_state"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.s"><code class="docutils literal notranslate"><span class="pre">OOState.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.set_object_state"><code class="docutils literal notranslate"><span class="pre">OOState.set_object_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOState.situation"><code class="docutils literal notranslate"><span class="pre">OOState.situation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOTransitionModel.transition_models"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.transition_models</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState"><code class="docutils literal notranslate"><span class="pre">ObjectState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState.__getitem__"><code class="docutils literal notranslate"><span class="pre">ObjectState.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState.__setitem__"><code class="docutils literal notranslate"><span class="pre">ObjectState.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.ObjectState.copy"><code class="docutils literal notranslate"><span class="pre">ObjectState.copy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.framework.html#module-pomdp_py.framework.planner">pomdp_py.framework.planner module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner"><code class="docutils literal notranslate"><span class="pre">Planner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner.plan"><code class="docutils literal notranslate"><span class="pre">Planner.plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner.update"><code class="docutils literal notranslate"><span class="pre">Planner.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner.updates_agent_belief"><code class="docutils literal notranslate"><span class="pre">Planner.updates_agent_belief()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.representations.html">pomdp_py.representations package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.belief.html">pomdp_py.representations.belief package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.particles">pomdp_py.representations.belief.particles module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.abstraction_over_histogram"><code class="docutils literal notranslate"><span class="pre">abstraction_over_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.update_histogram_belief"><code class="docutils literal notranslate"><span class="pre">update_histogram_belief()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.particles">pomdp_py.representations.belief.particles module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.abstraction_over_particles"><code class="docutils literal notranslate"><span class="pre">abstraction_over_particles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.particle_reinvigoration"><code class="docutils literal notranslate"><span class="pre">particle_reinvigoration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.update_particles_belief"><code class="docutils literal notranslate"><span class="pre">update_particles_belief()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html">pomdp_py.representations.distribution package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram"><code class="docutils literal notranslate"><span class="pre">Histogram</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.__getitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__getitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.__setitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__setitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.get_histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.get_histogram()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.histogram</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.is_normalized"><code class="docutils literal notranslate"><span class="pre">Histogram.is_normalized()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.mpe"><code class="docutils literal notranslate"><span class="pre">Histogram.mpe()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.random"><code class="docutils literal notranslate"><span class="pre">Histogram.random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles"><code class="docutils literal notranslate"><span class="pre">Particles</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.add"><code class="docutils literal notranslate"><span class="pre">Particles.add()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.from_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.from_histogram()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.get_abstraction"><code class="docutils literal notranslate"><span class="pre">Particles.get_abstraction()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.get_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.get_histogram()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.particles"><code class="docutils literal notranslate"><span class="pre">Particles.particles</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.random"><code class="docutils literal notranslate"><span class="pre">Particles.random()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__getitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.__setitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__setitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.add"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.add()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.condense"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.condense()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.from_histogram()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.get_histogram()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.mpe"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.mpe()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.particles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.particles</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.random"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.random()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.values"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.values</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.weights"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.weights</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian"><code class="docutils literal notranslate"><span class="pre">Gaussian</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__getitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__setitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.cov"><code class="docutils literal notranslate"><span class="pre">Gaussian.cov</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.covariance"><code class="docutils literal notranslate"><span class="pre">Gaussian.covariance</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.mean"><code class="docutils literal notranslate"><span class="pre">Gaussian.mean</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.mpe"><code class="docutils literal notranslate"><span class="pre">Gaussian.mpe()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.random"><code class="docutils literal notranslate"><span class="pre">Gaussian.random()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.sigma"><code class="docutils literal notranslate"><span class="pre">Gaussian.sigma</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,19 +463,196 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.colors">pomdp_py.utils.colors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#pomdp-py-utils-cython-utils-cpython-37m-x86-64-linux-gnu-module">pomdp_py.utils.cython_utils.cpython-37m-x86_64-linux-gnu module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.cython_utils">pomdp_py.utils.cython_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.debugging">pomdp_py.utils.debugging module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#treedebugger">TreeDebugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.colors">pomdp_py.utils.colors module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.lighter"><code class="docutils literal notranslate"><span class="pre">lighter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.rgb_to_hex"><code class="docutils literal notranslate"><span class="pre">rgb_to_hex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.hex_to_rgb"><code class="docutils literal notranslate"><span class="pre">hex_to_rgb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.inverse_color_rgb"><code class="docutils literal notranslate"><span class="pre">inverse_color_rgb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.inverse_color_hex"><code class="docutils literal notranslate"><span class="pre">inverse_color_hex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.colors.random_unique_color"><code class="docutils literal notranslate"><span class="pre">random_unique_color()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.math">pomdp_py.utils.math module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.misc">pomdp_py.utils.misc module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.plotting">pomdp_py.utils.plotting module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.templates">pomdp_py.utils.templates module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.test_utils">pomdp_py.utils.test_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.typ">pomdp_py.utils.typ module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#pomdp-py-utils-cython-utils-cpython-37m-x86-64-linux-gnu-module">pomdp_py.utils.cython_utils.cpython-37m-x86_64-linux-gnu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.cython_utils">pomdp_py.utils.cython_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.cython_utils.det_dict_hash"><code class="docutils literal notranslate"><span class="pre">det_dict_hash()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.debugging">pomdp_py.utils.debugging module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#treedebugger">TreeDebugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger"><code class="docutils literal notranslate"><span class="pre">TreeDebugger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.num_nodes"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.num_nodes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.depth"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.d"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.d</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.num_layers"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.num_layers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.nl"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.nl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.nn"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.nn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.nq"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.nq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.nv"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.nv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.l"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.l()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.layer"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.leaf"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.leaf</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.step"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.s"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.back"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.b"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.root"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.root</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.r"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.r</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.c"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.p"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.p()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.pp"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.pp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mbp"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.mbp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.pm"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.pm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_sequence"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.mark_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.mark()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_path"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.mark_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.markp"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.markp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.clear"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.clear</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.bestseq"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.bestseq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.bestseqd"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.bestseqd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.single_node_str"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.single_node_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.preferred_actions"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.preferred_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path_to"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.path_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.tree_stats"><code class="docutils literal notranslate"><span class="pre">TreeDebugger.tree_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.sorted_by_str"><code class="docutils literal notranslate"><span class="pre">sorted_by_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.debugging.interpret_color"><code class="docutils literal notranslate"><span class="pre">interpret_color()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.math">pomdp_py.utils.math module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.vec"><code class="docutils literal notranslate"><span class="pre">vec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.proj"><code class="docutils literal notranslate"><span class="pre">proj()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.R_x"><code class="docutils literal notranslate"><span class="pre">R_x()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.R_y"><code class="docutils literal notranslate"><span class="pre">R_y()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.R_z"><code class="docutils literal notranslate"><span class="pre">R_z()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.T"><code class="docutils literal notranslate"><span class="pre">T()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.to_radians"><code class="docutils literal notranslate"><span class="pre">to_radians()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.R_between"><code class="docutils literal notranslate"><span class="pre">R_between()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.approx_equal"><code class="docutils literal notranslate"><span class="pre">approx_equal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.math.euclidean_dist"><code class="docutils literal notranslate"><span class="pre">euclidean_dist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.misc">pomdp_py.utils.misc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.remap"><code class="docutils literal notranslate"><span class="pre">remap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.json_safe"><code class="docutils literal notranslate"><span class="pre">json_safe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.safe_slice"><code class="docutils literal notranslate"><span class="pre">safe_slice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.similar"><code class="docutils literal notranslate"><span class="pre">similar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char"><code class="docutils literal notranslate"><span class="pre">special_char</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.left"><code class="docutils literal notranslate"><span class="pre">special_char.left</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.up"><code class="docutils literal notranslate"><span class="pre">special_char.up</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.right"><code class="docutils literal notranslate"><span class="pre">special_char.right</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.down"><code class="docutils literal notranslate"><span class="pre">special_char.down</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longleft"><code class="docutils literal notranslate"><span class="pre">special_char.longleft</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longright"><code class="docutils literal notranslate"><span class="pre">special_char.longright</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.hline"><code class="docutils literal notranslate"><span class="pre">special_char.hline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.vline"><code class="docutils literal notranslate"><span class="pre">special_char.vline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.bottomleft"><code class="docutils literal notranslate"><span class="pre">special_char.bottomleft</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longbottomleft"><code class="docutils literal notranslate"><span class="pre">special_char.longbottomleft</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.topleft"><code class="docutils literal notranslate"><span class="pre">special_char.topleft</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longtopleft"><code class="docutils literal notranslate"><span class="pre">special_char.longtopleft</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.topright"><code class="docutils literal notranslate"><span class="pre">special_char.topright</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longtopright"><code class="docutils literal notranslate"><span class="pre">special_char.longtopright</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.bottomright"><code class="docutils literal notranslate"><span class="pre">special_char.bottomright</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.longbottomright"><code class="docutils literal notranslate"><span class="pre">special_char.longbottomright</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.intersect"><code class="docutils literal notranslate"><span class="pre">special_char.intersect</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.topt"><code class="docutils literal notranslate"><span class="pre">special_char.topt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.leftt"><code class="docutils literal notranslate"><span class="pre">special_char.leftt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.rightt"><code class="docutils literal notranslate"><span class="pre">special_char.rightt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.bottomt"><code class="docutils literal notranslate"><span class="pre">special_char.bottomt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.shadebar"><code class="docutils literal notranslate"><span class="pre">special_char.shadebar</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.misc.special_char.SUBSCRIPT"><code class="docutils literal notranslate"><span class="pre">special_char.SUBSCRIPT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.plotting">pomdp_py.utils.plotting module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.plotting.plot_points"><code class="docutils literal notranslate"><span class="pre">plot_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.plotting.save_plot"><code class="docutils literal notranslate"><span class="pre">save_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.plotting.plot_polygons"><code class="docutils literal notranslate"><span class="pre">plot_polygons()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.plotting.plot_line"><code class="docutils literal notranslate"><span class="pre">plot_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.plotting.plot_circle"><code class="docutils literal notranslate"><span class="pre">plot_circle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.templates">pomdp_py.utils.templates module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.SimpleState"><code class="docutils literal notranslate"><span class="pre">SimpleState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.SimpleAction"><code class="docutils literal notranslate"><span class="pre">SimpleAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.SimpleObservation"><code class="docutils literal notranslate"><span class="pre">SimpleObservation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetTransitionModel"><code class="docutils literal notranslate"><span class="pre">DetTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">DetTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">DetTransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetObservationModel"><code class="docutils literal notranslate"><span class="pre">DetObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">DetObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">DetObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetRewardModel"><code class="docutils literal notranslate"><span class="pre">DetRewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetRewardModel.reward_func"><code class="docutils literal notranslate"><span class="pre">DetRewardModel.reward_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">DetRewardModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.DetRewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">DetRewardModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.UniformPolicyModel"><code class="docutils literal notranslate"><span class="pre">UniformPolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.UniformPolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">UniformPolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.UniformPolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">UniformPolicyModel.get_all_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.UniformPolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">UniformPolicyModel.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel"><code class="docutils literal notranslate"><span class="pre">TabularTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TabularTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TabularTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TabularTransitionModel.get_all_states()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularObservationModel"><code class="docutils literal notranslate"><span class="pre">TabularObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">TabularObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">TabularObservationModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">TabularObservationModel.get_all_observations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularRewardModel"><code class="docutils literal notranslate"><span class="pre">TabularRewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.templates.TabularRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">TabularRewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.test_utils">pomdp_py.utils.test_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.test_utils.remove_files"><code class="docutils literal notranslate"><span class="pre">remove_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.test_utils.make_tiger"><code class="docutils literal notranslate"><span class="pre">make_tiger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils.typ">pomdp_py.utils.typ module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors"><code class="docutils literal notranslate"><span class="pre">bcolors</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.WHITE"><code class="docutils literal notranslate"><span class="pre">bcolors.WHITE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.CYAN"><code class="docutils literal notranslate"><span class="pre">bcolors.CYAN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.MAGENTA"><code class="docutils literal notranslate"><span class="pre">bcolors.MAGENTA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.BLUE"><code class="docutils literal notranslate"><span class="pre">bcolors.BLUE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.GREEN"><code class="docutils literal notranslate"><span class="pre">bcolors.GREEN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.YELLOW"><code class="docutils literal notranslate"><span class="pre">bcolors.YELLOW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.RED"><code class="docutils literal notranslate"><span class="pre">bcolors.RED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.BOLD"><code class="docutils literal notranslate"><span class="pre">bcolors.BOLD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.ENDC"><code class="docutils literal notranslate"><span class="pre">bcolors.ENDC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.disable"><code class="docutils literal notranslate"><span class="pre">bcolors.disable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bcolors.s"><code class="docutils literal notranslate"><span class="pre">bcolors.s()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.info"><code class="docutils literal notranslate"><span class="pre">info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.note"><code class="docutils literal notranslate"><span class="pre">note()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.error"><code class="docutils literal notranslate"><span class="pre">error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.warning"><code class="docutils literal notranslate"><span class="pre">warning()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.success"><code class="docutils literal notranslate"><span class="pre">success()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.bold"><code class="docutils literal notranslate"><span class="pre">bold()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.cyan"><code class="docutils literal notranslate"><span class="pre">cyan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.magenta"><code class="docutils literal notranslate"><span class="pre">magenta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.blue"><code class="docutils literal notranslate"><span class="pre">blue()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.green"><code class="docutils literal notranslate"><span class="pre">green()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.yellow"><code class="docutils literal notranslate"><span class="pre">yellow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.red"><code class="docutils literal notranslate"><span class="pre">red()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.utils.html#pomdp_py.utils.typ.white"><code class="docutils literal notranslate"><span class="pre">white()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.utils.html#module-pomdp_py.utils">Module contents</a></li>
 </ul>
 </li>
@@ -203,8 +671,8 @@
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/api/pomdp_py.rst.txt"

@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_problems.rocksample.cythonize package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <title>pomdp_problems.rocksample.cythonize package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tiger" href="pomdp_problems.tiger.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -61,7 +59,77 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-37m-x86-64-linux-gnu-module">pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-37m-x86_64-linux-gnu module</a></li>
 <li><a class="reference internal" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-38-x86-64-linux-gnu-module">pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-38-x86_64-linux-gnu module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.rocksample.cythonize.rocksample_problem">pomdp_problems.rocksample.cythonize.rocksample_problem module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.rocksample.cythonize.rocksample_problem">pomdp_problems.rocksample.cythonize.rocksample_problem module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction"><code class="docutils literal notranslate"><span class="pre">CheckAction</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction.rock_id"><code class="docutils literal notranslate"><span class="pre">CheckAction.rock_id</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction"><code class="docutils literal notranslate"><span class="pre">MoveAction</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.EAST"><code class="docutils literal notranslate"><span class="pre">MoveAction.EAST</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.NORTH"><code class="docutils literal notranslate"><span class="pre">MoveAction.NORTH</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.SOUTH"><code class="docutils literal notranslate"><span class="pre">MoveAction.SOUTH</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.WEST"><code class="docutils literal notranslate"><span class="pre">MoveAction.WEST</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.motion"><code class="docutils literal notranslate"><span class="pre">MoveAction.motion</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="docutils literal notranslate"><span class="pre">RSAction</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation"><code class="docutils literal notranslate"><span class="pre">RSObservation</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation.quality"><code class="docutils literal notranslate"><span class="pre">RSObservation.quality</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel"><code class="docutils literal notranslate"><span class="pre">RSObservationModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.get_all_actions()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.rollout()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel"><code class="docutils literal notranslate"><span class="pre">RSRewardModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.probability"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState"><code class="docutils literal notranslate"><span class="pre">RSState</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState.position"><code class="docutils literal notranslate"><span class="pre">RSState.position</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState.rocktypes"><code class="docutils literal notranslate"><span class="pre">RSState.rocktypes</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState.terminal"><code class="docutils literal notranslate"><span class="pre">RSState.terminal</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.generate_instance"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.generate_instance()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.in_exit_area"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.in_exit_area()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.print_state"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.print_state()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.random_free_location"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.random_free_location()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType"><code class="docutils literal notranslate"><span class="pre">RockType</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.BAD"><code class="docutils literal notranslate"><span class="pre">RockType.BAD</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.GOOD"><code class="docutils literal notranslate"><span class="pre">RockType.GOOD</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.invert"><code class="docutils literal notranslate"><span class="pre">RockType.invert()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.random"><code class="docutils literal notranslate"><span class="pre">RockType.random()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.SampleAction"><code class="docutils literal notranslate"><span class="pre">SampleAction</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.euclidean_dist"><code class="docutils literal notranslate"><span class="pre">euclidean_dist()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.init_particles_belief"><code class="docutils literal notranslate"><span class="pre">init_particles_belief()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pomdp-problems-rocksample-cythonize-run-rocksample-module">pomdp_problems.rocksample.cythonize.run_rocksample module</a></li>
 <li><a class="reference internal" href="#module-pomdp_problems.rocksample.cythonize">Module contents</a></li>
 </ul>
@@ -127,7 +195,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -153,18 +221,18 @@
           <div class="body" role="main">
             
   <section id="pomdp-problems-rocksample-cythonize-package">
-<h1>pomdp_problems.rocksample.cythonize package<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_problems.rocksample.cythonize package<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-package" title="Permalink to this heading">¶</a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-37m-x86-64-linux-gnu-module">
-<h2>pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
+<h2>pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-38-x86-64-linux-gnu-module">
-<h2>pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-38-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-38-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
+<h2>pomdp_problems.rocksample.cythonize.rocksample_problem.cpython-38-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-rocksample-problem-cpython-38-x86-64-linux-gnu-module" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_problems.rocksample.cythonize.rocksample_problem">
-<span id="pomdp-problems-rocksample-cythonize-rocksample-problem-module"></span><h2>pomdp_problems.rocksample.cythonize.rocksample_problem module<a class="headerlink" href="#module-pomdp_problems.rocksample.cythonize.rocksample_problem" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-rocksample-cythonize-rocksample-problem-module"></span><h2>pomdp_problems.rocksample.cythonize.rocksample_problem module<a class="headerlink" href="#module-pomdp_problems.rocksample.cythonize.rocksample_problem" title="Permalink to this heading">¶</a></h2>
 <p>RockSample(n,k) problem</p>
 <p>Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)</p>
 <p>Description:</p>
@@ -197,7 +265,7 @@ Check_i: receives a noisy observation about RockType_i
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">CheckAction</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">RSAction</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction.rock_id">
 <span class="sig-name descname"><span class="pre">rock_id</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.CheckAction.rock_id" title="Permalink to this definition">¶</a></dt>
@@ -208,7 +276,7 @@ Check_i: receives a noisy observation about RockType_i
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">MoveAction</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">RSAction</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.EAST">
 <span class="sig-name descname"><span class="pre">EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(1,</span> <span class="pre">0)</span></em><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.MoveAction.EAST" title="Permalink to this definition">¶</a></dt>
@@ -239,13 +307,13 @@ Check_i: receives a noisy observation about RockType_i
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSAction</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSObservation</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observation</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation.quality">
 <span class="sig-name descname"><span class="pre">quality</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservation.quality" title="Permalink to this definition">¶</a></dt>
@@ -256,10 +324,10 @@ Check_i: receives a noisy observation about RockType_i
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSObservationModel</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.argmax">
-<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely observation</p>
 </dd></dl>
 
@@ -268,17 +336,17 @@ Check_i: receives a noisy observation about RockType_i
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>observation</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – the observation <span class="math notranslate nohighlight">\(o\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -290,16 +358,16 @@ Check_i: receives a noisy observation about RockType_i
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
 </dd>
 </dl>
@@ -310,11 +378,11 @@ distribution of this observation model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSPolicyModel</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RolloutPolicy</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">RolloutPolicy</span></code></a></p>
 <p>Simple policy model according to problem description.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.argmax">
-<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely reward</p>
 </dd></dl>
 
@@ -329,16 +397,16 @@ distribution of this observation model.</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSPolicyModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\pi(a|s)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\pi(a|s)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -355,13 +423,13 @@ distribution of this observation model.</p>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the action <span class="math notranslate nohighlight">\(a\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action">Action</a></p>
 </dd>
 </dl>
@@ -372,7 +440,7 @@ distribution of this policy model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSRewardModel</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.argmax">
 <span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
@@ -384,7 +452,7 @@ distribution of this policy model.</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSRewardModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>reward</strong> (<em>float</em>) – the reward <span class="math notranslate nohighlight">\(r\)</span></p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
@@ -392,10 +460,10 @@ distribution of this policy model.</p>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -408,17 +476,17 @@ distribution of this policy model.</p>
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the reward <span class="math notranslate nohighlight">\(r\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -429,7 +497,7 @@ i.e. assumed to be implemented for a reward model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSState">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSState</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSState.position">
 <span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSState.position" title="Permalink to this definition">¶</a></dt>
@@ -450,11 +518,11 @@ i.e. assumed to be implemented for a reward model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RSTransitionModel</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a></p>
 <p>The model is deterministic</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.argmax">
-<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.argmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most likely next state</p>
 </dd></dl>
 
@@ -463,17 +531,17 @@ i.e. assumed to be implemented for a reward model.</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -485,16 +553,16 @@ i.e. assumed to be implemented for a reward model.</p>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
 </dd>
 </dl>
@@ -505,16 +573,16 @@ distribution of this transition model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">RockSampleProblem</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">POMDP</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.generate_instance">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.generate_instance" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.generate_instance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns init_state and rock locations for an instance of RockSample(n,k)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.in_exit_area">
-<span class="sig-name descname"><span class="pre">in_exit_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.in_exit_area" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">in_exit_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.in_exit_area" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -524,7 +592,7 @@ distribution of this transition model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.random_free_location">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">random_free_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.random_free_location" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">random_free_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_free_locs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockSampleProblem.random_free_location" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a random (x,y) location in nxn grid that is free.</p>
 </dd></dl>
 
@@ -546,12 +614,12 @@ distribution of this transition model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.invert">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.invert" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rocktype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.invert" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.random">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.random" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RockType.random" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -559,17 +627,17 @@ distribution of this transition model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.SampleAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">SampleAction</span></span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.SampleAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction" title="pomdp_problems.rocksample.cythonize.rocksample_problem.RSAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">RSAction</span></code></a></p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.euclidean_dist">
-<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">euclidean_dist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.euclidean_dist" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">euclidean_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.euclidean_dist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.init_particles_belief">
-<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">init_particles_belief</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.init_particles_belief" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">init_particles_belief</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">belief</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.init_particles_belief" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -579,15 +647,15 @@ distribution of this transition model.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_problems.rocksample.cythonize.rocksample_problem.test_planner">
-<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">test_planner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.test_planner" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_problems.rocksample.cythonize.rocksample_problem.</span></span><span class="sig-name descname"><span class="pre">test_planner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rocksample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_problems.rocksample.cythonize.rocksample_problem.test_planner" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="pomdp-problems-rocksample-cythonize-run-rocksample-module">
-<h2>pomdp_problems.rocksample.cythonize.run_rocksample module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-run-rocksample-module" title="Permalink to this headline">¶</a></h2>
+<h2>pomdp_problems.rocksample.cythonize.run_rocksample module<a class="headerlink" href="#pomdp-problems-rocksample-cythonize-run-rocksample-module" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_problems.rocksample.cythonize">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.rocksample.cythonize" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.rocksample.cythonize" title="Permalink to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -602,8 +670,8 @@ distribution of this transition model.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/problems/pomdp_problems.rocksample.cythonize.rst.txt"
