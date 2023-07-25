@@ -11,7 +11,7 @@ We recommend using `virtualenv <https://virtualenv.pypa.io/en/latest/>`_ and `pi
 Pre-installation
 ----------------
 
-1. install Python 3.7+ from `official website <https://www.python.org/downloads/>`_.
+1. install Python 3.8+ from `official website <https://www.python.org/downloads/>`_.
 
 
 Install pomdp-py
