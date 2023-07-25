@@ -34,7 +34,7 @@ extensions += [
 
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.3.2',
+      version='1.3.3',
       description='Python POMDP Library.',
       long_description=long_description,
       long_description_content_type="text/x-rst",
