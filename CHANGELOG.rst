@@ -5,6 +5,7 @@ Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>
 
 Version 1.3.3 (07/25/2023)
 -------------------------
+* Bumped minimum Python requirement from 3.7 to 3.8 due to `EOL of 3.7 <https://devguide.python.org/versions/>`_.
 * Fix :code:`cpdef -> cdef` to avoid installation failure after Cython 3.0.0 release (`pomdp-py#30 <https://github.com/h2r/pomdp-py/pull/30>`_).
 * Added float_precision argument to to_pomdp_file (`pomdp-py#29 <https://github.com/h2r/pomdp-py/pull/29>`_)
 * Add :code:`__init__` signature for Environment in comments to be visible in docs
