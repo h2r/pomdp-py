@@ -54,6 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
@@ -284,8 +285,8 @@
 <div class="viewcode-block" id="PolicyModel"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel">[docs]</a><span class="k">class</span> <span class="nc">PolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RolloutPolicy</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple policy model with uniform prior over a</span>
 <span class="sd">       small, finite action space&quot;&quot;&quot;</span>
-    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">TigerAction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-              <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}}</span>
+    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">TigerAction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}]</span>
 
 <div class="viewcode-block" id="PolicyModel.sample"><a class="viewcode-back" href="../../../problems/pomdp_problems.tiger.html#pomdp_problems.tiger.tiger_problem.PolicyModel.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
