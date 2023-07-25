@@ -11,6 +11,7 @@ Version 1.3.3 (07/25/2023)
 * Fix :code:`s -> sp` in :py:mod:`~pomdp_py.algorithms.value_iteration.ValueIteration` (`pomdp-py#20 <https://github.com/h2r/pomdp-py/issues/20>`_)
 * Allow updating rollout policy for :py:mod:`~pomdp_py.algorithms.po_uct.POUCT` and :py:mod:`~pomdp_py.algorithms.pomcp.POMCP`
 * Fix in :code:`setup.py` so that wheel builds properly.
+* Change set to list in :code:`pomdp_problems.tiger.tiger_problem.py` to tame error regarding :code:`random.sample` in Python 3.11.
 * Minor bug fixes and documentation.
 
 

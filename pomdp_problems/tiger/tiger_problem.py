@@ -168,8 +168,8 @@ class RewardModel(pomdp_py.RewardModel):
 class PolicyModel(pomdp_py.RolloutPolicy):
     """A simple policy model with uniform prior over a
        small, finite action space"""
-    ACTIONS = {TigerAction(s)
-              for s in {"open-left", "open-right", "listen"}}
+    ACTIONS = [TigerAction(s)
+              for s in {"open-left", "open-right", "listen"}]
 
     def sample(self, state):
         return random.sample(self.get_all_actions(), 1)[0]
