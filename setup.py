@@ -27,10 +27,8 @@ extensions = build_extensions("pomdp_py", ["framework",
                                            "utils",
                                            "representations.distribution",
                                            "representations.belief"])
-extensions += [
-    Extension("pomdp_problems.tiger.cythonize", ["pomdp_problems/tiger/cythonize/tiger_problem.pyx"]),
-    Extension("pomdp_problems.rocksample.cythonize", ["pomdp_problems/rocksample/cythonize/rocksample_problem.pyx"])
-]
+extensions.extend(build_extensions("pomdp_problems", ["tiger.cythonize",
+                                                      "rocksample.cythonize"]))
 
 setup(name='pomdp-py',
       packages=find_packages(),
