@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Multi-Object Search (MOS) Task &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <title>Multi-Object Search (MOS) Task &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_problems.multi_object_search.env package" href="pomdp_problems.multi_object_search.env.html" />
@@ -38,7 +36,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -57,8 +55,17 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Multi-Object Search (MOS) Task</a><ul>
-<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.problem">pomdp_problems.multi_object_search.problem module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.example_worlds">pomdp_problems.multi_object_search.example_worlds module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.problem">pomdp_problems.multi_object_search.problem module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.problem.MosOOPOMDP"><code class="docutils literal notranslate"><span class="pre">MosOOPOMDP</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.problem.belief_update"><code class="docutils literal notranslate"><span class="pre">belief_update()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.problem.solve"><code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.problem.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.example_worlds">pomdp_problems.multi_object_search.example_worlds module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.example_worlds.random_world"><code class="docutils literal notranslate"><span class="pre">random_world()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -70,7 +77,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -120,7 +126,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -146,17 +152,13 @@
           <div class="body" role="main">
             
   <section id="multi-object-search-mos-task">
-<h1>Multi-Object Search (MOS) Task<a class="headerlink" href="#multi-object-search-mos-task" title="Permalink to this headline">¶</a></h1>
+<h1>Multi-Object Search (MOS) Task<a class="headerlink" href="#multi-object-search-mos-task" title="Permalink to this heading">¶</a></h1>
 <p>This task is based on the Multi-Object Search (MOS) task described in the
 following paper</p>
 <p><a class="reference external" href="https://h2r.cs.brown.edu/wp-content/uploads/wandzel19.pdf">Multi-Object Search using Object-Oriented POMDPs</a> (ICRA 2019)</p>
 <p>In this implementation, we consider a different (simpler) motion action scheme,
 instead of based on topological graph and room connectivity.</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#module-pomdp_problems.multi_object_search.problem" title="pomdp_problems.multi_object_search.problem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">problem</span></code></a></p></td>
 <td><p>2D Multi-Object Search (MOS) Task.</p></td>
@@ -203,7 +205,7 @@ instead of based on topological graph and room connectivity.</p>
 </tbody>
 </table>
 <section id="module-pomdp_problems.multi_object_search.problem">
-<span id="pomdp-problems-multi-object-search-problem-module"></span><h2>pomdp_problems.multi_object_search.problem module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.problem" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-multi-object-search-problem-module"></span><h2>pomdp_problems.multi_object_search.problem module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.problem" title="Permalink to this heading">¶</a></h2>
 <p>2D Multi-Object Search (MOS) Task.
 Uses the domain, models, and agent/environment
 to actually define the POMDP problem for multi-object search.
@@ -211,7 +213,7 @@ Then, solve it using POUCT or POMCP.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.multi_object_search.problem.MosOOPOMDP">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.problem.</span></span><span class="sig-name descname"><span class="pre">MosOOPOMDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">belief_rep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'histogram'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_has_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/problem.html#MosOOPOMDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.problem.MosOOPOMDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOPOMDP" title="pomdp_py.framework.oopomdp.OOPOMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.oopomdp.OOPOMDP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOPOMDP" title="pomdp_py.framework.oopomdp.OOPOMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">OOPOMDP</span></code></a></p>
 <p>A MosOOPOMDP is instantiated given a string description
 of the search world, sensor descriptions for robots,
 and the necessary parameters for the agent’s models.</p>
@@ -239,7 +241,7 @@ through planner update (e.g. when planner is POMCP).</p>
 - agent has planned <cite>max_steps</cite> number of steps
 - agent has taken n FindAction(s) where n = number of target objects.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>visualize</strong> (<em>bool</em>) – </p>
 </dd>
 </dl>
@@ -252,7 +254,7 @@ through planner update (e.g. when planner is POMCP).</p>
 
 </section>
 <section id="module-pomdp_problems.multi_object_search.example_worlds">
-<span id="pomdp-problems-multi-object-search-example-worlds-module"></span><h2>pomdp_problems.multi_object_search.example_worlds module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.example_worlds" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-multi-object-search-example-worlds-module"></span><h2>pomdp_problems.multi_object_search.example_worlds module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.example_worlds" title="Permalink to this heading">¶</a></h2>
 <p>This file has some examples of world string.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_problems.multi_object_search.example_worlds.random_world">
@@ -262,21 +264,163 @@ through planner update (e.g. when planner is POMCP).</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html">pomdp_problems.multi_object_search.env package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#module-pomdp_problems.multi_object_search.env.env">pomdp_problems.multi_object_search.env.env module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#module-pomdp_problems.multi_object_search.env.visual">pomdp_problems.multi_object_search.env.visual module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#module-pomdp_problems.multi_object_search.env.env">pomdp_problems.multi_object_search.env.env module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.MosEnvironment"><code class="docutils literal notranslate"><span class="pre">MosEnvironment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.MosEnvironment.robot_ids"><code class="docutils literal notranslate"><span class="pre">MosEnvironment.robot_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.MosEnvironment.state_transition"><code class="docutils literal notranslate"><span class="pre">MosEnvironment.state_transition()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.interpret"><code class="docutils literal notranslate"><span class="pre">interpret()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.interpret_robot_id"><code class="docutils literal notranslate"><span class="pre">interpret_robot_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.equip_sensors"><code class="docutils literal notranslate"><span class="pre">equip_sensors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.make_laser_sensor"><code class="docutils literal notranslate"><span class="pre">make_laser_sensor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.env.make_proximity_sensor"><code class="docutils literal notranslate"><span class="pre">make_proximity_sensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#module-pomdp_problems.multi_object_search.env.visual">pomdp_problems.multi_object_search.env.visual module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.object_color"><code class="docutils literal notranslate"><span class="pre">object_color()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz"><code class="docutils literal notranslate"><span class="pre">MosViz</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.img_width"><code class="docutils literal notranslate"><span class="pre">MosViz.img_width</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.img_height"><code class="docutils literal notranslate"><span class="pre">MosViz.img_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.last_observation"><code class="docutils literal notranslate"><span class="pre">MosViz.last_observation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.update"><code class="docutils literal notranslate"><span class="pre">MosViz.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.draw_robot"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.draw_observation"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_observation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.draw_belief"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_belief()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_init"><code class="docutils literal notranslate"><span class="pre">MosViz.on_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_event"><code class="docutils literal notranslate"><span class="pre">MosViz.on_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_loop"><code class="docutils literal notranslate"><span class="pre">MosViz.on_loop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_render"><code class="docutils literal notranslate"><span class="pre">MosViz.on_render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_cleanup"><code class="docutils literal notranslate"><span class="pre">MosViz.on_cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.on_execute"><code class="docutils literal notranslate"><span class="pre">MosViz.on_execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.MosViz.render_env"><code class="docutils literal notranslate"><span class="pre">MosViz.render_env()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.env.html#pomdp_problems.multi_object_search.env.visual.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html">pomdp_problems.multi_object_search.domain package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.action">pomdp_problems.multi_object_search.domain.action module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.observation">pomdp_problems.multi_object_search.domain.observation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.state">pomdp_problems.multi_object_search.domain.state module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.action">pomdp_problems.multi_object_search.domain.action module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction"><code class="docutils literal notranslate"><span class="pre">MotionAction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_XYTH"><code class="docutils literal notranslate"><span class="pre">MotionAction.SCHEME_XYTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.EAST"><code class="docutils literal notranslate"><span class="pre">MotionAction.EAST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.WEST"><code class="docutils literal notranslate"><span class="pre">MotionAction.WEST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.NORTH"><code class="docutils literal notranslate"><span class="pre">MotionAction.NORTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SOUTH"><code class="docutils literal notranslate"><span class="pre">MotionAction.SOUTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_VW"><code class="docutils literal notranslate"><span class="pre">MotionAction.SCHEME_VW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.FORWARD"><code class="docutils literal notranslate"><span class="pre">MotionAction.FORWARD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.BACKWARD"><code class="docutils literal notranslate"><span class="pre">MotionAction.BACKWARD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.LEFT"><code class="docutils literal notranslate"><span class="pre">MotionAction.LEFT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.RIGHT"><code class="docutils literal notranslate"><span class="pre">MotionAction.RIGHT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEME_XY"><code class="docutils literal notranslate"><span class="pre">MotionAction.SCHEME_XY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.EAST2D"><code class="docutils literal notranslate"><span class="pre">MotionAction.EAST2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.WEST2D"><code class="docutils literal notranslate"><span class="pre">MotionAction.WEST2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.NORTH2D"><code class="docutils literal notranslate"><span class="pre">MotionAction.NORTH2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SOUTH2D"><code class="docutils literal notranslate"><span class="pre">MotionAction.SOUTH2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.MotionAction.SCHEMES"><code class="docutils literal notranslate"><span class="pre">MotionAction.SCHEMES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.LookAction"><code class="docutils literal notranslate"><span class="pre">LookAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.action.FindAction"><code class="docutils literal notranslate"><span class="pre">FindAction</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.observation">pomdp_problems.multi_object_search.domain.observation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.ObjectObservation"><code class="docutils literal notranslate"><span class="pre">ObjectObservation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.ObjectObservation.NULL"><code class="docutils literal notranslate"><span class="pre">ObjectObservation.NULL</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation"><code class="docutils literal notranslate"><span class="pre">MosOOObservation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.for_obj"><code class="docutils literal notranslate"><span class="pre">MosOOObservation.for_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.factor"><code class="docutils literal notranslate"><span class="pre">MosOOObservation.factor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.observation.MosOOObservation.merge"><code class="docutils literal notranslate"><span class="pre">MosOOObservation.merge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#module-pomdp_problems.multi_object_search.domain.state">pomdp_problems.multi_object_search.domain.state module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.ObjectState"><code class="docutils literal notranslate"><span class="pre">ObjectState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.ObjectState.pose"><code class="docutils literal notranslate"><span class="pre">ObjectState.pose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.ObjectState.objid"><code class="docutils literal notranslate"><span class="pre">ObjectState.objid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.RobotState"><code class="docutils literal notranslate"><span class="pre">RobotState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.RobotState.pose"><code class="docutils literal notranslate"><span class="pre">RobotState.pose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.RobotState.robot_pose"><code class="docutils literal notranslate"><span class="pre">RobotState.robot_pose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.RobotState.objects_found"><code class="docutils literal notranslate"><span class="pre">RobotState.objects_found</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState"><code class="docutils literal notranslate"><span class="pre">MosOOState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState.object_pose"><code class="docutils literal notranslate"><span class="pre">MosOOState.object_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState.pose"><code class="docutils literal notranslate"><span class="pre">MosOOState.pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.domain.html#pomdp_problems.multi_object_search.domain.state.MosOOState.object_poses"><code class="docutils literal notranslate"><span class="pre">MosOOState.object_poses</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html">pomdp_problems.multi_object_search.models package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.observation_model">pomdp_problems.multi_object_search.models.observation_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.policy_model">pomdp_problems.multi_object_search.models.policy_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.reward_model">pomdp_problems.multi_object_search.models.reward_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.transition_model">pomdp_problems.multi_object_search.models.transition_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.observation_model">pomdp_problems.multi_object_search.models.observation_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel"><code class="docutils literal notranslate"><span class="pre">MosObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.MosObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">MosObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel"><code class="docutils literal notranslate"><span class="pre">ObjectObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">ObjectObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">ObjectObservationModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.ObjectObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">ObjectObservationModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.observation_model.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.policy_model">pomdp_problems.multi_object_search.models.policy_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel"><code class="docutils literal notranslate"><span class="pre">PolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">PolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">PolicyModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">PolicyModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_all_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.policy_model.PolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">PolicyModel.rollout()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.reward_model">pomdp_problems.multi_object_search.models.reward_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel"><code class="docutils literal notranslate"><span class="pre">MosRewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.probability"><code class="docutils literal notranslate"><span class="pre">MosRewardModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">MosRewardModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.reward_model.MosRewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">MosRewardModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.reward_model.GoalRewardModel"><code class="docutils literal notranslate"><span class="pre">GoalRewardModel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#module-pomdp_problems.multi_object_search.models.transition_model">pomdp_problems.multi_object_search.models.transition_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel"><code class="docutils literal notranslate"><span class="pre">MosTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">MosTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.MosTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">MosTransitionModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel"><code class="docutils literal notranslate"><span class="pre">StaticObjectTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">StaticObjectTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">StaticObjectTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.StaticObjectTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">StaticObjectTransitionModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel"><code class="docutils literal notranslate"><span class="pre">RobotTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.if_move_by"><code class="docutils literal notranslate"><span class="pre">RobotTransitionModel.if_move_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">RobotTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">RobotTransitionModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.RobotTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">RobotTransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.valid_pose"><code class="docutils literal notranslate"><span class="pre">valid_pose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.multi_object_search.models.html#pomdp_problems.multi_object_search.models.transition_model.in_boundary"><code class="docutils literal notranslate"><span class="pre">in_boundary()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -295,8 +439,8 @@ through planner update (e.g. when planner is POMCP).</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/problems/pomdp_problems.multi_object_search.rst.txt"

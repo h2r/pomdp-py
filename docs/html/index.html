@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py Documentation &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <title>pomdp_py Documentation &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=253395cc" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" />
@@ -37,7 +35,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -107,7 +105,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -133,12 +131,12 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-documentation">
-<h1>pomdp_py Documentation<a class="headerlink" href="#pomdp-py-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_py Documentation<a class="headerlink" href="#pomdp-py-documentation" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="https://github.com/h2r/pomdp-py">pomdp_py</a> is a <strong>general purpose POMDP library</strong> written in Python and Cython. It features simple and comprehensive interfaces to describe POMDP or MDP problems. Originally written to support POMDP planning research, the interfaces also allow extensions to model-free or model-based learning in (PO)MDPs, multi-agent POMDP planning/learning, and task transfer or transfer learning.</p>
 <p><strong>Why pomdp_py?</strong> It provides a POMDP framework in Python with clean and intuitive interfaces. This makes POMDP-related research or projects accessible to more people. It also helps sharing code and developing a community.</p>
-<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <span id="id1">[<a class="reference internal" href="#id21" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span>.</p>
+<p>POMDP stands for <strong>P</strong>artially <strong>O</strong>bservable <strong>M</strong>arkov <strong>D</strong>ecision <strong>P</strong>rocess <span id="id1">[<a class="reference internal" href="api/pomdp_py.algorithms.html#id31" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span>.</p>
 <p>The code is available <a class="reference external" href="https://github.com/h2r/pomdp-py">on github</a>. We welcome contributions to this library in:</p>
 <ol class="arabic simple">
 <li><p>Implementation of additional POMDP solvers (see <a class="reference internal" href="existing_solvers.html"><span class="doc">Existing POMDP Solvers</span></a>)</p></li>
@@ -148,7 +146,7 @@
 </ol>
 </section>
 <section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a></p></li>
 <li><p><a class="reference internal" href="changelog.html"><span class="doc">What’s New?</span></a> (Changelog)</p></li>
@@ -166,7 +164,7 @@
 </ul>
 </section>
 <section id="further">
-<h2>Further<a class="headerlink" href="#further" title="Permalink to this headline">¶</a></h2>
+<h2>Further<a class="headerlink" href="#further" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="extensions.html"><span class="doc">Use Case Extensions</span></a></p></li>
 <li><p><a class="reference internal" href="other_libraries.html"><span class="doc">Other POMDP Libraries</span></a></p></li>
@@ -177,21 +175,21 @@
 </div>
 </section>
 <section id="citation">
-<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this heading">¶</a></h2>
 <p>If you find this library helpful to your work, please cite the <a class="reference external" href="https://arxiv.org/pdf/2004.10099.pdf">following paper</a></p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">zheng2020pomdp_py</span><span class="p">,</span>
-   <span class="na">title</span> <span class="p">=</span> <span class="s">{pomdp\_py: A Framework to Build and Solve POMDP Problems}</span><span class="p">,</span>
-   <span class="na">author</span> <span class="p">=</span> <span class="s">{Zheng, Kaiyu and Tellex, Stefanie}</span><span class="p">,</span>
-   <span class="na">booktitle</span> <span class="p">=</span> <span class="s">{ICAPS 2020 Workshop on Planning and Robotics (PlanRob)}</span><span class="p">,</span>
-   <span class="na">year</span> <span class="p">=</span> <span class="s">{2020}</span><span class="p">,</span>
-   <span class="na">url</span> <span class="p">=</span> <span class="s">{https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/14-PlanRob_2020_paper_3.pdf}</span><span class="p">,</span>
-   <span class="na">note</span> <span class="p">=</span> <span class="s">{Arxiv link: &quot;\url{https://arxiv.org/pdf/2004.10099.pdf}&quot;}</span>
+<span class="w">   </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{pomdp\_py: A Framework to Build and Solve POMDP Problems}</span><span class="p">,</span>
+<span class="w">   </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Zheng, Kaiyu and Tellex, Stefanie}</span><span class="p">,</span>
+<span class="w">   </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{ICAPS 2020 Workshop on Planning and Robotics (PlanRob)}</span><span class="p">,</span>
+<span class="w">   </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2020}</span><span class="p">,</span>
+<span class="w">   </span><span class="na">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/14-PlanRob_2020_paper_3.pdf}</span><span class="p">,</span>
+<span class="w">   </span><span class="na">note</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Arxiv link: &quot;\url{https://arxiv.org/pdf/2004.10099.pdf}&quot;}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="api-references">
-<h2>API References<a class="headerlink" href="#api-references" title="Permalink to this headline">¶</a></h2>
+<h2>API References<a class="headerlink" href="#api-references" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
@@ -221,18 +219,20 @@
 </div>
 </section>
 <section id="tools">
-<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-<p id="id2"><dl class="citation">
-<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
-</dd>
-</dl>
-</p>
+<div class="docutils container" id="id2">
+<div role="list" class="citation-list">
+<div class="citation" id="id21" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. <em>Artificial intelligence</em>, 101(1-2):99–134, 1998.</p>
+</div>
+</div>
+</div>
 <a class="reference external image-reference" href="http://bigai.cs.brown.edu/"><img alt="Brown University AI" class="align-center" src="_images/brown_logo.png" style="width: 110.75px; height: 57.5px;" /></a>
 </section>
 </section>
@@ -248,8 +248,8 @@
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/index.rst.txt"

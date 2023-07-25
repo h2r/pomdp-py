@@ -27,14 +27,12 @@ extensions = build_extensions("pomdp_py", ["framework",
                                            "utils",
                                            "representations.distribution",
                                            "representations.belief"])
-extensions += [
-    Extension("pomdp_problems.tiger.cythonize", ["pomdp_problems/tiger/cythonize/tiger_problem.pyx"]),
-    Extension("pomdp_problems.rocksample.cythonize", ["pomdp_problems/rocksample/cythonize/rocksample_problem.pyx"])
-]
+extensions.extend(build_extensions("pomdp_problems", ["tiger.cythonize",
+                                                      "rocksample.cythonize"]))
 
 setup(name='pomdp-py',
       packages=find_packages(),
-      version='1.3.2',
+      version='1.3.3',
       description='Python POMDP Library.',
       long_description=long_description,
       long_description_content_type="text/x-rst",
@@ -54,7 +52,7 @@ setup(name='pomdp-py',
       ext_modules=cythonize(extensions,
                             build_dir="build",
                             compiler_directives={'language_level' : "3"}),
-      package_data={"pomdp_py": ["*.pxd", "*.pyx"],
-                    "pomdp_problems": ["*.pxd", "*.pyx"]},
+      package_data={"pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
+                    "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"]},
       zip_safe=False
 )

@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tiger &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <title>Tiger &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_problems.tiger.cythonize package" href="pomdp_problems.tiger.cythonize.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -62,7 +60,44 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#pomdp-problems-tiger-cythonize-cpython-37m-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.cpython-37m-x86_64-linux-gnu module</a></li>
 <li><a class="reference internal" href="#pomdp-problems-tiger-cythonize-cpython-38-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.cpython-38-x86_64-linux-gnu module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.tiger.tiger_problem">pomdp_problems.tiger.tiger_problem module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.tiger.tiger_problem">pomdp_problems.tiger.tiger_problem module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerState"><code class="docutils literal notranslate"><span class="pre">TigerState</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerState.other"><code class="docutils literal notranslate"><span class="pre">TigerState.other()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerAction"><code class="docutils literal notranslate"><span class="pre">TigerAction</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerObservation"><code class="docutils literal notranslate"><span class="pre">TigerObservation</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.ObservationModel"><code class="docutils literal notranslate"><span class="pre">ObservationModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.ObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">ObservationModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.ObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">ObservationModel.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.ObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_all_observations()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TransitionModel"><code class="docutils literal notranslate"><span class="pre">TransitionModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TransitionModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TransitionModel.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_all_states()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.RewardModel"><code class="docutils literal notranslate"><span class="pre">RewardModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.RewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.PolicyModel"><code class="docutils literal notranslate"><span class="pre">PolicyModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS"><code class="docutils literal notranslate"><span class="pre">PolicyModel.ACTIONS</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">PolicyModel.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">PolicyModel.rollout()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_all_actions()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem"><code class="docutils literal notranslate"><span class="pre">TigerProblem</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem.create"><code class="docutils literal notranslate"><span class="pre">TigerProblem.create()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -124,7 +159,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -150,12 +185,12 @@
           <div class="body" role="main">
             
   <section id="tiger">
-<h1>Tiger<a class="headerlink" href="#tiger" title="Permalink to this headline">¶</a></h1>
+<h1>Tiger<a class="headerlink" href="#tiger" title="Permalink to this heading">¶</a></h1>
 <p>Classic problem from <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S000437029800023X">Planning and acting in partially observable stochastic
 domains</a></p>
 <p>Refer to <span class="xref std std-doc">examples.tiger</span> for more details.</p>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html">pomdp_problems.tiger.cythonize package</a><ul>
@@ -163,7 +198,60 @@ domains</a></p>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp-problems-tiger-cythonize-run-tiger-module">pomdp_problems.tiger.cythonize.run_tiger module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp-problems-tiger-cythonize-tiger-problem-cpython-37m-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.tiger_problem.cpython-37m-x86_64-linux-gnu module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp-problems-tiger-cythonize-tiger-problem-cpython-38-x86-64-linux-gnu-module">pomdp_problems.tiger.cythonize.tiger_problem.cpython-38-x86_64-linux-gnu module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#module-pomdp_problems.tiger.cythonize.tiger_problem">pomdp_problems.tiger.cythonize.tiger_problem module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#module-pomdp_problems.tiger.cythonize.tiger_problem">pomdp_problems.tiger.cythonize.tiger_problem module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerAction"><code class="docutils literal notranslate"><span class="pre">TigerAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation"><code class="docutils literal notranslate"><span class="pre">TigerObservation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservation.name"><code class="docutils literal notranslate"><span class="pre">TigerObservation.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel.get_all_observations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">TigerObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel"><code class="docutils literal notranslate"><span class="pre">TigerPolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">TigerPolicyModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">TigerPolicyModel.get_all_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">TigerPolicyModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerPolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">TigerPolicyModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem"><code class="docutils literal notranslate"><span class="pre">TigerProblem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.ACTIONS"><code class="docutils literal notranslate"><span class="pre">TigerProblem.ACTIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.OBSERVATIONS"><code class="docutils literal notranslate"><span class="pre">TigerProblem.OBSERVATIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerProblem.STATES"><code class="docutils literal notranslate"><span class="pre">TigerProblem.STATES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel"><code class="docutils literal notranslate"><span class="pre">TigerRewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">TigerRewardModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">TigerRewardModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.probability"><code class="docutils literal notranslate"><span class="pre">TigerRewardModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">TigerRewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerState"><code class="docutils literal notranslate"><span class="pre">TigerState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerState.name"><code class="docutils literal notranslate"><span class="pre">TigerState.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel.get_all_states()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel.get_distribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.TigerTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TigerTransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.build_actions"><code class="docutils literal notranslate"><span class="pre">build_actions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.build_observations"><code class="docutils literal notranslate"><span class="pre">build_observations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.build_setting"><code class="docutils literal notranslate"><span class="pre">build_setting()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.build_states"><code class="docutils literal notranslate"><span class="pre">build_states()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#pomdp_problems.tiger.cythonize.tiger_problem.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_problems.tiger.cythonize.html#module-pomdp_problems.tiger.cythonize">Module contents</a></li>
 </ul>
 </li>
@@ -171,16 +259,16 @@ domains</a></p>
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="pomdp-problems-tiger-cythonize-cpython-37m-x86-64-linux-gnu-module">
-<h2>pomdp_problems.tiger.cythonize.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
+<h2>pomdp_problems.tiger.cythonize.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="pomdp-problems-tiger-cythonize-cpython-38-x86-64-linux-gnu-module">
-<h2>pomdp_problems.tiger.cythonize.cpython-38-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-cpython-38-x86-64-linux-gnu-module" title="Permalink to this headline">¶</a></h2>
+<h2>pomdp_problems.tiger.cythonize.cpython-38-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-problems-tiger-cythonize-cpython-38-x86-64-linux-gnu-module" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_problems.tiger.tiger_problem">
-<span id="pomdp-problems-tiger-tiger-problem-module"></span><h2>pomdp_problems.tiger.tiger_problem module<a class="headerlink" href="#module-pomdp_problems.tiger.tiger_problem" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-tiger-tiger-problem-module"></span><h2>pomdp_problems.tiger.tiger_problem module<a class="headerlink" href="#module-pomdp_problems.tiger.tiger_problem" title="Permalink to this heading">¶</a></h2>
 <p>The classic Tiger problem.</p>
 <p>This is a POMDP problem; Namely, it specifies both
 the POMDP (i.e. state, action, observation space)
@@ -214,7 +302,7 @@ complicated examples.)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerState">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerState.other">
 <span class="sig-name descname"><span class="pre">other</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerState.other"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerState.other" title="Permalink to this definition">¶</a></dt>
@@ -225,35 +313,35 @@ complicated examples.)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerAction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerObservation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerObservation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerObservation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerObservation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observation</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.ObservationModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">ObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.ObservationModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.ObservationModel.probability">
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.ObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>observation</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – the observation <span class="math notranslate nohighlight">\(o\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -265,16 +353,16 @@ complicated examples.)</p>
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
 </dd>
 </dl>
@@ -293,7 +381,7 @@ a solver that needs to enumerate over the observation space
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TransitionModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TransitionModel</span></span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TransitionModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TransitionModel.probability">
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TransitionModel.probability" title="Permalink to this definition">¶</a></dt>
@@ -307,16 +395,16 @@ action is open-left/open-right. Otherwise, stays the same</p>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
 </dd>
 </dl>
@@ -334,7 +422,7 @@ a solver that needs to enumerate over the observation space (e.g. value iteratio
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.RewardModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">RewardModel</span></span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.RewardModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.RewardModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.RewardModel.sample">
 <span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.RewardModel.sample" title="Permalink to this definition">¶</a></dt>
@@ -342,17 +430,17 @@ a solver that needs to enumerate over the observation space (e.g. value iteratio
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the reward <span class="math notranslate nohighlight">\(r\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -363,12 +451,12 @@ i.e. assumed to be implemented for a reward model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.PolicyModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">PolicyModel</span></span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.algorithms.po_uct.RolloutPolicy</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">RolloutPolicy</span></code></a></p>
 <p>A simple policy model with uniform prior over a
 small, finite action space</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS">
-<span class="sig-name descname"><span class="pre">ACTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{TigerAction(open-left),</span> <span class="pre">TigerAction(open-right),</span> <span class="pre">TigerAction(listen)}</span></em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ACTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[TigerAction(open-left),</span> <span class="pre">TigerAction(open-right),</span> <span class="pre">TigerAction(listen)]</span></em><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.PolicyModel.ACTIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -377,13 +465,13 @@ small, finite action space</p>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the action <span class="math notranslate nohighlight">\(a\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action">Action</a></p>
 </dd>
 </dl>
@@ -406,7 +494,7 @@ distribution of this policy model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerProblem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">TigerProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obs_noise</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_true_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_belief</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerProblem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerProblem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">POMDP</span></code></a></p>
 <p>In fact, creating a TigerProblem class is entirely optional
 to simulate and solve POMDPs. But this is just an example
 of how such a class can be created.</p>
@@ -414,7 +502,7 @@ of how such a class can be created.</p>
 <dt class="sig sig-object py" id="pomdp_problems.tiger.tiger_problem.TigerProblem.create">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tiger-left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">belief</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#TigerProblem.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.TigerProblem.create" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<em>str</em>) – could be ‘tiger-left’ or ‘tiger-right’;
 True state of the environment</p></li>
@@ -434,7 +522,7 @@ model (default 0.15)</p></li>
 <span class="sig-prename descclassname"><span class="pre">pomdp_problems.tiger.tiger_problem.</span></span><span class="sig-name descname"><span class="pre">test_planner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tiger_problem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_tree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/tiger/tiger_problem.html#test_planner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.tiger.tiger_problem.test_planner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the action-feedback loop of Tiger problem POMDP</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tiger_problem</strong> (<a class="reference internal" href="#pomdp_problems.tiger.tiger_problem.TigerProblem" title="pomdp_problems.tiger.tiger_problem.TigerProblem"><em>TigerProblem</em></a>) – a problem instance</p></li>
 <li><p><strong>planner</strong> (<a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><em>Planner</em></a>) – a planner</p></li>
@@ -465,8 +553,8 @@ TreeDebugger created as ‘dd’ variable.</p></li>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/problems/pomdp_problems.tiger.rst.txt"

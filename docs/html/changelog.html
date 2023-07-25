@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Changelog &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <title>Changelog &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=253395cc" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pomdp_py" href="api/modules.html" />
@@ -38,7 +36,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -57,6 +55,7 @@
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#version-1-3-3-07-25-2023">Version 1.3.3 (07/25/2023)</a></li>
 <li><a class="reference internal" href="#version-1-3-2-04-03-2022">Version 1.3.2 (04/03/2022)</a></li>
 <li><a class="reference internal" href="#version-1-3-1-11-03-2021">Version 1.3.1 (11/03/2021)</a></li>
 <li><a class="reference internal" href="#version-1-3-0-1-09-30-2021">Version 1.3.0.1 (09/30/2021)</a></li>
@@ -84,6 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What's New?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-3-07-25-2023">Version 1.3.3 (07/25/2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-3-2-04-03-2022">Version 1.3.2 (04/03/2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-3-1-11-03-2021">Version 1.3.1 (11/03/2021)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-3-0-1-09-30-2021">Version 1.3.0.1 (09/30/2021)</a></li>
@@ -135,7 +135,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -161,10 +161,24 @@
           <div class="body" role="main">
             
   <section id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading">¶</a></h1>
 <p>Best viewed on <a class="reference external" href="https://h2r.github.io/pomdp-py/html/changelog.html">the website</a>.</p>
+<section id="version-1-3-3-07-25-2023">
+<h2>Version 1.3.3 (07/25/2023)<a class="headerlink" href="#version-1-3-3-07-25-2023" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Bumped minimum Python requirement from 3.7 to 3.8 due to <a class="reference external" href="https://devguide.python.org/versions/">EOL of 3.7</a>.</p></li>
+<li><p>Fix <code class="code docutils literal notranslate"><span class="pre">cpdef</span> <span class="pre">-&gt;</span> <span class="pre">cdef</span></code> to avoid installation failure after Cython 3.0.0 release (<a class="reference external" href="https://github.com/h2r/pomdp-py/pull/30">pomdp-py#30</a>).</p></li>
+<li><p>Added float_precision argument to to_pomdp_file (<a class="reference external" href="https://github.com/h2r/pomdp-py/pull/29">pomdp-py#29</a>)</p></li>
+<li><p>Add <code class="code docutils literal notranslate"><span class="pre">__init__</span></code> signature for Environment in comments to be visible in docs</p></li>
+<li><p>Fix <code class="code docutils literal notranslate"><span class="pre">s</span> <span class="pre">-&gt;</span> <span class="pre">sp</span></code> in <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration" title="pomdp_py.algorithms.value_iteration.ValueIteration"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ValueIteration</span></code></a> (<a class="reference external" href="https://github.com/h2r/pomdp-py/issues/20">pomdp-py#20</a>)</p></li>
+<li><p>Allow updating rollout policy for <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a> and <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></li>
+<li><p>Fix in <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> so that wheel builds properly.</p></li>
+<li><p>Change set to list in <code class="code docutils literal notranslate"><span class="pre">pomdp_problems.tiger.tiger_problem.py</span></code> to tame error regarding <code class="code docutils literal notranslate"><span class="pre">random.sample</span></code> in Python 3.11.</p></li>
+<li><p>Minor bug fixes and documentation.</p></li>
+</ul>
+</section>
 <section id="version-1-3-2-04-03-2022">
-<h2>Version 1.3.2 (04/03/2022)<a class="headerlink" href="#version-1-3-2-04-03-2022" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.3.2 (04/03/2022)<a class="headerlink" href="#version-1-3-2-04-03-2022" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fix in <a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram" title="pomdp_py.representations.distribution.histogram"><code class="xref py py-mod docutils literal notranslate"><span class="pre">histogram</span></code></a> (in <code class="code docutils literal notranslate"><span class="pre">__str__</span></code>):
 Print all of histogram as is instead of printing top 5 to avoid confusion.</p></li>
@@ -175,7 +189,7 @@ and gave a reference to <a class="reference internal" href="api/pomdp_py.algorit
 </ul>
 </section>
 <section id="version-1-3-1-11-03-2021">
-<h2>Version 1.3.1 (11/03/2021)<a class="headerlink" href="#version-1-3-1-11-03-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.3.1 (11/03/2021)<a class="headerlink" href="#version-1-3-1-11-03-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Bug fix in <a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles" title="pomdp_py.representations.distribution.particles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">particles</span></code></a> (in <code class="code docutils literal notranslate"><span class="pre">add</span></code>)</p></li>
 <li><p>Added classes for tabular models <a class="reference internal" href="api/pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel" title="pomdp_py.utils.templates.TabularTransitionModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TabularTransitionModel</span></code></a>,
@@ -184,11 +198,11 @@ and gave a reference to <a class="reference internal" href="api/pomdp_py.algorit
 </ul>
 </section>
 <section id="version-1-3-0-1-09-30-2021">
-<h2>Version 1.3.0.1 (09/30/2021)<a class="headerlink" href="#version-1-3-0-1-09-30-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.3.0.1 (09/30/2021)<a class="headerlink" href="#version-1-3-0-1-09-30-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Removed dependency on <code class="code docutils literal notranslate"><span class="pre">pygraphviz</span></code>;</p></li>
 <li><p>Added <code class="code docutils literal notranslate"><span class="pre">utils.debugging.Treedebugger</span></code>, which makes it easier to inspect the search tree.
-See <a class="reference internal" href="api/pomdp_py.utils.debugging.html#module-pomdp_py.utils.debugging" title="pomdp_py.utils.debugging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">debugging</span></code></a>.</p></li>
+See <a class="reference internal" href="api/pomdp_py.utils.html#module-pomdp_py.utils.debugging" title="pomdp_py.utils.debugging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">debugging</span></code></a>.</p></li>
 <li><p>Added <code class="code docutils literal notranslate"><span class="pre">WeightedParticles</span></code>; Refactored <code class="code docutils literal notranslate"><span class="pre">Particles</span></code>. (<a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles" title="pomdp_py.representations.distribution.particles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">particles</span></code></a>)</p></li>
 <li><p>Optionally show progress bar while simulating in POUCT/POMCP.</p></li>
 <li><p>Added a CLI interface to simplify running example domains, e.g. <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pomdp_py</span> <span class="pre">-r</span> <span class="pre">tiger</span></code> runs Tiger.</p></li>
@@ -205,27 +219,27 @@ your own type when implementing its <code class="code docutils literal notransla
 </ul>
 </section>
 <section id="version-1-2-4-6-canceled">
-<h2>Version 1.2.4.6 (canceled)<a class="headerlink" href="#version-1-2-4-6-canceled" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.4.6 (canceled)<a class="headerlink" href="#version-1-2-4-6-canceled" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fix <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> so that <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> works.</p></li>
 </ul>
 </section>
 <section id="version-1-2-4-5-07-05-2021">
-<h2>Version 1.2.4.5 (07/05/2021)<a class="headerlink" href="#version-1-2-4-5-07-05-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.4.5 (07/05/2021)<a class="headerlink" href="#version-1-2-4-5-07-05-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Edit <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> file so that Cython modules in <code class="code docutils literal notranslate"><span class="pre">pomdp-py</span></code> can be :code:<a href="#id1"><span class="problematic" id="id2">`</span></a>cimport`ed.</p></li>
 </ul>
 <p>(skipped versions due to attempting pypi release)</p>
 </section>
 <section id="version-1-2-4-1-06-02-2021">
-<h2>Version 1.2.4.1 (06/02/2021)<a class="headerlink" href="#version-1-2-4-1-06-02-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.4.1 (06/02/2021)<a class="headerlink" href="#version-1-2-4-1-06-02-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fix documentation (external solver examples).</p></li>
 <li><p>Update <code class="code docutils literal notranslate"><span class="pre">tiger_problem.py</span></code> to match documentation</p></li>
 </ul>
 </section>
 <section id="version-1-2-4-06-01-2021">
-<h2>Version 1.2.4 (06/01/2021)<a class="headerlink" href="#version-1-2-4-06-01-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.4 (06/01/2021)<a class="headerlink" href="#version-1-2-4-06-01-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><dl class="simple">
 <dt><code class="code docutils literal notranslate"><span class="pre">pomdp_py/algorithms/value_function.py</span></code>:</dt><dd><ul>
@@ -240,7 +254,7 @@ your own type when implementing its <code class="code docutils literal notransla
 </ul>
 </section>
 <section id="version-1-2-3-03-22-2021">
-<h2>Version 1.2.3 (03/22/2021)<a class="headerlink" href="#version-1-2-3-03-22-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.3 (03/22/2021)<a class="headerlink" href="#version-1-2-3-03-22-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Bug fix in <code class="code docutils literal notranslate"><span class="pre">solvers.py</span></code> and <code class="code docutils literal notranslate"><span class="pre">conversion.py</span></code> (18fc58e0, cfc88e8d8)</p></li>
 <li><p>Bug fix in the MOS domain’s observation model (719c2edf5)</p></li>
@@ -249,13 +263,13 @@ your own type when implementing its <code class="code docutils literal notransla
 </ul>
 </section>
 <section id="version-1-2-2-1-01-25-2021">
-<h2>Version 1.2.2.1 (01/25/2021)<a class="headerlink" href="#version-1-2-2-1-01-25-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.2.1 (01/25/2021)<a class="headerlink" href="#version-1-2-2-1-01-25-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Updated documentation for external library interfacing. Added citation.</p></li>
 </ul>
 </section>
 <section id="version-1-2-2-01-17-2021">
-<h2>Version 1.2.2 (01/17/2021)<a class="headerlink" href="#version-1-2-2-01-17-2021" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.2 (01/17/2021)<a class="headerlink" href="#version-1-2-2-01-17-2021" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Resolved <a class="reference external" href="https://github.com/h2r/pomdp-py/issues/10">issue #10</a>.
 Set value in V-Node to be the max among its children Q-Nodes.
@@ -271,7 +285,7 @@ defined in <code class="code docutils literal notranslate"><span class="pre">pom
 </ul>
 </section>
 <section id="version-1-2-1-12-23-2020">
-<h2>Version 1.2.1 (12/23/2020)<a class="headerlink" href="#version-1-2-1-12-23-2020" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.2.1 (12/23/2020)<a class="headerlink" href="#version-1-2-1-12-23-2020" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.</p></li>
 <li><p>Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value.</p></li>
@@ -288,14 +302,14 @@ solver by <a class="reference external" href="https://www.pomdp.org/code/index.h
 </ul>
 </section>
 <section id="pull-request-3-08-01-2020">
-<h2>Pull Request #3 (08/01/2020)<a class="headerlink" href="#pull-request-3-08-01-2020" title="Permalink to this headline">¶</a></h2>
+<h2>Pull Request #3 (08/01/2020)<a class="headerlink" href="#pull-request-3-08-01-2020" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added <code class="code docutils literal notranslate"><span class="pre">num_sims</span></code> parameter to POMCP/POUCT that allows specifying the number of simulations per planning step (Previously only <code class="code docutils literal notranslate"><span class="pre">planning_time</span></code> was available.</p></li>
 <li><p>Added cythonized versions of tiger and rocksample domains which are much faster.</p></li>
 </ul>
 </section>
 <section id="pull-request-1-06-02-2020">
-<h2>Pull Request #1 (06/02/2020)<a class="headerlink" href="#pull-request-1-06-02-2020" title="Permalink to this headline">¶</a></h2>
+<h2>Pull Request #1 (06/02/2020)<a class="headerlink" href="#pull-request-1-06-02-2020" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added continuous light-dark domain. A solver (BLQR) is attempted but not ready yet.</p></li>
 <li><p>Bug fix in 2D MOS domain rollout; action step size changeable</p></li>
@@ -304,7 +318,7 @@ solver by <a class="reference external" href="https://www.pomdp.org/code/index.h
 </ul>
 </section>
 <section id="version-1-0-1-2-02-08-2020-02-16-2020">
-<h2>Version 1.0 - 1.2 (02/08/2020 - 02/16/2020)<a class="headerlink" href="#version-1-0-1-2-02-08-2020-02-16-2020" title="Permalink to this headline">¶</a></h2>
+<h2>Version 1.0 - 1.2 (02/08/2020 - 02/16/2020)<a class="headerlink" href="#version-1-0-1-2-02-08-2020-02-16-2020" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Rewritten with cleaner interfaces and Cython integration</p></li>
 <li><p>Refactored POMCP: Now it extends POUCT which does not assume particle belief representation.</p></li>
@@ -313,7 +327,7 @@ solver by <a class="reference external" href="https://www.pomdp.org/code/index.h
 </ul>
 </section>
 <section id="version-0-0">
-<h2>Version 0.0<a class="headerlink" href="#version-0-0" title="Permalink to this headline">¶</a></h2>
+<h2>Version 0.0<a class="headerlink" href="#version-0-0" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Implementation of POMCP and OO-POMDP</p></li>
 </ul>
@@ -331,8 +345,8 @@ solver by <a class="reference external" href="https://www.pomdp.org/code/index.h
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/changelog.rst.txt"

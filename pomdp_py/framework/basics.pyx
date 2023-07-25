@@ -466,6 +466,11 @@ cdef class Environment:
     it can be used by a POMDP or OOPOMDP.
 
     The Environment is passive. It never observes nor acts.
+
+    __init__(self, init_state,
+             transition_model=None,
+             reward_model=None,
+             blackbox_model=None)
     """
     def __init__(self, init_state,
                  transition_model=None,

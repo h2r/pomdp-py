@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_problems.multi_object_search.models.components package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <title>pomdp_problems.multi_object_search.models.components package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,7 +34,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -56,8 +54,38 @@
     <ul>
 <li><a class="reference internal" href="#">pomdp_problems.multi_object_search.models.components package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.components.grid_map">pomdp_problems.multi_object_search.models.components.grid_map module</a></li>
-<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.components.sensor">pomdp_problems.multi_object_search.models.components.sensor module</a></li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.components.grid_map">pomdp_problems.multi_object_search.models.components.grid_map module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.grid_map.GridMap"><code class="docutils literal notranslate"><span class="pre">GridMap</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.grid_map.GridMap.valid_motions"><code class="docutils literal notranslate"><span class="pre">GridMap.valid_motions()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.components.sensor">pomdp_problems.multi_object_search.models.components.sensor module</a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.euclidean_dist"><code class="docutils literal notranslate"><span class="pre">euclidean_dist()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.to_rad"><code class="docutils literal notranslate"><span class="pre">to_rad()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.in_range"><code class="docutils literal notranslate"><span class="pre">in_range()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor"><code class="docutils literal notranslate"><span class="pre">Sensor</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.LASER"><code class="docutils literal notranslate"><span class="pre">Sensor.LASER</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.PROXIMITY"><code class="docutils literal notranslate"><span class="pre">Sensor.PROXIMITY</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.observe"><code class="docutils literal notranslate"><span class="pre">Sensor.observe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.within_range"><code class="docutils literal notranslate"><span class="pre">Sensor.within_range()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.sensing_region_size"><code class="docutils literal notranslate"><span class="pre">Sensor.sensing_region_size</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Sensor.robot_id"><code class="docutils literal notranslate"><span class="pre">Sensor.robot_id</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.in_field_of_view"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.in_field_of_view()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.within_range"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.within_range()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.shoot_beam"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.shoot_beam()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.valid_beam"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.valid_beam()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.observe"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.observe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor.sensing_region_size"><code class="docutils literal notranslate"><span class="pre">Laser2DSensor.sensing_region_size</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.ProximitySensor"><code class="docutils literal notranslate"><span class="pre">ProximitySensor</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-pomdp_problems.multi_object_search.models.components">Module contents</a></li>
 </ul>
 </li>
@@ -70,7 +98,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
@@ -103,7 +130,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -129,12 +156,12 @@
           <div class="body" role="main">
             
   <section id="pomdp-problems-multi-object-search-models-components-package">
-<h1>pomdp_problems.multi_object_search.models.components package<a class="headerlink" href="#pomdp-problems-multi-object-search-models-components-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_problems.multi_object_search.models.components package<a class="headerlink" href="#pomdp-problems-multi-object-search-models-components-package" title="Permalink to this heading">¶</a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_problems.multi_object_search.models.components.grid_map">
-<span id="pomdp-problems-multi-object-search-models-components-grid-map-module"></span><h2>pomdp_problems.multi_object_search.models.components.grid_map module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components.grid_map" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-multi-object-search-models-components-grid-map-module"></span><h2>pomdp_problems.multi_object_search.models.components.grid_map module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components.grid_map" title="Permalink to this heading">¶</a></h2>
 <p>Optional grid map to assist collision avoidance during planning.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.components.grid_map.GridMap">
@@ -157,7 +184,7 @@ the assumption that the robot dynamics is deterministic.</p>
 
 </section>
 <section id="module-pomdp_problems.multi_object_search.models.components.sensor">
-<span id="pomdp-problems-multi-object-search-models-components-sensor-module"></span><h2>pomdp_problems.multi_object_search.models.components.sensor module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components.sensor" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-problems-multi-object-search-models-components-sensor-module"></span><h2>pomdp_problems.multi_object_search.models.components.sensor module<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components.sensor" title="Permalink to this heading">¶</a></h2>
 <p>Sensor model (for example, laser scanner)</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.components.sensor.euclidean_dist">
@@ -264,14 +291,14 @@ accordance with the angle increment.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_problems.multi_object_search.models.components.sensor.ProximitySensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_problems.multi_object_search.models.components.sensor.</span></span><span class="sig-name descname"><span class="pre">ProximitySensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occlusion_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_problems/multi_object_search/models/components/sensor.html#ProximitySensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_problems.multi_object_search.models.components.sensor.ProximitySensor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor" title="pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor" title="pomdp_problems.multi_object_search.models.components.sensor.Laser2DSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Laser2DSensor</span></code></a></p>
 <p>This is a simple sensor; Observes a region centered
 at the robot.</p>
 </dd></dl>
 
 </section>
 <section id="module-pomdp_problems.multi_object_search.models.components">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_problems.multi_object_search.models.components" title="Permalink to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -286,8 +313,8 @@ at the robot.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/problems/pomdp_problems.multi_object_search.models.components.rst.txt"

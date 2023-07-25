@@ -1,19 +1,17 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.representations package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <title>pomdp_py.representations package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_py.representations.belief package" href="pomdp_py.representations.belief.html" />
@@ -38,7 +36,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -59,7 +57,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -107,7 +104,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -133,18 +130,77 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-representations-package">
-<h1>pomdp_py.representations package<a class="headerlink" href="#pomdp-py-representations-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_py.representations package<a class="headerlink" href="#pomdp-py-representations-package" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.representations.belief.html">pomdp_py.representations.belief package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.particles">pomdp_py.representations.belief.particles module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.histogram">pomdp_py.representations.belief.histogram module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.abstraction_over_histogram"><code class="docutils literal notranslate"><span class="pre">abstraction_over_histogram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.histogram.update_histogram_belief"><code class="docutils literal notranslate"><span class="pre">update_histogram_belief()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.belief.html#module-pomdp_py.representations.belief.particles">pomdp_py.representations.belief.particles module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.abstraction_over_particles"><code class="docutils literal notranslate"><span class="pre">abstraction_over_particles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.particle_reinvigoration"><code class="docutils literal notranslate"><span class="pre">particle_reinvigoration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.belief.html#pomdp_py.representations.belief.particles.update_particles_belief"><code class="docutils literal notranslate"><span class="pre">update_particles_belief()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.representations.distribution.html">pomdp_py.representations.distribution package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram">pomdp_py.representations.distribution.histogram module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram"><code class="docutils literal notranslate"><span class="pre">Histogram</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.__getitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.__setitem__"><code class="docutils literal notranslate"><span class="pre">Histogram.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.get_histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.get_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.histogram"><code class="docutils literal notranslate"><span class="pre">Histogram.histogram</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.is_normalized"><code class="docutils literal notranslate"><span class="pre">Histogram.is_normalized()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.mpe"><code class="docutils literal notranslate"><span class="pre">Histogram.mpe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.histogram.Histogram.random"><code class="docutils literal notranslate"><span class="pre">Histogram.random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles">pomdp_py.representations.distribution.particles module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles"><code class="docutils literal notranslate"><span class="pre">Particles</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.add"><code class="docutils literal notranslate"><span class="pre">Particles.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.from_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.from_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.get_abstraction"><code class="docutils literal notranslate"><span class="pre">Particles.get_abstraction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.get_histogram"><code class="docutils literal notranslate"><span class="pre">Particles.get_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.particles"><code class="docutils literal notranslate"><span class="pre">Particles.particles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.Particles.random"><code class="docutils literal notranslate"><span class="pre">Particles.random()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.__getitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.__setitem__"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.add"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.condense"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.condense()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.from_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.get_histogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.mpe"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.mpe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.particles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.particles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.random"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.random()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.values"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.particles.WeightedParticles.weights"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.weights</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.gaussian">pomdp_py.representations.distribution.gaussian module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian"><code class="docutils literal notranslate"><span class="pre">Gaussian</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.__getitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.__setitem__"><code class="docutils literal notranslate"><span class="pre">Gaussian.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.cov"><code class="docutils literal notranslate"><span class="pre">Gaussian.cov</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.covariance"><code class="docutils literal notranslate"><span class="pre">Gaussian.covariance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.mean"><code class="docutils literal notranslate"><span class="pre">Gaussian.mean</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.mpe"><code class="docutils literal notranslate"><span class="pre">Gaussian.mpe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.random"><code class="docutils literal notranslate"><span class="pre">Gaussian.random()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.representations.distribution.html#pomdp_py.representations.distribution.gaussian.Gaussian.sigma"><code class="docutils literal notranslate"><span class="pre">Gaussian.sigma</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -162,8 +218,8 @@
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/api/pomdp_py.representations.rst.txt"

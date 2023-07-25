@@ -3,6 +3,19 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
+Version 1.3.3 (07/25/2023)
+-------------------------
+* Bumped minimum Python requirement from 3.7 to 3.8 due to `EOL of 3.7 <https://devguide.python.org/versions/>`_.
+* Fix :code:`cpdef -> cdef` to avoid installation failure after Cython 3.0.0 release (`pomdp-py#30 <https://github.com/h2r/pomdp-py/pull/30>`_).
+* Added float_precision argument to to_pomdp_file (`pomdp-py#29 <https://github.com/h2r/pomdp-py/pull/29>`_)
+* Add :code:`__init__` signature for Environment in comments to be visible in docs
+* Fix :code:`s -> sp` in :py:mod:`~pomdp_py.algorithms.value_iteration.ValueIteration` (`pomdp-py#20 <https://github.com/h2r/pomdp-py/issues/20>`_)
+* Allow updating rollout policy for :py:mod:`~pomdp_py.algorithms.po_uct.POUCT` and :py:mod:`~pomdp_py.algorithms.pomcp.POMCP`
+* Fix in :code:`setup.py` so that wheel builds properly.
+* Change set to list in :code:`pomdp_problems.tiger.tiger_problem.py` to tame error regarding :code:`random.sample` in Python 3.11.
+* Minor bug fixes and documentation.
+
+
 Version 1.3.2 (04/03/2022)
 -------------------------
 * Fix in :py:mod:`~pomdp_py.representations.distribution.histogram` (in :code:`__str__`):

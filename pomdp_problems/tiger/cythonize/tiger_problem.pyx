@@ -44,11 +44,11 @@ import numpy as np
 import sys
 
 def build_states(strings):
-    return {TigerState(s) for s in strings}
+    return [TigerState(s) for s in strings]
 def build_actions(strings):
-    return {TigerAction(s) for s in strings}
+    return [TigerAction(s) for s in strings]
 def build_observations(strings):
-    return {TigerObservation(s) for s in strings}
+    return [TigerObservation(s) for s in strings]
 
 cdef class TigerState(State):
     cdef public str name

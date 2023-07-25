@@ -13,3 +13,7 @@ Figure from the paper:
    :alt: Load/Unload Problem.
 
    Load/Unload problem
+
+.. code-block::
+
+   python -m pomdp_py -r load_unload

@@ -1,20 +1,18 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.framework package &#8212; pomdp_py 1.3.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <title>pomdp_py.framework package &#8212; pomdp_py 1.3.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pomdp_py.representations package" href="pomdp_py.representations.html" />
@@ -39,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.2).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
 
 
 
@@ -58,9 +56,157 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">pomdp_py.framework package</a><ul>
-<li><a class="reference internal" href="#module-pomdp_py.framework.basics">pomdp_py.framework.basics module</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.framework.oopomdp">pomdp_py.framework.oopomdp module</a></li>
-<li><a class="reference internal" href="#module-pomdp_py.framework.planner">pomdp_py.framework.planner module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.framework.basics">pomdp_py.framework.basics module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.add_attr"><code class="docutils literal notranslate"><span class="pre">Agent.add_attr()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.all_actions"><code class="docutils literal notranslate"><span class="pre">Agent.all_actions</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.all_observations"><code class="docutils literal notranslate"><span class="pre">Agent.all_observations</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.all_states"><code class="docutils literal notranslate"><span class="pre">Agent.all_states</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.belief"><code class="docutils literal notranslate"><span class="pre">Agent.belief</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.history"><code class="docutils literal notranslate"><span class="pre">Agent.history</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.init_belief"><code class="docutils literal notranslate"><span class="pre">Agent.init_belief</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.sample_belief"><code class="docutils literal notranslate"><span class="pre">Agent.sample_belief()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.set_belief"><code class="docutils literal notranslate"><span class="pre">Agent.set_belief()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.update"><code class="docutils literal notranslate"><span class="pre">Agent.update()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Agent.update_history"><code class="docutils literal notranslate"><span class="pre">Agent.update_history()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.BlackboxModel"><code class="docutils literal notranslate"><span class="pre">BlackboxModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.BlackboxModel.argmax"><code class="docutils literal notranslate"><span class="pre">BlackboxModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.BlackboxModel.sample"><code class="docutils literal notranslate"><span class="pre">BlackboxModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Distribution"><code class="docutils literal notranslate"><span class="pre">Distribution</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Distribution.__getitem__"><code class="docutils literal notranslate"><span class="pre">Distribution.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Distribution.__setitem__"><code class="docutils literal notranslate"><span class="pre">Distribution.__setitem__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.apply_transition"><code class="docutils literal notranslate"><span class="pre">Environment.apply_transition()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.blackbox_model"><code class="docutils literal notranslate"><span class="pre">Environment.blackbox_model</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.cur_state"><code class="docutils literal notranslate"><span class="pre">Environment.cur_state</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.provide_observation"><code class="docutils literal notranslate"><span class="pre">Environment.provide_observation()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.reward_model"><code class="docutils literal notranslate"><span class="pre">Environment.reward_model</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.state"><code class="docutils literal notranslate"><span class="pre">Environment.state</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.state_transition"><code class="docutils literal notranslate"><span class="pre">Environment.state_transition()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Environment.transition_model"><code class="docutils literal notranslate"><span class="pre">Environment.transition_model</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution.argmax"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution.get_histogram"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.get_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution.mpe"><code class="docutils literal notranslate"><span class="pre">GenerativeDistribution.mpe()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Observation"><code class="docutils literal notranslate"><span class="pre">Observation</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel"><code class="docutils literal notranslate"><span class="pre">ObservationModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">ObservationModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_all_observations()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">ObservationModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">ObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Option"><code class="docutils literal notranslate"><span class="pre">Option</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Option.initiation"><code class="docutils literal notranslate"><span class="pre">Option.initiation()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Option.policy"><code class="docutils literal notranslate"><span class="pre">Option.policy</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Option.sample"><code class="docutils literal notranslate"><span class="pre">Option.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.Option.termination"><code class="docutils literal notranslate"><span class="pre">Option.termination()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.POMDP"><code class="docutils literal notranslate"><span class="pre">POMDP</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel"><code class="docutils literal notranslate"><span class="pre">PolicyModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">PolicyModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_all_actions()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">PolicyModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">PolicyModel.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.PolicyModel.update"><code class="docutils literal notranslate"><span class="pre">PolicyModel.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.RewardModel"><code class="docutils literal notranslate"><span class="pre">RewardModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.RewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">RewardModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.RewardModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">RewardModel.get_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.RewardModel.probability"><code class="docutils literal notranslate"><span class="pre">RewardModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.RewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.State"><code class="docutils literal notranslate"><span class="pre">State</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel"><code class="docutils literal notranslate"><span class="pre">TransitionModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">TransitionModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_all_states()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel.get_distribution"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TransitionModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TransitionModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.sample_explict_models"><code class="docutils literal notranslate"><span class="pre">sample_explict_models()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.basics.sample_generative_model"><code class="docutils literal notranslate"><span class="pre">sample_generative_model()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_py.framework.oopomdp">pomdp_py.framework.oopomdp module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief"><code class="docutils literal notranslate"><span class="pre">OOBelief</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOBelief.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.__setitem__"><code class="docutils literal notranslate"><span class="pre">OOBelief.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.b"><code class="docutils literal notranslate"><span class="pre">OOBelief.b()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.mpe"><code class="docutils literal notranslate"><span class="pre">OOBelief.mpe()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.object_belief"><code class="docutils literal notranslate"><span class="pre">OOBelief.object_belief()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.object_beliefs"><code class="docutils literal notranslate"><span class="pre">OOBelief.object_beliefs</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.random"><code class="docutils literal notranslate"><span class="pre">OOBelief.random()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOBelief.set_object_belief"><code class="docutils literal notranslate"><span class="pre">OOBelief.set_object_belief()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservation"><code class="docutils literal notranslate"><span class="pre">OOObservation</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservation.factor"><code class="docutils literal notranslate"><span class="pre">OOObservation.factor()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservation.merge"><code class="docutils literal notranslate"><span class="pre">OOObservation.merge()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel"><code class="docutils literal notranslate"><span class="pre">OOObservationModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel.observation_models"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.observation_models</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">OOObservationModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOPOMDP"><code class="docutils literal notranslate"><span class="pre">OOPOMDP</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState"><code class="docutils literal notranslate"><span class="pre">OOState</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOState.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.copy"><code class="docutils literal notranslate"><span class="pre">OOState.copy()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.get_object_attribute"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_attribute()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.get_object_class"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_class()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.get_object_state"><code class="docutils literal notranslate"><span class="pre">OOState.get_object_state()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.s"><code class="docutils literal notranslate"><span class="pre">OOState.s()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.set_object_state"><code class="docutils literal notranslate"><span class="pre">OOState.set_object_state()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState.situation"><code class="docutils literal notranslate"><span class="pre">OOState.situation</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel.__getitem__"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.argmax()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.probability()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.sample()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOTransitionModel.transition_models"><code class="docutils literal notranslate"><span class="pre">OOTransitionModel.transition_models</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.ObjectState"><code class="docutils literal notranslate"><span class="pre">ObjectState</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.ObjectState.__getitem__"><code class="docutils literal notranslate"><span class="pre">ObjectState.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.ObjectState.__setitem__"><code class="docutils literal notranslate"><span class="pre">ObjectState.__setitem__()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.oopomdp.ObjectState.copy"><code class="docutils literal notranslate"><span class="pre">ObjectState.copy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pomdp_py.framework.planner">pomdp_py.framework.planner module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.planner.Planner"><code class="docutils literal notranslate"><span class="pre">Planner</span></code></a><ul>
+<li><a class="reference internal" href="#pomdp_py.framework.planner.Planner.plan"><code class="docutils literal notranslate"><span class="pre">Planner.plan()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.planner.Planner.update"><code class="docutils literal notranslate"><span class="pre">Planner.update()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.framework.planner.Planner.updates_agent_belief"><code class="docutils literal notranslate"><span class="pre">Planner.updates_agent_belief()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -72,7 +218,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -120,7 +265,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -146,13 +291,9 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-framework-package">
-<h1>pomdp_py.framework package<a class="headerlink" href="#pomdp-py-framework-package" title="Permalink to this headline">¶</a></h1>
+<h1>pomdp_py.framework package<a class="headerlink" href="#pomdp-py-framework-package" title="Permalink to this heading">¶</a></h1>
 <p>Important classes in <a class="reference internal" href="#module-pomdp_py.framework.basics" title="pomdp_py.framework.basics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pomdp_py.framework.basics</span></code></a>:</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.framework.basics.Distribution" title="pomdp_py.framework.basics.Distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Distribution</span></code></a></p></td>
 <td><p>A Distribution is a probability function that maps from variable value to a real value, that is, <span class="math notranslate nohighlight">\(Pr(X=x)\)</span>.</p></td>
@@ -199,7 +340,7 @@
 </tbody>
 </table>
 <section id="module-pomdp_py.framework.basics">
-<span id="pomdp-py-framework-basics-module"></span><h2>pomdp_py.framework.basics module<a class="headerlink" href="#module-pomdp_py.framework.basics" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-framework-basics-module"></span><h2>pomdp_py.framework.basics module<a class="headerlink" href="#module-pomdp_py.framework.basics" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.basics.Action">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.basics.</span></span><span class="sig-name descname"><span class="pre">Action</span></span><a class="headerlink" href="#pomdp_py.framework.basics.Action" title="Permalink to this definition">¶</a></dt>
@@ -348,6 +489,12 @@ Therefore, when coding up an Environment, the developer
 should have in mind how to represent the state so that
 it can be used by a POMDP or OOPOMDP.</p>
 <p>The Environment is passive. It never observes nor acts.</p>
+<dl class="simple">
+<dt>__init__(self, init_state,</dt><dd><p>transition_model=None,
+reward_model=None,
+blackbox_model=None)</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.basics.Environment.apply_transition">
 <span class="sig-name descname"><span class="pre">apply_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.Environment.apply_transition" title="Permalink to this definition">¶</a></dt>
@@ -374,16 +521,16 @@ be the <cite>next_state</cite>.</p>
 where <span class="math notranslate nohighlight">\(s'\)</span> is current environment <a class="reference internal" href="#pomdp_py.framework.basics.Environment.state" title="pomdp_py.framework.basics.Environment.state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state()</span></code></a>, <span class="math notranslate nohighlight">\(a\)</span>
 is the given <cite>action</cite>, and <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span> is the <cite>observation_model</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>observation_model</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><em>ObservationModel</em></a>) – </p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>an observation sampled from <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
 </dd>
 </dl>
@@ -407,7 +554,7 @@ is the given <cite>action</cite>, and <span class="math notranslate nohighlight"
 <dd><p>Simulates a state transition given <cite>action</cite>. If <cite>execute</cite> is set to True,
 then the resulting state will be the new current state of the environment.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – action that triggers the state transition</p></li>
 <li><p><strong>execute</strong> (<em>bool</em>) – If True, the resulting state of the transition will become the current state.</p></li>
@@ -415,11 +562,11 @@ then the resulting state will be the new current state of the environment.</p>
 factor when executing actions following an option’s policy until reaching terminal condition.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>reward as a result of <cite>action</cite> and state transition, if <cite>execute</cite> is True
 (next_state, reward) if <cite>execute</cite> is False.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float or tuple</p>
 </dd>
 </dl>
@@ -436,7 +583,7 @@ factor when executing actions following an option’s policy until reaching term
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.basics.GenerativeDistribution">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.basics.</span></span><span class="sig-name descname"><span class="pre">GenerativeDistribution</span></span><a class="headerlink" href="#pomdp_py.framework.basics.GenerativeDistribution" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Distribution" title="pomdp_py.framework.basics.Distribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Distribution</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Distribution" title="pomdp_py.framework.basics.Distribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distribution</span></code></a></p>
 <p>A GenerativeDistribution is a Distribution that additionally exhibits
 generative properties. That is, it supports <a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution.argmax" title="pomdp_py.framework.basics.GenerativeDistribution.argmax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">argmax()</span></code></a> (or <a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution.mpe" title="pomdp_py.framework.basics.GenerativeDistribution.mpe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mpe()</span></code></a>)
 and <code class="xref py py-meth docutils literal notranslate"><span class="pre">random()</span></code> functions.</p>
@@ -495,17 +642,17 @@ and <code class="xref py py-meth docutils literal notranslate"><span class="pre"
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.ObservationModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>observation</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><em>Observation</em></a>) – the observation <span class="math notranslate nohighlight">\(o\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -517,16 +664,16 @@ and <code class="xref py py-meth docutils literal notranslate"><span class="pre"
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the observation <span class="math notranslate nohighlight">\(o\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation">Observation</a></p>
 </dd>
 </dl>
@@ -537,7 +684,7 @@ distribution of this observation model.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.basics.Option">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.basics.</span></span><span class="sig-name descname"><span class="pre">Option</span></span><a class="headerlink" href="#pomdp_py.framework.basics.Option" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Action</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a></p>
 <p>An option is a temporally abstracted action that
 is defined by (I, pi, B), where I is a initiation set,
 pi is a policy, and B is a termination condition</p>
@@ -613,16 +760,16 @@ depending on the state (that is, certain actions have probabilty=0)</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.PolicyModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\pi(a|s)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\pi(a|s)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -634,13 +781,13 @@ depending on the state (that is, certain actions have probabilty=0)</p>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the action <span class="math notranslate nohighlight">\(a\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action">Action</a></p>
 </dd>
 </dl>
@@ -678,7 +825,7 @@ distribution of this policy model.</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.RewardModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>reward</strong> (<em>float</em>) – the reward <span class="math notranslate nohighlight">\(r\)</span></p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
@@ -686,10 +833,10 @@ distribution of this policy model.</p>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(r|s,a,s')\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -702,17 +849,17 @@ distribution of this policy model.</p>
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the reward <span class="math notranslate nohighlight">\(r\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -755,17 +902,17 @@ i.e. assumed to be implemented for a reward model.</p>
 <span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.basics.TransitionModel.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s'\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the probability <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -777,16 +924,16 @@ i.e. assumed to be implemented for a reward model.</p>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – the next state <span class="math notranslate nohighlight">\(s\)</span></p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – the action <span class="math notranslate nohighlight">\(a\)</span></p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the next state <span class="math notranslate nohighlight">\(s'\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State">State</a></p>
 </dd>
 </dl>
@@ -807,7 +954,7 @@ distribution of this transition model.</p>
 based on these models (i.e. <span class="math notranslate nohighlight">\(s'\)</span> and <span class="math notranslate nohighlight">\(o\)</span> will be sampled according
 to these models).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>agent</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><em>Agent</em></a>) – agent that supplies all the models</p></li>
 <li><p><strong>state</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><em>State</em></a>) – </p></li>
@@ -815,10 +962,10 @@ to these models).</p>
 <li><p><strong>discount_factor</strong> (<em>float</em>) – Defaults to 1.0; Only used when <cite>action</cite> is an <a class="reference internal" href="#pomdp_py.framework.basics.Option" title="pomdp_py.framework.basics.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">Option</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="math notranslate nohighlight">\((s', o, r, n_steps)\)</span></p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
@@ -826,7 +973,7 @@ to these models).</p>
 
 </section>
 <section id="module-pomdp_py.framework.oopomdp">
-<span id="pomdp-py-framework-oopomdp-module"></span><h2>pomdp_py.framework.oopomdp module<a class="headerlink" href="#module-pomdp_py.framework.oopomdp" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-framework-oopomdp-module"></span><h2>pomdp_py.framework.oopomdp module<a class="headerlink" href="#module-pomdp_py.framework.oopomdp" title="Permalink to this heading">¶</a></h2>
 <p>This module describes components of the
 OO-POMDP interface in <cite>pomdp_py</cite>.</p>
 <p>An OO-POMDP is a specific type of POMDP where
@@ -840,7 +987,7 @@ of objects increases. See <span id="id1">[<a class="reference internal" href="..
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOBelief">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOBelief</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOBelief" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.GenerativeDistribution</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a></p>
 <p>Belief factored by objects.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOBelief.__getitem__">
@@ -857,7 +1004,7 @@ Note always feasible.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOBelief.b">
-<span class="sig-name descname"><span class="pre">b</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOBelief.b" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">b</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOBelief.b" title="Permalink to this definition">¶</a></dt>
 <dd><p>convenient alias function call</p>
 </dd></dl>
 
@@ -895,23 +1042,23 @@ Note always feasible.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOObservation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOObservation</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOObservation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.Observation</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observation</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOObservation.factor">
 <span class="sig-name descname"><span class="pre">factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOObservation.factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Factors the observation by objects.
 That is, <span class="math notranslate nohighlight">\(z\mapsto z_1,\cdots,z_n\)</span></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState" title="pomdp_py.framework.oopomdp.OOState"><em>OOState</em></a>) – given state</p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – given action</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>map from object id to a <cite>pomdp_py.Observation</cite>.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -919,21 +1066,21 @@ That is, <span class="math notranslate nohighlight">\(z\mapsto z_1,\cdots,z_n\)<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOObservation.merge">
-<span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_observations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOObservation.merge" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_observations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOObservation.merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merges the factored <cite>object_observations</cite> into a
 single OOObservation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>object_observations</strong> (<em>dict</em>) – map from object id to a <cite>pomdp_py.Observation</cite>.</p></li>
 <li><p><strong>next_state</strong> (<a class="reference internal" href="#pomdp_py.framework.oopomdp.OOState" title="pomdp_py.framework.oopomdp.OOState"><em>OOState</em></a>) – given state</p></li>
 <li><p><strong>action</strong> (<a class="reference internal" href="#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><em>Action</em></a>) – given action</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the merged observation.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pomdp_py.framework.oopomdp.OOObservation" title="pomdp_py.framework.oopomdp.OOObservation">OOObservation</a></p>
 </dd>
 </dl>
@@ -944,7 +1091,7 @@ single OOObservation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOObservationModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOObservationModel</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOObservationModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.ObservationModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a></p>
 <p><span class="math notranslate nohighlight">\(O(z | s', a) = \prod_i O(z_i' | s', a)\)</span></p>
 <p>__init__(self, observation_models):
 :param observation_models:
@@ -983,7 +1130,7 @@ single OOObservation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOPOMDP">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOPOMDP</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOPOMDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.POMDP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.POMDP" title="pomdp_py.framework.basics.POMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">POMDP</span></code></a></p>
 <p>An OO-POMDP is again defined by an agent and an environment.</p>
 <p>__init__(self, agent, env, name=”OOPOMDP”)</p>
 </dd></dl>
@@ -991,7 +1138,7 @@ single OOObservation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOState">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOState</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a></p>
 <p>State that can be factored by objects, that is, to ObjectState(s).</p>
 <p>Note: to change the state of an object, you can use set_object_state.  Do
 not directly assign the object state by e.g. oostate.object_states[objid] =
@@ -1030,7 +1177,7 @@ oostate after the change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOState.s">
-<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOState.s" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOState.s" title="Permalink to this definition">¶</a></dt>
 <dd><p>convenient alias function</p>
 </dd></dl>
 
@@ -1053,7 +1200,7 @@ the situation of this state since it supports hashing.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.OOTransitionModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">OOTransitionModel</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.OOTransitionModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.TransitionModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a></p>
 <p><span class="math notranslate nohighlight">\(T(s' | s, a) = \prod_i T(s_i' | s, a)\)</span></p>
 <p>__init__(self, transition_models):
 :param transition_models:
@@ -1092,7 +1239,7 @@ the situation of this state since it supports hashing.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.oopomdp.ObjectState">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.oopomdp.</span></span><span class="sig-name descname"><span class="pre">ObjectState</span></span><a class="headerlink" href="#pomdp_py.framework.oopomdp.ObjectState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">pomdp_py.framework.basics.State</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a></p>
 <p>This is the result of OOState factoring; A state
 in an OO-POMDP is made up of ObjectState(s), each with
 an <cite>object class</cite> (str) and a set of <cite>attributes</cite> (dict).</p>
@@ -1118,7 +1265,7 @@ an <cite>object class</cite> (str) and a set of <cite>attributes</cite> (dict).<
 
 </section>
 <section id="module-pomdp_py.framework.planner">
-<span id="pomdp-py-framework-planner-module"></span><h2>pomdp_py.framework.planner module<a class="headerlink" href="#module-pomdp_py.framework.planner" title="Permalink to this headline">¶</a></h2>
+<span id="pomdp-py-framework-planner-module"></span><h2>pomdp_py.framework.planner module<a class="headerlink" href="#module-pomdp_py.framework.planner" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.framework.planner.Planner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.framework.planner.</span></span><span class="sig-name descname"><span class="pre">Planner</span></span><a class="headerlink" href="#pomdp_py.framework.planner.Planner" title="Permalink to this definition">¶</a></dt>
@@ -1170,8 +1317,8 @@ belief.</p>
       &copy;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/api/pomdp_py.framework.rst.txt"
