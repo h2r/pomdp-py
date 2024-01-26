@@ -3,35 +3,41 @@
 import numpy as np
 import random
 
+
 # colors
 def lighter(color, percent):
-    '''assumes color is rgb between (0, 0, 0) and (255, 255, 255)'''
+    """assumes color is rgb between (0, 0, 0) and (255, 255, 255)"""
     color = np.array(color)
     white = np.array([255, 255, 255])
-    vector = white-color
+    vector = white - color
     return color + vector * percent
 
+
 def rgb_to_hex(rgb):
-    r,g,b = rgb
-    return '#%02x%02x%02x' % (int(r), int(g), int(b))
+    r, g, b = rgb
+    return "#%02x%02x%02x" % (int(r), int(g), int(b))
+
 
 def hex_to_rgb(hx):
     """hx is a string, begins with #. ASSUME len(hx)=7."""
     if len(hx) != 7:
         raise ValueError("Hex must be #------")
     hx = hx[1:]  # omit the '#'
-    r = int('0x'+hx[:2], 16)
-    g = int('0x'+hx[2:4], 16)
-    b = int('0x'+hx[4:6], 16)
-    return (r,g,b)
+    r = int("0x" + hx[:2], 16)
+    g = int("0x" + hx[2:4], 16)
+    b = int("0x" + hx[4:6], 16)
+    return (r, g, b)
+
 
 def inverse_color_rgb(rgb):
-    r,g,b = rgb
-    return (255-r, 255-g, 255-b)
+    r, g, b = rgb
+    return (255 - r, 255 - g, 255 - b)
+
 
 def inverse_color_hex(hx):
     """hx is a string, begins with #. ASSUME len(hx)=7."""
     return inverse_color_rgb(hex_to_rgb(hx))
+
 
 def random_unique_color(colors, ctype=1):
     """

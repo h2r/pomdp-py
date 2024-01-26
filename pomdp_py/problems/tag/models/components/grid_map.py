@@ -2,8 +2,8 @@ from pomdp_py.problems.tag.domain.action import *
 from pomdp_py.problems.tag.models.transition_model import TagTransitionModel
 from pomdp_py.problems.multi_object_search.env.env import interpret
 
-class GridMap:
 
+class GridMap:
     def __init__(self, width, length, obstacle_poses):
         self.width = width
         self.length = length
@@ -11,15 +11,18 @@ class GridMap:
         self.obstacle_poses = obstacle_poses
 
     def valid_pose(self, position):
-        if not (position[0] >= 0 and position[0] < self.width\
-                and position[1] >= 0 and position[1] < self.length):
+        if not (
+            position[0] >= 0
+            and position[0] < self.width
+            and position[1] >= 0
+            and position[1] < self.length
+        ):
             return False
         if position in self.obstacle_poses:
             return False
         return True
 
-    def valid_motions(self, position,
-                      all_motions=MOTION_ACTIONS):
+    def valid_motions(self, position, all_motions=MOTION_ACTIONS):
         valid_motions = set({})
         for motion_action in all_motions:
             if TagTransitionModel.if_move_by(self, position, motion_action) == position:
@@ -38,8 +41,12 @@ class GridMap:
         return grid_map
 
     def free_cells(self):
-        cells = set({(x,y)
-                     for x in range(self.width)
-                     for y in range(self.length)
-                     if (x,y) not in self.obstacle_poses})
+        cells = set(
+            {
+                (x, y)
+                for x in range(self.width)
+                for y in range(self.length)
+                if (x, y) not in self.obstacle_poses
+            }
+        )
         return cells

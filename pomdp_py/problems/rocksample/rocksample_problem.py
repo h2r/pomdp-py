@@ -40,25 +40,30 @@ import copy
 
 EPSILON = 1e-9
 
+
 def euclidean_dist(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+    return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+
 
 class RockType:
-    GOOD = 'good'
-    BAD = 'bad'
+    GOOD = "good"
+    BAD = "bad"
+
     @staticmethod
     def invert(rocktype):
-        if rocktype == 'good':
-            return 'bad'
+        if rocktype == "good":
+            return "bad"
         else:
-            return 'good'
+            return "good"
         # return 1 - rocktype
+
     @staticmethod
     def random(p=0.5):
-        if random.uniform(0,1) >= p:
+        if random.uniform(0, 1) >= p:
             return RockType.GOOD
         else:
             return RockType.BAD
+
 
 class State(pomdp_py.State):
     def __init__(self, position, rocktypes, terminal=False):
@@ -79,11 +84,14 @@ class State(pomdp_py.State):
 
     def __hash__(self):
         return hash((self.position, self.rocktypes, self.terminal))
+
     def __eq__(self, other):
         if isinstance(other, State):
-            return self.position == other.position\
-                and self.rocktypes == other.rocktypes\
+            return (
+                self.position == other.position
+                and self.rocktypes == other.rocktypes
                 and self.terminal == other.terminal
+            )
         else:
             return False
 
@@ -91,20 +99,29 @@ class State(pomdp_py.State):
         return self.__repr__()
 
     def __repr__(self):
-        return "State(%s | %s | %s)" % (str(self.position), str(self.rocktypes), str(self.terminal))
+        return "State(%s | %s | %s)" % (
+            str(self.position),
+            str(self.rocktypes),
+            str(self.terminal),
+        )
+
 
 class Action(pomdp_py.Action):
     def __init__(self, name):
         self.name = name
+
     def __hash__(self):
         return hash(self.name)
+
     def __eq__(self, other):
         if isinstance(other, Action):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
+
     def __str__(self):
         return self.name
+
     def __repr__(self):
         return "Action(%s)" % self.name
 
@@ -114,62 +131,78 @@ class MoveAction(Action):
     WEST = (-1, 0)
     NORTH = (0, -1)
     SOUTH = (0, 1)
+
     def __init__(self, motion, name):
-        if motion not in {MoveAction.EAST, MoveAction.WEST,
-                          MoveAction.NORTH, MoveAction.SOUTH}:
+        if motion not in {
+            MoveAction.EAST,
+            MoveAction.WEST,
+            MoveAction.NORTH,
+            MoveAction.SOUTH,
+        }:
             raise ValueError("Invalid move motion %s" % motion)
         self.motion = motion
         super().__init__("move-%s" % str(name))
+
 
 MoveEast = MoveAction(MoveAction.EAST, "EAST")
 MoveWest = MoveAction(MoveAction.WEST, "WEST")
 MoveNorth = MoveAction(MoveAction.NORTH, "NORTH")
 MoveSouth = MoveAction(MoveAction.SOUTH, "SOUTH")
 
+
 class SampleAction(Action):
     def __init__(self):
         super().__init__("sample")
+
 
 class CheckAction(Action):
     def __init__(self, rock_id):
         self.rock_id = rock_id
         super().__init__("check-%d" % self.rock_id)
 
+
 class Observation(pomdp_py.Observation):
     def __init__(self, quality):
         self.quality = quality
+
     def __hash__(self):
         return hash(self.quality)
+
     def __eq__(self, other):
         if isinstance(other, Observation):
             return self.quality == other.quality
         elif type(other) == str:
             return self.quality == other
+
     def __str__(self):
         return str(self.quality)
+
     def __repr__(self):
         return "Observation(%s)" % str(self.quality)
 
+
 class RSTransitionModel(pomdp_py.TransitionModel):
 
-    """ The model is deterministic """
+    """The model is deterministic"""
 
     def __init__(self, n, rock_locs, in_exit_area):
         """
         rock_locs: a map from (x,y) location to rock_id
-        in_exit_area: a function (x,y) -> Bool that returns True if (x,y) is in exit area"""
+        in_exit_area: a function (x,y) -> Bool that returns True if (x,y) is in exit area
+        """
         self._n = n
         self._rock_locs = rock_locs
         self._in_exit_area = in_exit_area
 
     def _move_or_exit(self, position, action):
-        expected = (position[0] + action.motion[0],
-                    position[1] + action.motion[1])
+        expected = (position[0] + action.motion[0], position[1] + action.motion[1])
         if self._in_exit_area(expected):
             return expected, True
         else:
-            return (max(0, min(position[0] + action.motion[0], self._n-1)),
-                    max(0, min(position[1] + action.motion[1], self._n-1))), False
+            return (
+                max(0, min(position[0] + action.motion[0], self._n - 1)),
+                max(0, min(position[1] + action.motion[1], self._n - 1)),
+            ), False
 
     def probability(self, next_state, state, action, normalized=False, **kwargs):
         if next_state != self.sample(state, action):
@@ -205,7 +238,7 @@ class RSTransitionModel(pomdp_py.TransitionModel):
 class RSObservationModel(pomdp_py.ObservationModel):
     def __init__(self, rock_locs, half_efficiency_dist=20):
         self._half_efficiency_dist = half_efficiency_dist
-        self._rocks = {rock_locs[pos]:pos for pos in rock_locs}
+        self._rocks = {rock_locs[pos]: pos for pos in rock_locs}
 
     def probability(self, observation, next_state, action):
         if isinstance(action, CheckAction):
@@ -283,12 +316,15 @@ class RSRewardModel(pomdp_py.RewardModel):
     def argmax(self, state, action, next_state, normalized=False, **kwargs):
         raise NotImplementedError
 
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+    def probability(
+        self, reward, state, action, next_state, normalized=False, **kwargs
+    ):
         raise NotImplementedError
 
 
 class RSPolicyModel(pomdp_py.RolloutPolicy):
     """Simple policy model according to problem description."""
+
     def __init__(self, n, k):
         check_actions = set({CheckAction(rock_id) for rock_id in range(k)})
         self._move_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth}
@@ -326,13 +362,11 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
 
 
 class RockSampleProblem(pomdp_py.POMDP):
-
     @staticmethod
     def random_free_location(n, not_free_locs):
         """returns a random (x,y) location in nxn grid that is free."""
         while True:
-            loc = (random.randint(0, n-1),
-                   random.randint(0, n-1))
+            loc = (random.randint(0, n - 1), random.randint(0, n - 1))
             if loc not in not_free_locs:
                 return loc
 
@@ -343,10 +377,12 @@ class RockSampleProblem(pomdp_py.POMDP):
     def generate_instance(n, k):
         """Returns init_state and rock locations for an instance of RockSample(n,k)"""
 
-        rover_position = (0, random.randint(0, n-1))
+        rover_position = (0, random.randint(0, n - 1))
         rock_locs = {}  # map from rock location to rock id
         for i in range(k):
-            loc = RockSampleProblem.random_free_location(n, set(rock_locs.keys()) | set({rover_position}))
+            loc = RockSampleProblem.random_free_location(
+                n, set(rock_locs.keys()) | set({rover_position})
+            )
             rock_locs[loc] = i
 
         # random rocktypes
@@ -363,29 +399,29 @@ class RockSampleProblem(pomdp_py.POMDP):
         rocktypes = self.env.state.rocktypes
         # Rock id map
         for y in range(self._n):
-            for x in range(self._n+1):
+            for x in range(self._n + 1):
                 char = "."
                 if x == self._n:
                     char = ">"
-                if (x,y) in self._rock_locs:
-                    char = str(self._rock_locs[(x,y)])
-                if (x,y) == rover_position:
+                if (x, y) in self._rock_locs:
+                    char = str(self._rock_locs[(x, y)])
+                if (x, y) == rover_position:
                     char = "R"
                 string += char
             string += "\n"
         string += "_____G/B_____\n"
         # Good/bad map
         for y in range(self._n):
-            for x in range(self._n+1):
+            for x in range(self._n + 1):
                 char = "."
                 if x == self._n:
                     char = ">"
-                if (x,y) in self._rock_locs:
-                    if rocktypes[self._rock_locs[(x,y)]] == RockType.GOOD:
+                if (x, y) in self._rock_locs:
+                    if rocktypes[self._rock_locs[(x, y)]] == RockType.GOOD:
                         char = "$"
                     else:
                         char = "x"
-                if (x,y) == rover_position:
+                if (x, y) == rover_position:
                     char = "R"
                 string += char
             string += "\n"
@@ -393,14 +429,18 @@ class RockSampleProblem(pomdp_py.POMDP):
 
     def __init__(self, n, k, init_state, rock_locs, init_belief):
         self._n, self._k = n, k
-        agent = pomdp_py.Agent(init_belief,
-                               RSPolicyModel(n,k),
-                               RSTransitionModel(n, rock_locs, self.in_exit_area),
-                               RSObservationModel(rock_locs),
-                               RSRewardModel(rock_locs, self.in_exit_area))
-        env = pomdp_py.Environment(init_state,
-                                   RSTransitionModel(n, rock_locs, self.in_exit_area),
-                                   RSRewardModel(rock_locs, self.in_exit_area))
+        agent = pomdp_py.Agent(
+            init_belief,
+            RSPolicyModel(n, k),
+            RSTransitionModel(n, rock_locs, self.in_exit_area),
+            RSObservationModel(rock_locs),
+            RSRewardModel(rock_locs, self.in_exit_area),
+        )
+        env = pomdp_py.Environment(
+            init_state,
+            RSTransitionModel(n, rock_locs, self.in_exit_area),
+            RSRewardModel(rock_locs, self.in_exit_area),
+        )
         self._rock_locs = rock_locs
         super().__init__(agent, env, name="RockSampleProblem")
 
@@ -410,7 +450,7 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
     total_reward = 0
     total_discounted_reward = 0
     for i in range(nsteps):
-        print("==== Step %d ====" % (i+1))
+        print("==== Step %d ====" % (i + 1))
         action = planner.plan(rocksample.agent)
         # pomdp_py.visual.visualize_pouct_search_tree(rocksample.agent.tree,
         #                                             max_depth=5, anonymize=False)
@@ -419,8 +459,9 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         env_reward = rocksample.env.state_transition(action, execute=True)
         true_next_state = copy.deepcopy(rocksample.env.state)
 
-        real_observation = rocksample.env.provide_observation(rocksample.agent.observation_model,
-                                                              action)
+        real_observation = rocksample.env.provide_observation(
+            rocksample.agent.observation_model, action
+        )
         rocksample.agent.update_history(action, real_observation)
         planner.update(rocksample.agent, action, real_observation)
         total_reward += env_reward
@@ -460,6 +501,7 @@ def init_particles_belief(k, num_particles, init_state, belief="uniform"):
     init_belief = pomdp_py.Particles(particles)
     return init_belief
 
+
 def main():
     n, k = 5, 5
     init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
@@ -486,10 +528,14 @@ def main():
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
-    pomcp = pomdp_py.POMCP(max_depth=20, discount_factor=0.95,
-                           num_sims=10000, exploration_const=20,
-                           rollout_policy=rocksample.agent.policy_model,
-                           num_visits_init=1)
+    pomcp = pomdp_py.POMCP(
+        max_depth=20,
+        discount_factor=0.95,
+        num_sims=10000,
+        exploration_const=20,
+        rollout_policy=rocksample.agent.policy_model,
+        num_visits_init=1,
+    )
     tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
 
     rocksample.env.state.position = init_state_copy.position
@@ -499,5 +545,5 @@ def main():
     rocksample.agent.set_belief(init_belief)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

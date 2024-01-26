@@ -6,6 +6,7 @@ Observation space: the agent observes the target's location when the agent and
 """
 import pomdp_py
 
+
 class TagObservation(pomdp_py.Observation):
     def __init__(self, target_position):
         self.target_position = target_position
@@ -20,5 +21,4 @@ class TagObservation(pomdp_py.Observation):
             return self.target_position == other.target_position
 
     def __str__(self):
-        return 'Observation(%s)' % (str(self.target_position))
-
+        return "Observation(%s)" % (str(self.target_position))

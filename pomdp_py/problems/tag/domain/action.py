@@ -6,10 +6,17 @@ Action space: The agent can take motion action and a tag action.
 
 # Reuses the actions in the multi object search domain
 import pomdp_py
-from pomdp_py.problems.multi_object_search.domain.action\
-    import Action, MotionAction, MoveEast2D, MoveWest2D, MoveSouth2D, MoveNorth2D
+from pomdp_py.problems.multi_object_search.domain.action import (
+    Action,
+    MotionAction,
+    MoveEast2D,
+    MoveWest2D,
+    MoveSouth2D,
+    MoveNorth2D,
+)
 
 MOTION_ACTIONS = {MoveEast2D, MoveWest2D, MoveSouth2D, MoveNorth2D}
+
 
 class TagAction(Action):
     def __init__(self):

@@ -7,6 +7,7 @@ import pomdp_py
 import random
 from pomdp_py.problems.multi_object_search.domain.action import *
 
+
 class PolicyModel(pomdp_py.RolloutPolicy):
     """Simple policy model. All actions are possible at any state."""
 
@@ -38,10 +39,9 @@ class PolicyModel(pomdp_py.RolloutPolicy):
             return ALL_MOTION_ACTIONS | {Look} | find_action
         else:
             if self._grid_map is not None:
-                valid_motions =\
-                    self._grid_map.valid_motions(self.robot_id,
-                                                 state.pose(self.robot_id),
-                                                 ALL_MOTION_ACTIONS)
+                valid_motions = self._grid_map.valid_motions(
+                    self.robot_id, state.pose(self.robot_id), ALL_MOTION_ACTIONS
+                )
                 return valid_motions | {Look} | find_action
             else:
                 return ALL_MOTION_ACTIONS | {Look} | find_action

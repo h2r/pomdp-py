@@ -9,7 +9,7 @@ Problem originally introduced in `Solving POMDPs by Searching the Space of Finit
 
 .. figure:: https://i.imgur.com/i1RDsrL.png
    :alt: Figure from the paper
-         
+
    Maze POMDP
 
 

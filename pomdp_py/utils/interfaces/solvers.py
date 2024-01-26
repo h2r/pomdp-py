@@ -11,17 +11,25 @@ We hope to interface with:
 * more? Help us if you can!
 """
 import pomdp_py
-from pomdp_py.utils.interfaces.conversion\
-    import to_pomdp_file, PolicyGraph, AlphaVectorPolicy, parse_pomdp_solve_output
+from pomdp_py.utils.interfaces.conversion import (
+    to_pomdp_file,
+    PolicyGraph,
+    AlphaVectorPolicy,
+    parse_pomdp_solve_output,
+)
 import subprocess
 import os, sys
 
-def vi_pruning(agent, pomdp_solve_path,
-               discount_factor=0.95,
-               options=[],
-               pomdp_name="temp-pomdp",
-               remove_generated_files=False,
-               return_policy_graph=False):
+
+def vi_pruning(
+    agent,
+    pomdp_solve_path,
+    discount_factor=0.95,
+    options=[],
+    pomdp_name="temp-pomdp",
+    remove_generated_files=False,
+    return_policy_graph=False,
+):
     """
     Value Iteration with pruning, using the software pomdp-solve
     https://www.pomdp.org/code/ developed by Anthony R. Cassandra.
@@ -49,24 +57,29 @@ def vi_pruning(agent, pomdp_solve_path,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        raise("S, A, O must be enumerable for a given agent to convert to .pomdp format")
+        raise (
+            "S, A, O must be enumerable for a given agent to convert to .pomdp format"
+        )
 
     pomdp_path = "./%s.pomdp" % pomdp_name
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
-    proc = subprocess.Popen([pomdp_solve_path,
-                             "-pomdp", pomdp_path,
-                             "-o", pomdp_name] + list(map(str,options)))
+    proc = subprocess.Popen(
+        [pomdp_solve_path, "-pomdp", pomdp_path, "-o", pomdp_name]
+        + list(map(str, options))
+    )
     proc.wait()
 
     # Read the value and policy graph files
     alpha_path = "%s.alpha" % pomdp_name
     pg_path = "%s.pg" % pomdp_name
     if return_policy_graph:
-        policy = PolicyGraph.construct(alpha_path, pg_path,
-                                       all_states, all_actions, all_observations)
+        policy = PolicyGraph.construct(
+            alpha_path, pg_path, all_states, all_actions, all_observations
+        )
     else:
         policy = AlphaVectorPolicy.construct(
-            alpha_path, all_states, all_actions, solver="pomdp-solve")
+            alpha_path, all_states, all_actions, solver="pomdp-solve"
+        )
 
     # Remove temporary files
     if remove_generated_files:
@@ -76,13 +89,17 @@ def vi_pruning(agent, pomdp_solve_path,
     return policy
 
 
-def sarsop(agent, pomdpsol_path,
-           discount_factor=0.95,
-           timeout=30, memory=100,
-           precision=0.5,
-           pomdp_name="temp-pomdp",
-           remove_generated_files=False,
-           logfile=None):
+def sarsop(
+    agent,
+    pomdpsol_path,
+    discount_factor=0.95,
+    timeout=30,
+    memory=100,
+    precision=0.5,
+    pomdp_name="temp-pomdp",
+    remove_generated_files=False,
+    logfile=None,
+):
     """
     SARSOP, using the binary from https://github.com/AdaCompNUS/sarsop
     This is an anytime POMDP planning algorithm
@@ -104,7 +121,9 @@ def sarsop(agent, pomdpsol_path,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        raise("S, A, O must be enumerable for a given agent to convert to .pomdpx format")
+        raise (
+            "S, A, O must be enumerable for a given agent to convert to .pomdpx format"
+        )
 
     if logfile is None:
         stdout = None
@@ -116,12 +135,22 @@ def sarsop(agent, pomdpsol_path,
 
     pomdp_path = "./%s.pomdp" % pomdp_name
     to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
-    proc = subprocess.Popen([pomdpsol_path,
-                             "--timeout", str(timeout),
-                             "--memory", str(memory),
-                             "--precision", str(precision),
-                             "--output", "%s.policy" % pomdp_name,
-                             pomdp_path], stdout=stdout, stderr=stderr)
+    proc = subprocess.Popen(
+        [
+            pomdpsol_path,
+            "--timeout",
+            str(timeout),
+            "--memory",
+            str(memory),
+            "--precision",
+            str(precision),
+            "--output",
+            "%s.policy" % pomdp_name,
+            pomdp_path,
+        ],
+        stdout=stdout,
+        stderr=stderr,
+    )
     if logfile is not None:
         for line in proc.stdout:
             line = line.decode("utf-8")
@@ -130,8 +159,7 @@ def sarsop(agent, pomdpsol_path,
     proc.wait()
 
     policy_path = "%s.policy" % pomdp_name
-    policy = AlphaVectorPolicy.construct(policy_path,
-                                         all_states, all_actions)
+    policy = AlphaVectorPolicy.construct(policy_path, all_states, all_actions)
 
     # Remove temporary files
     if remove_generated_files:

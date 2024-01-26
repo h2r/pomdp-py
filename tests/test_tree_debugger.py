@@ -3,13 +3,18 @@ from pomdp_py.problems.tiger import TigerProblem, test_planner
 import pomdp_py
 from pomdp_py.utils.debugging import TreeDebugger
 
-description="testing pomdp_py.utils.TreeDebugger"
+description = "testing pomdp_py.utils.TreeDebugger"
+
 
 def test_tree_debugger_tiger(debug_tree=False):
     tiger_problem = TigerProblem.create("tiger-left", 0.5, 0.15)
-    pouct = pomdp_py.POUCT(max_depth=4, discount_factor=0.95,
-                           num_sims=4096, exploration_const=200,
-                           rollout_policy=tiger_problem.agent.policy_model)
+    pouct = pomdp_py.POUCT(
+        max_depth=4,
+        discount_factor=0.95,
+        num_sims=4096,
+        exploration_const=200,
+        rollout_policy=tiger_problem.agent.policy_model,
+    )
 
     pouct.plan(tiger_problem.agent)
     dd = TreeDebugger(tiger_problem.agent.tree)
@@ -32,6 +37,7 @@ def test_tree_debugger_tiger(debug_tree=False):
         assert path is not None
 
     test_planner(tiger_problem, pouct, nsteps=3, debug_tree=debug_tree)
+
 
 def run(verbose=False, debug_tree=False):
     test_tree_debugger_tiger(debug_tree=debug_tree)

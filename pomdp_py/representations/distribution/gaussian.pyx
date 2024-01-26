@@ -10,7 +10,7 @@ if scipy_spec is not None:
 else:
     raise ImportError("scipy not found."\
                       "Requires scipy.stats.multivariate_normal to use Gaussian")
-    
+
 
 cdef class Gaussian(GenerativeDistribution):
 
@@ -46,7 +46,7 @@ cdef class Gaussian(GenerativeDistribution):
     def __getitem__(self, value):
         """__getitem__(self, value)
         Evaluate the probability of given value
-        
+
         Args:
             value (list or array like)
         Returns:
@@ -54,8 +54,8 @@ cdef class Gaussian(GenerativeDistribution):
         return multivariate_normal.pdf(np.array(value),
                                        np.array(self._mean),
                                        np.array(self._cov))
-        
-            
+
+
     def __setitem__(self, value, prob):
         """__setitem__(self, value, prob)
         Not Implemented;

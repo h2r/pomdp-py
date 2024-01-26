@@ -25,14 +25,17 @@ from matplotlib.animation import FuncAnimation
 EPSILON = 1e-3
 LOAD_LOCATION = 10
 
+
 class LUState(pomdp_py.State):
     def __init__(self, x, loaded):
         if type(x) != int or x < 0:
-            raise ValueError("Invalid state: {}\n".format((x, loaded)) +
-                             "x must be an integer > 0")
+            raise ValueError(
+                "Invalid state: {}\n".format((x, loaded)) + "x must be an integer > 0"
+            )
         if type(loaded) != bool:
-            raise ValueError("Invalid state: {}\n".format((x, loaded)) +
-                             "loaded must be a boolean")
+            raise ValueError(
+                "Invalid state: {}\n".format((x, loaded)) + "loaded must be a boolean"
+            )
         if x == 0 and loaded == True:
             raise ValueError("Agent can not be loaded in the 0th position")
         if x == LOAD_LOCATION and loaded == False:
@@ -40,17 +43,22 @@ class LUState(pomdp_py.State):
 
         self.x = x
         self.loaded = loaded
+
     def __hash__(self):
         return hash((self.x, self.loaded))
+
     def __eq__(self, other):
         if isinstance(other, LUState):
             return self.x == other.x and self.loaded == self.loaded
         elif type(other) == tuple:
             return self.x == other[0] and self.loaded == other[1]
+
     def __str__(self):
         return str((self.x, self.loaded))
+
     def __repr__(self):
         return "State({})".format(self)
+
 
 class LUAction(pomdp_py.Action):
     def __init__(self, name):
@@ -58,40 +66,53 @@ class LUAction(pomdp_py.Action):
             raise ValueError("Invalid action: %s" % name)
 
         self.name = name
+
     def __hash__(self):
         return hash(self.name)
+
     def __eq__(self, other):
         if isinstance(other, LUAction):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
+
     def __str__(self):
         return self.name
+
     def __repr__(self):
         return "Action(%s)" % self.name
+
 
 class LUObservation(pomdp_py.Observation):
     def __init__(self, obs):
         if obs not in ["load", "unload", "middle"]:
-            raise ValueError("Invalid observation: {}\n".format(name) +
-                             "Observation must be an integer > 0")
+            raise ValueError(
+                "Invalid observation: {}\n".format(name)
+                + "Observation must be an integer > 0"
+            )
         self.name = obs
+
     def __hash__(self):
         return hash(self.name)
+
     def __eq__(self, other):
         if isinstance(other, LUObservation):
             return self.name == other.name
         elif type(other) == str:
             return self.name == other
+
     def __str__(self):
         return str(self.name)
+
     def __repr__(self):
         return "Observation(%s)" % str(self.x)
+
 
 # Observation model
 class LUObservationModel(pomdp_py.ObservationModel):
     """This problem is small enough for the probabilities to be directly given
     externally"""
+
     def probability(self, observation, next_state, action, normalized=False, **kwargs):
         if observation != self.sample(next_state, action):
             # return EPSILON to avoid degradation of particles
@@ -115,7 +136,8 @@ class LUObservationModel(pomdp_py.ObservationModel):
 # Transition Model
 class LUTransitionModel(pomdp_py.TransitionModel):
     """This problem is small enough for the probabilities to be directly given
-            externally"""
+    externally"""
+
     def probability(self, next_state, state, action, normalized=False, **kwargs):
         if next_state != self.sample(state, action):
             return EPSILON
@@ -123,8 +145,9 @@ class LUTransitionModel(pomdp_py.TransitionModel):
             return 1 - EPSILON
 
     def sample(self, state, action, normalized=False, **kwargs):
-        if ((state.x == LOAD_LOCATION and action == "move-right") or
-           (state.x == 0 and action == "move-left")):
+        if (state.x == LOAD_LOCATION and action == "move-right") or (
+            state.x == 0 and action == "move-left"
+        ):
             # trying to make invalid move, stay in the same place
             return state
 
@@ -144,9 +167,12 @@ class LUTransitionModel(pomdp_py.TransitionModel):
         """Returns the most likely next state"""
         return self.sample(state, action)
 
+
 # Reward Model
 class LURewardModel(pomdp_py.RewardModel):
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+    def probability(
+        self, reward, state, action, next_state, normalized=False, **kwargs
+    ):
         if reward == self.sample(state, action):
             return 1.0
         else:
@@ -163,10 +189,12 @@ class LURewardModel(pomdp_py.RewardModel):
         """Returns the most likely reward"""
         return self.sample(state, action)
 
+
 # Policy Model
 class LUPolicyModel(pomdp_py.RandomRollout):
     """This is an extremely dumb policy model; To keep consistent
     with the framework."""
+
     def __init__(self):
         self._all_actions = {LUAction("move-right"), LUAction("move-left")}
 
@@ -185,20 +213,20 @@ class LUPolicyModel(pomdp_py.RandomRollout):
 
 
 class LoadUnloadProblem(pomdp_py.POMDP):
-
     def __init__(self, init_state, init_belief):
         """init_belief is a Distribution."""
-        agent = pomdp_py.Agent(init_belief,
-                               LUPolicyModel(),
-                               LUTransitionModel(),
-                               LUObservationModel(),
-                               LURewardModel())
+        agent = pomdp_py.Agent(
+            init_belief,
+            LUPolicyModel(),
+            LUTransitionModel(),
+            LUObservationModel(),
+            LURewardModel(),
+        )
 
-        env = pomdp_py.Environment(init_state,
-                                   LUTransitionModel(),
-                                   LURewardModel())
+        env = pomdp_py.Environment(init_state, LUTransitionModel(), LURewardModel())
 
         super().__init__(agent, env, name="LoadUnloadProblem")
+
 
 def generate_random_state():
     # Flip a coin to determine if we are loaded
@@ -210,12 +238,14 @@ def generate_random_state():
         loaded = True
     return LUState(location, loaded)
 
+
 def generate_init_belief(num_particles):
     particles = []
     for _ in range(num_particles):
         particles.append(generate_random_state())
 
     return pomdp_py.Particles(particles)
+
 
 def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
     gamma = 1.0
@@ -227,21 +257,22 @@ def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
     plt.xlabel("Position")
 
     ax = fig.add_subplot(111)
-    ax.set_xlim(-1, LOAD_LOCATION+1)
+    ax.set_xlim(-1, LOAD_LOCATION + 1)
     ax.set_ylim(0, 2)
     x, y = [], []
-    scat, = ax.plot(x, y, marker="x", markersize=20, ls=" ", color="black")
+    (scat,) = ax.plot(x, y, marker="x", markersize=20, ls=" ", color="black")
 
     def update(t):
         nonlocal gamma, total_reward, total_discounted_reward
-        print("==== Step %d ====" % (t+1))
+        print("==== Step %d ====" % (t + 1))
         action = planner.plan(load_unload_problem.agent)
 
         env_reward = load_unload_problem.env.state_transition(action, execute=True)
         true_state = copy.deepcopy(load_unload_problem.env.state)
 
         real_observation = load_unload_problem.env.provide_observation(
-                load_unload_problem.agent.observation_model, action)
+            load_unload_problem.agent.observation_model, action
+        )
         load_unload_problem.agent.update_history(action, real_observation)
         planner.update(load_unload_problem.agent, action, real_observation)
         total_reward += env_reward
@@ -263,10 +294,11 @@ def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
         new_x, new_y = [true_state.x], [1]
         scat.set_data(new_x, new_y)
         scat.set_color("b" if true_state.loaded else "r")
-        return scat,
+        return (scat,)
 
     ani = FuncAnimation(fig, update, frames=nsteps, interval=500)
     plt.show()
+
 
 def main():
     init_state = generate_random_state()
@@ -274,10 +306,15 @@ def main():
     load_unload_problem = LoadUnloadProblem(init_state, init_belief)
 
     print("** Testing POMCP **")
-    pomcp = pomdp_py.POMCP(max_depth=100, discount_factor=0.95,
-                           num_sims=100, exploration_const=110,
-                           rollout_policy=load_unload_problem.agent.policy_model)
+    pomcp = pomdp_py.POMCP(
+        max_depth=100,
+        discount_factor=0.95,
+        num_sims=100,
+        exploration_const=110,
+        rollout_policy=load_unload_problem.agent.policy_model,
+    )
     test_planner(load_unload_problem, pomcp, nsteps=100)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

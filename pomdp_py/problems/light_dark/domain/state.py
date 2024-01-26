@@ -2,15 +2,17 @@
 
 Origin: Belief space planning assuming maximum likelihood observations
 
-State space: 
+State space:
 
     :math:`X\subseteq\mathbb{R}^2` the state of the robot
 """
 import pomdp_py
 import numpy as np
 
+
 class State(pomdp_py.State):
     """The state of the problem is just the robot position"""
+
     def __init__(self, position):
         """
         Initializes a state in light dark domain.
@@ -24,15 +26,15 @@ class State(pomdp_py.State):
 
     def __hash__(self):
         return hash(self.position)
-    
+
     def __eq__(self, other):
         if isinstance(other, State):
             return self.position == other.position
         else:
             return False
-        
+
     def __str__(self):
         return self.__repr__()
-    
+
     def __repr__(self):
         return "State(%s)" % (str(self.position))

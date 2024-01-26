@@ -5,8 +5,9 @@ from Cython.Build import cythonize
 import os.path
 
 
-with open("README.rst", 'r') as f:
+with open("README.rst", "r") as f:
     long_description = f.read()
+
 
 # Build cython files as extensions
 def build_extensions(pkg_name, major_submodules):
@@ -22,18 +23,27 @@ def build_extensions(pkg_name, major_submodules):
 
     return extensions
 
-extensions = build_extensions("pomdp_py", ["framework",
-                                           "algorithms",
-                                           "utils",
-                                           "representations.distribution",
-                                           "representations.belief",
-                                           "problems.tiger.cythonize",
-                                           "problems.rocksample.cythonize"])
 
-setup(ext_modules=cythonize(extensions,
-                            build_dir="build",
-                            compiler_directives={'language_level' : "3"}),
-      package_data={"pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
-                    "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"]},
-      zip_safe=False
+extensions = build_extensions(
+    "pomdp_py",
+    [
+        "framework",
+        "algorithms",
+        "utils",
+        "representations.distribution",
+        "representations.belief",
+        "problems.tiger.cythonize",
+        "problems.rocksample.cythonize",
+    ],
+)
+
+setup(
+    ext_modules=cythonize(
+        extensions, build_dir="build", compiler_directives={"language_level": "3"}
+    ),
+    package_data={
+        "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
+        "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"],
+    },
+    zip_safe=False,
 )

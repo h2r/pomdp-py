@@ -11,6 +11,7 @@ from pomdp_py.problems.tag.models.policy_model import *
 from pomdp_py.problems.tag.models.components.motion_policy import *
 from pomdp_py.problems.tag.models.components.grid_map import *
 
+
 ## initialize belief
 def initialize_belief(grid_map, init_robot_position, prior={}):
     """Initialize belief.
@@ -28,12 +29,12 @@ def initialize_belief(grid_map, init_robot_position, prior={}):
 
     for x in range(grid_map.width):
         for y in range(grid_map.length):
-            if (x,y) in grid_map.obstacle_poses:
+            if (x, y) in grid_map.obstacle_poses:
                 # Skip obstacles
                 continue
-            state = TagState(init_robot_position, (x,y), False)
+            state = TagState(init_robot_position, (x, y), False)
             if len(prior) > 0:
-                if (x,y) not in prior:
+                if (x, y) not in prior:
                     hist[state] = 1e-9
             else:
                 hist[state] = 1.0
@@ -45,7 +46,10 @@ def initialize_belief(grid_map, init_robot_position, prior={}):
     hist_belief = pomdp_py.Histogram(hist)
     return hist_belief
 
-def initialize_particles_belief(grid_map, init_robot_position, num_particles=100, prior={}):
+
+def initialize_particles_belief(
+    grid_map, init_robot_position, num_particles=100, prior={}
+):
     """Initialize belief.
 
     Args:
@@ -63,8 +67,10 @@ def initialize_particles_belief(grid_map, init_robot_position, num_particles=100
                 particles.append(state)
     else:
         while len(particles) < num_particles:
-            target_position = (random.randint(0, grid_map.width-1),
-                               random.randint(0, grid_map.length-1))
+            target_position = (
+                random.randint(0, grid_map.width - 1),
+                random.randint(0, grid_map.length - 1),
+            )
             if target_position in grid_map.obstacle_poses:
                 # Skip obstacles
                 continue
@@ -77,7 +83,9 @@ def initialize_particles_belief(grid_map, init_robot_position, num_particles=100
 def belief_update(agent, real_action, real_observation):
     # Update agent belief
     current_mpe_state = agent.cur_belief.mpe()
-    next_robot_position = agent.transition_model.sample(current_mpe_state, real_action).robot_position
+    next_robot_position = agent.transition_model.sample(
+        current_mpe_state, real_action
+    ).robot_position
 
     next_state_space = set({})
     for state in agent.cur_belief:
@@ -86,33 +94,32 @@ def belief_update(agent, real_action, real_observation):
         next_state_space.add(next_state)
 
     new_belief = pomdp_py.update_histogram_belief(
-        agent.cur_belief, real_action, real_observation,
-        agent.observation_model, agent.transition_model,
-        next_state_space=next_state_space)
+        agent.cur_belief,
+        real_action,
+        real_observation,
+        agent.observation_model,
+        agent.transition_model,
+        next_state_space=next_state_space,
+    )
 
     agent.set_belief(new_belief)
 
-class TagAgent(pomdp_py.Agent):
 
-    def __init__(self,
-                 init_belief,
-                 grid_map,
-                 pr_stay=0.2,
-                 small=1,
-                 big=10):
+class TagAgent(pomdp_py.Agent):
+    def __init__(self, init_belief, grid_map, pr_stay=0.2, small=1, big=10):
         self._grid_map = grid_map
-        target_motion_policy = TagTargetMotionPolicy(grid_map,
-                                                     pr_stay)
-        transition_model = TagTransitionModel(grid_map,
-                                              target_motion_policy)
+        target_motion_policy = TagTargetMotionPolicy(grid_map, pr_stay)
+        transition_model = TagTransitionModel(grid_map, target_motion_policy)
         reward_model = TagRewardModel(small=small, big=big)
         observation_model = TagObservationModel()
         policy_model = TagPolicyModel(grid_map=grid_map)
-        super().__init__(init_belief,
-                         policy_model,
-                         transition_model=transition_model,
-                         observation_model=observation_model,
-                         reward_model=reward_model)
+        super().__init__(
+            init_belief,
+            policy_model,
+            transition_model=transition_model,
+            observation_model=observation_model,
+            reward_model=reward_model,
+        )
 
     def clear_history(self):
         """Custum function; clear history"""
