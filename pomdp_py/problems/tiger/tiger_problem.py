@@ -39,6 +39,7 @@ from pomdp_py.utils import TreeDebugger
 import random
 import numpy as np
 import sys
+import copy
 
 class TigerState(pomdp_py.State):
     def __init__(self, name):
@@ -245,9 +246,9 @@ def test_planner(tiger_problem, planner, nsteps=3,
             import pdb; pdb.set_trace()
 
         print("==== Step %d ====" % (i+1))
-        print("True state:", tiger_problem.env.state)
-        print("Belief:", tiger_problem.agent.cur_belief)
-        print("Action:", action)
+        print(f"True state: {tiger_problem.env.state}")
+        print(f"Belief: {tiger_problem.agent.cur_belief}")
+        print(f"Action: {action}")
         # There is no state transition for the tiger domain.
         # In general, the ennvironment state can be transitioned
         # using
@@ -307,37 +308,37 @@ def make_tiger(noise=0.15, init_state="tiger-left", init_belief=[0.5, 0.5]):
 
 
 def main():
-    init_true_state = random.choice([TigerState("tiger-left"),
-                                     TigerState("tiger-right")])
-    tiger_problem = make_tiger(init_state=init_true_state)
+    init_true_state = random.choice(["tiger-left",
+                                     "tiger-right"])
+    init_belief = pomdp_py.Histogram({TigerState("tiger-left"): 0.5,
+                                      TigerState("tiger-right"): 0.5})
+    tiger = make_tiger(init_state=init_true_state)
+    init_belief = tiger.agent.belief
 
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)
-    test_planner(tiger_problem, vi, nsteps=3)
-
-    # Reset agent belief
-    tiger_problem.agent.set_belief(init_belief, prior=True)
+    test_planner(tiger, vi, nsteps=3)
 
     print("\n** Testing POUCT **")
     pouct = pomdp_py.POUCT(max_depth=3, discount_factor=0.95,
                            num_sims=4096, exploration_const=50,
-                           rollout_policy=tiger_problem.agent.policy_model,
+                           rollout_policy=tiger.agent.policy_model,
                            show_progress=True)
-    test_planner(tiger_problem, pouct, nsteps=10)
-    TreeDebugger(tiger_problem.agent.tree).pp
+    test_planner(tiger, pouct, nsteps=10)
+    TreeDebugger(tiger.agent.tree).pp
 
     # Reset agent belief
-    tiger_problem.agent.set_belief(init_belief, prior=True)
-    tiger_problem.agent.tree = None
+    tiger.agent.set_belief(init_belief, prior=True)
+    tiger.agent.tree = None
 
     print("** Testing POMCP **")
-    tiger_problem.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
+    tiger.agent.set_belief(pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True)
     pomcp = pomdp_py.POMCP(max_depth=3, discount_factor=0.95,
                            num_sims=1000, exploration_const=50,
-                           rollout_policy=tiger_problem.agent.policy_model,
+                           rollout_policy=tiger.agent.policy_model,
                            show_progress=True, pbar_update_interval=500)
-    test_planner(tiger_problem, pomcp, nsteps=10)
-    TreeDebugger(tiger_problem.agent.tree).pp
+    test_planner(tiger, pomcp, nsteps=10)
+    TreeDebugger(tiger.agent.tree).pp
 
 if __name__ == '__main__':
     main()
