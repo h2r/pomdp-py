@@ -21,12 +21,19 @@ classifiers = [
     "Topic :: Scientific/Engineering"
 
 ]
-
-# dependencies for core functionality only
-[project.dependencies]
+dependencies = [
+    "numpy>=1.18.0",
+    "scipy>=1.6.0",
+    "tqdm>=4.55.0"
+]
 
 # optional dependencies for examples in pomdp_problems
 [project.optional-dependencies]
+problems = [
+    "matplotlib>=3.2.0",       # for some utilities
+    "pygame>=2.0.2",           # for some tests
+    "opencv-python>=4.5.2.0"  # for some tests
+]
 
 [project.urls]
 Home = "https://github.com/h2r/pomdp-py"
