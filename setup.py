@@ -26,9 +26,9 @@ extensions = build_extensions("pomdp_py", ["framework",
                                            "algorithms",
                                            "utils",
                                            "representations.distribution",
-                                           "representations.belief"])
-extensions.extend(build_extensions("pomdp_problems", ["tiger.cythonize",
-                                                      "rocksample.cythonize"]))
+                                           "representations.belief",
+                                           "problems.tiger.cythonize",
+                                           "problems.rocksample.cythonize"])
 
 setup(ext_modules=cythonize(extensions,
                             build_dir="build",
