@@ -14,10 +14,6 @@ def plot_points(xvals, yvals, color=None,
     plt.ylabel(ylabel)
     plt.legend(loc=loc)
 
-def save_plot(path, bbox_inches='tight'):
-    plt.savefig(path, bbox_inches=bbox_inches)
-    plt.close()
-
 
 # Plot polygons with colors
 def plot_polygons(verts, colors, ax=None, edgecolor=None):
