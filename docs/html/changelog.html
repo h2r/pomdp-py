@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Changelog &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=51d35e29" />
+    <script src="_static/documentation_options.js?v=e358f374"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pomdp_py" href="api/modules.html" />
+    <link rel="prev" title="Existing POMDP Solvers" href="existing_solvers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#version-1-3-4-01-26-2024">Version 1.3.4 (01/26/2024)</a></li>
+<li><a class="reference internal" href="#version-1-3-3-07-25-2023">Version 1.3.3 (07/25/2023)</a></li>
+<li><a class="reference internal" href="#version-1-3-2-04-03-2022">Version 1.3.2 (04/03/2022)</a></li>
+<li><a class="reference internal" href="#version-1-3-1-11-03-2021">Version 1.3.1 (11/03/2021)</a></li>
+<li><a class="reference internal" href="#version-1-3-0-1-09-30-2021">Version 1.3.0.1 (09/30/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-4-6-canceled">Version 1.2.4.6 (canceled)</a></li>
+<li><a class="reference internal" href="#version-1-2-4-5-07-05-2021">Version 1.2.4.5 (07/05/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-4-1-06-02-2021">Version 1.2.4.1 (06/02/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-4-06-01-2021">Version 1.2.4 (06/01/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-3-03-22-2021">Version 1.2.3 (03/22/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-2-1-01-25-2021">Version 1.2.2.1 (01/25/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-2-01-17-2021">Version 1.2.2 (01/17/2021)</a></li>
+<li><a class="reference internal" href="#version-1-2-1-12-23-2020">Version 1.2.1 (12/23/2020)</a></li>
+<li><a class="reference internal" href="#pull-request-3-08-01-2020">Pull Request #3 (08/01/2020)</a></li>
+<li><a class="reference internal" href="#pull-request-1-06-02-2020">Pull Request #1 (06/02/2020)</a></li>
+<li><a class="reference internal" href="#version-1-0-1-2-02-08-2020-02-16-2020">Version 1.0 - 1.2 (02/08/2020 - 02/16/2020)</a></li>
+<li><a class="reference internal" href="#version-0-0">Version 0.0</a></li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What's New?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-4-01-26-2024">Version 1.3.4 (01/26/2024)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-3-07-25-2023">Version 1.3.3 (07/25/2023)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-2-04-03-2022">Version 1.3.2 (04/03/2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-1-11-03-2021">Version 1.3.1 (11/03/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-3-0-1-09-30-2021">Version 1.3.0.1 (09/30/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-4-6-canceled">Version 1.2.4.6 (canceled)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-4-5-07-05-2021">Version 1.2.4.5 (07/05/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-4-1-06-02-2021">Version 1.2.4.1 (06/02/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-4-06-01-2021">Version 1.2.4 (06/01/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-3-03-22-2021">Version 1.2.3 (03/22/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-2-1-01-25-2021">Version 1.2.2.1 (01/25/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-2-01-17-2021">Version 1.2.2 (01/17/2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-2-1-12-23-2020">Version 1.2.1 (12/23/2020)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-request-3-08-01-2020">Pull Request #3 (08/01/2020)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-request-1-06-02-2020">Pull Request #1 (06/02/2020)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-0-1-2-02-08-2020-02-16-2020">Version 1.0 - 1.2 (02/08/2020 - 02/16/2020)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-0">Version 0.0</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pomdp_py</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="existing_solvers.html" title="previous chapter">Existing POMDP Solvers</a></li>
+      <li>Next: <a href="api/modules.html" title="next chapter">pomdp_py</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<p>Best viewed on <a class="reference external" href="https://h2r.github.io/pomdp-py/html/changelog.html">the website</a>.</p>
+<section id="version-1-3-4-01-26-2024">
+<h2>Version 1.3.4 (01/26/2024)<a class="headerlink" href="#version-1-3-4-01-26-2024" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Modernize repo without introducing new features.</p></li>
+<li><p>Migrate to <code class="code docutils literal notranslate"><span class="pre">pyproject.toml</span></code> to specify dependencies, with minimal <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> to build Cython extensions.</p></li>
+<li><p>Separate core and optional dependencies. Optional dependencies are needed only for <cite>pomdp_py.problems</cite>.</p></li>
+<li><p>Added CI testing to repo.</p></li>
+<li><p>Added pre-commit checks to repo.</p></li>
+</ul>
+</section>
+<section id="version-1-3-3-07-25-2023">
+<h2>Version 1.3.3 (07/25/2023)<a class="headerlink" href="#version-1-3-3-07-25-2023" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Bumped minimum Python requirement from 3.7 to 3.8 due to <a class="reference external" href="https://devguide.python.org/versions/">EOL of 3.7</a>.</p></li>
+<li><p>Fix <code class="code docutils literal notranslate"><span class="pre">cpdef</span> <span class="pre">-&gt;</span> <span class="pre">cdef</span></code> to avoid installation failure after Cython 3.0.0 release (<a class="reference external" href="https://github.com/h2r/pomdp-py/pull/30">pomdp-py#30</a>).</p></li>
+<li><p>Added float_precision argument to to_pomdp_file (<a class="reference external" href="https://github.com/h2r/pomdp-py/pull/29">pomdp-py#29</a>)</p></li>
+<li><p>Add <code class="code docutils literal notranslate"><span class="pre">__init__</span></code> signature for Environment in comments to be visible in docs</p></li>
+<li><p>Fix <code class="code docutils literal notranslate"><span class="pre">s</span> <span class="pre">-&gt;</span> <span class="pre">sp</span></code> in <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.value_iteration.ValueIteration" title="pomdp_py.algorithms.value_iteration.ValueIteration"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ValueIteration</span></code></a> (<a class="reference external" href="https://github.com/h2r/pomdp-py/issues/20">pomdp-py#20</a>)</p></li>
+<li><p>Allow updating rollout policy for <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POUCT</span></code></a> and <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></li>
+<li><p>Fix in <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> so that wheel builds properly.</p></li>
+<li><p>Change set to list in <code class="code docutils literal notranslate"><span class="pre">pomdp_problems.tiger.tiger_problem.py</span></code> to tame error regarding <code class="code docutils literal notranslate"><span class="pre">random.sample</span></code> in Python 3.11.</p></li>
+<li><p>Minor bug fixes and documentation.</p></li>
+</ul>
+</section>
+<section id="version-1-3-2-04-03-2022">
+<h2>Version 1.3.2 (04/03/2022)<a class="headerlink" href="#version-1-3-2-04-03-2022" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Fix in <a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.histogram" title="pomdp_py.representations.distribution.histogram"><code class="xref py py-mod docutils literal notranslate"><span class="pre">histogram</span></code></a> (in <code class="code docutils literal notranslate"><span class="pre">__str__</span></code>):
+Print all of histogram as is instead of printing top 5 to avoid confusion.</p></li>
+<li><p>Improve documentation for <a class="reference external" href="https://h2r.github.io/pomdp-py/html/examples.tiger.html">the tiger tutorial</a>;
+Specifically, clarified <a class="reference internal" href="api/pomdp_py.framework.html#pomdp_py.framework.basics.PolicyModel" title="pomdp_py.framework.basics.PolicyModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PolicyModel</span></code></a>
+and gave a reference to <a class="reference internal" href="api/pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.ActionPrior" title="pomdp_py.algorithms.po_uct.ActionPrior"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ActionPrior</span></code></a>.</p></li>
+<li><p>Built documentation with new Sphinx version (4.5.0)</p></li>
+</ul>
+</section>
+<section id="version-1-3-1-11-03-2021">
+<h2>Version 1.3.1 (11/03/2021)<a class="headerlink" href="#version-1-3-1-11-03-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Bug fix in <a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles" title="pomdp_py.representations.distribution.particles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">particles</span></code></a> (in <code class="code docutils literal notranslate"><span class="pre">add</span></code>)</p></li>
+<li><p>Added classes for tabular models <a class="reference internal" href="api/pomdp_py.utils.html#pomdp_py.utils.templates.TabularTransitionModel" title="pomdp_py.utils.templates.TabularTransitionModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TabularTransitionModel</span></code></a>,
+<a class="reference internal" href="api/pomdp_py.utils.html#pomdp_py.utils.templates.TabularObservationModel" title="pomdp_py.utils.templates.TabularObservationModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TabularObservationModel</span></code></a>,
+<a class="reference internal" href="api/pomdp_py.utils.html#pomdp_py.utils.templates.TabularRewardModel" title="pomdp_py.utils.templates.TabularRewardModel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TabularRewardModel</span></code></a>. See an example in <a class="reference external" href="https://gist.github.com/zkytony/51d43ee6818375434eb3b84a77a47a5c">this Github Gist</a> for defining and solving the CryingBaby domain, a small POMDP.</p></li>
+</ul>
+</section>
+<section id="version-1-3-0-1-09-30-2021">
+<h2>Version 1.3.0.1 (09/30/2021)<a class="headerlink" href="#version-1-3-0-1-09-30-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Removed dependency on <code class="code docutils literal notranslate"><span class="pre">pygraphviz</span></code>;</p></li>
+<li><p>Added <code class="code docutils literal notranslate"><span class="pre">utils.debugging.Treedebugger</span></code>, which makes it easier to inspect the search tree.
+See <a class="reference internal" href="api/pomdp_py.utils.html#module-pomdp_py.utils.debugging" title="pomdp_py.utils.debugging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">debugging</span></code></a>.</p></li>
+<li><p>Added <code class="code docutils literal notranslate"><span class="pre">WeightedParticles</span></code>; Refactored <code class="code docutils literal notranslate"><span class="pre">Particles</span></code>. (<a class="reference internal" href="api/pomdp_py.representations.distribution.html#module-pomdp_py.representations.distribution.particles" title="pomdp_py.representations.distribution.particles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">particles</span></code></a>)</p></li>
+<li><p>Optionally show progress bar while simulating in POUCT/POMCP.</p></li>
+<li><p>Added a CLI interface to simplify running example domains, e.g. <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pomdp_py</span> <span class="pre">-r</span> <span class="pre">tiger</span></code> runs Tiger.</p></li>
+<li><p>Can initialize <code class="code docutils literal notranslate"><span class="pre">Environment</span></code> with  <code class="code docutils literal notranslate"><span class="pre">BlackboxModel</span></code>.</p></li>
+<li><p>For the <code class="code docutils literal notranslate"><span class="pre">OOBelief</span></code> class in <code class="code docutils literal notranslate"><span class="pre">oopomdp.pyx</span></code>, now <code class="code docutils literal notranslate"><span class="pre">mpe</span></code> and <code class="code docutils literal notranslate"><span class="pre">random</span></code> can take an
+argument <code class="code docutils literal notranslate"><span class="pre">return_oostate</span></code> (default True), which returns a sampled state as type <code class="code docutils literal notranslate"><span class="pre">OOState</span></code>.
+This can be useful if you would like to inherit <code class="code docutils literal notranslate"><span class="pre">OOBelief</span></code> and return a state of
+your own type when implementing its <code class="code docutils literal notranslate"><span class="pre">mpe</span></code> and <code class="code docutils literal notranslate"><span class="pre">random</span></code> functions.</p></li>
+<li><p>Added <code class="code docutils literal notranslate"><span class="pre">__ne__</span></code> methods to framework classes.</p></li>
+<li><p>Reorganized <code class="code docutils literal notranslate"><span class="pre">util</span></code> by breaking it into different modules.</p></li>
+<li><p>Code refactoring: Remove unnecessary <code class="code docutils literal notranslate"><span class="pre">*args,</span> <span class="pre">**kwargs</span></code> in interface signature. <strong>Backwards compatible</strong>.</p></li>
+<li><p>Bug fix regarding hashing and pickling.</p></li>
+<li><p>Verified installation on Windows (TODO)</p></li>
+</ul>
+</section>
+<section id="version-1-2-4-6-canceled">
+<h2>Version 1.2.4.6 (canceled)<a class="headerlink" href="#version-1-2-4-6-canceled" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Fix <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> so that <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> works.</p></li>
+</ul>
+</section>
+<section id="version-1-2-4-5-07-05-2021">
+<h2>Version 1.2.4.5 (07/05/2021)<a class="headerlink" href="#version-1-2-4-5-07-05-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Edit <code class="code docutils literal notranslate"><span class="pre">setup.py</span></code> file so that Cython modules in <code class="code docutils literal notranslate"><span class="pre">pomdp-py</span></code> can be :code:<a href="#id1"><span class="problematic" id="id2">`</span></a>cimport`ed.</p></li>
+</ul>
+<p>(skipped versions due to attempting pypi release)</p>
+</section>
+<section id="version-1-2-4-1-06-02-2021">
+<h2>Version 1.2.4.1 (06/02/2021)<a class="headerlink" href="#version-1-2-4-1-06-02-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Fix documentation (external solver examples).</p></li>
+<li><p>Update <code class="code docutils literal notranslate"><span class="pre">tiger_problem.py</span></code> to match documentation</p></li>
+</ul>
+</section>
+<section id="version-1-2-4-06-01-2021">
+<h2>Version 1.2.4 (06/01/2021)<a class="headerlink" href="#version-1-2-4-06-01-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">pomdp_py/algorithms/value_function.py</span></code>:</dt><dd><ul>
+<li><p>zero-probability observation should be skipped.</p></li>
+<li><p>refactored so that <code class="code docutils literal notranslate"><span class="pre">value()</span></code> can take either a dict or a sequence of arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Available on <a class="reference external" href="https://pypi.org/project/pomdp-py/#history">PyPI</a></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">.value</span></code> field of VNode is instead changed to be a property, computed by finding the maximum value of the children Q-Nodes.</p></li>
+</ul>
+</section>
+<section id="version-1-2-3-03-22-2021">
+<h2>Version 1.2.3 (03/22/2021)<a class="headerlink" href="#version-1-2-3-03-22-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Bug fix in <code class="code docutils literal notranslate"><span class="pre">solvers.py</span></code> and <code class="code docutils literal notranslate"><span class="pre">conversion.py</span></code> (18fc58e0, cfc88e8d8)</p></li>
+<li><p>Bug fix in the MOS domain’s observation model (719c2edf5)</p></li>
+<li><p>Linked <a class="reference external" href="https://hub.docker.com/r/romainegele/pomdp">docker image</a> in documentation <a class="reference external" href="https://github.com/h2r/pomdp-py/issues)">issue #13</a>.</p></li>
+<li><p>Updated documentations</p></li>
+</ul>
+</section>
+<section id="version-1-2-2-1-01-25-2021">
+<h2>Version 1.2.2.1 (01/25/2021)<a class="headerlink" href="#version-1-2-2-1-01-25-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Updated documentation for external library interfacing. Added citation.</p></li>
+</ul>
+</section>
+<section id="version-1-2-2-01-17-2021">
+<h2>Version 1.2.2 (01/17/2021)<a class="headerlink" href="#version-1-2-2-01-17-2021" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Resolved <a class="reference external" href="https://github.com/h2r/pomdp-py/issues/10">issue #10</a>.
+Set value in V-Node to be the max among its children Q-Nodes.
+Initial V-Node value set to negative infinity.</p></li>
+<li><p>Avoid search tree building during rollout (thanks Jason)</p></li>
+<li><p>Documentation clarification about <code class="code docutils literal notranslate"><span class="pre">.sample</span></code> and <code class="code docutils literal notranslate"><span class="pre">.argmax</span></code> functions in the <code class="code docutils literal notranslate"><span class="pre">RewardModel</span></code>.</p></li>
+<li><p>Small pomdps (with enumerable state, action, observation spaces)
+defined in <code class="code docutils literal notranslate"><span class="pre">pomdp_py</span></code> can be converted to <code class="code docutils literal notranslate"><span class="pre">.pomdp</span></code> and <code class="code docutils literal notranslate"><span class="pre">.pomdpx</span></code> file formats.</p></li>
+<li><p>Added interfacing with <a class="reference external" href="https://www.pomdp.org/code/">pomdp_solve</a> and tested.</p></li>
+<li><p>Added interfacing with <a class="reference external" href="https://github.com/AdaCompNUS/sarsop">sarsop</a> and tested.</p></li>
+<li><p>Added <code class="code docutils literal notranslate"><span class="pre">utils/templates.py</span></code> that contains some convenient implementations of the POMDP interface.</p></li>
+<li><p>Bug fixes (in <code class="code docutils literal notranslate"><span class="pre">histogram.pyx</span></code>)</p></li>
+</ul>
+</section>
+<section id="version-1-2-1-12-23-2020">
+<h2>Version 1.2.1 (12/23/2020)<a class="headerlink" href="#version-1-2-1-12-23-2020" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed preferred rollout and action prior implementation; Previously the initial visits and values were not applied.</p></li>
+<li><p>Fixed UCB1 value calculation when number of visits is 0; Previously a divide by zero error will be thrown. But it should have infinite value.</p></li>
+<li><p>Fixed another potential math domain error due to log(0) in UCB1 value calculation when initial number of visit set to 0.</p></li>
+<li><p>Fixed bug in particle belief update (minor type error)</p></li>
+<li><p>Simplified the Tiger example code, updated the Tiger example in documentation.</p></li>
+<li><p>Fixed bug in ValueIteration and verified in Tiger that it’s able to
+differentiate differentiate between listen/stay actions when horizon = 3, but
+not so when horizon = 1 or 2. The same behavior is observed using the pomdp
+solver by <a class="reference external" href="https://www.pomdp.org/code/index.html">POMDP.org</a>.</p></li>
+<li><p>Added an exact value function in <code class="code docutils literal notranslate"><span class="pre">pomdp_py.algorithms.value_function</span></code>. It is a simpler exact value iteration algorithm.</p></li>
+<li><p>Added Load/Unload domain <a class="reference external" href="https://github.com/h2r/pomdp-py/pull/9">Pull request #9</a></p></li>
+<li><p><a class="reference external" href="https://github.com/h2r/pomdp-py/pull/11">Pull request #11</a></p></li>
+</ul>
+</section>
+<section id="pull-request-3-08-01-2020">
+<h2>Pull Request #3 (08/01/2020)<a class="headerlink" href="#pull-request-3-08-01-2020" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Added <code class="code docutils literal notranslate"><span class="pre">num_sims</span></code> parameter to POMCP/POUCT that allows specifying the number of simulations per planning step (Previously only <code class="code docutils literal notranslate"><span class="pre">planning_time</span></code> was available.</p></li>
+<li><p>Added cythonized versions of tiger and rocksample domains which are much faster.</p></li>
+</ul>
+</section>
+<section id="pull-request-1-06-02-2020">
+<h2>Pull Request #1 (06/02/2020)<a class="headerlink" href="#pull-request-1-06-02-2020" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Added continuous light-dark domain. A solver (BLQR) is attempted but not ready yet.</p></li>
+<li><p>Bug fix in 2D MOS domain rollout; action step size changeable</p></li>
+<li><p>Added Tag domain, tested with POUCT random rollout</p></li>
+<li><p>Documentation</p></li>
+</ul>
+</section>
+<section id="version-1-0-1-2-02-08-2020-02-16-2020">
+<h2>Version 1.0 - 1.2 (02/08/2020 - 02/16/2020)<a class="headerlink" href="#version-1-0-1-2-02-08-2020-02-16-2020" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Rewritten with cleaner interfaces and Cython integration</p></li>
+<li><p>Refactored POMCP: Now it extends POUCT which does not assume particle belief representation.</p></li>
+<li><p>Included Tiger, RockSample, and a 2D multi-object search (MOS) domain.</p></li>
+<li><p>Using Sphinx Documentation</p></li>
+</ul>
+</section>
+<section id="version-0-0">
+<h2>Version 0.0<a class="headerlink" href="#version-0-0" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Implementation of POMCP and OO-POMDP</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/changelog.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
