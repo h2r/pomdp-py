@@ -41,7 +41,6 @@ Home = "https://github.com/h2r/pomdp-py"
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    "docs",
     ".direnv",
     ".eggs",
     ".git",
@@ -62,6 +61,10 @@ exclude = [
     "dist",
     "node_modules",
     "venv",
+    "docs",
+    ".rst",
+    ".bib",
+    ".html"
 ]
 
 [tool.black]
