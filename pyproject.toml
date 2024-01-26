@@ -37,3 +37,14 @@ problems = [
 
 [project.urls]
 Home = "https://github.com/h2r/pomdp-py"
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = "\\.(py|pyx|pxd|pyi)$"
+preview = true
+force-exclude = """
+(
+   .html | .rst | .bib | .txt | .js | .css
+)
+"""
