@@ -3,6 +3,14 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
+Version 1.3.4 (01/26/2024)
+--------------------------
+* Modernize repo without introducing new features:
+  * Migrate to `pyproject.toml` to specify dependencies with minimal setup.py to build Cython extensions.
+  * Separate core and optional dependencies. Optional dependencies are needed only for `pomdp_py.problems`.
+  * Added CI testing to repo
+  * Added pre-commit checks
+
 Version 1.3.3 (07/25/2023)
 -------------------------
 * Bumped minimum Python requirement from 3.7 to 3.8 due to `EOL of 3.7 <https://devguide.python.org/versions/>`_.
