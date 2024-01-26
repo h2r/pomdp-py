@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools", "wheel", "Cython>=3.0.8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pomdp-py"
+version = "1.3.4"
+description = "Python POMDP Library."
+authors = [{name = "Kaiyu Zheng", email = "kzheng10@cs.brown.edu"}]
+license = {file = "LICENSE"}
+readme = "README.rst"
+keywords = ["Partially Observable Markov Decision Process", "POMDP"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Cython",
+    "Topic :: Scientific/Engineering"
+
+]
+dependencies = [
+    "numpy>=1.18.0",
+    "scipy>=1.6.0",
+    "tqdm>=4.55.0"
+]
+
+# optional dependencies for examples in pomdp_problems
+[project.optional-dependencies]
+problems = [
+    "matplotlib>=3.2.0",       # for some utilities
+    "pygame>=2.0.2",           # for some tests
+    "opencv-python>=4.5.2.0"   # for some tests
+]
+
+[project.urls]
+Home = "https://github.com/h2r/pomdp-py"

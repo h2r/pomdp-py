@@ -1,9 +1,10 @@
 import sys
 import pomdp_py
 import subprocess
-from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdp_file
 from pomdp_py.utils.interfaces.solvers import vi_pruning
+from pomdp_py.problems.tiger import make_tiger
+
 import os
 import io
 
