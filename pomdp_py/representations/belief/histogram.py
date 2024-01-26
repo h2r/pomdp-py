@@ -2,7 +2,7 @@ from pomdp_py.representations.distribution.histogram import Histogram
 
 
 def abstraction_over_histogram(current_histogram, state_mapper):
-    state_mappings = {s:state_mapper(s) for s in current_histogram}
+    state_mappings = {s: state_mapper(s) for s in current_histogram}
     hist = {}
     for s in current_histogram:
         a_s = state_mapper(s)
@@ -11,11 +11,19 @@ def abstraction_over_histogram(current_histogram, state_mapper):
         hist[a_s] += current_histogram[s]
     return hist
 
-def update_histogram_belief(current_histogram, 
-                            real_action, real_observation,
-                            observation_model, transition_model, oargs={},
-                            targs={}, normalize=True, static_transition=False,
-                            next_state_space=None):
+
+def update_histogram_belief(
+    current_histogram,
+    real_action,
+    real_observation,
+    observation_model,
+    transition_model,
+    oargs={},
+    targs={},
+    normalize=True,
+    static_transition=False,
+    next_state_space=None,
+):
     """
     update_histogram_belief(current_histogram, real_action, real_observation,
                             observation_model, transition_model, oargs={},
@@ -54,20 +62,21 @@ def update_histogram_belief(current_histogram,
     if next_state_space is None:
         next_state_space = current_histogram
     for next_state in next_state_space:
-        observation_prob = observation_model.probability(real_observation,
-                                                         next_state,
-                                                         real_action,
-                                                         **oargs)
+        observation_prob = observation_model.probability(
+            real_observation, next_state, real_action, **oargs
+        )
         if not static_transition:
             transition_prob = 0
             for state in current_histogram:
-                transition_prob += transition_model.probability(next_state,
-                                                                state,
-                                                                real_action,
-                                                                **targs) * current_histogram[state]
+                transition_prob += (
+                    transition_model.probability(
+                        next_state, state, real_action, **targs
+                    )
+                    * current_histogram[state]
+                )
         else:
             transition_prob = current_histogram[next_state]
-            
+
         new_histogram[next_state] = observation_prob * transition_prob
         total_prob += new_histogram[next_state]
 

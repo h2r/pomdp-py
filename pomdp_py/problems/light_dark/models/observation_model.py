@@ -14,13 +14,14 @@ Quote from the paper:
     state (i.e. robot position). The number 5 indicates the x-coordinate
     of the light bar as shown in the figure (Fig.1 of the paper).
 """
+
 import pomdp_py
 import copy
 import numpy as np
 from ..domain.observation import *
 
-class ObservationModel(pomdp_py.ObservationModel):
 
+class ObservationModel(pomdp_py.ObservationModel):
     def __init__(self, light, const):
         """
         `light` and `const` are parameters in
@@ -34,12 +35,11 @@ class ObservationModel(pomdp_py.ObservationModel):
         self._const = const
 
     def _compute_variance(self, pos):
-        return 0.5 * (self._light - pos[0])**2 + self._const
+        return 0.5 * (self._light - pos[0]) ** 2 + self._const
 
     def noise_covariance(self, pos):
         variance = self._compute_variance(pos)
-        return np.array([[variance, 0],
-                         [0, variance]])
+        return np.array([[variance, 0], [0, variance]])
 
     def probability(self, observation, next_state, action):
         """
@@ -50,11 +50,11 @@ class ObservationModel(pomdp_py.ObservationModel):
         if self._discrete:
             observation = observation.discretize()
         variance = self._compute_variance(next_state.position)
-        gaussian_noise = pomdp_py.Gaussian([0,0],
-                                           [[variance, 0],
-                                            [0, variance]])
-        omega = (observation.position[0] - next_state.position[0],
-                 observation.position[1] - next_state.position[1])
+        gaussian_noise = pomdp_py.Gaussian([0, 0], [[variance, 0], [0, variance]])
+        omega = (
+            observation.position[0] - next_state.position[0],
+            observation.position[1] - next_state.position[1],
+        )
         return gaussian_noise[omega]
 
     def sample(self, next_state, action, argmax=False):
@@ -62,43 +62,40 @@ class ObservationModel(pomdp_py.ObservationModel):
         # Sample a position shift according to the gaussian noise.
         obs_pos = self.func(next_state.position, mpe=argmax)
         return Observation(tuple(obs_pos))
-        
+
     def argmax(self, next_state, action):
         return self.sample(next_state, action, argmax=True)
 
     def func(self):
         def g(xt, mpe=False):
             variance = self._compute_variance(xt)
-            gaussian_noise = pomdp_py.Gaussian([0,0],
-                                               [[variance, 0],
-                                                [0, variance]])
+            gaussian_noise = pomdp_py.Gaussian([0, 0], [[variance, 0], [0, variance]])
             if mpe:
                 omega = gaussian_noise.mpe()
             else:
                 omega = gaussian_noise.random()
-            return np.array([xt[0] + omega[0],
-                             xt[1] + omega[1]])
+            return np.array([xt[0] + omega[0], xt[1] + omega[1]])
+
         return g
 
     def jac_dx(self):
         def dgdx(mt):
             variance = self._compute_variance(mt)
-            gaussian_noise = pomdp_py.Gaussian([0,0],
-                                               [[variance, 0],
-                                                [0, variance]])
+            gaussian_noise = pomdp_py.Gaussian([0, 0], [[variance, 0], [0, variance]])
             omega = gaussian_noise.random()
             # manually compute the jacobian of d(x + omega)/dx
-            return np.array([[omega[0], mt[1] + omega[1]],
-                             [mt[0] + omega[0], omega[1]]])
+            return np.array(
+                [[omega[0], mt[1] + omega[1]], [mt[0] + omega[0], omega[1]]]
+            )
+
         return dgdx
 
     def func_noise(self):
         """Returns a function that returns a state-dependent Gaussian noise."""
+
         def fn(mt):
             variance = self._compute_variance(mt)
-            gaussian_noise = pomdp_py.Gaussian([0,0],
-                                               [[variance, 0],
-                                                [0, variance]])
+            gaussian_noise = pomdp_py.Gaussian([0, 0], [[variance, 0], [0, variance]])
             return gaussian_noise
+
         return fn
-        

@@ -1,14 +1,18 @@
 """Optional grid map to assist collision avoidance during planning."""
 
-from pomdp_py.problems.multi_object_search.models.transition_model import RobotTransitionModel
+from pomdp_py.problems.multi_object_search.models.transition_model import (
+    RobotTransitionModel,
+)
 from pomdp_py.problems.multi_object_search.domain.action import *
 from pomdp_py.problems.multi_object_search.domain.state import *
+
 
 class GridMap:
     """This map assists the agent to avoid planning invalid
     actions that will run into obstacles. Used if we assume
     the agent has a map. This map does not contain information
     about the object locations."""
+
     def __init__(self, width, length, obstacles):
         """
         Args:
@@ -28,8 +32,7 @@ class GridMap:
             for objid in self._obstacles
         }
         # set of obstacle poses
-        self.obstacle_poses = set({self._obstacles[objid]
-                                   for objid in self._obstacles})
+        self.obstacle_poses = set({self._obstacles[objid] for objid in self._obstacles})
 
     def valid_motions(self, robot_id, robot_pose, all_motion_actions):
         """
@@ -39,16 +42,18 @@ class GridMap:
         the assumption that the robot dynamics is deterministic.
         """
         state = MosOOState(self._obstacle_states)
-        state.set_object_state(robot_id,
-                               RobotState(robot_id, robot_pose, None, None))
+        state.set_object_state(robot_id, RobotState(robot_id, robot_pose, None, None))
 
         valid = set({})
         for motion_action in all_motion_actions:
             if not isinstance(motion_action, MotionAction):
-                raise ValueError("This (%s) is not a motion action" % str(motion_action))
+                raise ValueError(
+                    "This (%s) is not a motion action" % str(motion_action)
+                )
 
-            next_pose = RobotTransitionModel.if_move_by(robot_id, state,
-                                                        motion_action, (self.width, self.length))
+            next_pose = RobotTransitionModel.if_move_by(
+                robot_id, state, motion_action, (self.width, self.length)
+            )
             if next_pose != robot_pose:
                 # robot moved --> valid motion
                 valid.add(motion_action)

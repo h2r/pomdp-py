@@ -2,14 +2,15 @@
 Provides utility to convert a POMDP written in pomdp_py to
 a POMDP file format (.pomdp or .pomdpx). Output to a file.
 """
+
 import subprocess
 import os
 import pomdp_py
 import numpy as np
 import xml.etree.ElementTree as ET
 
-def to_pomdp_file(agent, output_path=None,
-                  discount_factor=0.95, float_precision=9):
+
+def to_pomdp_file(agent, output_path=None, discount_factor=0.95, float_precision=9):
     """
     Pass in an Agent, and use its components to generate
     a .pomdp file to `output_path`.
@@ -42,30 +43,41 @@ def to_pomdp_file(agent, output_path=None,
         all_actions = list(agent.all_actions)
         all_observations = list(agent.all_observations)
     except NotImplementedError:
-        raise ValueError("S, A, O must be enumerable for a given agent to convert to .pomdp format")
+        raise ValueError(
+            "S, A, O must be enumerable for a given agent to convert to .pomdp format"
+        )
 
     content = f"discount: %.{float_precision}f\n" % discount_factor
-    content += "values: reward\n" # We only consider reward, not cost.
+    content += "values: reward\n"  # We only consider reward, not cost.
 
     list_of_states = " ".join(str(s) for s in all_states)
-    assert len(list_of_states.split(" ")) == len(all_states),\
-        "states must be convertable to strings without blank spaces"
+    assert len(list_of_states.split(" ")) == len(
+        all_states
+    ), "states must be convertable to strings without blank spaces"
     content += "states: %s\n" % list_of_states
 
     list_of_actions = " ".join(str(a) for a in all_actions)
-    assert len(list_of_actions.split(" ")) == len(all_actions),\
-        "actions must be convertable to strings without blank spaces"
+    assert len(list_of_actions.split(" ")) == len(
+        all_actions
+    ), "actions must be convertable to strings without blank spaces"
     content += "actions: %s\n" % list_of_actions
 
     list_of_observations = " ".join(str(o) for o in all_observations)
-    assert len(list_of_observations.split(" ")) == len(all_observations),\
-        "observations must be convertable to strings without blank spaces"
+    assert len(list_of_observations.split(" ")) == len(
+        all_observations
+    ), "observations must be convertable to strings without blank spaces"
     content += "observations: %s\n" % list_of_observations
 
     # Starting belief state - they need to be normalized
     total_belief = sum(agent.belief[s] for s in all_states)
-    content += "start: %s\n" % (" ".join([f"%.{float_precision}f" % (agent.belief[s]/total_belief)
-                                          for s in all_states]))
+    content += "start: %s\n" % (
+        " ".join(
+            [
+                f"%.{float_precision}f" % (agent.belief[s] / total_belief)
+                for s in all_states
+            ]
+        )
+    )
 
     # State transition probabilities - they need to be normalized
     for s in all_states:
@@ -77,7 +89,12 @@ def to_pomdp_file(agent, output_path=None,
             total_prob = sum(probs)
             for i, s_next in enumerate(all_states):
                 prob_norm = probs[i] / total_prob
-                content += f'T : %s : %s : %s %.{float_precision}f\n' % (a, s, s_next, prob_norm)
+                content += f"T : %s : %s : %s %.{float_precision}f\n" % (
+                    a,
+                    s,
+                    s_next,
+                    prob_norm,
+                )
 
     # Observation probabilities - they need to be normalized
     for s_next in all_states:
@@ -87,12 +104,17 @@ def to_pomdp_file(agent, output_path=None,
                 prob = agent.observation_model.probability(o, s_next, a)
                 probs.append(prob)
             total_prob = sum(probs)
-            assert total_prob > 0.0,\
-                "No observation is probable under state={} action={}"\
-                .format(s_next, a)
+            assert (
+                total_prob > 0.0
+            ), "No observation is probable under state={} action={}".format(s_next, a)
             for i, o in enumerate(all_observations):
                 prob_norm = probs[i] / total_prob
-                content += f'O : %s : %s : %s %.{float_precision}f\n' % (a, s_next, o, prob_norm)
+                content += f"O : %s : %s : %s %.{float_precision}f\n" % (
+                    a,
+                    s_next,
+                    o,
+                    prob_norm,
+                )
 
     # Immediate rewards
     for s in all_states:
@@ -100,7 +122,12 @@ def to_pomdp_file(agent, output_path=None,
             for s_next in all_states:
                 # We will take the argmax reward, which works for deterministic rewards.
                 r = agent.reward_model.sample(s, a, s_next)
-                content += f'R : %s : %s : %s : *  %.{float_precision}f\n' % (a, s, s_next, r)
+                content += f"R : %s : %s : %s : *  %.{float_precision}f\n" % (
+                    a,
+                    s,
+                    s_next,
+                    r,
+                )
 
     if output_path is not None:
         with open(output_path, "w") as f:
@@ -108,10 +135,7 @@ def to_pomdp_file(agent, output_path=None,
     return all_states, all_actions, all_observations
 
 
-
-def to_pomdpx_file(agent, pomdpconvert_path,
-                   output_path=None,
-                   discount_factor=0.95):
+def to_pomdpx_file(agent, pomdpconvert_path, output_path=None, discount_factor=0.95):
     """
     Converts an agent to a pomdpx file. This works by first converting the agent into a .pomdp file and then
     using the :code:`pomdpconvert` utility program to convert that file to a .pomdpx file. Check out
@@ -133,15 +157,14 @@ def to_pomdpx_file(agent, pomdpconvert_path,
         discount_factor (float): The discount factor
     """
     pomdp_path = "./temp-pomdp.pomdp"
-    to_pomdp_file(agent, pomdp_path,
-                  discount_factor=discount_factor)
+    to_pomdp_file(agent, pomdp_path, discount_factor=discount_factor)
     proc = subprocess.Popen([pomdpconvert_path, pomdp_path])
     proc.wait()
 
     pomdpx_path = pomdp_path + "x"
     assert os.path.exists(pomdpx_path), "POMDPx conversion failed."
 
-    with open(pomdpx_path, 'r') as f:
+    with open(pomdpx_path, "r") as f:
         content = f.read()
 
     if output_path is not None:
@@ -175,7 +198,7 @@ def parse_pomdp_solve_output(alpha_path, pg_path=None):
         policy_graph: a mapping from node number to (action_number, edges)
     """
     alphas = []  # (alpha_vector, action_number) tuples
-    with open(alpha_path, 'r') as f:
+    with open(alpha_path, "r") as f:
         action_number = None
         alpha_vector = None
         mode = "action"
@@ -198,17 +221,17 @@ def parse_pomdp_solve_output(alpha_path, pg_path=None):
     if pg_path is None:
         return alphas
     else:
-        with open(pg_path, 'r') as f:
+        with open(pg_path, "r") as f:
             for line in f:
                 line = line.rstrip()
                 if len(line) == 0:
                     continue
                 parts = list(map(int, line.split()))  # Splits on whitespace
-                assert parts[0] not in policy_graph,\
+                assert parts[0] not in policy_graph, (
                     "The node id %d already exists. Something wrong" % parts[0]
+                )
                 policy_graph[parts[0]] = (parts[1], parts[2:])
         return alphas, policy_graph
-
 
 
 class AlphaVectorPolicy(pomdp_py.Planner):
@@ -227,6 +250,7 @@ class AlphaVectorPolicy(pomdp_py.Planner):
 
     This can be constructed using .policy file created by sarsop.
     """
+
     def __init__(self, alphas, states):
         """
         Args:
@@ -240,8 +264,7 @@ class AlphaVectorPolicy(pomdp_py.Planner):
     def plan(self, agent):
         """Returns an action that is mapped by the agent belief, under this policy"""
         b = [agent.belief[s] for s in self.states]
-        _, action = max(self.alphas,
-                 key=lambda va: np.dot(b, va[0]))
+        _, action = max(self.alphas, key=lambda va: np.dot(b, va[0]))
         return action
 
     def value(self, belief):
@@ -251,13 +274,11 @@ class AlphaVectorPolicy(pomdp_py.Planner):
         :math:`V(b) = max_{a\in\Gamma} {a} \cdot b`
         """
         b = [belief[s] for s in self.states]
-        alpha_vector, _ = max(self.alphas,
-                              key=lambda va: np.dot(b, va[0]))
+        alpha_vector, _ = max(self.alphas, key=lambda va: np.dot(b, va[0]))
         return np.dot(b, alpha_vector)
 
     @classmethod
-    def construct(cls, policy_path,
-                  states, actions, solver="pomdpsol"):
+    def construct(cls, policy_path, states, actions, solver="pomdpsol"):
         """
         Returns an AlphaVectorPolicy, given `alphas`,
         which are the output of parse_appl_policy_file.
@@ -279,35 +300,43 @@ class AlphaVectorPolicy(pomdp_py.Planner):
                 action = actions[int(vector.attrib["action"])]
                 alpha_vector = tuple(map(float, vector.text.split()))
                 alphas.append((alpha_vector, action))
-            return AlphaVectorPolicy(alphas,
-                                     states)
+            return AlphaVectorPolicy(alphas, states)
 
     @classmethod
-    def construct_from_pomdp_solve(cls, alpha_path,
-                                   states, actions):
+    def construct_from_pomdp_solve(cls, alpha_path, states, actions):
         alphas_with_action_numbers = parse_pomdp_solve_output(alpha_path)
-        alphas = [(alpha_vector, actions[action_number])
-                  for alpha_vector, action_number in alphas_with_action_numbers]
+        alphas = [
+            (alpha_vector, actions[action_number])
+            for alpha_vector, action_number in alphas_with_action_numbers
+        ]
         return AlphaVectorPolicy(alphas, states)
 
 
 class PGNode:
     """A node on the policy graph"""
+
     def __init__(self, node_id, alpha_vector, action):
         self.node_id = node_id
         self.alpha_vector = alpha_vector
         self.action = action
+
     def __eq__(self, other):
         if isinstance(other, PolicyNode):
             return self.node_id == other.node_id
         return False
+
     def __hash__(self):
         return hash(self.node_id)
+
     def __str__(self):
         return repr(self)
+
     def __repr__(self):
-        return "NodeID(%d)::AlphaVector(%s)::Action(%s)\n"\
-            % (self.node_id, str(self.alpha_vector), self.action)
+        return "NodeID(%d)::AlphaVector(%s)::Action(%s)\n" % (
+            self.node_id,
+            str(self.alpha_vector),
+            self.action,
+        )
 
 
 class PolicyGraph(pomdp_py.Planner):
@@ -323,14 +352,13 @@ class PolicyGraph(pomdp_py.Planner):
             edges (dict): Mapping from node_id to a dictionary {observation -> node_id}
             states (list): List of states, ordered as in .pomdp file
         """
-        self.nodes = {n.node_id:n for n in nodes}
+        self.nodes = {n.node_id: n for n in nodes}
         self.edges = edges
         self.states = states
         self._current_node = None
 
     @classmethod
-    def construct(cls, alpha_path, pg_path,
-                  states, actions, observations):
+    def construct(cls, alpha_path, pg_path, states, actions, observations):
         """
         See parse_pomdp_solve_output for detailed definitions of
         alphas and pg.
@@ -356,8 +384,9 @@ class PolicyGraph(pomdp_py.Planner):
             assert 0 <= node_id < len(nodes), "Invalid node id in policy graph"
 
             action_number, o_links = pg[node_id]
-            assert actions[action_number] == nodes[node_id].action,\
-                "Inconsistent action mapping"
+            assert (
+                actions[action_number] == nodes[node_id].action
+            ), "Inconsistent action mapping"
 
             edges[node_id] = {}
 
@@ -374,10 +403,9 @@ class PolicyGraph(pomdp_py.Planner):
 
     def _find_node(self, agent):
         """Locate the node in the policy graph corresponding to the agent's current
-        belief state. """
+        belief state."""
         b = [agent.belief[s] for s in self.states]
-        nid = max(self.nodes,
-                   key=lambda nid: np.dot(b, self.nodes[nid].alpha_vector))
+        nid = max(self.nodes, key=lambda nid: np.dot(b, self.nodes[nid].alpha_vector))
         return self.nodes[nid]
 
     def update(self, agent, action, observation):
@@ -389,4 +417,6 @@ class PolicyGraph(pomdp_py.Planner):
             # Find out the node number using agent current belief
             self._current_node = self._find_node(agent)
         # Transition the current node following the graph
-        self._current_node = self.nodes[self.edges[self._current_node.node_id][observation]]
+        self._current_node = self.nodes[
+            self.edges[self._current_node.node_id][observation]
+        ]

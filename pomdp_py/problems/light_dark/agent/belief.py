@@ -30,7 +30,7 @@
 
 #     def __init__(self, mean, sigma):
 #         """initialize isotropic Gaussian distribution.
-        
+
 #         Args:
 #             mean (list): 2d vector of robot position
 #             sigma (float): sigma defining the standard deviation of the Gaussian.
@@ -41,12 +41,12 @@
 #         super().__init__(mean,
 #                          [[sigma**2, 0,
 #                            0, sigma**2]])
-        
+
 #     @property
 #     def sigma(self):
 #         return self._sigma
 
-    
+
 # class BeliefState(pomdp_py.State):
 #     """Belief state;
 
@@ -68,19 +68,18 @@
 #     @property
 #     def belief(self):
 #         return self._belief
-        
+
 #     def __hash__(self):
 #         return self._hashcode
-    
+
 #     def __eq__(self, other):
 #         if isinstance(other, BeliefState):
 #             return self._belief == other.belief
 #         else:
 #             return False
-        
+
 #     def __str__(self):
 #         return self.__repr__()
-    
+
 #     def __repr__(self):
 #         return "BeliefState(%s)" % (str(self._belief.mean, self._belief.sigma))
-        

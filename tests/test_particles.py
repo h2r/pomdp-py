@@ -3,6 +3,7 @@ import random
 
 description = "testing particle representation"
 
+
 def test_particles():
     random_dist = {}
     total_prob = 0
@@ -12,7 +13,9 @@ def test_particles():
     for v in random_dist:
         random_dist[v] /= total_prob
 
-    particles = pomdp_py.Particles.from_histogram(pomdp_py.Histogram(random_dist), num_particles=int(1e6))
+    particles = pomdp_py.Particles.from_histogram(
+        pomdp_py.Histogram(random_dist), num_particles=int(1e6)
+    )
 
     for v in random_dist:
         assert abs(particles[v] - random_dist[v]) <= 2e-3
@@ -41,7 +44,9 @@ def test_weighted_particles():
     for v in random_dist:
         random_dist[v] /= total_prob
 
-    particles = pomdp_py.WeightedParticles.from_histogram(pomdp_py.Histogram(random_dist))
+    particles = pomdp_py.WeightedParticles.from_histogram(
+        pomdp_py.Histogram(random_dist)
+    )
 
     assert abs(sum(particles[v] for v, _ in particles) - 1.0) <= 1e-6
 
@@ -59,6 +64,7 @@ def test_weighted_particles():
         assert abs(counts[v] - random_dist[v]) <= 2e-3
 
     assert particles.mpe() == pomdp_py.Histogram(random_dist).mpe()
+
 
 def run():
     test_particles()

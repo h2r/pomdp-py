@@ -1,4 +1,5 @@
 """Largely based on MosViz, except this is not an OO-POMDP"""
+
 import pygame
 import cv2
 import math
@@ -12,9 +13,9 @@ from pomdp_py.problems.tag.domain.state import *
 from pomdp_py.problems.tag.example_worlds import *
 from pomdp_py.problems.tag.models.observation_model import *
 
+
 #### Visualization through pygame ####
 class TagViz:
-
     def __init__(self, env, res=30, fps=30, controllable=False, observation_model=None):
         self._env = env
 
@@ -35,22 +36,24 @@ class TagViz:
     def _make_gridworld_image(self, r):
         # Preparing 2d array
         w, l = self._env.width, self._env.length
-        arr2d = np.full((self._env.width,
-                         self._env.length), 0)  # free grids
+        arr2d = np.full((self._env.width, self._env.length), 0)  # free grids
         # Creating image
-        img = np.full((w*r,l*r,3), 255, dtype=np.int32)
+        img = np.full((w * r, l * r, 3), 255, dtype=np.int32)
         for x in range(w):
             for y in range(l):
-                if (x,y) not in self._env.grid_map.obstacle_poses:
-                    arr2d[x,y] == 0    # free
-                    cv2.rectangle(img, (y*r, x*r), (y*r+r, x*r+r),
-                                  (255, 255, 255), -1)
+                if (x, y) not in self._env.grid_map.obstacle_poses:
+                    arr2d[x, y] == 0  # free
+                    cv2.rectangle(
+                        img, (y * r, x * r), (y * r + r, x * r + r), (255, 255, 255), -1
+                    )
                 else:
-                    arr2d[x,y] == 1  # obstacle
-                    cv2.rectangle(img, (y*r, x*r), (y*r+r, x*r+r),
-                                  (40, 31, 3), -1)
-                cv2.rectangle(img, (y*r, x*r), (y*r+r, x*r+r),
-                              (0, 0, 0), 1, 8)
+                    arr2d[x, y] == 1  # obstacle
+                    cv2.rectangle(
+                        img, (y * r, x * r), (y * r + r, x * r + r), (40, 31, 3), -1
+                    )
+                cv2.rectangle(
+                    img, (y * r, x * r), (y * r + r, x * r + r), (0, 0, 0), 1, 8
+                )
         return img
 
     @property
@@ -75,22 +78,22 @@ class TagViz:
         self._last_belief = belief
 
     @staticmethod
-    def draw_robot(img, x, y, th, size, color=(255,12,12)):
+    def draw_robot(img, x, y, th, size, color=(255, 12, 12)):
         radius = int(round(size / 2))
-        cv2.circle(img, (y+radius, x+radius), radius, color, thickness=6)
+        cv2.circle(img, (y + radius, x + radius), radius, color, thickness=6)
         # endpoint = (y+radius + int(round(radius*math.sin(th))),
         #             x+radius + int(round(radius*math.cos(th))))
         # cv2.line(img, (y+radius,x+radius), endpoint, color, 2)
 
     @staticmethod
-    def draw_observation(img, z, rx, ry, rth, r, size, color=(12,12,255)):
+    def draw_observation(img, z, rx, ry, rth, r, size, color=(12, 12, 255)):
         assert type(z) == TagObservation, "%s != TagObservation" % (str(type(z)))
         radius = int(round(r / 2))
         if z.target_position is not None:
             lx, ly = z.target_position
-            cv2.circle(img, (ly*r+radius,
-                             lx*r+radius), size, color, thickness=-1)
-
+            cv2.circle(
+                img, (ly * r + radius, lx * r + radius), size, color, thickness=-1
+            )
 
     # TODO! Deprecated.
     @staticmethod
@@ -107,18 +110,23 @@ class TagViz:
         count = 0
         for state in reversed(sorted(hist, key=hist.get)):
             if last_val != -1:
-                color = util.lighter(color, 1-hist[state]/last_val)
+                color = util.lighter(color, 1 - hist[state] / last_val)
             if np.mean(np.array(color) / np.array([255, 255, 255])) < 0.999:
                 tx, ty = state.target_position
-                if (tx,ty) not in circle_drawn:
-                    circle_drawn[(tx,ty)] = 0
-                circle_drawn[(tx,ty)] += 1
+                if (tx, ty) not in circle_drawn:
+                    circle_drawn[(tx, ty)] = 0
+                circle_drawn[(tx, ty)] += 1
 
-                cv2.circle(img, (ty*r+radius,
-                                 tx*r+radius), size//circle_drawn[(tx,ty)], color, thickness=-1)
+                cv2.circle(
+                    img,
+                    (ty * r + radius, tx * r + radius),
+                    size // circle_drawn[(tx, ty)],
+                    color,
+                    thickness=-1,
+                )
                 last_val = hist[state]
 
-                count +=1
+                count += 1
                 if last_val <= 0:
                     break
 
@@ -127,14 +135,14 @@ class TagViz:
         """pygame init"""
         pygame.init()  # calls pygame.font.init()
         # init main screen and background
-        self._display_surf = pygame.display.set_mode((self.img_width,
-                                                      self.img_height),
-                                                     pygame.HWSURFACE)
+        self._display_surf = pygame.display.set_mode(
+            (self.img_width, self.img_height), pygame.HWSURFACE
+        )
         self._background = pygame.Surface(self._display_surf.get_size()).convert()
         self._clock = pygame.time.Clock()
 
         # Font
-        self._myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        self._myfont = pygame.font.SysFont("Comic Sans MS", 30)
         self._running = True
 
     def on_event(self, event):
@@ -170,7 +178,12 @@ class TagViz:
                 print("     action: %s" % str(action.name))
                 print("     observation: %s" % str(z))
                 print("     reward: %s" % str(reward))
-                print(" valid motions: %s" % str(self._env.grid_map.valid_motions(self._env.state.robot_position)))
+                print(
+                    " valid motions: %s"
+                    % str(
+                        self._env.grid_map.valid_motions(self._env.state.robot_position)
+                    )
+                )
                 print("------------")
                 if self._env.state.target_found:
                     self._running = False
@@ -186,10 +199,10 @@ class TagViz:
         fps_text = "FPS: {0:.2f}".format(self._clock.get_fps())
         last_action = self._last_action
         last_action_str = "no_action" if last_action is None else str(last_action)
-        pygame.display.set_caption("%s | Robot(%.2f,%.2f,%.2f) | %s | %s" %
-                                   (last_action_str, rx, ry, 0,
-                                    str(self._env.state.target_found),
-                                    fps_text))
+        pygame.display.set_caption(
+            "%s | Robot(%.2f,%.2f,%.2f) | %s | %s"
+            % (last_action_str, rx, ry, 0, str(self._env.state.target_found), fps_text)
+        )
         pygame.display.flip()
 
     def on_cleanup(self):
@@ -199,7 +212,7 @@ class TagViz:
         if self.on_init() == False:
             self._running = False
 
-        while( self._running ):
+        while self._running:
             for event in pygame.event.get():
                 self.on_event(event)
             self.on_loop()
@@ -212,8 +225,9 @@ class TagViz:
 
         # draw target
         tx, ty = self._env.state.target_position
-        cv2.rectangle(img, (ty*r, tx*r), (ty*r+r, tx*r+r),
-                      (255, 165, 0), -1)
+        cv2.rectangle(
+            img, (ty * r, tx * r), (ty * r + r, tx * r + r), (255, 165, 0), -1
+        )
 
         # draw robot
         rx, ry = self._env.state.robot_position
@@ -222,13 +236,15 @@ class TagViz:
         # last_viz_observation = self._last_viz_observation.get(robot_id, None)
         # last_belief = self._last_belief.get(robot_id, None)
         if self._last_belief is not None:
-            TagViz.draw_belief(img, self._last_belief, r, r//3, self._target_color)
+            TagViz.draw_belief(img, self._last_belief, r, r // 3, self._target_color)
         if self._last_observation is not None:
-            TagViz.draw_observation(img, self._last_observation,
-                                    rx, ry, 0, r, r//8, color=(20, 20, 180))
+            TagViz.draw_observation(
+                img, self._last_observation, rx, ry, 0, r, r // 8, color=(20, 20, 180)
+            )
 
-        TagViz.draw_robot(img, rx*r, ry*r, 0, r, color=(200, 12, 150))
+        TagViz.draw_robot(img, rx * r, ry * r, 0, r, color=(200, 12, 150))
         pygame.surfarray.blit_array(display_surf, img)
+
 
 # TODO! DEPRECATED!
 def unittest():
@@ -238,5 +254,6 @@ def unittest():
     viz = TagViz(env, controllable=True, observation_model=observation_model)
     viz.on_execute()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest()

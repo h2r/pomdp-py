@@ -7,22 +7,14 @@ from pomdp_py.problems.tag.models.components.grid_map import *
 from pomdp_py.problems.multi_object_search.env.env import interpret
 from pomdp_py.problems.multi_object_search.env.visual import MosViz
 
-class TagEnvironment(pomdp_py.Environment):
 
-    def __init__(self,
-                 init_state,
-                 grid_map,
-                 pr_stay=0.2,
-                 small=1,
-                 big=10):
+class TagEnvironment(pomdp_py.Environment):
+    def __init__(self, init_state, grid_map, pr_stay=0.2, small=1, big=10):
         self._grid_map = grid_map
-        target_motion_policy = TagTargetMotionPolicy(grid_map,
-                                                     pr_stay)
+        target_motion_policy = TagTargetMotionPolicy(grid_map, pr_stay)
         transition_model = TagTransitionModel(grid_map, target_motion_policy)
         reward_model = TagRewardModel(small=small, big=big)
-        super().__init__(init_state,
-                         transition_model,
-                         reward_model)
+        super().__init__(init_state, transition_model, reward_model)
 
     @property
     def width(self):

@@ -5,7 +5,8 @@ import pickle
 import subprocess
 import textwrap
 
-description="testing hashing & pickling some objects"
+description = "testing hashing & pickling some objects"
+
 
 def test_hashing_pickling():
     objstate1 = pomdp_py.ObjectState("apple", {"color": "red", "weight": 1.5})
@@ -25,7 +26,7 @@ def test_hashing_pickling():
     assert hash(objstate3) == hash(objstate1)
     assert objstate3 != objstate1
 
-    oos1 = pomdp_py.OOState({1:objstate1, 2:objstate2})
+    oos1 = pomdp_py.OOState({1: objstate1, 2: objstate2})
     assert hash(oos1.copy()) == hash(oos1)
 
     # save oos1 as a pickle file
@@ -52,22 +53,25 @@ def test_hashing_pickling():
     with open(temp_prog_file, "w") as f:
         f.write(prog)
 
-    proc = subprocess.Popen(["python", temp_prog_file],
-                            stdout=subprocess.PIPE)
+    proc = subprocess.Popen(["python", temp_prog_file], stdout=subprocess.PIPE)
     passed = False
     try:
         for line in io.TextIOWrapper(proc.stdout, encoding="utf-8"):
             if "Passed" in line:
                 passed = True
                 break
-        assert passed, "Something wrong - pickled object does not equal to original object"
+        assert (
+            passed
+        ), "Something wrong - pickled object does not equal to original object"
         print("Pass.")
     finally:
         os.remove(temp_oos1_file)
         os.remove(temp_prog_file)
 
+
 def run():
     test_hashing_pickling()
+
 
 if __name__ == "__main__":
     run()

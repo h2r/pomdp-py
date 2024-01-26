@@ -7,8 +7,10 @@ from pomdp_py.problems.multi_object_search.models.reward_model import *
 from pomdp_py.problems.multi_object_search.models.components.sensor import *
 from pomdp_py.problems.multi_object_search.domain.state import *
 
+
 class MosEnvironment(pomdp_py.Environment):
     """"""
+
     def __init__(self, dim, init_state, sensors, obstacles=set({})):
         """
         Args:
@@ -21,18 +23,17 @@ class MosEnvironment(pomdp_py.Environment):
         self.width, self.length = dim
         self.sensors = sensors
         self.obstacles = obstacles
-        transition_model = MosTransitionModel(dim,
-                                              sensors,
-                                              set(init_state.object_states.keys()))
+        transition_model = MosTransitionModel(
+            dim, sensors, set(init_state.object_states.keys())
+        )
         # Target objects, a set of ids, are not robot nor obstacles
-        self.target_objects = \
-            {objid
-             for objid in set(init_state.object_states.keys()) - self.obstacles
-             if not isinstance(init_state.object_states[objid], RobotState)}
+        self.target_objects = {
+            objid
+            for objid in set(init_state.object_states.keys()) - self.obstacles
+            if not isinstance(init_state.object_states[objid], RobotState)
+        }
         reward_model = GoalRewardModel(self.target_objects)
-        super().__init__(init_state,
-                         transition_model,
-                         reward_model)
+        super().__init__(init_state, transition_model, reward_model)
 
     @property
     def robot_ids(self):
@@ -56,19 +57,24 @@ class MosEnvironment(pomdp_py.Environment):
             is False.
 
         """
-        assert robot_id is not None, "state transition should happen for a specific robot"
+        assert (
+            robot_id is not None
+        ), "state transition should happen for a specific robot"
 
         next_state = copy.deepcopy(self.state)
-        next_state.object_states[robot_id] =\
-            self.transition_model[robot_id].sample(self.state, action)
+        next_state.object_states[robot_id] = self.transition_model[robot_id].sample(
+            self.state, action
+        )
 
-        reward = self.reward_model.sample(self.state, action, next_state,
-                                          robot_id=robot_id)
+        reward = self.reward_model.sample(
+            self.state, action, next_state, robot_id=robot_id
+        )
         if execute:
             self.apply_transition(next_state)
             return reward
         else:
             return next_state, reward
+
 
 #### Interpret string as an initial world state ####
 def interpret(worldstr):
@@ -116,11 +122,10 @@ def interpret(worldstr):
             if mode == "sensor":
                 sensorlines.append(line)
 
-    lines = [line for line in worldlines
-             if len(line) > 0]
+    lines = [line for line in worldlines if len(line) > 0]
     w, l = len(worldlines[0]), len(worldlines)
 
-    objects = {}    # objid -> object_state(pose)
+    objects = {}  # objid -> object_state(pose)
     obstacles = set({})  # objid
     robots = {}  # robot_id -> robot_state(pose)
     sensors = {}  # robot_id -> Sensor
@@ -128,25 +133,26 @@ def interpret(worldstr):
     # Parse world
     for y, line in enumerate(worldlines):
         if len(line) != w:
-            raise ValueError("World size inconsistent."\
-                             "Expected width: %d; Actual Width: %d"
-                             % (w, len(line)))
+            raise ValueError(
+                "World size inconsistent.Expected width: %d; Actual Width: %d"
+                % (w, len(line))
+            )
         for x, c in enumerate(line):
             if c == "x":
                 # obstacle
                 objid = 1000 + len(obstacles)  # obstacle id
-                objects[objid] = ObjectState(objid, "obstacle", (x,y))
+                objects[objid] = ObjectState(objid, "obstacle", (x, y))
                 obstacles.add(objid)
 
             elif c.isupper():
                 # target object
                 objid = len(objects)
-                objects[objid] = ObjectState(objid, "target", (x,y))
+                objects[objid] = ObjectState(objid, "target", (x, y))
 
             elif c.islower():
                 # robot
                 robot_id = interpret_robot_id(c)
-                robots[robot_id] = RobotState(robot_id, (x,y,0), (), None)
+                robots[robot_id] = RobotState(robot_id, (x, y, 0), (), None)
 
             else:
                 assert c == ".", "Unrecognized character %s in worldstr" % c
@@ -158,10 +164,14 @@ def interpret(worldstr):
     # Parse sensors
     for line in sensorlines:
         if "," in line:
-            raise ValueError("Wrong Fromat. SHould not have ','. Separate tokens with space.")
+            raise ValueError(
+                "Wrong Fromat. SHould not have ','. Separate tokens with space."
+            )
         robot_name = line.split(":")[0].strip()
         robot_id = interpret_robot_id(robot_name)
-        assert robot_id in robots, "Sensor specified for unknown robot %s" % (robot_name)
+        assert robot_id in robots, "Sensor specified for unknown robot %s" % (
+            robot_name
+        )
 
         sensor_setting = line.split(":")[1].strip()
         sensor_type = sensor_setting.split(" ")[0].strip()
@@ -179,7 +189,8 @@ def interpret(worldstr):
             raise ValueError("Unknown sensor type %s" % sensor_type)
         sensors[robot_id] = sensor
 
-    return (w,l), robots, objects, obstacles, sensors
+    return (w, l), robots, objects, obstacles, sensors
+
 
 def interpret_robot_id(robot_name):
     return -ord(robot_name)
@@ -202,6 +213,7 @@ def equip_sensors(worldmap, sensors):
         worldmap += "%s: %s\n" % (robot_char, sensors[robot_char])
     return worldmap
 
+
 def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
     """
     Returns string representation of the laser scanner configuration.
@@ -221,6 +233,7 @@ def make_laser_sensor(fov, dist_range, angle_increment, occlusion):
     angicstr = "angle_increment=%s" % (str(angle_increment))
     occstr = "occlusion_enabled=%s" % str(occlusion)
     return "laser %s %s %s %s" % (fovstr, rangestr, angicstr, occstr)
+
 
 def make_proximity_sensor(radius, occlusion):
     """

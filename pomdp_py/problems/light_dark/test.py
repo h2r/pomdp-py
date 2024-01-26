@@ -23,9 +23,7 @@ num_segments = 10
 var_sysd = 1e-9
 
 # Environment.
-env = ld.LightDarkEnvironment(x_0,  # init state
-                              light,  # light
-                              const)  # const
+env = ld.LightDarkEnvironment(x_0, light, const)  # init state  # light  # const
 obsmodel = ld.ObservationModel(light, const)
 
 func_sysd = env.transition_model.func()
@@ -37,28 +35,32 @@ noise_obs = obsmodel.func_noise()
 noise_sysd = env.transition_model.func_noise(var_sysd)
 
 L = 200
-Q = np.array([[0.5, 0],
-              [0, 0.5]])
-R = np.array([[0.5, 0],
-              [0, 0.5]])
+Q = np.array([[0.5, 0], [0, 0.5]])
+R = np.array([[0.5, 0], [0, 0.5]])
 
-b_des = (goal_pos,
-         np.array([[1e-6, 0.0],
-                   [0.0, 1e-6]]))
+b_des = (goal_pos, np.array([[1e-6, 0.0], [0.0, 1e-6]]))
 # u_des = [0.5*np.random.rand(2) for _ in range(num_segments)]
 u_des = [[0.0, 0.0] for _ in range(num_segments)]
 
-blqr = pomdp_py.BLQR(func_sysd, func_obs, jac_sysd, jac_obs, jac_sysd_u,
-                     noise_obs, noise_sysd,
-                     None, L, Q, R,
-                     planning_horizon=planning_horizon)
+blqr = pomdp_py.BLQR(
+    func_sysd,
+    func_obs,
+    jac_sysd,
+    jac_obs,
+    jac_sysd_u,
+    noise_obs,
+    noise_sysd,
+    None,
+    L,
+    Q,
+    R,
+    planning_horizon=planning_horizon,
+)
 
 
 def manual_test(blqr):
     # Initial and final belief states.
-    b_0 = (np.array([2.0, 2.0]),
-           np.array([[5.0, 0.0],
-                     [0.0, 5.0]]))
+    b_0 = (np.array([2.0, 2.0]), np.array([[5.0, 0.0], [0.0, 5.0]]))
     print("Path through the light:")
     print(b_0[0])
     print(b_0[1])
@@ -91,11 +93,8 @@ def manual_test(blqr):
         print(b_1[0])
         print(b_1[1])
 
-
     # Initial and final belief states.
-    b_0 = (np.array([2.0, 2.0]),
-           np.array([[5.0, 0.0],
-                     [0.0, 5.0]]))
+    b_0 = (np.array([2.0, 2.0]), np.array([[5.0, 0.0], [0.0, 5.0]]))
     print("Path directly to goal")
     print(b_0[0])
     print(b_0[1])
@@ -109,15 +108,17 @@ def manual_test(blqr):
 
     ####### FOR DEBUGGING
     # traj through light
-    u_traj_light = [[1.0, 0.0],
-                    [1.0, 0.0],
-                    [0.0, -1.0],
-                    [0.0, -1.0],
-                    [-1.0, 0.0],
-                    [-1.0, 0.0],
-                    [-1.0, 0.0],
-                    [-1.0, 0.0],
-                    [-0.99, 0.09]]
+    u_traj_light = [
+        [1.0, 0.0],
+        [1.0, 0.0],
+        [0.0, -1.0],
+        [0.0, -1.0],
+        [-1.0, 0.0],
+        [-1.0, 0.0],
+        [-1.0, 0.0],
+        [-1.0, 0.0],
+        [-0.99, 0.09],
+    ]
     b_t = b_0
     b_traj_light = [b_t]
     for t in range(len(u_traj_light)):
@@ -125,10 +126,12 @@ def manual_test(blqr):
         b_tp1 = blqr.ekf_update_mlo(b_t, u_t)
         b_traj_light.append(b_tp1)
         b_t = b_tp1
-    bu_traj_light = [(b_traj_light[t], np.array(u_traj_light[t])) for t in range(len(u_traj_light))]
+    bu_traj_light = [
+        (b_traj_light[t], np.array(u_traj_light[t])) for t in range(len(u_traj_light))
+    ]
 
     # traj not through light
-    u_traj_dark = [[-1., -1.], [-1., -1.], [-1., -1.]]
+    u_traj_dark = [[-1.0, -1.0], [-1.0, -1.0], [-1.0, -1.0]]
     b_t = b_0
     b_traj_dark = [b_t]
     for t in range(len(u_traj_dark)):
@@ -136,18 +139,23 @@ def manual_test(blqr):
         b_tp1 = blqr.ekf_update_mlo(b_t, u_t)
         b_traj_dark.append(b_tp1)
         b_t = b_tp1
-    bu_traj_dark = [(b_traj_dark[t], np.array(u_traj_dark[t])) for t in range(len(u_traj_dark))]
-
+    bu_traj_dark = [
+        (b_traj_dark[t], np.array(u_traj_dark[t])) for t in range(len(u_traj_dark))
+    ]
 
     total_light = 0
     total_dark = 0
     for i in range(1000):
-        cost_light = blqr.segmented_cost_function(bu_traj_light, b_des, [], len(bu_traj_light))
-        cost_dark = blqr.segmented_cost_function(bu_traj_dark, b_des, [], len(bu_traj_dark))
+        cost_light = blqr.segmented_cost_function(
+            bu_traj_light, b_des, [], len(bu_traj_light)
+        )
+        cost_dark = blqr.segmented_cost_function(
+            bu_traj_dark, b_des, [], len(bu_traj_dark)
+        )
         total_light += cost_light
         total_dark += cost_dark
-    print("avg cost light: %.3f" % (total_light/1000.0))
-    print("avg cost dark: %.3f" % (total_dark/1000.0))
+    print("avg cost light: %.3f" % (total_light / 1000.0))
+    print("avg cost dark: %.3f" % (total_dark / 1000.0))
 
     x_range = (-1, 7)
     y_range = (-2, 4)
@@ -173,16 +181,16 @@ def manual_test(blqr):
         viz.log_position(tuple(sysd_b_dark[-1][0]), path=5)
         sysd_b_dark.append((func_sysd(sysd_b_dark[-1][0], u_t), 0))
 
-    viz.plot(path_colors={2: [(0,0,0), (0,255,0)],
-                          3: [(0,0,0), (0,255,255)],
-                          4: [(0,0,0), (255,255,0)],
-                          5: [(0,0,0), (255,0,255)]},
-             path_styles={2: "--",
-                          3: "-",
-                          4: "--",
-                          5: "-"})
+    viz.plot(
+        path_colors={
+            2: [(0, 0, 0), (0, 255, 0)],
+            3: [(0, 0, 0), (0, 255, 255)],
+            4: [(0, 0, 0), (255, 255, 0)],
+            5: [(0, 0, 0), (255, 0, 255)],
+        },
+        path_styles={2: "--", 3: "-", 4: "--", 5: "-"},
+    )
     plt.show()
-
 
 
 def opt_callback(xk, *args):
@@ -195,14 +203,16 @@ def opt_callback(xk, *args):
 
 def test(blqr):
     ############
-    b_0 = (np.array([2.0, 2.0]),
-           np.array([[5.0, 0.0],
-                     [0.0, 5.0]]))
-    x_sol = blqr.create_plan(b_0, b_des, u_des,
-                             num_segments=num_segments,
-                             opt_options={"maxiter": 30},
-                             opt_callback=opt_callback,
-                             control_bounds=(-0.1, 0.1))
+    b_0 = (np.array([2.0, 2.0]), np.array([[5.0, 0.0], [0.0, 5.0]]))
+    x_sol = blqr.create_plan(
+        b_0,
+        b_des,
+        u_des,
+        num_segments=num_segments,
+        opt_options={"maxiter": 30},
+        opt_callback=opt_callback,
+        control_bounds=(-0.1, 0.1),
+    )
     with np.printoptions(precision=3, suppress=True):
         print("SLSQP solution:")
         print(x_sol)
@@ -221,15 +231,12 @@ def test(blqr):
     for m_i, _, _ in plan:
         viz.log_position(tuple(m_i), path=0)
 
-    viz.plot(path_colors={0: [(0,0,0), (0,255,0)],
-                          1: [(0,0,0), (255,0,0)]},
-             path_styles={0: "--",
-                          1: "-"},
-             path_widths={0: 4,
-                          1: 1})
+    viz.plot(
+        path_colors={0: [(0, 0, 0), (0, 255, 0)], 1: [(0, 0, 0), (255, 0, 0)]},
+        path_styles={0: "--", 1: "-"},
+        path_widths={0: 4, 1: 1},
+    )
     plt.show()
-
-
 
 
 if __name__ == "__main__":

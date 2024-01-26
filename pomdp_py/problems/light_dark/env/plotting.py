@@ -1,9 +1,21 @@
 """Plotting utilties"""
+
 import matplotlib.pyplot as plt
 
-def plot_points(xvals, yvals, color=None,
-                size=1.5, label=None, connected=True, style="--", linewidth=1.5,
-                xlabel='x', ylabel='f(x)', loc="lower right"):
+
+def plot_points(
+    xvals,
+    yvals,
+    color=None,
+    size=1.5,
+    label=None,
+    connected=True,
+    style="--",
+    linewidth=1.5,
+    xlabel="x",
+    ylabel="f(x)",
+    loc="lower right",
+):
     if not connected:
         plt.scatter(xvals, yvals, s=size, c=color, label=label)
     else:
@@ -27,34 +39,71 @@ def plot_polygons(verts, colors, ax=None, edgecolor=None):
     Creates a PolygonCollection object in the axis `ax`."""
     if ax is None:
         fig = plt.gcf()
-        ax = fig.add_subplot(1,1,1)
+        ax = fig.add_subplot(1, 1, 1)
     pc = PolyCollection(verts)
     pc.set_edgecolor(edgecolor)
     pc.set_facecolor(colors)
     ax.add_collection(pc)
-    ax.set_xlabel('X axis')
-    ax.set_ylabel('Y axis')
+    ax.set_xlabel("X axis")
+    ax.set_ylabel("Y axis")
 
 
-def plot_line(ax, p1, p2,
-              linewidth=1, color='black', zorder=0, alpha=1.0, linestyle="-"):
+def plot_line(
+    ax, p1, p2, linewidth=1, color="black", zorder=0, alpha=1.0, linestyle="-"
+):
     p1x, p1y = p1
     p2x, p2y = p2
-    line = lines.Line2D([p1x, p2x], [p1y, p2y],
-                        linewidth=linewidth, color=color, zorder=zorder,
-                        alpha=alpha, linestyle=linestyle)
+    line = lines.Line2D(
+        [p1x, p2x],
+        [p1y, p2y],
+        linewidth=linewidth,
+        color=color,
+        zorder=zorder,
+        alpha=alpha,
+        linestyle=linestyle,
+    )
     ax.add_line(line)
 
-def plot_circle(ax, center, radius, color="blue",
-                fill=False, zorder=0, linewidth=0,
-                edgecolor=None, label_text=None,
-                alpha=1.0, text_color="white"):
+
+def plot_circle(
+    ax,
+    center,
+    radius,
+    color="blue",
+    fill=False,
+    zorder=0,
+    linewidth=0,
+    edgecolor=None,
+    label_text=None,
+    alpha=1.0,
+    text_color="white",
+):
     px, py = center
-    circ = plt.Circle((px, py), radius, facecolor=color, fill=fill,
-                      zorder=zorder, linewidth=linewidth, edgecolor=edgecolor, alpha=alpha)
+    circ = plt.Circle(
+        (px, py),
+        radius,
+        facecolor=color,
+        fill=fill,
+        zorder=zorder,
+        linewidth=linewidth,
+        edgecolor=edgecolor,
+        alpha=alpha,
+    )
     ax.add_artist(circ)
     if label_text:
-        text = ax.text(px, py, label_text, color=text_color,
-                        ha='center', va='center', size=7, weight='bold')
-        text.set_path_effects([path_effects.Stroke(linewidth=1, foreground='black'),
-                               path_effects.Normal()])
+        text = ax.text(
+            px,
+            py,
+            label_text,
+            color=text_color,
+            ha="center",
+            va="center",
+            size=7,
+            weight="bold",
+        )
+        text.set_path_effects(
+            [
+                path_effects.Stroke(linewidth=1, foreground="black"),
+                path_effects.Normal(),
+            ]
+        )

@@ -25,20 +25,20 @@ from pomdp_py.problems.multi_object_search.domain.state import *
 from pomdp_py.problems.multi_object_search.domain.action import *
 from pomdp_py.problems.multi_object_search.domain.observation import *
 
+
 #### Observation Models ####
 class MosObservationModel(pomdp_py.OOObservationModel):
     """Object-oriented transition model"""
-    def __init__(self,
-                 dim,
-                 sensor,
-                 object_ids,
-                 sigma=0.01,
-                 epsilon=1):
+
+    def __init__(self, dim, sensor, object_ids, sigma=0.01, epsilon=1):
         self.sigma = sigma
         self.epsilon = epsilon
-        observation_models = {objid: ObjectObservationModel(objid, sensor, dim,
-                                                            sigma=sigma, epsilon=epsilon)
-                              for objid in object_ids}
+        observation_models = {
+            objid: ObjectObservationModel(
+                objid, sensor, dim, sigma=sigma, epsilon=epsilon
+            )
+            for objid in object_ids
+        }
         pomdp_py.OOObservationModel.__init__(self, observation_models)
 
     def sample(self, next_state, action, argmax=False, **kwargs):
@@ -50,6 +50,7 @@ class MosObservationModel(pomdp_py.OOObservationModel):
 
         factored_observations = super().sample(next_state, action, argmax=argmax)
         return MosOOObservation.merge(factored_observations, next_state)
+
 
 class ObjectObservationModel(pomdp_py.ObservationModel):
     def __init__(self, objid, sensor, dim, sigma=0, epsilon=1):
@@ -97,13 +98,15 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         # The (funny) business of allowing histogram belief update using O(oi|si',sr',a).
         next_robot_state = kwargs.get("next_robot_state", None)
         if next_robot_state is not None:
-            assert next_robot_state["id"] == self._sensor.robot_id,\
-                "Robot id of observation model mismatch with given state"
+            assert (
+                next_robot_state["id"] == self._sensor.robot_id
+            ), "Robot id of observation model mismatch with given state"
             robot_pose = next_robot_state.pose
 
             if isinstance(next_state, ObjectState):
-                assert next_state["id"] == self._objid,\
-                    "Object id of observation model mismatch with given state"
+                assert (
+                    next_state["id"] == self._objid
+                ), "Object id of observation model mismatch with given state"
                 object_pose = next_state.pose
             else:
                 object_pose = next_state.pose(self._objid)
@@ -113,7 +116,9 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
 
         # Compute the probability
         zi = observation.pose
-        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))
+        alpha, beta, gamma = self._compute_params(
+            self._sensor.within_range(robot_pose, object_pose)
+        )
 
         # Requires Python >= 3.6
         prob = 0.0
@@ -124,9 +129,9 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             # This has 0.0 probability.
             prob += 0.0 * alpha
         else:
-            gaussian = pomdp_py.Gaussian(list(object_pose),
-                                         [[self.sigma**2, 0],
-                                          [0, self.sigma**2]])
+            gaussian = pomdp_py.Gaussian(
+                list(object_pose), [[self.sigma**2, 0], [0, self.sigma**2]]
+            )
             prob += gaussian[zi] * alpha
 
         # Event B
@@ -136,7 +141,6 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         pr_c = 1.0 if zi == ObjectObservation.NULL else 0.0  # indicator zi == NULL
         prob += pr_c * gamma
         return prob
-
 
     def sample(self, next_state, action, **kwargs):
         """Returns observation"""
@@ -148,21 +152,25 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
         object_pose = next_state.pose(self._objid)
 
         # Obtain observation according to distribution.
-        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))
+        alpha, beta, gamma = self._compute_params(
+            self._sensor.within_range(robot_pose, object_pose)
+        )
 
         # Requires Python >= 3.6
-        event_occured = random.choices(["A", "B", "C"], weights=[alpha, beta, gamma], k=1)[0]
+        event_occured = random.choices(
+            ["A", "B", "C"], weights=[alpha, beta, gamma], k=1
+        )[0]
         zi = self._sample_zi(event_occured, next_state)
 
         return ObjectObservation(self._objid, zi)
 
     def argmax(self, next_state, action, **kwargs):
         # Obtain observation according to distribution.
-        alpha, beta, gamma = self._compute_params(self._sensor.within_range(robot_pose, object_pose))
+        alpha, beta, gamma = self._compute_params(
+            self._sensor.within_range(robot_pose, object_pose)
+        )
 
-        event_probs = {"A": alpha,
-                       "B": beta,
-                       "C": gamma}
+        event_probs = {"A": alpha, "B": beta, "C": gamma}
         event_occured = max(event_probs, key=lambda e: event_probs[e])
         zi = self._sample_zi(event_occured, next_state, argmax=True)
         return ObjectObservation(self._objid, zi)
@@ -170,9 +178,9 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
     def _sample_zi(self, event, next_state, argmax=False):
         if event == "A":
             object_true_pose = next_state.object_pose(self._objid)
-            gaussian =  pomdp_py.Gaussian(list(object_true_pose),
-                                          [[self.sigma**2, 0],
-                                           [0, self.sigma**2]])
+            gaussian = pomdp_py.Gaussian(
+                list(object_true_pose), [[self.sigma**2, 0], [0, self.sigma**2]]
+            )
             if not argmax:
                 zi = gaussian.random()
             else:
@@ -183,23 +191,29 @@ class ObjectObservationModel(pomdp_py.ObservationModel):
             # TODO: FIX. zi should ONLY come from the field of view.
             # There is currently no easy way to sample from the field of view.
             width, height = self._dim
-            zi = (random.randint(0, width),   # x axis
-                  random.randint(0, height))  # y axis
-        else: # event == C
+            zi = (
+                random.randint(0, width),  # x axis
+                random.randint(0, height),
+            )  # y axis
+        else:  # event == C
             zi = ObjectObservation.NULL
         return zi
 
 
 ### Unit test ###
 def unittest():
-    from ..env.env import make_laser_sensor,\
-        make_proximity_sensor, equip_sensors,\
-        interpret, interpret_robot_id
+    from ..env.env import (
+        make_laser_sensor,
+        make_proximity_sensor,
+        equip_sensors,
+        interpret,
+        interpret_robot_id,
+    )
+
     # Test within search region check,
     # and the observation model probability and
     # sampling functions.
-    worldmap =\
-        """
+    worldmap = """
         ..........
         ....T.....
         ......x...
@@ -208,34 +222,41 @@ def unittest():
         ....T.....
         ..........
         """
-       #0123456789
-       # 10 x 8
-    worldstr = equip_sensors(worldmap,
-                             {"r": make_laser_sensor(90, (1,5), 0.5, False)})
+    # 0123456789
+    # 10 x 8
+    worldstr = equip_sensors(worldmap, {"r": make_laser_sensor(90, (1, 5), 0.5, False)})
     env = interpret(worldstr)
     robot_id = interpret_robot_id("r")
     robot_pose = env.state.pose(robot_id)
 
     # within_range test
     sensor = env.sensors[robot_id]
-    assert sensor.within_range(robot_pose, (4,3)) == False
-    assert sensor.within_range(robot_pose, (5,3)) == True
-    assert sensor.within_range(robot_pose, (6,3)) == True
-    assert sensor.within_range(robot_pose, (7,2)) == True
-    assert sensor.within_range(robot_pose, (7,3)) == True
-    assert sensor.within_range(robot_pose, (4,3)) == False
-    assert sensor.within_range(robot_pose, (2,4)) == False
-    assert sensor.within_range(robot_pose, (4,1)) == False
-    assert sensor.within_range(robot_pose, (4,5)) == False
-    assert sensor.within_range(robot_pose, (0,0)) == False
+    assert sensor.within_range(robot_pose, (4, 3)) == False
+    assert sensor.within_range(robot_pose, (5, 3)) == True
+    assert sensor.within_range(robot_pose, (6, 3)) == True
+    assert sensor.within_range(robot_pose, (7, 2)) == True
+    assert sensor.within_range(robot_pose, (7, 3)) == True
+    assert sensor.within_range(robot_pose, (4, 3)) == False
+    assert sensor.within_range(robot_pose, (2, 4)) == False
+    assert sensor.within_range(robot_pose, (4, 1)) == False
+    assert sensor.within_range(robot_pose, (4, 5)) == False
+    assert sensor.within_range(robot_pose, (0, 0)) == False
 
     print(env.state)
 
     # observation model test
-    O0 = ObjectObservationModel(0, sensor, (env.width, env.length), sigma=0.01, epsilon=1)
-    O2 = ObjectObservationModel(2, sensor, (env.width, env.length), sigma=0.01, epsilon=1)
-    O3 = ObjectObservationModel(3, sensor, (env.width, env.length), sigma=0.01, epsilon=1)
-    O5 = ObjectObservationModel(5, sensor, (env.width, env.length), sigma=0.01, epsilon=1)
+    O0 = ObjectObservationModel(
+        0, sensor, (env.width, env.length), sigma=0.01, epsilon=1
+    )
+    O2 = ObjectObservationModel(
+        2, sensor, (env.width, env.length), sigma=0.01, epsilon=1
+    )
+    O3 = ObjectObservationModel(
+        3, sensor, (env.width, env.length), sigma=0.01, epsilon=1
+    )
+    O5 = ObjectObservationModel(
+        5, sensor, (env.width, env.length), sigma=0.01, epsilon=1
+    )
 
     z0 = O0.sample(env.state, Look)
     assert z0.pose == ObjectObservation.NULL
@@ -249,9 +270,12 @@ def unittest():
     assert O0.probability(z0, env.state, Look) == 1.0
     assert O2.probability(z2, env.state, Look) == 1.0
     assert O3.probability(z3, env.state, Look) >= 1.0
-    assert O3.probability(ObjectObservation(3, ObjectObservation.NULL),
-                          env.state, Look) == 0.0
+    assert (
+        O3.probability(ObjectObservation(3, ObjectObservation.NULL), env.state, Look)
+        == 0.0
+    )
     assert O5.probability(z5, env.state, Look) == 1.0
+
 
 if __name__ == "__main__":
     unittest()

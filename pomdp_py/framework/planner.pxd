@@ -4,4 +4,3 @@ cdef class Planner:
 
     cpdef public plan(self, Agent agent)
     cpdef public update(self, Agent agent, Action real_action, Observation real_observation)
-    

@@ -1,4 +1,5 @@
 """This file has some examples of world string."""
+
 import random
 
 ############# Example Worlds ###########
@@ -6,14 +7,16 @@ import random
 # the format
 
 world0 = (
-"""
+    """
 rx...
 .x.xT
 .....
-""", "r")
+""",
+    "r",
+)
 
 world1 = (
-"""
+    """
 rx.T...
 .x.....
 ...xx..
@@ -21,11 +24,13 @@ rx.T...
 .xxx.T.
 .xxx...
 .......
-""", "r")
+""",
+    "r",
+)
 
 # Used to test the shape of the sensor
 world2 = (
-"""
+    """
 .................
 .................
 ..xxxxxxxxxxxxx..
@@ -47,11 +52,13 @@ world2 = (
 ..xxxxxxxxxxxxx..
 .................
 .................
-""", "r")    
+""",
+    "r",
+)
 
 # Used to test sensor occlusion
 world3 = (
-"""
+    """
 .................
 .................
 ..xxxxxxxxxxxxx..
@@ -73,11 +80,13 @@ world3 = (
 ..xxxxxxxxxxxxx..
 .................
 .................
-""", "r")
+""",
+    "r",
+)
 
-def random_world(width, length, num_obj, num_obstacles,
-                 robot_char="r"):
-    worldstr = [[ "." for i in range(width)] for j in range(length)]
+
+def random_world(width, length, num_obj, num_obstacles, robot_char="r"):
+    worldstr = [["." for i in range(width)] for j in range(length)]
     # First place obstacles
     num_obstacles_placed = 0
     while num_obstacles_placed < num_obstacles:
@@ -86,7 +95,7 @@ def random_world(width, length, num_obj, num_obstacles,
         if worldstr[y][x] == ".":
             worldstr[y][x] = "x"
             num_obstacles_placed += 1
-            
+
     num_obj_placed = 0
     while num_obj_placed < num_obj:
         x = random.randrange(0, width)

@@ -7,13 +7,9 @@ import pomdp_py
 import pomdp_py.problems.light_dark as ld
 import numpy as np
 
-class LightDarkEnvironment(pomdp_py.Environment):
 
-    def __init__(self,
-                 init_state,
-                 light,
-                 const,
-                 reward_model=None):
+class LightDarkEnvironment(pomdp_py.Environment):
+    def __init__(self, init_state, light, const, reward_model=None):
         """
         Args:
             init_state (light_dark.domain.State or np.ndarray):
@@ -33,9 +29,7 @@ class LightDarkEnvironment(pomdp_py.Environment):
         transition_model = ld.TransitionModel()
         if type(init_state) == np.ndarray:
             init_state = ld.State(init_state)
-        super().__init__(init_state,
-                         transition_model,
-                         reward_model)
+        super().__init__(init_state, transition_model, reward_model)
 
     @property
     def light(self):

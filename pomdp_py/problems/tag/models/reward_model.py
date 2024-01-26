@@ -1,13 +1,15 @@
 import pomdp_py
 from pomdp_py.problems.tag.domain.action import *
 
-class TagRewardModel(pomdp_py.RewardModel):
 
+class TagRewardModel(pomdp_py.RewardModel):
     def __init__(self, small=1, big=10):
         self.small = small
         self.big = big
 
-    def probability(self, reward, state, action, next_state, normalized=False, **kwargs):
+    def probability(
+        self, reward, state, action, next_state, normalized=False, **kwargs
+    ):
         if reward == self._reward_func(state, action):
             return 1.0
         else:

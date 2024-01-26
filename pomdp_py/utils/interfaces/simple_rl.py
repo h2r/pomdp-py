@@ -15,7 +15,9 @@ simple_rl is simple_rl's POMDP functionality is currently relatively
 lacking. Providing this inteface is mostly to potentially leverage the MDP
 algorithms in simple_rl.
 """
+
 import simple_rl
+
 
 def convert_to_MDPClass(pomdp, discount_factor=0.99, step_cost=0):
     """Converts the pomdp to the building block MDPClass of simple_rl.  There are a lot of
@@ -39,16 +41,18 @@ def convert_to_MDPClass(pomdp, discount_factor=0.99, step_cost=0):
     # that simple_rl is supposed to work with.
     state = simple_rl.State(data=env.state)
 
-    return simple_rl.MDP(all_actions,
-                         agent.transition_model.sample,
-                         agent.reward_model.sample,
-                         gamma=discount_factor,
-                         step_cost=step_cost)
+    return simple_rl.MDP(
+        all_actions,
+        agent.transition_model.sample,
+        agent.reward_model.sample,
+        gamma=discount_factor,
+        step_cost=step_cost,
+    )
 
 
-def convert_to_POMDPClass(pomdp,
-                          discount_factor=0.99, step_cost=0,
-                          belief_updater_type="discrete"):
+def convert_to_POMDPClass(
+    pomdp, discount_factor=0.99, step_cost=0, belief_updater_type="discrete"
+):
     agent = pomdp.agent
     env = pomdp.env
     try:
@@ -63,15 +67,19 @@ def convert_to_POMDPClass(pomdp,
     try:
         belief_hist = agent.belief.get_histogram()
     except Exception:
-        raise ValueError("Agent belief cannot be converted into a histogram;\n"
-                         "thus cannot create POMDPClass.")
+        raise ValueError(
+            "Agent belief cannot be converted into a histogram;\n"
+            "thus cannot create POMDPClass."
+        )
 
-    return simple_rl.POMDP(all_actions,
-                           all_observations,
-                           agent.transition_model.sample,
-                           agent.reward_model.sample,
-                           agent.observation_model.sample,
-                           belief_hist,
-                           belief_updater_type=belief_updater_type,
-                           gamma=discount_factor,
-                           step_cost=step_cost)
+    return simple_rl.POMDP(
+        all_actions,
+        all_observations,
+        agent.transition_model.sample,
+        agent.reward_model.sample,
+        agent.observation_model.sample,
+        belief_hist,
+        belief_updater_type=belief_updater_type,
+        gamma=discount_factor,
+        step_cost=step_cost,
+    )

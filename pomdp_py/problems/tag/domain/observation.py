@@ -4,7 +4,9 @@ Approximations for Large POMDPs <https://arxiv.org/pdf/1110.0027.pdf>`_.
 Observation space: the agent observes the target's location when the agent and
     the target are in the same cell.
 """
+
 import pomdp_py
+
 
 class TagObservation(pomdp_py.Observation):
     def __init__(self, target_position):
@@ -20,5 +22,4 @@ class TagObservation(pomdp_py.Observation):
             return self.target_position == other.target_position
 
     def __str__(self):
-        return 'Observation(%s)' % (str(self.target_position))
-
+        return "Observation(%s)" % (str(self.target_position))

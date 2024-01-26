@@ -1,5 +1,7 @@
 """Misc Python utilities"""
+
 from difflib import SequenceMatcher
+
 
 def remap(oldvalue, oldmin, oldmax, newmin, newmax):
     if oldmax - oldmin == 0:
@@ -14,16 +16,17 @@ def json_safe(obj):
     elif isinstance(obj, (list, tuple)):
         return [json_safe(item) for item in obj]
     elif isinstance(obj, dict):
-        return {json_safe(key):json_safe(value) for key, value in obj.items()}
+        return {json_safe(key): json_safe(value) for key, value in obj.items()}
     else:
         return str(obj)
     return obj
 
 
 def safe_slice(arr, start, end):
-    true_start = max(0, min(len(arr)-1, start))
-    true_end = max(0, min(len(arr)-1, end))
+    true_start = max(0, min(len(arr) - 1, start))
+    true_end = max(0, min(len(arr) - 1, end))
     return arr[true_start:true_end]
+
 
 def similar(a, b):
     # Reference: https://stackoverflow.com/questions/17388213/find-the-similarity-metric-between-two-strings
@@ -31,12 +34,12 @@ def similar(a, b):
 
 
 class special_char:
-    left = '\u2190'
-    up = '\u2191'
-    right = '\u2192'
-    down = '\u2193'
-    longleft = '\u27F5'
-    longright = '\u27F6'
+    left = "\u2190"
+    up = "\u2191"
+    right = "\u2192"
+    down = "\u2193"
+    longleft = "\u27f5"
+    longright = "\u27f6"
 
     hline = "─"
     vline = "│"

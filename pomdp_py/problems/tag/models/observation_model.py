@@ -2,6 +2,7 @@ import pomdp_py
 from pomdp_py.problems.tag.domain.observation import *
 import pomdp_py.problems.tag.constants as constants
 
+
 class TagObservationModel(pomdp_py.ObservationModel):
     """In this observation model, the robot deterministically
     observes the target location when it is in the same grid cell
