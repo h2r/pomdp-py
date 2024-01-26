@@ -87,6 +87,7 @@ You can obtain the currently preferred action sequence by:
 
 To explore more features, browse the list of methods in the documentation.
 """
+
 import sys
 from pomdp_py.algorithms.po_uct import TreeNode, QNode, VNode, RootVNode
 from pomdp_py.utils import typ, similar, special_char
@@ -762,6 +763,5 @@ def interpret_color(colorstr):
         return eval("typ.{}".format(colorstr))
     else:
         raise ValueError(
-            "Invalid color: {};\n"
-            "The available ones are {}".format(colorstr, typ.colors)
+            "Invalid color: {};\nThe available ones are {}".format(colorstr, typ.colors)
         )

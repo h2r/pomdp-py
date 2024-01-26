@@ -134,8 +134,8 @@ def interpret(worldstr):
     for y, line in enumerate(worldlines):
         if len(line) != w:
             raise ValueError(
-                "World size inconsistent."
-                "Expected width: %d; Actual Width: %d" % (w, len(line))
+                "World size inconsistent.Expected width: %d; Actual Width: %d"
+                % (w, len(line))
             )
         for x, c in enumerate(line):
             if c == "x":

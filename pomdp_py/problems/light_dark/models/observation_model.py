@@ -14,6 +14,7 @@ Quote from the paper:
     state (i.e. robot position). The number 5 indicates the x-coordinate
     of the light bar as shown in the figure (Fig.1 of the paper).
 """
+
 import pomdp_py
 import copy
 import numpy as np

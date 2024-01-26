@@ -1,5 +1,6 @@
 """Defines the State for the maze domain, which is the position of the robot and its orientation.
 """
+
 import pomdp_py
 import numpy as np
 

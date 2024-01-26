@@ -4,6 +4,7 @@ Approximations for Large POMDPs <https://arxiv.org/pdf/1110.0027.pdf>`_.
 State space: state of the robot (x,y), state of the person (x,y), person found.
 
 """
+
 import pomdp_py
 
 

@@ -2,6 +2,7 @@
 for small POMDPs with enumerable S, A, O spaces.  This can also be
 used as an exact value iteration algorithm.
 """
+
 import pomdp_py
 
 

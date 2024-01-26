@@ -2,6 +2,7 @@
 Uses the domain, models, and agent/environment
 to actually define the POMDP problem for multi-object search.
 Then, solve it using POUCT or POMCP."""
+
 import pomdp_py
 from pomdp_py.problems.multi_object_search.env.env import *
 from pomdp_py.problems.multi_object_search.env.visual import *

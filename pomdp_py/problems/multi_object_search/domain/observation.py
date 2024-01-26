@@ -12,6 +12,7 @@ Observation:
     it could be something else. But the resulting observation
     should be a map from object id to observed pose or NULL (not observed).
 """
+
 import pomdp_py
 
 

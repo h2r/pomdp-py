@@ -1,4 +1,5 @@
 """This file has some examples of world string."""
+
 import random
 
 ############# Example Worlds ###########

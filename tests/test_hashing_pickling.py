@@ -47,9 +47,7 @@ def test_hashing_pickling():
     assert hash(oos1) == hash(oos1_loaded), "hash code for object {} != hash code for pickled object {}".format(hash(oos1), hash(oos1_loaded))
     assert oos1 == oos1_loaded
     print("Passed.")
-    """ % (
-        temp_oos1_file
-    )
+    """ % (temp_oos1_file)
     prog = textwrap.dedent(prog)
     temp_prog_file = "_temp_prog.py"
     with open(temp_prog_file, "w") as f:

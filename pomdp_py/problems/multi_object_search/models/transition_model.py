@@ -8,6 +8,7 @@ Description: Multi-Object Search in a 2D grid world.
 
 Transition: deterministic
 """
+
 import pomdp_py
 import copy
 from pomdp_py.problems.multi_object_search.domain.state import *

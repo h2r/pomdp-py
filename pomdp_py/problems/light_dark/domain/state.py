@@ -6,6 +6,7 @@ State space:
 
     :math:`X\subseteq\mathbb{R}^2` the state of the robot
 """
+
 import pomdp_py
 import numpy as np
 

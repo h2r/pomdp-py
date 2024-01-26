@@ -1,6 +1,7 @@
 """
 Some particular implementations of the interface for convenience
 """
+
 import pomdp_py
 import random
 

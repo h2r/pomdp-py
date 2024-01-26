@@ -1,4 +1,5 @@
 """Misc Python utilities"""
+
 from difflib import SequenceMatcher
 
 
@@ -37,8 +38,8 @@ class special_char:
     up = "\u2191"
     right = "\u2192"
     down = "\u2193"
-    longleft = "\u27F5"
-    longright = "\u27F6"
+    longleft = "\u27f5"
+    longright = "\u27f6"
 
     hline = "─"
     vline = "│"

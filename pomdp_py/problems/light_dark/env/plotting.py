@@ -1,4 +1,5 @@
 """Plotting utilties"""
+
 import matplotlib.pyplot as plt
 
 

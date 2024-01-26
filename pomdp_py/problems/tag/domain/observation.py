@@ -4,6 +4,7 @@ Approximations for Large POMDPs <https://arxiv.org/pdf/1110.0027.pdf>`_.
 Observation space: the agent observes the target's location when the agent and
     the target are in the same cell.
 """
+
 import pomdp_py
 
 

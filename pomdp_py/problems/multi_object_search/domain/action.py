@@ -14,6 +14,7 @@ Action space:
 It is possible to force "Look" after every N/S/E/W action;
 then the Look action could be dropped. This is optional behavior.
 """
+
 import pomdp_py
 import math
 

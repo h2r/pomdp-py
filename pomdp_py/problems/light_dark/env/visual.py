@@ -1,4 +1,5 @@
 """Plot the light dark environment"""
+
 import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 import pomdp_py.problems.light_dark as ld

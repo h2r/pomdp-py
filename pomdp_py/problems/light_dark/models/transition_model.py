@@ -8,6 +8,7 @@ Quote from the paper:
     :math:`f(x_t,u_t)=x_t+u`. This means the transition dynamics is
     deterministic.
 """
+
 import pomdp_py
 import copy
 import numpy as np

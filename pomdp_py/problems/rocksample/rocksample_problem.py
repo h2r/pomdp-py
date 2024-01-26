@@ -31,6 +31,7 @@ Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.
 
 Initial belief: every rock has equal probability of being Good or Bad.
 """
+
 import pomdp_py
 import random
 import math
@@ -182,7 +183,6 @@ class Observation(pomdp_py.Observation):
 
 
 class RSTransitionModel(pomdp_py.TransitionModel):
-
     """The model is deterministic"""
 
     def __init__(self, n, rock_locs, in_exit_area):

@@ -6,6 +6,7 @@ Transition model: the robot moves deterministically. The target's movement
     and with Pr=0.2, the target stays at the same place. The target never
     moves closer to the robot.
 """
+
 import copy
 import pomdp_py
 import pomdp_py.problems.tag.constants as constants
