@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, Extension
 from Cython.Build import cythonize
 import os.path
 
@@ -30,26 +30,7 @@ extensions = build_extensions("pomdp_py", ["framework",
 extensions.extend(build_extensions("pomdp_problems", ["tiger.cythonize",
                                                       "rocksample.cythonize"]))
 
-setup(name='pomdp-py',
-      packages=find_packages(),
-      version='1.3.3',
-      description='Python POMDP Library.',
-      long_description=long_description,
-      long_description_content_type="text/x-rst",
-      install_requires=[
-          'Cython==3.0.8',
-          'numpy',
-          'scipy',
-          'tqdm',
-          'matplotlib',
-          'pygame',        # for some tests
-          'opencv-python',  # for some tests
-      ],
-      license="MIT",
-      author='Kaiyu Zheng',
-      author_email='kzheng10@cs.brown.edu',
-      keywords = ['Partially Observable Markov Decision Process', 'POMDP'],
-      ext_modules=cythonize(extensions,
+setup(ext_modules=cythonize(extensions,
                             build_dir="build",
                             compiler_directives={'language_level' : "3"}),
       package_data={"pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
