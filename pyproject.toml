@@ -69,24 +69,11 @@ exclude = [
 
 [tool.black]
 line-length = 88
-target-version = ['py312']
-include = '\.pyi?$'
-# 'extend-exclude' excludes files or directories in addition to the defaults
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = "\\.(py|pyx|pxd|pyi)$"
+preview = true
 force-exclude = '''
 /(
   docs
 )/
 '''
-unstable = true
-
-# [tool.black]
-# line-length = 120
-# target-version = ["py38", "py39", "py310", "py311", "py312"]
-# include = "\\.(py|pyx|pxd|pyi)$"
-# preview = true
-# force-exclude = '''
-# (
-#    *.html
-#    | *.rst
-# )
-# '''
