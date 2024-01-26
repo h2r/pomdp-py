@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.utils package &#8212; pomdp_py 1.3.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <title>pomdp_py.utils package &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=e358f374"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -20,8 +20,9 @@
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   <div class="document">
@@ -30,14 +31,14 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../index.html">
-    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
     
   </a>
 </p>
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
 
 
 
@@ -161,14 +162,7 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pomdp_py.utils.plotting">pomdp_py.utils.plotting module</a><ul>
-<li><a class="reference internal" href="#pomdp_py.utils.plotting.plot_points"><code class="docutils literal notranslate"><span class="pre">plot_points()</span></code></a></li>
-<li><a class="reference internal" href="#pomdp_py.utils.plotting.save_plot"><code class="docutils literal notranslate"><span class="pre">save_plot()</span></code></a></li>
-<li><a class="reference internal" href="#pomdp_py.utils.plotting.plot_polygons"><code class="docutils literal notranslate"><span class="pre">plot_polygons()</span></code></a></li>
-<li><a class="reference internal" href="#pomdp_py.utils.plotting.plot_line"><code class="docutils literal notranslate"><span class="pre">plot_line()</span></code></a></li>
-<li><a class="reference internal" href="#pomdp_py.utils.plotting.plot_circle"><code class="docutils literal notranslate"><span class="pre">plot_circle()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#pomdp-py-utils-plotting-module">pomdp_py.utils.plotting module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.utils.templates">pomdp_py.utils.templates module</a><ul>
 <li><a class="reference internal" href="#pomdp_py.utils.templates.SimpleState"><code class="docutils literal notranslate"><span class="pre">SimpleState</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.utils.templates.SimpleAction"><code class="docutils literal notranslate"><span class="pre">SimpleAction</span></code></a></li>
@@ -213,11 +207,7 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pomdp_py.utils.test_utils">pomdp_py.utils.test_utils module</a><ul>
-<li><a class="reference internal" href="#pomdp_py.utils.test_utils.remove_files"><code class="docutils literal notranslate"><span class="pre">remove_files()</span></code></a></li>
-<li><a class="reference internal" href="#pomdp_py.utils.test_utils.make_tiger"><code class="docutils literal notranslate"><span class="pre">make_tiger()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#pomdp-py-utils-test-utils-module">pomdp_py.utils.test_utils module</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.utils.typ">pomdp_py.utils.typ module</a><ul>
 <li><a class="reference internal" href="#pomdp_py.utils.typ.bcolors"><code class="docutils literal notranslate"><span class="pre">bcolors</span></code></a><ul>
 <li><a class="reference internal" href="#pomdp_py.utils.typ.bcolors.WHITE"><code class="docutils literal notranslate"><span class="pre">bcolors.WHITE</span></code></a></li>
@@ -260,7 +250,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -274,7 +263,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -334,7 +322,7 @@
           <div class="body" role="main">
             
   <section id="pomdp-py-utils-package">
-<h1>pomdp_py.utils package<a class="headerlink" href="#pomdp-py-utils-package" title="Permalink to this heading">¶</a></h1>
+<h1>pomdp_py.utils package<a class="headerlink" href="#pomdp-py-utils-package" title="Link to this heading">¶</a></h1>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -364,13 +352,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#module-pomdp_py.utils.colors" title="pomdp_py.utils.colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.colors</span></code></a></p></td>
 <td><p>Utilities for dealing with colors</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#module-pomdp_py.utils.plotting" title="pomdp_py.utils.plotting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pomdp_py.utils.plotting</span></code></a></p></td>
-<td><p>Plotting utilties</p></td>
-</tr>
 </tbody>
 </table>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pomdp_py.utils.interfaces.html">pomdp_py.utils.interfaces package</a><ul>
@@ -381,42 +366,42 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_py.utils.colors">
-<span id="pomdp-py-utils-colors-module"></span><h2>pomdp_py.utils.colors module<a class="headerlink" href="#module-pomdp_py.utils.colors" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-colors-module"></span><h2>pomdp_py.utils.colors module<a class="headerlink" href="#module-pomdp_py.utils.colors" title="Link to this heading">¶</a></h2>
 <p>Utilities for dealing with colors</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.lighter">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">lighter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#lighter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.lighter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">lighter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#lighter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.lighter" title="Link to this definition">¶</a></dt>
 <dd><p>assumes color is rgb between (0, 0, 0) and (255, 255, 255)</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.rgb_to_hex">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">rgb_to_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#rgb_to_hex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.rgb_to_hex" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">rgb_to_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#rgb_to_hex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.rgb_to_hex" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.hex_to_rgb">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">hex_to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#hex_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.hex_to_rgb" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">hex_to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#hex_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.hex_to_rgb" title="Link to this definition">¶</a></dt>
 <dd><p>hx is a string, begins with #. ASSUME len(hx)=7.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.inverse_color_rgb">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">inverse_color_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#inverse_color_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.inverse_color_rgb" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">inverse_color_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#inverse_color_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.inverse_color_rgb" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.inverse_color_hex">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">inverse_color_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#inverse_color_hex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.inverse_color_hex" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">inverse_color_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#inverse_color_hex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.inverse_color_hex" title="Link to this definition">¶</a></dt>
 <dd><p>hx is a string, begins with #. ASSUME len(hx)=7.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.colors.random_unique_color">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">random_unique_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#random_unique_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.random_unique_color" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.colors.</span></span><span class="sig-name descname"><span class="pre">random_unique_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/colors.html#random_unique_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.colors.random_unique_color" title="Link to this definition">¶</a></dt>
 <dd><p>ctype=1: completely random
 ctype=2: red random
 ctype=3: blue random
@@ -426,24 +411,24 @@ ctype=5: yellow random</p>
 
 </section>
 <section id="pomdp-py-utils-cython-utils-cpython-37m-x86-64-linux-gnu-module">
-<h2>pomdp_py.utils.cython_utils.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-py-utils-cython-utils-cpython-37m-x86-64-linux-gnu-module" title="Permalink to this heading">¶</a></h2>
+<h2>pomdp_py.utils.cython_utils.cpython-37m-x86_64-linux-gnu module<a class="headerlink" href="#pomdp-py-utils-cython-utils-cpython-37m-x86-64-linux-gnu-module" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_py.utils.cython_utils">
-<span id="pomdp-py-utils-cython-utils-module"></span><h2>pomdp_py.utils.cython_utils module<a class="headerlink" href="#module-pomdp_py.utils.cython_utils" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-cython-utils-module"></span><h2>pomdp_py.utils.cython_utils module<a class="headerlink" href="#module-pomdp_py.utils.cython_utils" title="Link to this heading">¶</a></h2>
 <p>Utility functions for Cython code.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.cython_utils.det_dict_hash">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.cython_utils.</span></span><span class="sig-name descname"><span class="pre">det_dict_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dct</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.utils.cython_utils.det_dict_hash" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.cython_utils.</span></span><span class="sig-name descname"><span class="pre">det_dict_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dct</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.utils.cython_utils.det_dict_hash" title="Link to this definition">¶</a></dt>
 <dd><p>deterministic hash of a dictionary.</p>
 </dd></dl>
 
 </section>
 <section id="module-pomdp_py.utils.debugging">
-<span id="pomdp-py-utils-debugging-module"></span><h2>pomdp_py.utils.debugging module<a class="headerlink" href="#module-pomdp_py.utils.debugging" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-debugging-module"></span><h2>pomdp_py.utils.debugging module<a class="headerlink" href="#module-pomdp_py.utils.debugging" title="Link to this heading">¶</a></h2>
 <p>This module contains utility functions making it easier to debug POMDP
 planning.</p>
 <section id="treedebugger">
-<h3>TreeDebugger<a class="headerlink" href="#treedebugger" title="Permalink to this heading">¶</a></h3>
+<h3>TreeDebugger<a class="headerlink" href="#treedebugger" title="Link to this heading">¶</a></h3>
 <p>The core debugging functionality for POMCP/POUCT search trees is incorporated
 into the TreeDebugger.  It is designed for ease of use during a <code class="code docutils literal notranslate"><span class="pre">pdb</span></code> or
 <code class="code docutils literal notranslate"><span class="pre">ipdb</span></code> debugging session. Here is a minimal example usage:</p>
@@ -519,7 +504,7 @@ open-right⟶_QNodePP(n=15, v=-148.634)
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">TreeDebugger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">TreeDebugger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Helps you debug the search tree; A search tree is a tree
 that contains a subset of future histories, organized into
@@ -527,63 +512,63 @@ QNodes (value represents Q(b,a); children are observations) and
 VNodes (value represents V(b); children are actions).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.num_nodes">
-<span class="sig-name descname"><span class="pre">num_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.num_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_nodes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">num_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.num_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_nodes" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of nodes in the tree rooted at “current”</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.depth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.depth" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.depth" title="Link to this definition">¶</a></dt>
 <dd><p>Tree depth starts from 0 (root node only).
 It is the largest number of edges on a path from root to leaf.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.d">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.d" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.d" title="Link to this definition">¶</a></dt>
 <dd><p>alias for depth</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.num_layers">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_layers" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_layers" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the number of layers;
 It is the number of layers of nodes, which equals to depth + 1</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nl">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nl</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nl" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nl</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nl" title="Link to this definition">¶</a></dt>
 <dd><p>alias for num_layers</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nn">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nn</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nn" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nn</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nn" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of nodes in the tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nq">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nq" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nq" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of QNodes in the tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nv">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nv</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nv" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nv</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nv" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of VNodes in the tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.l">
-<span class="sig-name descname"><span class="pre">l</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.l"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.l" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">l</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.l"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.l" title="Link to this definition">¶</a></dt>
 <dd><p>alias for layer</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.layer">
-<span class="sig-name descname"><span class="pre">layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.layer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.layer" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of nodes at the given depth. Will only return VNodes.
 Warning: If depth is high, there will likely be a huge number of nodes.</p>
 <dl class="field-list simple">
@@ -599,80 +584,80 @@ one for each tree on the layer.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.leaf">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">leaf</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.leaf" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">leaf</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.leaf" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.step" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.step" title="Link to this definition">¶</a></dt>
 <dd><p>Updates current interaction node to follow the
 edge along key</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.s">
-<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.s" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.s" title="Link to this definition">¶</a></dt>
 <dd><p>alias for step</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.back">
-<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.back" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.back" title="Link to this definition">¶</a></dt>
 <dd><p>move current node of interaction back to parent</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.b">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.b" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.b" title="Link to this definition">¶</a></dt>
 <dd><p>alias for back</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.root">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.root" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.root" title="Link to this definition">¶</a></dt>
 <dd><p>The root node when first creating this TreeDebugger</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.r">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.r" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.r" title="Link to this definition">¶</a></dt>
 <dd><p>alias for root</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.c">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.c" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.c" title="Link to this definition">¶</a></dt>
 <dd><p>Current node of interaction</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.p">
-<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.p" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.p" title="Link to this definition">¶</a></dt>
 <dd><p>print tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.pp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pp" title="Link to this definition">¶</a></dt>
 <dd><p>print tree, with preset options</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mbp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mbp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mbp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mbp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mbp" title="Link to this definition">¶</a></dt>
 <dd><p>Mark Best and Print.
 Mark the best sequence, and then print with only the marked nodes</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.pm">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pm</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pm</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pm" title="Link to this definition">¶</a></dt>
 <dd><p>Print marked only</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark_sequence">
-<span class="sig-name descname"><span class="pre">mark_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_sequence" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_sequence" title="Link to this definition">¶</a></dt>
 <dd><p>Given a list of keys (understandable by __getitem__ in _NodePP),
 mark nodes (both QNode and VNode) along the path in the tree.
 Note this sequence starts from self.current; So self.current will
@@ -681,31 +666,31 @@ also be marked.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark">
-<span class="sig-name descname"><span class="pre">mark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark" title="Link to this definition">¶</a></dt>
 <dd><p>alias for mark_sequence</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark_path">
-<span class="sig-name descname"><span class="pre">mark_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_path" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_path" title="Link to this definition">¶</a></dt>
 <dd><p>paths the path to dest node</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.markp">
-<span class="sig-name descname"><span class="pre">markp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.markp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.markp" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">markp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.markp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.markp" title="Link to this definition">¶</a></dt>
 <dd><p>alias to mark_path</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.clear">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clear</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.clear" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clear</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.clear" title="Link to this definition">¶</a></dt>
 <dd><p>Clear the marks</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.bestseq">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bestseq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseq" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bestseq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseq" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of actions, observation sequence
 that have the highest value for each step. Such
 a sequence is “preferred”.</p>
@@ -715,25 +700,25 @@ into the future</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.bestseqd">
-<span class="sig-name descname"><span class="pre">bestseqd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.bestseqd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseqd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bestseqd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.bestseqd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseqd" title="Link to this definition">¶</a></dt>
 <dd><p>alias for bestseq except with</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.single_node_str">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">single_node_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.single_node_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.single_node_str" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">single_node_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.single_node_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.single_node_str" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a string for printing given a single vnode.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.preferred_actions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferred_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.preferred_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.preferred_actions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferred_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.preferred_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.preferred_actions" title="Link to this definition">¶</a></dt>
 <dd><p>Print out the currently preferred actions up to given <cite>max_depth</cite></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.path">
-<span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path" title="Link to this definition">¶</a></dt>
 <dd><p>alias for path_to;
 Example usage:</p>
 <p>marking path from root to the first node on the second layer:</p>
@@ -744,7 +729,7 @@ Example usage:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.path_to">
-<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path_to" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path_to" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of keys (actions / observations) that represents the path from
 self.current to the given node <cite>dest</cite>. Returns None if the path does not
 exist.  Uses DFS. Can be useful for marking path to a node to a specific
@@ -753,7 +738,7 @@ layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.tree_stats">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tree_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.tree_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.tree_stats" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tree_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.tree_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.tree_stats" title="Link to this definition">¶</a></dt>
 <dd><p>Gether statistics about the tree</p>
 </dd></dl>
 
@@ -761,255 +746,224 @@ layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</p
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.sorted_by_str">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">sorted_by_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enumerable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#sorted_by_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.sorted_by_str" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">sorted_by_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enumerable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#sorted_by_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.sorted_by_str" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.interpret_color">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">interpret_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorstr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#interpret_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.interpret_color" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">interpret_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorstr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#interpret_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.interpret_color" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-pomdp_py.utils.math">
-<span id="pomdp-py-utils-math-module"></span><h2>pomdp_py.utils.math module<a class="headerlink" href="#module-pomdp_py.utils.math" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-math-module"></span><h2>pomdp_py.utils.math module<a class="headerlink" href="#module-pomdp_py.utils.math" title="Link to this heading">¶</a></h2>
 <p>Assorted utilities for math</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.vec">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.vec" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.vec" title="Link to this definition">¶</a></dt>
 <dd><p>vector from p1 to p2</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.proj">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">proj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vec2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#proj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.proj" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">proj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vec2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#proj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.proj" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.R_x">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_x" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_x" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.R_y">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_y" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_y" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.R_z">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_z" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_z" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.T">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">T</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#T"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.T" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">T</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#T"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.T" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.to_radians">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">to_radians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#to_radians"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.to_radians" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">to_radians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#to_radians"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.to_radians" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.R_between">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_between"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_between" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">R_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#R_between"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.R_between" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.approx_equal">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">approx_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#approx_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.approx_equal" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">approx_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#approx_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.approx_equal" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.math.euclidean_dist">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">euclidean_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#euclidean_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.euclidean_dist" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.math.</span></span><span class="sig-name descname"><span class="pre">euclidean_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/math.html#euclidean_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.math.euclidean_dist" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-pomdp_py.utils.misc">
-<span id="pomdp-py-utils-misc-module"></span><h2>pomdp_py.utils.misc module<a class="headerlink" href="#module-pomdp_py.utils.misc" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-misc-module"></span><h2>pomdp_py.utils.misc module<a class="headerlink" href="#module-pomdp_py.utils.misc" title="Link to this heading">¶</a></h2>
 <p>Misc Python utilities</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.remap">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">remap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oldvalue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oldmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oldmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#remap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.remap" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">remap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oldvalue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oldmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oldmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#remap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.remap" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.json_safe">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">json_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#json_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.json_safe" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">json_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#json_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.json_safe" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.safe_slice">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">safe_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#safe_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.safe_slice" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">safe_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#safe_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.safe_slice" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.similar">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#similar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.similar" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#similar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.similar" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">special_char</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#special_char"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.special_char" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.misc.</span></span><span class="sig-name descname"><span class="pre">special_char</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/misc.html#special_char"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.misc.special_char" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.left">
-<span class="sig-name descname"><span class="pre">left</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'←'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.left" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">left</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'←'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.left" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.up">
-<span class="sig-name descname"><span class="pre">up</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'↑'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.up" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">up</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'↑'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.up" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.right">
-<span class="sig-name descname"><span class="pre">right</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'→'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.right" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">right</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'→'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.right" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.down">
-<span class="sig-name descname"><span class="pre">down</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'↓'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.down" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">down</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'↓'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.down" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longleft">
-<span class="sig-name descname"><span class="pre">longleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'⟵'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longleft" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'⟵'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longleft" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longright">
-<span class="sig-name descname"><span class="pre">longright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'⟶'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longright" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'⟶'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longright" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.hline">
-<span class="sig-name descname"><span class="pre">hline</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.hline" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hline</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.hline" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.vline">
-<span class="sig-name descname"><span class="pre">vline</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'│'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.vline" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">vline</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'│'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.vline" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.bottomleft">
-<span class="sig-name descname"><span class="pre">bottomleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'└'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomleft" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bottomleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'└'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomleft" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longbottomleft">
-<span class="sig-name descname"><span class="pre">longbottomleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'└─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longbottomleft" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longbottomleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'└─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longbottomleft" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.topleft">
-<span class="sig-name descname"><span class="pre">topleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┌'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topleft" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">topleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┌'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topleft" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longtopleft">
-<span class="sig-name descname"><span class="pre">longtopleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┌─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longtopleft" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longtopleft</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┌─'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longtopleft" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.topright">
-<span class="sig-name descname"><span class="pre">topright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┐'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topright" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">topright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┐'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topright" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longtopright">
-<span class="sig-name descname"><span class="pre">longtopright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─┐'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longtopright" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longtopright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─┐'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longtopright" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.bottomright">
-<span class="sig-name descname"><span class="pre">bottomright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┘'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomright" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bottomright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┘'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomright" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.longbottomright">
-<span class="sig-name descname"><span class="pre">longbottomright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─┘'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longbottomright" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">longbottomright</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'─┘'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.longbottomright" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.intersect">
-<span class="sig-name descname"><span class="pre">intersect</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┼'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.intersect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">intersect</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┼'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.intersect" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.topt">
-<span class="sig-name descname"><span class="pre">topt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┬'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">topt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┬'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.topt" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.leftt">
-<span class="sig-name descname"><span class="pre">leftt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'├'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.leftt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">leftt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'├'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.leftt" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.rightt">
-<span class="sig-name descname"><span class="pre">rightt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┤'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.rightt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">rightt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┤'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.rightt" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.bottomt">
-<span class="sig-name descname"><span class="pre">bottomt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┴'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bottomt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'┴'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.bottomt" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.shadebar">
-<span class="sig-name descname"><span class="pre">shadebar</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'▒'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.shadebar" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">shadebar</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'▒'</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.shadebar" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.misc.special_char.SUBSCRIPT">
-<span class="sig-name descname"><span class="pre">SUBSCRIPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{48:</span> <span class="pre">8320,</span> <span class="pre">49:</span> <span class="pre">8321,</span> <span class="pre">50:</span> <span class="pre">8322,</span> <span class="pre">51:</span> <span class="pre">8323,</span> <span class="pre">52:</span> <span class="pre">8324,</span> <span class="pre">53:</span> <span class="pre">8325,</span> <span class="pre">54:</span> <span class="pre">8326,</span> <span class="pre">55:</span> <span class="pre">8327,</span> <span class="pre">56:</span> <span class="pre">8328,</span> <span class="pre">57:</span> <span class="pre">8329}</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.SUBSCRIPT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">SUBSCRIPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{48:</span> <span class="pre">8320,</span> <span class="pre">49:</span> <span class="pre">8321,</span> <span class="pre">50:</span> <span class="pre">8322,</span> <span class="pre">51:</span> <span class="pre">8323,</span> <span class="pre">52:</span> <span class="pre">8324,</span> <span class="pre">53:</span> <span class="pre">8325,</span> <span class="pre">54:</span> <span class="pre">8326,</span> <span class="pre">55:</span> <span class="pre">8327,</span> <span class="pre">56:</span> <span class="pre">8328,</span> <span class="pre">57:</span> <span class="pre">8329}</span></em><a class="headerlink" href="#pomdp_py.utils.misc.special_char.SUBSCRIPT" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="module-pomdp_py.utils.plotting">
-<span id="pomdp-py-utils-plotting-module"></span><h2>pomdp_py.utils.plotting module<a class="headerlink" href="#module-pomdp_py.utils.plotting" title="Permalink to this heading">¶</a></h2>
-<p>Plotting utilties</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.plotting.plot_points">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'--'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f(x)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lower</span> <span class="pre">right'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/plotting.html#plot_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.plotting.plot_points" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.plotting.save_plot">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">save_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox_inches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tight'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/plotting.html#save_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.plotting.save_plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.plotting.plot_polygons">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_polygons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgecolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/plotting.html#plot_polygons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.plotting.plot_polygons" title="Permalink to this definition">¶</a></dt>
-<dd><p><cite>verts</cite> is a sequence of ( verts0, verts1, …) where verts_i is a sequence of
-xy tuples of vertices, or an equivalent numpy array of shape (nv, 2).</p>
-<p><cite>c</cite> is a sequence of (color0, color1, …) where color_i is a color,
-represented by a hex string (7 characters #xxxxxx).</p>
-<p>Creates a PolygonCollection object in the axis <cite>ax</cite>.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.plotting.plot_line">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linestyle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/plotting.html#plot_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.plotting.plot_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.plotting.plot_circle">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgecolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/plotting.html#plot_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.plotting.plot_circle" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="pomdp-py-utils-plotting-module">
+<h2>pomdp_py.utils.plotting module<a class="headerlink" href="#pomdp-py-utils-plotting-module" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_py.utils.templates">
-<span id="pomdp-py-utils-templates-module"></span><h2>pomdp_py.utils.templates module<a class="headerlink" href="#module-pomdp_py.utils.templates" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-templates-module"></span><h2>pomdp_py.utils.templates module<a class="headerlink" href="#module-pomdp_py.utils.templates" title="Link to this heading">¶</a></h2>
 <p>Some particular implementations of the interface for convenience</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.SimpleState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleState" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleState" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.State" title="pomdp_py.framework.basics.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a></p>
 <p>A SimpleState is a state that stores
 one piece of hashable data and the equality
@@ -1019,14 +973,14 @@ this data</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.SimpleAction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleAction" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleAction" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Action" title="pomdp_py.framework.basics.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a></p>
 <p>A SimpleAction is an action defined by a string name</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.SimpleObservation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleObservation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleObservation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleObservation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">SimpleObservation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#SimpleObservation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.SimpleObservation" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.Observation" title="pomdp_py.framework.basics.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observation</span></code></a></p>
 <p>A SimpleObservation is an observation
 with a piece of hashable data that defines
@@ -1035,14 +989,14 @@ the equality.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetTransitionModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a></p>
 <p>A DetTransitionModel is a deterministic transition model.
 A probability of 1 - epsilon is given for correct transition,
 and epsilon is given for incorrect transition.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetTransitionModel.probability">
-<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.probability" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1063,7 +1017,7 @@ and epsilon is given for incorrect transition.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetTransitionModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetTransitionModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
@@ -1086,14 +1040,14 @@ distribution of this transition model.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetObservationModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a></p>
 <p>A DetTransitionModel is a deterministic transition model.
 A probability of 1 - epsilon is given for correct transition,
 and epsilon is given for incorrect transition.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetObservationModel.probability">
-<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.probability" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(o|s',a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1114,7 +1068,7 @@ and epsilon is given for incorrect transition.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetObservationModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetObservationModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
@@ -1137,17 +1091,17 @@ distribution of this observation model.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetRewardModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetRewardModel</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">DetRewardModel</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a></p>
 <p>A DetRewardModel is a deterministic reward model (the most typical kind).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetRewardModel.reward_func">
-<span class="sig-name descname"><span class="pre">reward_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.reward_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.reward_func" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reward_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.reward_func"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.reward_func" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetRewardModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns reward randomly sampled according to the
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
@@ -1170,7 +1124,7 @@ i.e. assumed to be implemented for a reward model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.DetRewardModel.argmax">
-<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.argmax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">argmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#DetRewardModel.argmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.DetRewardModel.argmax" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the most likely reward. This is optional.</p>
 </dd></dl>
 
@@ -1178,11 +1132,11 @@ i.e. assumed to be implemented for a reward model.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.UniformPolicyModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">UniformPolicyModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">UniformPolicyModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.algorithms.html#pomdp_py.algorithms.po_uct.RolloutPolicy" title="pomdp_py.algorithms.po_uct.RolloutPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">RolloutPolicy</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.UniformPolicyModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns action randomly sampled according to the
 distribution of this policy model.</p>
 <dl class="field-list simple">
@@ -1200,20 +1154,20 @@ distribution of this policy model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.UniformPolicyModel.get_all_actions">
-<span class="sig-name descname"><span class="pre">get_all_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.get_all_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.get_all_actions" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_all_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.get_all_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.get_all_actions" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible actions, if feasible.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.UniformPolicyModel.rollout">
-<span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">State</span> <span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tuple</span> <span class="pre">history=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.rollout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">State</span> <span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tuple</span> <span class="pre">history=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#UniformPolicyModel.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.UniformPolicyModel.rollout" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularTransitionModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularTransitionModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.TransitionModel" title="pomdp_py.framework.basics.TransitionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransitionModel</span></code></a></p>
 <p>This tabular transition model is built given a dictionary that maps a tuple
 (state, action, next_state) to a probability.  This model assumes that the
@@ -1221,7 +1175,7 @@ given <cite>weights</cite> is complete, that is, it specifies the probability of
 state-action-nextstate combinations</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularTransitionModel.probability">
-<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.probability" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.probability" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the probability of <span class="math notranslate nohighlight">\(\Pr(s'|s,a)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1242,7 +1196,7 @@ state-action-nextstate combinations</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularTransitionModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns next state randomly sampled according to the
 distribution of this transition model.</p>
 <dl class="field-list simple">
@@ -1263,7 +1217,7 @@ distribution of this transition model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularTransitionModel.get_all_states">
-<span class="sig-name descname"><span class="pre">get_all_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.get_all_states"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.get_all_states" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_all_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularTransitionModel.get_all_states"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularTransitionModel.get_all_states" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible states, if feasible.</p>
 </dd></dl>
 
@@ -1271,20 +1225,20 @@ distribution of this transition model.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularObservationModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularObservationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.ObservationModel" title="pomdp_py.framework.basics.ObservationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservationModel</span></code></a></p>
 <p>This tabular observation model is built given a dictionary that maps a tuple
 (next_state, action, observation) to a probability.  This model assumes that the
 given <cite>weights</cite> is complete.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularObservationModel.probability">
-<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.probability" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.probability" title="Link to this definition">¶</a></dt>
 <dd><p>observation is emitted from state</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularObservationModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns observation randomly sampled according to the
 distribution of this observation model.</p>
 <dl class="field-list simple">
@@ -1305,7 +1259,7 @@ distribution of this observation model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularObservationModel.get_all_observations">
-<span class="sig-name descname"><span class="pre">get_all_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.get_all_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.get_all_observations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_all_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularObservationModel.get_all_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularObservationModel.get_all_observations" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a set of all possible observations, if feasible.</p>
 </dd></dl>
 
@@ -1313,14 +1267,14 @@ distribution of this observation model.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularRewardModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularRewardModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.templates.</span></span><span class="sig-name descname"><span class="pre">TabularRewardModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.basics.RewardModel" title="pomdp_py.framework.basics.RewardModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RewardModel</span></code></a></p>
 <p>This tabular reward model is built given a dictionary that maps a state or a
 tuple (state, action), or (state, action, next_state) to a probability.  This
 model assumes that the given <cite>rewards</cite> is complete.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.templates.TabularRewardModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/templates.html#TabularRewardModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.templates.TabularRewardModel.sample" title="Link to this definition">¶</a></dt>
 <dd><p>Returns reward randomly sampled according to the
 distribution of this reward model. This is required,
 i.e. assumed to be implemented for a reward model.</p>
@@ -1344,82 +1298,70 @@ i.e. assumed to be implemented for a reward model.</p>
 </dd></dl>
 
 </section>
-<section id="module-pomdp_py.utils.test_utils">
-<span id="pomdp-py-utils-test-utils-module"></span><h2>pomdp_py.utils.test_utils module<a class="headerlink" href="#module-pomdp_py.utils.test_utils" title="Permalink to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.test_utils.remove_files">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.test_utils.</span></span><span class="sig-name descname"><span class="pre">remove_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/test_utils.html#remove_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.test_utils.remove_files" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pomdp_py.utils.test_utils.make_tiger">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.test_utils.</span></span><span class="sig-name descname"><span class="pre">make_tiger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tiger-left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_belief</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5,</span> <span class="pre">0.5]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/test_utils.html#make_tiger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.test_utils.make_tiger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenient function to quickly build a tiger domain.
-Useful for testing</p>
-</dd></dl>
-
+<section id="pomdp-py-utils-test-utils-module">
+<h2>pomdp_py.utils.test_utils module<a class="headerlink" href="#pomdp-py-utils-test-utils-module" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-pomdp_py.utils.typ">
-<span id="pomdp-py-utils-typ-module"></span><h2>pomdp_py.utils.typ module<a class="headerlink" href="#module-pomdp_py.utils.typ" title="Permalink to this heading">¶</a></h2>
+<span id="pomdp-py-utils-typ-module"></span><h2>pomdp_py.utils.typ module<a class="headerlink" href="#module-pomdp_py.utils.typ" title="Link to this heading">¶</a></h2>
 <p>Utilties for typography, i.e. dealing with
 strings for the purpose of displaying them.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">bcolors</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">bcolors</span></span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.WHITE">
-<span class="sig-name descname"><span class="pre">WHITE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[97m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.WHITE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WHITE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[97m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.WHITE" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.CYAN">
-<span class="sig-name descname"><span class="pre">CYAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[96m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.CYAN" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">CYAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[96m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.CYAN" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.MAGENTA">
-<span class="sig-name descname"><span class="pre">MAGENTA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[95m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.MAGENTA" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MAGENTA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[95m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.MAGENTA" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.BLUE">
-<span class="sig-name descname"><span class="pre">BLUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[94m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.BLUE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BLUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[94m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.BLUE" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.GREEN">
-<span class="sig-name descname"><span class="pre">GREEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[92m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.GREEN" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">GREEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[92m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.GREEN" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.YELLOW">
-<span class="sig-name descname"><span class="pre">YELLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[93m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.YELLOW" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">YELLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[93m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.YELLOW" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.RED">
-<span class="sig-name descname"><span class="pre">RED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[91m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.RED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">RED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[91m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.RED" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.BOLD">
-<span class="sig-name descname"><span class="pre">BOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[1m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.BOLD" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[1m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.BOLD" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.ENDC">
-<span class="sig-name descname"><span class="pre">ENDC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.ENDC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ENDC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.ENDC" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.disable">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors.disable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.disable" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors.disable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.disable" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bcolors.s">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.s" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bcolors.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bcolors.s" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a string with color when shown on terminal.
 <cite>color</cite> is a constant in <cite>bcolors</cite> class.</p>
 </dd></dl>
@@ -1428,72 +1370,72 @@ strings for the purpose of displaying them.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.info">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.info" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.info" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.note">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.note" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.note" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.error">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.error" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.warning">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.warning" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.warning" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.success">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#success"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.success" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#success"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.success" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.bold">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">bold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bold" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">bold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#bold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.bold" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.cyan">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">cyan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#cyan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.cyan" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">cyan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#cyan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.cyan" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.magenta">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">magenta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#magenta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.magenta" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">magenta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#magenta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.magenta" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.blue">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">blue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#blue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.blue" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">blue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#blue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.blue" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.green">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">green</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#green"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.green" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">green</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#green"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.green" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.yellow">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">yellow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#yellow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.yellow" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">yellow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#yellow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.yellow" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.red">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#red"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.red" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#red"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.red" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.typ.white">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">white</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#white"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.white" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.typ.</span></span><span class="sig-name descname"><span class="pre">white</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/typ.html#white"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.typ.white" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-pomdp_py.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.utils" title="Permalink to this heading">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.utils" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -1505,11 +1447,11 @@ strings for the purpose of displaying them.</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020-2021, H2R@Brown.
+      &#169;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/api/pomdp_py.utils.rst.txt"

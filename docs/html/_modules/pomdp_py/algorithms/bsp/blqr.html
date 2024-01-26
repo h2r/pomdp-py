@@ -1,26 +1,24 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="../../../../">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.algorithms.bsp.blqr &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pomdp_py.algorithms.bsp.blqr &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
    
   <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   <div class="document">
@@ -29,14 +27,14 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../../../index.html">
-    <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo" />
     
   </a>
 </p>
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.1).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
 
 
 
@@ -51,18 +49,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -87,12 +83,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -126,21 +122,33 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
 
-<div class="viewcode-block" id="BLQR"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR">[docs]</a><span class="k">class</span> <span class="nc">BLQR</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Planner</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">func_sysd</span><span class="p">,</span> <span class="n">func_obs</span><span class="p">,</span> <span class="n">jac_sysd</span><span class="p">,</span> <span class="n">jac_obs</span><span class="p">,</span> <span class="n">jac_sysd_u</span><span class="p">,</span>
-                 <span class="n">noise_obs</span><span class="p">,</span> <span class="n">noise_sysd</span><span class="p">,</span>
-                 <span class="n">Qlarge</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span>
-                 <span class="n">planning_horizon</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;To initialize the planenr of B-LQR, one needs to supply parameters</span>
+<div class="viewcode-block" id="BLQR">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR">[docs]</a>
+<span class="k">class</span> <span class="nc">BLQR</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Planner</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">func_sysd</span><span class="p">,</span>
+        <span class="n">func_obs</span><span class="p">,</span>
+        <span class="n">jac_sysd</span><span class="p">,</span>
+        <span class="n">jac_obs</span><span class="p">,</span>
+        <span class="n">jac_sysd_u</span><span class="p">,</span>
+        <span class="n">noise_obs</span><span class="p">,</span>
+        <span class="n">noise_sysd</span><span class="p">,</span>
+        <span class="n">Qlarge</span><span class="p">,</span>
+        <span class="n">L</span><span class="p">,</span>
+        <span class="n">Q</span><span class="p">,</span>
+        <span class="n">R</span><span class="p">,</span>
+        <span class="n">planning_horizon</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;To initialize the planenr of B-LQR, one needs to supply parameters</span>
 <span class="sd">        that describe the underlying linear gaussian system, and also</span>
 <span class="sd">        matrices that describe the cost function. Note that math symbols</span>
-<span class="sd">        (e.g. xt, ut) are vectors or matrices represented as np.arrays. </span>
+<span class="sd">        (e.g. xt, ut) are vectors or matrices represented as np.arrays.</span>
 <span class="sd">        The B-LQR cost function (Eq.14 in the paper):</span>
 
 <span class="sd">        :math:`J(b_{t:T},u_{t:T}) = \bar{m}_T^TQ_{large}\bar{m}_T+\bar{s}_T^T\Lambda\bar{s}_T + \sum_{k=t}^{T-1}\bar{m}_k^TQ\bar{m}_k+\bar{u}_t^TR\bar{u}_t`</span>
-<span class="sd">                    </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            func_sysd (function): f: (xt, ut) -&gt; xt+1</span>
 <span class="sd">            func_obs (function): g: (xt) -&gt; zt</span>
@@ -169,7 +177,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_jac_obs</span> <span class="o">=</span> <span class="n">jac_obs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_jac_sysd</span> <span class="o">=</span> <span class="n">jac_sysd_u</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_noise_obs</span> <span class="o">=</span> <span class="n">noise_obs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_noise_sysd</span> <span class="o">=</span> <span class="n">noise_sysd</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_noise_sysd</span> <span class="o">=</span> <span class="n">noise_sysd</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_Qlarge</span> <span class="o">=</span> <span class="n">Qlarge</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_L</span> <span class="o">=</span> <span class="n">L</span>  <span class="c1"># Lambda</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_Q</span> <span class="o">=</span> <span class="n">Q</span>
@@ -178,9 +186,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dim_control</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        
-<div class="viewcode-block" id="BLQR.ekf_update_mlo"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo">[docs]</a>    <span class="k">def</span> <span class="nf">ekf_update_mlo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bt</span><span class="p">,</span> <span class="n">ut</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BLQR.ekf_update_mlo">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.ekf_update_mlo">[docs]</a>
+    <span class="k">def</span> <span class="nf">ekf_update_mlo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bt</span><span class="p">,</span> <span class="n">ut</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs the ekf belief update assuming maximum likelihood observation.</span>
 <span class="sd">        This follows equations 12, 13 in the paper. It&#39;s the function :math:`F`.</span>
 
@@ -199,28 +208,31 @@
 <span class="sd">                observation function. This corresponds to Wt in equation 13.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: FIX</span>
-        <span class="n">mt</span><span class="p">,</span> <span class="n">Cov_t</span> <span class="o">=</span> <span class="n">bt</span>        
+        <span class="n">mt</span><span class="p">,</span> <span class="n">Cov_t</span> <span class="o">=</span> <span class="n">bt</span>
         <span class="n">At</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_sysd</span><span class="p">(</span><span class="n">mt</span><span class="p">,</span> <span class="n">ut</span><span class="p">)</span>
         <span class="n">Ct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_jac_obs</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span>  <span class="c1"># based on maximum likelihood observation</span>
         <span class="n">Wt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_noise_obs</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span><span class="o">.</span><span class="n">cov</span>
         <span class="n">Gat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="n">Cov_t</span><span class="p">),</span> <span class="n">At</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>  <span class="c1"># Gamma_t = At*Cov_t*At^T</span>
         <span class="n">CGC_W_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ct</span><span class="p">,</span> <span class="n">Gat</span><span class="p">),</span> <span class="n">Ct</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span> <span class="o">+</span> <span class="n">Wt</span><span class="p">)</span>
-        <span class="n">Cov_next</span> <span class="o">=</span> <span class="n">Gat</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Gat</span><span class="p">,</span> <span class="n">Ct</span><span class="o">.</span><span class="n">transpose</span><span class="p">()),</span> <span class="n">CGC_W_inv</span><span class="p">),</span> <span class="n">Ct</span><span class="p">),</span> <span class="n">Gat</span><span class="p">)</span>
+        <span class="n">Cov_next</span> <span class="o">=</span> <span class="n">Gat</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Gat</span><span class="p">,</span> <span class="n">Ct</span><span class="o">.</span><span class="n">transpose</span><span class="p">()),</span> <span class="n">CGC_W_inv</span><span class="p">),</span> <span class="n">Ct</span><span class="p">),</span> <span class="n">Gat</span>
+        <span class="p">)</span>
         <span class="n">m_next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_func_sysd</span><span class="p">(</span><span class="n">mt</span><span class="p">,</span> <span class="n">ut</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_noise_sysd</span><span class="p">(</span><span class="n">mt</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">m_next</span><span class="p">,</span> <span class="n">Cov_next</span><span class="p">)</span></div>
 
+
     <span class="k">def</span> <span class="nf">_b_u_seg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the elements of x that corresponds to the belief and controls,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the elements of x that corresponds to the belief and controls,</span>
 <span class="sd">        as a tuple (m_i, Covi, u_i)&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_control</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
-        <span class="n">m_i_end</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
-        <span class="n">Covi_end</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d</span><span class="o">*</span><span class="n">d</span>
-        <span class="n">u_end</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="n">c</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">m_i_end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span>
+        <span class="n">Covi_end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">d</span>
+        <span class="n">u_end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">d</span> <span class="o">+</span> <span class="n">c</span>
         <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">m_i_end</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">m_i_end</span><span class="p">:</span><span class="n">Covi_end</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">Covi_end</span><span class="p">:</span><span class="n">u_end</span><span class="p">]</span>
-    
+
     <span class="k">def</span> <span class="nf">_control_max_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">max_val</span><span class="p">):</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">u_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">max_val</span> <span class="o">-</span> <span class="n">u_i</span>
@@ -230,9 +242,9 @@
         <span class="k">return</span> <span class="n">u_i</span> <span class="o">-</span> <span class="n">min_val</span>
 
     <span class="k">def</span> <span class="nf">_mean_final_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">m_des</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
-        <span class="n">m_k</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">num_segments</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">m_k</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">num_segments</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">m_k</span> <span class="o">-</span> <span class="n">m_des</span>
-    
+
     <span class="k">def</span> <span class="nf">_mean_start_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">m_0</span><span class="p">):</span>
         <span class="n">m_k</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">m_k</span> <span class="o">-</span> <span class="n">m_0</span>
@@ -241,14 +253,18 @@
         <span class="n">m_i</span><span class="p">,</span> <span class="n">s_i</span><span class="p">,</span> <span class="n">u_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
         <span class="n">Cov_i</span> <span class="o">=</span> <span class="n">s_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
         <span class="n">m_ip1</span><span class="p">,</span> <span class="n">Cov_ip1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrate_belief_segment</span><span class="p">((</span><span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span><span class="p">),</span> <span class="n">u_i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">)</span>
-        <span class="n">s_ip1</span> <span class="o">=</span> <span class="n">Cov_ip1</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="n">s_ip1</span> <span class="o">=</span> <span class="n">Cov_ip1</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+            <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">b_i_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m_i</span><span class="p">,</span> <span class="n">s_i</span><span class="p">)</span>
         <span class="n">b_ip1_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m_ip1</span><span class="p">,</span> <span class="n">s_ip1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b_i_vec</span> <span class="o">-</span> <span class="n">b_ip1_vec</span>
 
-<div class="viewcode-block" id="BLQR.integrate_belief_segment"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.integrate_belief_segment">[docs]</a>    <span class="k">def</span> <span class="nf">integrate_belief_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b_i</span><span class="p">,</span> <span class="n">u_i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This is to represent equation 18.</span>
-<span class="sd">             </span>
+<div class="viewcode-block" id="BLQR.integrate_belief_segment">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.integrate_belief_segment">[docs]</a>
+    <span class="k">def</span> <span class="nf">integrate_belief_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b_i</span><span class="p">,</span> <span class="n">u_i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This is to represent equation 18.</span>
+
 <span class="sd">        phi(b_i&#39;, u_i&#39;) = F(b_i&#39;, u_i&#39;) +   sum    F(b_{t+1}, u_i) - F(b_t, u_i)</span>
 <span class="sd">                                          t in seg</span>
 
@@ -257,18 +273,18 @@
         <span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span> <span class="o">=</span> <span class="n">b_i</span>
         <span class="n">b_seg</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ekf_update_mlo</span><span class="p">((</span><span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span><span class="p">),</span> <span class="n">u_i</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_planning_horizon</span> <span class="o">//</span> <span class="n">num_segments</span><span class="p">):</span>
-            <span class="n">b_seg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ekf_update_mlo</span><span class="p">(</span><span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">u_i</span><span class="p">))</span>
+            <span class="n">b_seg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ekf_update_mlo</span><span class="p">(</span><span class="n">b_seg</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">u_i</span><span class="p">))</span>
         <span class="n">sum_mean</span> <span class="o">=</span> <span class="n">b_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">sum_Cov</span> <span class="o">=</span> <span class="n">b_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b_seg</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_seg</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">sum_mean</span> <span class="o">+=</span> <span class="p">(</span><span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-                <span class="n">sum_Cov</span> <span class="o">+=</span> <span class="p">(</span><span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">sum_mean</span> <span class="o">+=</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">sum_Cov</span> <span class="o">+=</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">b_seg</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">sum_mean</span><span class="p">,</span> <span class="n">sum_Cov</span></div>
 
-    
+
     <span class="k">def</span> <span class="nf">_opt_cost_func_seg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">b_des</span><span class="p">,</span> <span class="n">u_des</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This will be used as part of the objective function for scipy</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This will be used as part of the objective function for scipy</span>
 <span class="sd">        optimizer. Therefore we only take in one input vector, x.  We require</span>
 <span class="sd">        the structure of x to be:</span>
 
@@ -283,8 +299,10 @@
             <span class="n">bu_traj</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span><span class="p">),</span> <span class="n">u_i</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">segmented_cost_function</span><span class="p">(</span><span class="n">bu_traj</span><span class="p">,</span> <span class="n">b_des</span><span class="p">,</span> <span class="n">u_des</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BLQR.segmented_cost_function"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function">[docs]</a>    <span class="k">def</span> <span class="nf">segmented_cost_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bu_traj</span><span class="p">,</span> <span class="n">b_des</span><span class="p">,</span> <span class="n">u_des</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;The cost function in eq 17. </span>
+<div class="viewcode-block" id="BLQR.segmented_cost_function">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.segmented_cost_function">[docs]</a>
+    <span class="k">def</span> <span class="nf">segmented_cost_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bu_traj</span><span class="p">,</span> <span class="n">b_des</span><span class="p">,</span> <span class="n">u_des</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The cost function in eq 17.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            b_des (tuple): The desired belief (mT, CovT). This is needed to compute the cost function.</span>
@@ -292,13 +310,17 @@
 <span class="sd">                If this information is not available, pass in an empty list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">u_des</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">u_des</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_segments</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The list of desired controls, if provided, must have one control&quot;</span>\
-                             <span class="s2">&quot;per segment&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The list of desired controls, if provided, must have one control&quot;</span>
+                <span class="s2">&quot;per segment&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">b_T</span><span class="p">,</span> <span class="n">u_T</span> <span class="o">=</span> <span class="n">bu_traj</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">m_T</span><span class="p">,</span> <span class="n">Cov_T</span> <span class="o">=</span> <span class="n">b_T</span>
-        <span class="n">s_T</span> <span class="o">=</span> <span class="n">Cov_T</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
-        
+        <span class="n">s_T</span> <span class="o">=</span> <span class="n">Cov_T</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+            <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+
         <span class="n">sLs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s_T</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_L</span><span class="p">),</span> <span class="n">s_T</span><span class="p">)</span>
         <span class="n">Summation</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segments</span><span class="p">):</span>
@@ -310,13 +332,25 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">u_i_des</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dim_control</span><span class="p">)</span>
             <span class="n">u_i_diff</span> <span class="o">=</span> <span class="n">u_i</span> <span class="o">-</span> <span class="n">u_i_des</span>
-            <span class="n">Summation</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m_i_diff</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Q</span><span class="p">),</span> <span class="n">m_i_diff</span><span class="p">)</span>\
-                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_i_diff</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_R</span><span class="p">),</span> <span class="n">u_i_diff</span><span class="p">)</span>
+            <span class="n">Summation</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m_i_diff</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Q</span><span class="p">),</span> <span class="n">m_i_diff</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_i_diff</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_R</span><span class="p">),</span> <span class="n">u_i_diff</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sLs</span> <span class="o">+</span> <span class="n">Summation</span></div>
-    
-<div class="viewcode-block" id="BLQR.create_plan"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.create_plan">[docs]</a>    <span class="k">def</span> <span class="nf">create_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b_0</span><span class="p">,</span> <span class="n">b_des</span><span class="p">,</span> <span class="n">u_init</span><span class="p">,</span> <span class="n">num_segments</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">control_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">opt_options</span><span class="o">=</span><span class="p">{},</span> <span class="n">opt_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Solves the SQP problem using direct transcription, and produce belief points</span>
+
+
+<div class="viewcode-block" id="BLQR.create_plan">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.create_plan">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_plan</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">b_0</span><span class="p">,</span>
+        <span class="n">b_des</span><span class="p">,</span>
+        <span class="n">u_init</span><span class="p">,</span>
+        <span class="n">num_segments</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">control_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">opt_options</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">opt_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Solves the SQP problem using direct transcription, and produce belief points</span>
 <span class="sd">        and controls at segments.</span>
 <span class="sd">        Reference: https://docs.scipy.org/doc/scipy/reference/tutorial/optimize.html&quot;&quot;&quot;</span>
         <span class="c1"># build initial guess from initial belief and the given trajectory.</span>
@@ -324,61 +358,81 @@
         <span class="n">b_i</span> <span class="o">=</span> <span class="n">b_0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segments</span><span class="p">):</span>
             <span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span> <span class="o">=</span> <span class="n">b_i</span>
-            <span class="n">s_i</span> <span class="o">=</span> <span class="n">Cov_i</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
+            <span class="n">s_i</span> <span class="o">=</span> <span class="n">Cov_i</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">u_i</span> <span class="o">=</span> <span class="n">u_init</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">x_0</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">m_i</span><span class="p">)</span>
             <span class="n">x_0</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">s_i</span><span class="p">)</span>
             <span class="n">x_0</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">u_i</span><span class="p">)</span>
             <span class="n">b_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrate_belief_segment</span><span class="p">(</span><span class="n">b_i</span><span class="p">,</span> <span class="n">u_i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">)</span>
 
-        <span class="c1"># constraints        </span>
+        <span class="c1"># constraints</span>
         <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1">## initial belief constraint</span>
-        <span class="n">cons_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_start_constraint</span><span class="p">,</span>
-                      <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">b_0</span><span class="p">[</span><span class="mi">0</span><span class="p">]]}</span>
+        <span class="n">cons_start</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;eq&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fun&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_start_constraint</span><span class="p">,</span>
+            <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">b_0</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+        <span class="p">}</span>
         <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cons_start</span><span class="p">)</span>
         <span class="c1">## belief dynamics constraints and control bounds</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segments</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">num_segments</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="n">cons_belief</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_constraint</span><span class="p">,</span>
-                               <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">]}</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">num_segments</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">cons_belief</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;eq&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;fun&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_constraint</span><span class="p">,</span>
+                    <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">],</span>
+                <span class="p">}</span>
                 <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cons_belief</span><span class="p">)</span>
 
                 <span class="c1"># control bounds</span>
                 <span class="k">if</span> <span class="n">control_bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">cons_control_min</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span>
-                                        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_control_min_constraint</span><span class="p">,</span>
-                                        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">control_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]]}</span>                
-                    <span class="n">cons_control_max</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span>
-                                        <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_control_max_constraint</span><span class="p">,</span>
-                                        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">control_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]]}</span>
+                    <span class="n">cons_control_min</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ineq&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;fun&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_control_min_constraint</span><span class="p">,</span>
+                        <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">control_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                    <span class="p">}</span>
+                    <span class="n">cons_control_max</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ineq&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;fun&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_control_max_constraint</span><span class="p">,</span>
+                        <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">control_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                    <span class="p">}</span>
                     <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cons_control_min</span><span class="p">)</span>
                     <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cons_control_max</span><span class="p">)</span>
 
         <span class="c1"># final belief constraint</span>
-        <span class="n">cons_final</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;eq&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_final_constraint</span><span class="p">,</span>
-                      <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">b_des</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_segments</span><span class="p">]}</span>
+        <span class="n">cons_final</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;eq&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fun&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_final_constraint</span><span class="p">,</span>
+            <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">b_des</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_segments</span><span class="p">],</span>
+        <span class="p">}</span>
         <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cons_final</span><span class="p">)</span>
 
-        <span class="n">opt_res</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_opt_cost_func_seg</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span>
-                                    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span>
-                                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">b_des</span><span class="p">,</span> <span class="n">u_init</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">),</span>
-                                    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
-                                    <span class="n">options</span><span class="o">=</span><span class="n">opt_options</span><span class="p">,</span>
-                                    <span class="n">callback</span><span class="o">=</span><span class="n">opt_callback</span><span class="p">)</span>
+        <span class="n">opt_res</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_opt_cost_func_seg</span><span class="p">,</span>
+            <span class="n">x_0</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">b_des</span><span class="p">,</span> <span class="n">u_init</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">),</span>
+            <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">opt_options</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">opt_callback</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">opt_res</span></div>
 
-<div class="viewcode-block" id="BLQR.interpret_sqp_plan"><a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.bsp.html#pomdp_py.algorithms.bsp.blqr.BLQR.interpret_sqp_plan">[docs]</a>    <span class="k">def</span> <span class="nf">interpret_sqp_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_res</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BLQR.interpret_sqp_plan">
+<a class="viewcode-back" href="../../../../api/pomdp_py.algorithms.html#pomdp_py.algorithms.bsp.blqr.BLQR.interpret_sqp_plan">[docs]</a>
+    <span class="k">def</span> <span class="nf">interpret_sqp_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_res</span><span class="p">,</span> <span class="n">num_segments</span><span class="p">):</span>
         <span class="n">x_res</span> <span class="o">=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">x</span>
         <span class="n">plan</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segments</span><span class="p">):</span>
             <span class="n">m_i</span><span class="p">,</span> <span class="n">s_i</span><span class="p">,</span> <span class="n">u_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b_u_seg</span><span class="p">(</span><span class="n">x_res</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
             <span class="n">Cov_i</span> <span class="o">=</span> <span class="n">s_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_state</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
             <span class="n">plan</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">m_i</span><span class="p">,</span> <span class="n">Cov_i</span><span class="p">,</span> <span class="n">u_i</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">plan</span></div></div>
+        <span class="k">return</span> <span class="n">plan</span></div>
+</div>
+
 </pre></div>
 
           </div>
@@ -388,11 +442,11 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020-2021, H2R@Brown.
+      &#169;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
     </div>
 

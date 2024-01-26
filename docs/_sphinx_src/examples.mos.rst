@@ -2,7 +2,7 @@ Multi-Object Search (MOS)
 *************************
 
 The purpose of this example is to **introduce the conventions** when building a project that involves a more complicated POMDP whose components better be separated for maintenance and readability purposes.
-We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.  
+We will first introduce this task at relatively high level, then introduce the conventions of the project structure. The conventions can help you organize your project, make the code more readable, and share components between different POMDPs.
 
 * :ref:`overview`
 * :ref:`conventions`
@@ -61,10 +61,10 @@ The package structure (for our MOS implementation) is as follows:
     │   ├── observation.py
     │   └── __init__.py
     ├── models
-    │   ├── transition_model.py    
+    │   ├── transition_model.py
     │   ├── observation_model.py
-    │   ├── reward_model.py    
-    │   ├── policy_model.py    
+    │   ├── reward_model.py
+    │   ├── policy_model.py
     │   ├── components
     │   │   ├── grid_map.py
     │   │   └── sensor.py
@@ -78,14 +78,14 @@ The package structure (for our MOS implementation) is as follows:
     │   ├── visual.py
     │   └── __init__.py
     ├── problem.py
-    ├── example_worlds.py    
+    ├── example_worlds.py
     └── __init__.py
 
 The recommendation is to separate code for `domain`, `models`, `agent` and `environment`, and have simple generic filenames.
 As in the above package tree, files such as :code:`state.py` or
 :code:`transition_model.py` are self-evident in their role. The
 :code:`problem.py` file is where the
-:py:mod:`~pomdp_problems.multi_object_search.problem.MosOOPOMDP` class is defined, and
+:py:mod:`~pomdp_py.problems.multi_object_search.problem.MosOOPOMDP` class is defined, and
 where the logic of `action-feedback loop` is implemented (see
 :doc:`examples.tiger` for more detail).
 
@@ -99,17 +99,15 @@ To try out the MOS example problem:
 
 .. code-block:: shell
 
-   $ python -m pomdp_problems.multi_object_search.problem
+   $ python -m pomdp_py.problems.multi_object_search.problem
 
 A gridworld with randomly placed obstacles, targets and robot initial pose is generated; The robot is equipped with either a disk-shape sensor or a laser sensor `[source] <_modules/problems/multi_object_search/problem.html#unittest>`_. A command-line interface is not yet provided; Check :py:mod:`~problems.multi_object_search.env.env.interpret`,
-:py:mod:`~pomdp_problems.multi_object_search.env.env.equip_sensors`,
-:py:mod:`~pomdp_problems.multi_object_search.env.env.make_laser_sensor`,
-:py:mod:`~pomdp_problems.multi_object_search.env.env.make_proximity_sensor`
+:py:mod:`~pomdp_py.problems.multi_object_search.env.env.equip_sensors`,
+:py:mod:`~pomdp_py.problems.multi_object_search.env.env.make_laser_sensor`,
+:py:mod:`~pomdp_py.problems.multi_object_search.env.env.make_proximity_sensor`
 as well as previously linked source code
 for details about how to create your custom instance of the problem.
-    
+
 .. bibliography:: refs.bib
    :filter: docname in docnames
    :style: unsrt
-
-

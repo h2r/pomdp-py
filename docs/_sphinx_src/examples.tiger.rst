@@ -70,7 +70,7 @@ equivalent as defining three classes that inherit
             self.name = name
         # ... __hash__, __eq__ should be implemented
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#State>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#State>`_
 
 .. _define-the-models:
 
@@ -125,7 +125,7 @@ We begin with the :py:mod:`~pomdp_py.framework.basics.ObservationModel`. In Tige
           space (e.g. value iteration)"""
           return [Observation(s)
                   for s in {"tiger-left", "tiger-right"}]
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#ObservationModel>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#ObservationModel>`_
 
 The :py:mod:`~pomdp_py.framework.basics.TransitionModel` is deterministic. Similarly, we implement the :code:`sample` and :code:`probability` functions in the interface for this generative model:
 
@@ -157,7 +157,7 @@ The :py:mod:`~pomdp_py.framework.basics.TransitionModel` is deterministic. Simil
           observation space (e.g. value iteration)"""
           return [State(s) for s in {"tiger-left", "tiger-right"}]
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#TransitionModel>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#TransitionModel>`_
 
 
 Since the Tiger domain is small, the transition and observation probabilities can be easily specified by a table (a dictionary in Python), which is similar to specifying POMDPs using POMDP file formats. However, pomdp_py allows more flexible way of implementing these models which can be intractable to enumerate (e.g. continuous).
@@ -199,7 +199,7 @@ it becomes important.
        def get_all_actions(self, state=None, history=None):
            return PolicyModel.ACTIONS
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#PolicyModel>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#PolicyModel>`_
 
 Note that the :code:`sample` function is not used directly during planning with
 POMCP or POUCT; Instead, the rollout policy's sampling process is defined
@@ -256,7 +256,7 @@ it as follows. The interface for reward model does allow stochastic rewards.
           # deterministic
           return self._reward_func(state, action)
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#RewardModel>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#RewardModel>`_
 
 
 Define the POMDP
@@ -283,7 +283,7 @@ This class is mostly just for code organization and is entirely optional.
                                        RewardModel())
             super().__init__(agent, env, name="TigerProblem")
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#TigerProblem>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#TigerProblem>`_
 
 Notice that :code:`init_true_state` and :code:`init_belief` need to be provided.
 The process of creating them is described in more detail in the next section.
@@ -330,7 +330,7 @@ Then, we can create an instance of the Tiger problem with the standard noise of 
    tiger_problem = TigerProblem(0.15, init_true_state, init_belief)
 
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#main>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#main>`_
 
 
 .. _solve:
@@ -428,7 +428,7 @@ For the Tiger problem, we implemented this procedure as follows:
                                                               tiger_problem.agent.transition_model)
                 tiger_problem.agent.set_belief(new_belief)
 
-`[source] <_modules/pomdp_problems/tiger/tiger_problem.html#test_planner>`_
+`[source] <_modules/pomdp_py/problems/tiger/tiger_problem.html#test_planner>`_
 
 .. _summary:
 

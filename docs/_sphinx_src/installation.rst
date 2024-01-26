@@ -47,14 +47,11 @@ See `this wiki page <https://github.com/h2r/pomdp-py/wiki/Installing-pomdp%E2%80
 Test things out
 ---------------
 
-1. Verify that **Tiger**, **RockSample**, and **Multi-Object Search** problems work::
+1. Verify that **Tiger** works::
 
-     python -m pomdp_py -r tiger
-     python -m pomdp_py -r rocksample
-     python -m pomdp_py -r mos
+    python -m pomdp_py -r tiger
 
-
-  For the **Tiger** problem, you should see output like::
+  You should see output like::
 
       ** Testing value iteration **
       ==== Step 1 ====
@@ -65,7 +62,12 @@ Test things out
       >> Observation: tiger-left
       ...
 
-  There will be plots that visualize the MCTS trees displayed, like below (could be more messy):
+
+2. Optionally, verify that **RockSample**, and **Multi-Object Search** problems work. This requires installing additional dependencies::
+
+     pip install pomdp-py[problems]
+     python -m pomdp_py -r rocksample
+     python -m pomdp_py -r mos
 
 
   For the **RockSample** problem, you should see something like::
@@ -103,7 +105,7 @@ Test things out
 
   and the agent (a green circle) starts acting::
 
-      $ python -m pomdp_problems.multi_object_search.problem
+      $ python -m pomdp_py.problems.multi_object_search.problem
       pygame 1.9.6
       Hello from the pygame community. https://www.pygame.org/contribute.html
       ==== Step 1 ====
@@ -122,7 +124,7 @@ Test things out
       __num_sims__: 506
       ...
 
-2. You can additionally run some tests (assuming you are at the root directory of the repository).
+3. You can additionally run some tests (assuming you are at the root directory of the repository).
    Note that some tests
    requires installing external software (`pomdp-solve <https://www.pomdp.org/code/>`_
    and `sarsop <https://github.com/AdaCompNUS/sarsop>`_).

@@ -28,12 +28,12 @@ If a pomdp_py :py:mod:`~pomdp_py.framework.basics.Agent` has enumerable state :m
 Example
 ~~~~~~~
 
-Let's use the existing :py:mod:`~pomdp_problems.tiger.tiger_problem.Tiger` problem as an example.
+Let's use the existing :py:mod:`~pomdp_py.problems.tiger.tiger_problem.Tiger` problem as an example.
 First we create an instance of the Tiger problem:
 
 .. code-block:: python
 
-   from pomdp_problems.tiger.tiger_problem import TigerProblem, TigerState
+   from pomdp_py.problems.tiger.tiger_problem import TigerProblem, TigerState
    init_state = "tiger-left"
    tiger = TigerProblem(0.15, TigerState(init_state),
                 pomdp_py.Histogram({TigerState("tiger-left"): 0.5,
@@ -112,7 +112,7 @@ That means setting :code:`return_policy_graph` to False (optional).
 
    import pomdp_py
    from pomdp_py import vi_pruning
-   from pomdp_problems.tiger.tiger_problem import TigerProblem, TigerState
+   from pomdp_py.problems.tiger.tiger_problem import TigerProblem, TigerState
 
    # Initialize problem
    init_state = "tiger-left"
@@ -239,7 +239,7 @@ to point to this path:
 
    import pomdp_py
    from pomdp_py import sarsop
-   from pomdp_problems.tiger.tiger_problem import TigerProblem, TigerState
+   from pomdp_py.problems.tiger.tiger_problem import TigerProblem, TigerState
 
    # Initialize problem
    init_state = "tiger-left"
