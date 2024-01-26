@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pomdp-py"
-version = "1.4.0"
+version = "1.3.4"
 description = "Python POMDP Library."
 authors = [{name = "Kaiyu Zheng", email = "kzheng10@cs.brown.edu"}]
 license = {file = "LICENSE"}
@@ -32,7 +32,7 @@ dependencies = [
 problems = [
     "matplotlib>=3.2.0",       # for some utilities
     "pygame>=2.0.2",           # for some tests
-    "opencv-python>=4.5.2.0"  # for some tests
+    "opencv-python>=4.5.2.0"   # for some tests
 ]
 
 [project.urls]
