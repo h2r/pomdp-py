@@ -1,5 +1,5 @@
 import random
-from pomdp_problems.tiger import TigerProblem, test_planner
+from pomdp_py.problems.tiger import TigerProblem, test_planner
 import pomdp_py
 from pomdp_py.utils.debugging import TreeDebugger
 

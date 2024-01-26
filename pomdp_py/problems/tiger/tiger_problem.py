@@ -297,13 +297,19 @@ def test_planner(tiger_problem, planner, nsteps=3,
             # until every time door is opened.
             print("\n")
 
+def make_tiger(noise=0.15, init_state="tiger-left", init_belief=[0.5, 0.5]):
+    """Convenient function to quickly build a tiger domain.
+    Useful for testing"""
+    tiger = TigerProblem(noise, TigerState(init_state),
+                         pomdp_py.Histogram({TigerState("tiger-left"): init_belief[0],
+                                             TigerState("tiger-right"): init_belief[1]}))
+    return tiger
+
+
 def main():
     init_true_state = random.choice([TigerState("tiger-left"),
                                      TigerState("tiger-right")])
-    init_belief = pomdp_py.Histogram({TigerState("tiger-left"): 0.5,
-                                      TigerState("tiger-right"): 0.5})
-    tiger_problem = TigerProblem(0.15,  # observation noise
-                                 init_true_state, init_belief)
+    tiger_problem = make_tiger(init_state=init_true_state)
 
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)

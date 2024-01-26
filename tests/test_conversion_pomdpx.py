@@ -1,8 +1,8 @@
 # Tests the conversion to .pomdpx file format code
 
 import sys
-from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdpx_file
+from pomdp_py.problems.tiger import make_tiger
 import os
 
 description="testing conversion to .pomdpx file"

@@ -6,11 +6,16 @@ import sys
 import pomdp_py
 import subprocess
 import inspect
-from pomdp_py.utils.test_utils import *
 from pomdp_py.utils.interfaces.conversion import to_pomdp_file
+from pomdp_py.problems.tiger import make_tiger
 
 
 description="testing conversion to .pomdp file"
+
+def remove_files(pattern):
+    file_list = glob.glob(pattern)
+    for file_path in file_list:
+        os.remove(file_path)
 
 def test_pomdp_file_conversion(pomdp_solve_path):
     print("[testing] test_pomdp_file_conversion")
