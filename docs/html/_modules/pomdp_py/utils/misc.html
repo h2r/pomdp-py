@@ -1,26 +1,24 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.utils.misc &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pomdp_py.utils.misc &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   <div class="document">
@@ -29,14 +27,14 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../../index.html">
-    <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+    <img class="logo" src="../../../_static/logo.png" alt="Logo" />
     
   </a>
 </p>
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.1).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
 
 
 
@@ -51,18 +49,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -87,12 +83,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -119,44 +115,61 @@
             
   <h1>Source code for pomdp_py.utils.misc</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Misc Python utilities&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">difflib</span> <span class="kn">import</span> <span class="n">SequenceMatcher</span>
 
-<div class="viewcode-block" id="remap"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.remap">[docs]</a><span class="k">def</span> <span class="nf">remap</span><span class="p">(</span><span class="n">oldvalue</span><span class="p">,</span> <span class="n">oldmin</span><span class="p">,</span> <span class="n">oldmax</span><span class="p">,</span> <span class="n">newmin</span><span class="p">,</span> <span class="n">newmax</span><span class="p">):</span>
+
+<div class="viewcode-block" id="remap">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.remap">[docs]</a>
+<span class="k">def</span> <span class="nf">remap</span><span class="p">(</span><span class="n">oldvalue</span><span class="p">,</span> <span class="n">oldmin</span><span class="p">,</span> <span class="n">oldmax</span><span class="p">,</span> <span class="n">newmin</span><span class="p">,</span> <span class="n">newmax</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">oldmax</span> <span class="o">-</span> <span class="n">oldmin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning in remap: the old range has size 0&quot;</span><span class="p">)</span>
         <span class="n">oldmax</span> <span class="o">=</span> <span class="n">oldmin</span> <span class="o">+</span> <span class="n">oldvalue</span>
     <span class="k">return</span> <span class="p">(((</span><span class="n">oldvalue</span> <span class="o">-</span> <span class="n">oldmin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">newmax</span> <span class="o">-</span> <span class="n">newmin</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">oldmax</span> <span class="o">-</span> <span class="n">oldmin</span><span class="p">))</span> <span class="o">+</span> <span class="n">newmin</span></div>
 
 
-<div class="viewcode-block" id="json_safe"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.json_safe">[docs]</a><span class="k">def</span> <span class="nf">json_safe</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+
+<div class="viewcode-block" id="json_safe">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.json_safe">[docs]</a>
+<span class="k">def</span> <span class="nf">json_safe</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">json_safe</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">json_safe</span><span class="p">(</span><span class="n">key</span><span class="p">):</span><span class="n">json_safe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">json_safe</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">json_safe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span></div>
 
 
-<div class="viewcode-block" id="safe_slice"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.safe_slice">[docs]</a><span class="k">def</span> <span class="nf">safe_slice</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-    <span class="n">true_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
-    <span class="n">true_end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+<div class="viewcode-block" id="safe_slice">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.safe_slice">[docs]</a>
+<span class="k">def</span> <span class="nf">safe_slice</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="n">true_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+    <span class="n">true_end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">arr</span><span class="p">[</span><span class="n">true_start</span><span class="p">:</span><span class="n">true_end</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="similar"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.similar">[docs]</a><span class="k">def</span> <span class="nf">similar</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="similar">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.similar">[docs]</a>
+<span class="k">def</span> <span class="nf">similar</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="c1"># Reference: https://stackoverflow.com/questions/17388213/find-the-similarity-metric-between-two-strings</span>
     <span class="k">return</span> <span class="n">SequenceMatcher</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">ratio</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="special_char"><a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.special_char">[docs]</a><span class="k">class</span> <span class="nc">special_char</span><span class="p">:</span>
-    <span class="n">left</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u2190</span><span class="s1">&#39;</span>
-    <span class="n">up</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u2191</span><span class="s1">&#39;</span>
-    <span class="n">right</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u2192</span><span class="s1">&#39;</span>
-    <span class="n">down</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u2193</span><span class="s1">&#39;</span>
-    <span class="n">longleft</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u27F5</span><span class="s1">&#39;</span>
-    <span class="n">longright</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u27F6</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="special_char">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.misc.special_char">[docs]</a>
+<span class="k">class</span> <span class="nc">special_char</span><span class="p">:</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u2190</span><span class="s2">&quot;</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u2191</span><span class="s2">&quot;</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u2192</span><span class="s2">&quot;</span>
+    <span class="n">down</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u2193</span><span class="s2">&quot;</span>
+    <span class="n">longleft</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u27f5</span><span class="s2">&quot;</span>
+    <span class="n">longright</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u27f6</span><span class="s2">&quot;</span>
 
     <span class="n">hline</span> <span class="o">=</span> <span class="s2">&quot;─&quot;</span>
     <span class="n">vline</span> <span class="o">=</span> <span class="s2">&quot;│&quot;</span>
@@ -178,6 +191,7 @@
     <span class="n">shadebar</span> <span class="o">=</span> <span class="s2">&quot;▒&quot;</span>
 
     <span class="n">SUBSCRIPT</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s2">&quot;0123456789&quot;</span><span class="p">,</span> <span class="s2">&quot;₀₁₂₃₄₅₆₇₈₉&quot;</span><span class="p">)</span></div>
+
 </pre></div>
 
           </div>
@@ -187,11 +201,11 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020-2021, H2R@Brown.
+      &#169;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
     </div>
 

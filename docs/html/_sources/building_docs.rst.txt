@@ -4,7 +4,7 @@ Building Documentations
 Documentations are based on `Sphinx <https://www.sphinx-doc.org/en/master/>`_.
 Here we explain steps to build documentations from source, that is, to generate the documentation web pages.
 
-There are two packages: `pomdp_py` and `pomdp_problems`. Their documentations are built separately.
+There are two packages: `pomdp_py` and `pomdp_py.problems`. Their documentations are built separately.
 
 Building docs for `pomdp_py`
 ----------------------------
@@ -34,7 +34,7 @@ Building docs for `pomdp_py`
    This outputs to :code:`pomdp-py/docs/html`
 
 
-Building docs for `pomdp_problems`
+Building docs for `pomdp_py.problems`
 ----------------------------------
 
 
@@ -44,7 +44,7 @@ Building docs for `pomdp_problems`
 
 2. Building docs for `pomdp_py`. Run :code:`sphinx-apidoc`::
 
-    sphinx-apidoc -o problems/ ../../pomdp_problems
+    sphinx-apidoc -o problems/ ../../pomdp_py.problems
 
 3. Generate web pages::
 
@@ -52,15 +52,15 @@ Building docs for `pomdp_problems`
 
    This outputs to :code:`pomdp-py/docs/html`
 
-Note that when creating the documentation for a problem under :code:`pomdp_problems`,
+Note that when creating the documentation for a problem under :code:`pomdp_py.problems`,
 you may want to re-use the README file on github for the documentation. To do that,
-first create a read-me file at :code:`pomdp_problems/<problem>/README.rst` with desirable
+first create a read-me file at :code:`pomdp_py.problems/<problem>/README.rst` with desirable
 content that describes the problem. Then, include this read-me file at the top of the
-generated :code:`pomdp_problems.<problem>.rst`, like so:
+generated :code:`pomdp_py.problems.<problem>.rst`, like so:
 
 .. code-block::
 
-   .. include:: ../../../pomdp_problems/<problem>/README.rst
+   .. include:: ../../../pomdp_py.problems/<problem>/README.rst
 
 
 Note on Changelog

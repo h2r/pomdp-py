@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.utils.debugging module &#8212; pomdp_py 1.3.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=253395cc" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=0aabb5f1"></script>
+    <title>pomdp_py.utils.debugging module &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=e358f374"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   <div class="document">
@@ -27,14 +28,14 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../index.html">
-    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
     
   </a>
 </p>
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.3).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
 
 
 
@@ -108,7 +109,6 @@
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -162,11 +162,11 @@
           <div class="body" role="main">
             
   <section id="module-pomdp_py.utils.debugging">
-<span id="pomdp-py-utils-debugging-module"></span><h1>pomdp_py.utils.debugging module<a class="headerlink" href="#module-pomdp_py.utils.debugging" title="Permalink to this heading">¶</a></h1>
+<span id="pomdp-py-utils-debugging-module"></span><h1>pomdp_py.utils.debugging module<a class="headerlink" href="#module-pomdp_py.utils.debugging" title="Link to this heading">¶</a></h1>
 <p>This module contains utility functions making it easier to debug POMDP
 planning.</p>
 <section id="treedebugger">
-<h2>TreeDebugger<a class="headerlink" href="#treedebugger" title="Permalink to this heading">¶</a></h2>
+<h2>TreeDebugger<a class="headerlink" href="#treedebugger" title="Link to this heading">¶</a></h2>
 <p>The core debugging functionality for POMCP/POUCT search trees is incorporated
 into the TreeDebugger.  It is designed for ease of use during a <code class="code docutils literal notranslate"><span class="pre">pdb</span></code> or
 <code class="code docutils literal notranslate"><span class="pre">ipdb</span></code> debugging session. Here is a minimal example usage:</p>
@@ -242,7 +242,7 @@ open-right⟶_QNodePP(n=15, v=-148.634)
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">TreeDebugger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">TreeDebugger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Helps you debug the search tree; A search tree is a tree
 that contains a subset of future histories, organized into
@@ -250,63 +250,63 @@ QNodes (value represents Q(b,a); children are observations) and
 VNodes (value represents V(b); children are actions).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.num_nodes">
-<span class="sig-name descname"><span class="pre">num_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.num_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_nodes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">num_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.num_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_nodes" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of nodes in the tree rooted at “current”</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.depth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.depth" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.depth" title="Link to this definition">¶</a></dt>
 <dd><p>Tree depth starts from 0 (root node only).
 It is the largest number of edges on a path from root to leaf.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.d">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.d" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.d" title="Link to this definition">¶</a></dt>
 <dd><p>alias for depth</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.num_layers">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_layers" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.num_layers" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the number of layers;
 It is the number of layers of nodes, which equals to depth + 1</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nl">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nl</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nl" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nl</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nl" title="Link to this definition">¶</a></dt>
 <dd><p>alias for num_layers</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nn">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nn</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nn" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nn</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nn" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of nodes in the tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nq">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nq" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nq" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of QNodes in the tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.nv">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nv</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nv" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nv</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.nv" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the total number of VNodes in the tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.l">
-<span class="sig-name descname"><span class="pre">l</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.l"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.l" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">l</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.l"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.l" title="Link to this definition">¶</a></dt>
 <dd><p>alias for layer</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.layer">
-<span class="sig-name descname"><span class="pre">layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.layer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_debuggers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.layer" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of nodes at the given depth. Will only return VNodes.
 Warning: If depth is high, there will likely be a huge number of nodes.</p>
 <dl class="field-list simple">
@@ -322,80 +322,80 @@ one for each tree on the layer.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.leaf">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">leaf</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.leaf" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">leaf</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.leaf" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.step" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.step" title="Link to this definition">¶</a></dt>
 <dd><p>Updates current interaction node to follow the
 edge along key</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.s">
-<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.s" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.s" title="Link to this definition">¶</a></dt>
 <dd><p>alias for step</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.back">
-<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.back" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.back" title="Link to this definition">¶</a></dt>
 <dd><p>move current node of interaction back to parent</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.b">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.b" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.b" title="Link to this definition">¶</a></dt>
 <dd><p>alias for back</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.root">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.root" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.root" title="Link to this definition">¶</a></dt>
 <dd><p>The root node when first creating this TreeDebugger</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.r">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.r" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.r" title="Link to this definition">¶</a></dt>
 <dd><p>alias for root</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.c">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.c" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.c" title="Link to this definition">¶</a></dt>
 <dd><p>Current node of interaction</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.p">
-<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.p" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.p" title="Link to this definition">¶</a></dt>
 <dd><p>print tree</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.pp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pp" title="Link to this definition">¶</a></dt>
 <dd><p>print tree, with preset options</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mbp">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mbp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mbp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mbp</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mbp" title="Link to this definition">¶</a></dt>
 <dd><p>Mark Best and Print.
 Mark the best sequence, and then print with only the marked nodes</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.pm">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pm</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pm</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.pm" title="Link to this definition">¶</a></dt>
 <dd><p>Print marked only</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark_sequence">
-<span class="sig-name descname"><span class="pre">mark_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_sequence" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_sequence" title="Link to this definition">¶</a></dt>
 <dd><p>Given a list of keys (understandable by __getitem__ in _NodePP),
 mark nodes (both QNode and VNode) along the path in the tree.
 Note this sequence starts from self.current; So self.current will
@@ -404,31 +404,31 @@ also be marked.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark">
-<span class="sig-name descname"><span class="pre">mark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark" title="Link to this definition">¶</a></dt>
 <dd><p>alias for mark_sequence</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.mark_path">
-<span class="sig-name descname"><span class="pre">mark_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_path" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mark_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.mark_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.mark_path" title="Link to this definition">¶</a></dt>
 <dd><p>paths the path to dest node</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.markp">
-<span class="sig-name descname"><span class="pre">markp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.markp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.markp" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">markp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.markp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.markp" title="Link to this definition">¶</a></dt>
 <dd><p>alias to mark_path</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.clear">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clear</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.clear" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clear</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.clear" title="Link to this definition">¶</a></dt>
 <dd><p>Clear the marks</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.bestseq">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bestseq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseq" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bestseq</span></span><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseq" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of actions, observation sequence
 that have the highest value for each step. Such
 a sequence is “preferred”.</p>
@@ -438,25 +438,25 @@ into the future</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.bestseqd">
-<span class="sig-name descname"><span class="pre">bestseqd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.bestseqd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseqd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bestseqd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.bestseqd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.bestseqd" title="Link to this definition">¶</a></dt>
 <dd><p>alias for bestseq except with</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.single_node_str">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">single_node_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.single_node_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.single_node_str" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">single_node_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.single_node_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.single_node_str" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a string for printing given a single vnode.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.preferred_actions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferred_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.preferred_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.preferred_actions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preferred_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.preferred_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.preferred_actions" title="Link to this definition">¶</a></dt>
 <dd><p>Print out the currently preferred actions up to given <cite>max_depth</cite></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.path">
-<span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path" title="Link to this definition">¶</a></dt>
 <dd><p>alias for path_to;
 Example usage:</p>
 <p>marking path from root to the first node on the second layer:</p>
@@ -467,7 +467,7 @@ Example usage:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.path_to">
-<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path_to" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.path_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.path_to" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of keys (actions / observations) that represents the path from
 self.current to the given node <cite>dest</cite>. Returns None if the path does not
 exist.  Uses DFS. Can be useful for marking path to a node to a specific
@@ -476,7 +476,7 @@ layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.TreeDebugger.tree_stats">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tree_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.tree_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.tree_stats" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tree_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#TreeDebugger.tree_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.TreeDebugger.tree_stats" title="Link to this definition">¶</a></dt>
 <dd><p>Gether statistics about the tree</p>
 </dd></dl>
 
@@ -484,12 +484,12 @@ layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</p
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.sorted_by_str">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">sorted_by_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enumerable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#sorted_by_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.sorted_by_str" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">sorted_by_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enumerable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#sorted_by_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.sorted_by_str" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pomdp_py.utils.debugging.interpret_color">
-<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">interpret_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorstr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#interpret_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.interpret_color" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.utils.debugging.</span></span><span class="sig-name descname"><span class="pre">interpret_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorstr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/utils/debugging.html#interpret_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.utils.debugging.interpret_color" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -502,11 +502,11 @@ layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</p
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020-2021, H2R@Brown.
+      &#169;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/api/pomdp_py.utils.debugging.rst.txt"

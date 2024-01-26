@@ -1,26 +1,24 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <title>pomdp_py.utils.debugging &#8212; pomdp_py 1.3.1 documentation</title>
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pomdp_py.utils.debugging &#8212; pomdp_py 1.3.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   <div class="document">
@@ -29,14 +27,14 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../../index.html">
-    <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+    <img class="logo" src="../../../_static/logo.png" alt="Logo" />
     
   </a>
 </p>
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.1).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
 
 
 
@@ -51,18 +49,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API References</span></p>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">pomdp_py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">pomdp_problems</a></li>
 </ul>
 
 
@@ -87,12 +83,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 <h3 class="donation">Donate/support</h3>
@@ -207,6 +203,7 @@
 
 <span class="sd">To explore more features, browse the list of methods in the documentation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pomdp_py.algorithms.po_uct</span> <span class="kn">import</span> <span class="n">TreeNode</span><span class="p">,</span> <span class="n">QNode</span><span class="p">,</span> <span class="n">VNode</span><span class="p">,</span> <span class="n">RootVNode</span>
 <span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">typ</span><span class="p">,</span> <span class="n">similar</span><span class="p">,</span> <span class="n">special_char</span>
@@ -214,6 +211,7 @@
 <span class="n">SIMILAR_THRESH</span> <span class="o">=</span> <span class="mf">0.6</span>
 <span class="n">DEFAULT_MARK_COLOR</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
 <span class="n">MARKED</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># tracks marked nodes on tree</span>
+
 
 <span class="k">def</span> <span class="nf">_node_pp</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># We want to return the node, but we don&#39;t want to print it on pdb with</span>
@@ -224,10 +222,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_QNodePP</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="n">o</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">_NodePP</span><span class="p">:</span>
 
+<span class="k">class</span> <span class="nc">_NodePP</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;node: either VNode or QNode (the actual node on the tree) &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;node: either VNode or QNode (the actual node on the tree)&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent_edge</span> <span class="o">=</span> <span class="n">parent_edge</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span>
@@ -257,14 +255,13 @@
             <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sorted_by_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
             <span class="k">return</span> <span class="n">edges</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="n">chosen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
-                         <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">edge</span><span class="p">:</span> <span class="n">similar</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span> <span class="n">key</span><span class="p">))</span>
+            <span class="n">chosen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">edge</span><span class="p">:</span> <span class="n">similar</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">),</span> <span class="n">key</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">similar</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">chosen</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">SIMILAR_THRESH</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">chosen</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot access children with key </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When debugging, you can access the child of a node by the key</span>
 <span class="sd">        of the following types:</span>
 <span class="sd">        - the key is an action or observation object that points to a child;</span>
@@ -306,35 +303,38 @@
     <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">opt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">max_depth</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">print_type_opt</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+            <span class="n">print_type_opt</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
             <span class="n">max_depth</span> <span class="o">=</span> <span class="n">opt</span>
-            <span class="n">print_type_opt</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+            <span class="n">print_type_opt</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
             <span class="n">print_type_opt</span> <span class="o">=</span> <span class="n">opt</span>
-            <span class="n">max_depth</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">max_depth</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot deal with opt of type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">opt</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
-                        <span class="n">print_type</span><span class="o">=</span><span class="n">_NodePP</span><span class="o">.</span><span class="n">interpret_print_type</span><span class="p">(</span><span class="n">print_type_opt</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span>
+            <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">print_type</span><span class="o">=</span><span class="n">_NodePP</span><span class="o">.</span><span class="n">interpret_print_type</span><span class="p">(</span><span class="n">print_type_opt</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">print_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prints the tree, rooted at self&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prints the tree, rooted at self&quot;&quot;&quot;</span>
         <span class="n">_NodePP</span><span class="o">.</span><span class="n">_print_tree_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_print_tree_helper</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
-                           <span class="n">depth</span><span class="p">,</span>   <span class="c1"># depth of root</span>
-                           <span class="n">parent_edge</span><span class="p">,</span>
-                           <span class="n">branch_positions</span><span class="p">,</span>  <span class="c1"># list of &#39;first&#39;, &#39;middle&#39;, &#39;last&#39; for each level prior to root</span>
-                           <span class="n">child_index</span><span class="p">,</span>  <span class="c1"># Index of the root as a child of parent</span>
-                           <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                           <span class="n">print_type</span><span class="o">=</span><span class="s2">&quot;summary&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_print_tree_helper</span><span class="p">(</span>
+        <span class="n">root</span><span class="p">,</span>
+        <span class="n">depth</span><span class="p">,</span>  <span class="c1"># depth of root</span>
+        <span class="n">parent_edge</span><span class="p">,</span>
+        <span class="n">branch_positions</span><span class="p">,</span>  <span class="c1"># list of &#39;first&#39;, &#39;middle&#39;, &#39;last&#39; for each level prior to root</span>
+        <span class="n">child_index</span><span class="p">,</span>  <span class="c1"># Index of the root as a child of parent</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">print_type</span><span class="o">=</span><span class="s2">&quot;summary&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        pos_among_children is either &#39;first&#39;, &#39;middle&#39;, or &#39;last&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="n">max_depth</span><span class="p">:</span>
@@ -344,7 +344,9 @@
 
         <span class="c1"># Print the tree branches for all levels up to current root</span>
         <span class="n">branches</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">preceding_positions</span> <span class="o">=</span> <span class="n">branch_positions</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># all positions except for current root</span>
+        <span class="n">preceding_positions</span> <span class="o">=</span> <span class="n">branch_positions</span><span class="p">[</span>
+            <span class="p">:</span><span class="o">-</span><span class="mi">1</span>
+        <span class="p">]</span>  <span class="c1"># all positions except for current root</span>
         <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">preceding_positions</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
@@ -363,22 +365,25 @@
 
         <span class="n">root</span><span class="o">.</span><span class="n">print_children</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">child_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">branches</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">child_index</span><span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">special_char</span><span class="o">.</span><span class="n">SUBSCRIPT</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">branches</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">child_index</span><span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">special_char</span><span class="o">.</span><span class="n">SUBSCRIPT</span><span class="p">)</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">branches</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
-            <span class="n">line</span> <span class="o">+=</span> <span class="n">typ</span><span class="o">.</span><span class="n">cyan</span><span class="p">(</span><span class="s2">&quot;(depth=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;)&quot;</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="n">typ</span><span class="o">.</span><span class="n">cyan</span><span class="p">(</span><span class="s2">&quot;(depth=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_by_str</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)):</span>
-
             <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">if</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">marked</span><span class="p">:</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">elif</span> <span class="n">print_type</span> <span class="o">==</span> <span class="s2">&quot;complete&quot;</span><span class="p">:</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">elif</span> <span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">num_visits</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">num_visits</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="n">print_type</span> <span class="o">==</span> <span class="s2">&quot;marked-only&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">marked</span><span class="p">:</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
@@ -396,65 +401,76 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">next_pos</span> <span class="o">=</span> <span class="s2">&quot;middle&quot;</span>
 
-                <span class="n">_NodePP</span><span class="o">.</span><span class="n">_print_tree_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                                           <span class="n">next_depth</span><span class="p">,</span>
-                                           <span class="n">c</span><span class="p">,</span>
-                                           <span class="n">branch_positions</span> <span class="o">+</span> <span class="p">[</span><span class="n">next_pos</span><span class="p">],</span>
-                                           <span class="n">i</span><span class="p">,</span>
-                                           <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
-                                           <span class="n">print_type</span><span class="o">=</span><span class="n">print_type</span><span class="p">)</span>
+                <span class="n">_NodePP</span><span class="o">.</span><span class="n">_print_tree_helper</span><span class="p">(</span>
+                    <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
+                    <span class="n">next_depth</span><span class="p">,</span>
+                    <span class="n">c</span><span class="p">,</span>
+                    <span class="n">branch_positions</span> <span class="o">+</span> <span class="p">[</span><span class="n">next_pos</span><span class="p">],</span>
+                    <span class="n">i</span><span class="p">,</span>
+                    <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+                    <span class="n">print_type</span><span class="o">=</span><span class="n">print_type</span><span class="p">,</span>
+                <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">_QNodePP</span><span class="p">(</span><span class="n">_NodePP</span><span class="p">,</span> <span class="n">QNode</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;QNode for better printing&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QNode for better printing&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qnode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">QNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qnode</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span> <span class="n">qnode</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">_NodePP</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qnode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                            <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_edge</span><span class="p">,</span>
-                                            <span class="n">include_children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_children</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_edge</span><span class="p">,</span> <span class="n">include_children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_children</span>
+        <span class="p">)</span>
+
 
 <span class="k">class</span> <span class="nc">_VNodePP</span><span class="p">(</span><span class="n">_NodePP</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;VNode for better printing&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;VNode for better printing&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vnode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">VNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vnode</span><span class="o">.</span><span class="n">num_visits</span><span class="p">)</span>
         <span class="n">_NodePP</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vnode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                            <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_edge</span><span class="p">,</span>
-                                            <span class="n">include_children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_children</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_edge</span><span class="p">,</span> <span class="n">include_children</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_children</span>
+        <span class="p">)</span>
 
 
-<div class="viewcode-block" id="TreeDebugger"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger">[docs]</a><span class="k">class</span> <span class="nc">TreeDebugger</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger">[docs]</a>
+<span class="k">class</span> <span class="nc">TreeDebugger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helps you debug the search tree; A search tree is a tree</span>
 <span class="sd">    that contains a subset of future histories, organized into</span>
 <span class="sd">    QNodes (value represents Q(b,a); children are observations) and</span>
 <span class="sd">    VNodes (value represents V(b); children are actions).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            tree (VNode): the root node of a search tree. For example,</span>
 <span class="sd">                the tree built by POUCT after planning an action,</span>
 <span class="sd">                which can be accessed by agent.tree.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">TreeNode</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expecting tree to be a TreeNode, but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">tree</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Expecting tree to be a TreeNode, but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">tree</span><span class="p">))</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">_node_pp</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span>   <span class="c1"># points to the node the user is interacting with</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span>  <span class="c1"># points to the node the user is interacting with</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stats_cache</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">nodestr</span> <span class="o">=</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span>
-                                               <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">parent_edge</span><span class="p">)</span>
+        <span class="n">nodestr</span> <span class="o">=</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">parent_edge</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="s2">&quot;TreeDebugger@</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nodestr</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
@@ -474,67 +490,77 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stats_cache</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">)]</span> <span class="o">=</span> <span class="n">stats</span>
         <span class="k">return</span> <span class="n">stats</span>
 
-<div class="viewcode-block" id="TreeDebugger.num_nodes"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.num_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.num_nodes">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.num_nodes">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the total number of nodes in the tree rooted at &quot;current&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_stats</span><span class="p">()</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_vnodes&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_qnodes&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_qnodes&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_vnodes&#39;</span><span class="p">]</span>
+            <span class="s2">&quot;all&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_vnodes&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_qnodes&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_qnodes&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_vnodes&quot;</span><span class="p">],</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="n">kind</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid value for kind=</span><span class="si">{}</span><span class="s2">; Valid values are </span><span class="si">{}</span><span class="s2">&quot;</span>\
-                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid value for kind=</span><span class="si">{}</span><span class="s2">; Valid values are </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">kind</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Tree depth starts from 0 (root node only).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tree depth starts from 0 (root node only).</span>
 <span class="sd">        It is the largest number of edges on a path from root to leaf.&quot;&quot;&quot;</span>
         <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_stats</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for depth&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for depth&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the number of layers;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the number of layers;</span>
 <span class="sd">        It is the number of layers of nodes, which equals to depth + 1&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for num_layers&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for num_layers&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the total number of nodes in the tree&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the total number of nodes in the tree&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the total number of QNodes in the tree&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the total number of QNodes in the tree&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the total number of VNodes in the tree&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the total number of VNodes in the tree&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_nodes</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.l"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.l">[docs]</a>    <span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for layer&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.l">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.l">[docs]</a>
+    <span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for layer&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="n">as_debuggers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.layer"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.layer">[docs]</a>    <span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeDebugger.layer">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.layer">[docs]</a>
+    <span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of nodes at the given depth. Will only return VNodes.</span>
 <span class="sd">        Warning: If depth is high, there will likely be a huge number of nodes.</span>
 
@@ -544,12 +570,17 @@
 <span class="sd">                one for each tree on the layer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Depth </span><span class="si">{}</span><span class="s2"> is out of range (0-</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Depth </span><span class="si">{}</span><span class="s2"> is out of range (0-</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_layer_helper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">nodes</span></div>
 
-    <span class="k">def</span> <span class="nf">_layer_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">current_depth</span><span class="p">,</span> <span class="n">target_depth</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">_layer_helper</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">current_depth</span><span class="p">,</span> <span class="n">target_depth</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">as_debuggers</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
         <span class="k">if</span> <span class="n">current_depth</span> <span class="o">==</span> <span class="n">target_depth</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">as_debuggers</span><span class="p">:</span>
@@ -562,10 +593,7 @@
                     <span class="n">next_depth</span> <span class="o">=</span> <span class="n">current_depth</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">next_depth</span> <span class="o">=</span> <span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_layer_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span>
-                                   <span class="n">next_depth</span><span class="p">,</span>
-                                   <span class="n">target_depth</span><span class="p">,</span>
-                                   <span class="n">nodes</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_layer_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">target_depth</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -583,65 +611,78 @@
                         <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">leafs</span>
 
-<div class="viewcode-block" id="TreeDebugger.step"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Updates current interaction node to follow the</span>
+<div class="viewcode-block" id="TreeDebugger.step">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates current interaction node to follow the</span>
 <span class="sd">        edge along key&quot;&quot;&quot;</span>
         <span class="n">edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">to_edge</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">edge</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="TreeDebugger.s"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.s">[docs]</a>    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for step&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.s">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.s">[docs]</a>
+    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for step&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.back"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.back">[docs]</a>    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;move current node of interaction back to parent&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeDebugger.back">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.back">[docs]</a>
+    <span class="k">def</span> <span class="nf">back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;move current node of interaction back to parent&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">parent</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for back&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for back&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">back</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;The root node when first creating this TreeDebugger&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The root node when first creating this TreeDebugger&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for root&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for root&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Current node of interaction&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current node of interaction&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span>
 
-<div class="viewcode-block" id="TreeDebugger.p"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.p">[docs]</a>    <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;print tree&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.p">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.p">[docs]</a>
+    <span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;print tree&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;print tree, with preset options&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;print tree, with preset options&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">pp</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mbp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mark Best and Print.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mark Best and Print.</span>
 <span class="sd">        Mark the best sequence, and then print with only the marked nodes&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bestseq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;marked-only&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Print marked only&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print marked only&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;marked-only&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.mark_sequence"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">mark_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">DEFAULT_MARK_COLOR</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.mark_sequence">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_sequence">[docs]</a>
+    <span class="k">def</span> <span class="nf">mark_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">DEFAULT_MARK_COLOR</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a list of keys (understandable by __getitem__ in _NodePP),</span>
 <span class="sd">        mark nodes (both QNode and VNode) along the path in the tree.</span>
 <span class="sd">        Note this sequence starts from self.current; So self.current will</span>
@@ -653,27 +694,37 @@
             <span class="n">MARKED</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">original</span><span class="p">)]</span> <span class="o">=</span> <span class="n">interpret_color</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.mark"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark">[docs]</a>    <span class="k">def</span> <span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for mark_sequence&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeDebugger.mark">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark">[docs]</a>
+    <span class="k">def</span> <span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for mark_sequence&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_sequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.mark_path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.mark_path">[docs]</a>    <span class="k">def</span> <span class="nf">mark_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;paths the path to dest node&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeDebugger.mark_path">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.mark_path">[docs]</a>
+    <span class="k">def</span> <span class="nf">mark_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;paths the path to dest node&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to</span><span class="p">(</span><span class="n">dest</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.markp"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.markp">[docs]</a>    <span class="k">def</span> <span class="nf">markp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias to mark_path&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeDebugger.markp">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.markp">[docs]</a>
+    <span class="k">def</span> <span class="nf">markp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias to mark_path&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_path</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Clear the marks&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear the marks&quot;&quot;&quot;</span>
         <span class="k">global</span> <span class="n">MARKED</span>
         <span class="n">MARKED</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bestseq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a list of actions, observation sequence</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of actions, observation sequence</span>
 <span class="sd">        that have the highest value for each step. Such</span>
 <span class="sd">        a sequence is &quot;preferred&quot;.</span>
 
@@ -681,15 +732,20 @@
 <span class="sd">        into the future&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferred_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.bestseqd"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.bestseqd">[docs]</a>    <span class="k">def</span> <span class="nf">bestseqd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TreeDebugger.bestseqd">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.bestseqd">[docs]</a>
+    <span class="k">def</span> <span class="nf">bestseqd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        alias for bestseq except with</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferred_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.single_node_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.single_node_str">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="TreeDebugger.single_node_str">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.single_node_str">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">single_node_str</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent_edge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a string for printing given a single vnode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;marked&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">marked</span><span class="p">:</span>
@@ -707,9 +763,9 @@
         <span class="k">if</span> <span class="n">parent_edge</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">+=</span> <span class="n">opposite_color</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parent_edge</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;⟶&quot;</span>
 
-        <span class="n">output</span> <span class="o">+=</span> <span class="n">color</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>\
-            <span class="o">+</span> <span class="s2">&quot;(n=</span><span class="si">{}</span><span class="s2">, v=</span><span class="si">{:.3f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span>
-                                    <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">color</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;(n=</span><span class="si">{}</span><span class="s2">, v=</span><span class="si">{:.3f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">num_visits</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">include_children</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_by_str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)):</span>
@@ -717,22 +773,26 @@
                 <span class="n">child_info</span> <span class="o">=</span> <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">single_node_str</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">include_children</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
                 <span class="n">spaces</span> <span class="o">=</span> <span class="s2">&quot;    &quot;</span> <span class="o">*</span> <span class="n">indent</span>
-                <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">- [</span><span class="si">{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spaces</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
-                                                   <span class="n">typ</span><span class="o">.</span><span class="n">white</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">)),</span>
-                                                   <span class="n">child_info</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">- [</span><span class="si">{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">spaces</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">typ</span><span class="o">.</span><span class="n">white</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="p">)),</span> <span class="n">child_info</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">output</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.preferred_actions"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.preferred_actions">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="TreeDebugger.preferred_actions">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.preferred_actions">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">preferred_actions</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print out the currently preferred actions up to given `max_depth`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">seq</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_preferred_actions_helper</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">seq</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_preferred_actions_helper</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -752,7 +812,7 @@
         <span class="n">equally_good</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">best_child</span><span class="p">)</span> <span class="ow">and</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">best_value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">best_child</span><span class="p">)</span> <span class="ow">and</span> <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">best_value</span><span class="p">:</span>
                     <span class="n">equally_good</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">best_child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">root</span><span class="p">[</span><span class="n">best_child</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -762,11 +822,14 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">next_depth</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
 
-            <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_preferred_actions_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">best_child</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span>
-                                                   <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+            <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_preferred_actions_helper</span><span class="p">(</span>
+                <span class="n">root</span><span class="p">[</span><span class="n">best_child</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span>
+            <span class="p">)</span>
 
-<div class="viewcode-block" id="TreeDebugger.path"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;alias for path_to;</span>
+<div class="viewcode-block" id="TreeDebugger.path">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path">[docs]</a>
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;alias for path_to;</span>
 <span class="sd">        Example usage:</span>
 
 <span class="sd">        marking path from root to the first node on the second layer:</span>
@@ -775,8 +838,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_to</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TreeDebugger.path_to"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.path_to">[docs]</a>    <span class="k">def</span> <span class="nf">path_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a list of keys (actions / observations) that represents the path from</span>
+
+<div class="viewcode-block" id="TreeDebugger.path_to">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.path_to">[docs]</a>
+    <span class="k">def</span> <span class="nf">path_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of keys (actions / observations) that represents the path from</span>
 <span class="sd">        self.current to the given node `dest`. Returns None if the path does not</span>
 <span class="sd">        exist.  Uses DFS. Can be useful for marking path to a node to a specific</span>
 <span class="sd">        layer. Note that the returned path is a list of keys (i.e. edges), not nodes.</span>
@@ -798,8 +864,9 @@
                     <span class="n">parent</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
+
     <span class="k">def</span> <span class="nf">_get_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Helper method for path_to&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper method for path_to&quot;&quot;&quot;</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">dest</span>
         <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">while</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">start</span><span class="p">:</span>
@@ -807,22 +874,25 @@
             <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
 
-<div class="viewcode-block" id="TreeDebugger.tree_stats"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.TreeDebugger.tree_stats">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TreeDebugger.tree_stats">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.TreeDebugger.tree_stats">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">tree_stats</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gether statistics about the tree&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gether statistics about the tree&quot;&quot;&quot;</span>
         <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;total_vnodes&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;total_qnodes&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;total_vnodes_children&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;total_qnodes_children&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;max_vnodes_children&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;max_qnodes_children&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="s2">&quot;total_vnodes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_qnodes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_vnodes_children&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_qnodes_children&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;max_vnodes_children&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;max_qnodes_children&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_tree_stats_helper</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
-        <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;num_visits&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">num_visits</span>
-        <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;num_visits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">num_visits</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span>
         <span class="k">return</span> <span class="n">stats</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_tree_stats_helper</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -830,31 +900,47 @@
             <span class="k">return</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">VNode</span><span class="p">):</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_vnodes&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_vnodes_children&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_vnodes_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_vnodes_children&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">],</span> <span class="n">depth</span><span class="p">)</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_vnodes&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_vnodes_children&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_vnodes_children&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_vnodes_children&quot;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">],</span> <span class="n">depth</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_qnodes&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_qnodes_children&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
-                <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_qnodes_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max_qnodes_children&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_qnodes&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_qnodes_children&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_qnodes_children&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;max_qnodes_children&quot;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+                <span class="p">)</span>
 
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">QNode</span><span class="p">):</span>
                     <span class="n">next_depth</span> <span class="o">=</span> <span class="n">depth</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">next_depth</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_tree_stats_helper</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span></div>
+                <span class="n">TreeDebugger</span><span class="o">.</span><span class="n">_tree_stats_helper</span><span class="p">(</span>
+                    <span class="n">root</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">next_depth</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span>
+                <span class="p">)</span></div>
 
-<div class="viewcode-block" id="sorted_by_str"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.sorted_by_str">[docs]</a><span class="k">def</span> <span class="nf">sorted_by_str</span><span class="p">(</span><span class="n">enumerable</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="sorted_by_str">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.sorted_by_str">[docs]</a>
+<span class="k">def</span> <span class="nf">sorted_by_str</span><span class="p">(</span><span class="n">enumerable</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">enumerable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="interpret_color"><a class="viewcode-back" href="../../../api/pomdp_py.utils.debugging.html#pomdp_py.utils.debugging.interpret_color">[docs]</a><span class="k">def</span> <span class="nf">interpret_color</span><span class="p">(</span><span class="n">colorstr</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="interpret_color">
+<a class="viewcode-back" href="../../../api/pomdp_py.utils.html#pomdp_py.utils.debugging.interpret_color">[docs]</a>
+<span class="k">def</span> <span class="nf">interpret_color</span><span class="p">(</span><span class="n">colorstr</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">colorstr</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">typ</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;typ.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colorstr</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid color: </span><span class="si">{}</span><span class="s2">;</span><span class="se">\n</span><span class="s2">&quot;</span>
-                         <span class="s2">&quot;The available ones are </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colorstr</span><span class="p">,</span> <span class="n">typ</span><span class="o">.</span><span class="n">colors</span><span class="p">))</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid color: </span><span class="si">{}</span><span class="s2">;</span><span class="se">\n</span><span class="s2">The available ones are </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colorstr</span><span class="p">,</span> <span class="n">typ</span><span class="o">.</span><span class="n">colors</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
 </pre></div>
 
           </div>
@@ -864,11 +950,11 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2020-2021, H2R@Brown.
+      &#169;2020-2021, H2R@Brown.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
     </div>
 
