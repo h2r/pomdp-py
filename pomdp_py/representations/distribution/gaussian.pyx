@@ -2,7 +2,7 @@ from pomdp_py.framework.basics cimport GenerativeDistribution
 import numpy as np
 
 # Check if scipy exists
-import importlib
+import importlib.util
 scipy_spec = importlib.util.find_spec("scipy")
 if scipy_spec is not None:
     from scipy.linalg import sqrtm
