@@ -34,17 +34,17 @@ class PolicyModel(pomdp_py.RolloutPolicy):
             last_action = history[-1][0]
             if isinstance(last_action, LookAction):
                 can_find = True
-        find_action = set({Find}) if can_find else set({})
+        find_action = [Find] if can_find else []
         if state is None:
-            return ALL_MOTION_ACTIONS | {Look} | find_action
+            return ALL_MOTION_ACTIONS + [Look] + find_action
         else:
             if self._grid_map is not None:
                 valid_motions = self._grid_map.valid_motions(
                     self.robot_id, state.pose(self.robot_id), ALL_MOTION_ACTIONS
                 )
-                return valid_motions | {Look} | find_action
+                return list(valid_motions) + [Look] + find_action
             else:
-                return ALL_MOTION_ACTIONS | {Look} | find_action
+                return ALL_MOTION_ACTIONS + [Look] + find_action
 
     def rollout(self, state, history=None):
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]

@@ -209,7 +209,7 @@ def solve(
         visualize (bool) if True, show the pygame visualization.
     """
 
-    random_objid = random.sample(problem.env.target_objects, 1)[0]
+    random_objid = random.sample(sorted(problem.env.target_objects), 1)[0]
     random_object_belief = problem.agent.belief.object_beliefs[random_objid]
     if isinstance(random_object_belief, pomdp_py.Histogram):
         # Use POUCT
