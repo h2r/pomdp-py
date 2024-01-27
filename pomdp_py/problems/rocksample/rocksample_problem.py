@@ -345,7 +345,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
     def get_all_actions(self, **kwargs):
         state = kwargs.get("state", None)
         if state is None:
-            return self._all_actions
+            return list(self._all_actions)
         else:
             motions = set(self._all_actions)
             rover_x, rover_y = state.position
@@ -355,7 +355,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
                 motions.remove(MoveNorth)
             if rover_y == self._n - 1:
                 motions.remove(MoveSouth)
-            return motions | self._other_actions
+            return list(motions | self._other_actions)
 
     def rollout(self, state, history=None):
         return random.sample(self.get_all_actions(state=state), 1)[0]
@@ -529,7 +529,7 @@ def main():
 
     print("*** Testing POMCP ***")
     pomcp = pomdp_py.POMCP(
-        max_depth=20,
+        max_depth=12,
         discount_factor=0.95,
         num_sims=10000,
         exploration_const=20,
