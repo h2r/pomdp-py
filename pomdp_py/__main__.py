@@ -9,8 +9,9 @@ def parse_args():
         "-r",
         "--run",
         type=str,
-        help="run a pomdp under pomdp_py.problems."
-        "Available options: {}".format(available_problems),
+        help="run a pomdp under pomdp_py.problems.Available options: {}".format(
+            available_problems
+        ),
     )
     args = parser.parse_args()
     return parser, args

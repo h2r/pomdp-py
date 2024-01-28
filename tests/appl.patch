@@ -1,0 +1,77 @@
+diff --git a/src/Makefile b/src/Makefile
+index 456cef1..a58539b 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -57,7 +57,7 @@ endif
+ 
+ CC            = gcc
+ 
+-CFLAGS        = -g -w -O3 $(INCDIR) -msse2  -mfpmath=sse $(CYGWIN_CFLAGS)  #-DDEBUG_LOG_ON
++CFLAGS        = -g -w -O3 $(INCDIR) -msse2 $(CYGWIN_CFLAGS)  #-DDEBUG_LOG_ON
+ 
+ CXX           = g++
+ 
+diff --git a/src/Parser/Cassandra/decision-tree.h b/src/Parser/Cassandra/decision-tree.h
+index 9005cef..90da271 100644
+--- a/src/Parser/Cassandra/decision-tree.h
++++ b/src/Parser/Cassandra/decision-tree.h
+@@ -23,13 +23,13 @@ permissions and limitations under the License.
+ 
+ #ifndef INCdecision_tree_h
+ #define INCdecision_tree_h
+-
+-#include "Const.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif 
+-
++
++#include "Const.h"
++
++#ifdef __cplusplus
++extern "C" {
++#endif 
++
+ 
+ 	/**********************************************************************
+ 	See an example of how to use this library in testDecisionTree.c.
+@@ -70,9 +70,11 @@ extern "C" {
+ 	stdout.  Intended for debugging. */
+ 	extern void dtDebugPrint(const char* header);
+ 
+-#ifdef __cplusplus
+-}
+-#endif 
++	extern void checkAllocatedPointer(void * ptr);
++
++#ifdef __cplusplus
++}
++#endif 
+ 
+ 
+ 
+diff --git a/src/Parser/Cassandra/parse_err.h b/src/Parser/Cassandra/parse_err.h
+index f2f60bf..01665ba 100644
+--- a/src/Parser/Cassandra/parse_err.h
++++ b/src/Parser/Cassandra/parse_err.h
+@@ -157,6 +157,7 @@ void ERR_enter(	char 	*source,
+ 			char	*modificationString );
+ void ERR_initialize(void);
+ void ERR_cleanUp(void);
++void checkAllocatedPointer(void * ptr);
+ 
+ #ifdef __cplusplus
+ }  /* extern "C" */
+diff --git a/src/Parser/Cassandra/sparse-matrix.h b/src/Parser/Cassandra/sparse-matrix.h
+index 68ae1d1..7324db6 100644
+--- a/src/Parser/Cassandra/sparse-matrix.h
++++ b/src/Parser/Cassandra/sparse-matrix.h
+@@ -100,6 +100,7 @@ extern Matrix transformIMatrix( I_Matrix i_matrix );
+ extern void displayMatrix( Matrix matrix );
+ extern REAL_VALUE sumRowValues( Matrix matrix, int row );
+ extern REAL_VALUE getEntryMatrix( Matrix matrix, int row, int col );
++extern void checkAllocatedPointer(void * ptr);
+ 
+ #ifdef __cplusplus
+ }  /* extern "C" */

@@ -1,0 +1,45 @@
+name: pomdp-py macOS build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: true
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Build dependencies
+      run: |
+        # Install pomdp-solve macOS binary
+        wget -P thirdparty https://www.pomdp.org/code/pomdp-solve-os-x.bin
+        chmod +x thirdparty/pomdp-solve-os-x.bin
+
+        # Build and install SARSOP
+        git clone https://github.com/personalrobotics/appl.git thirdparty/appl
+        # Fix Arm build (remove -mfpmath=sse) and declare implict functions
+        git -C thirdparty/appl apply ../../tests/appl.patch
+        make -C thirdparty/appl/src
+        make -C thirdparty/appl/src install
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+    - name: Test
+      working-directory: .
+      run: |
+        export POMDP_SOLVE_PATH=./thirdparty/pomdp-solve-os-x.bin
+        export POMDPSOL_PATH=./thirdparty/appl/bin/pomdpsol
+        export POMDPCONVERT_PATH=./thirdparty/appl/src/pomdpconvert
+        python tests/test_all.py

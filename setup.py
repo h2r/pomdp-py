@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 import os.path
 
@@ -41,6 +41,7 @@ setup(
     ext_modules=cythonize(
         extensions, build_dir="build", compiler_directives={"language_level": "3"}
     ),
+    packages=find_packages(exclude=["thirdparty", "thirdparty.*"]),
     package_data={
         "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
         "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"],

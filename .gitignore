@@ -60,7 +60,6 @@ Demos/*/*.html
 /dist/
 .gitrev
 .coverage
-*.patch
 *.diff
 *.orig
 *.prof
@@ -135,3 +134,5 @@ Thumbs.db
 #############################
 *.alpha
 *.pg
+
+.DS_Store
