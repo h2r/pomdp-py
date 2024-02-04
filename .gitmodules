@@ -1,0 +1,3 @@
+[submodule "thirdparty/pomdp-solve"]
+	path = thirdparty/pomdp-solve
+	url = git@github.com:cassandra/pomdp-solve.git
