@@ -1,4 +1,4 @@
-name: pomdp-py macOS build
+name: pomdp-py repo macOS build
 
 on:
   push:
