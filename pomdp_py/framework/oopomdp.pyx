@@ -409,4 +409,5 @@ cdef class OOBelief(GenerativeDistribution):
 cdef class DictState(ObjectState):
     """This is synonymous as ObjectState, but does not convey 'objectness'
     of the information being described."""
-    pass
+    def __init__(self, attributes):
+        super().__init__(None, attributes)
