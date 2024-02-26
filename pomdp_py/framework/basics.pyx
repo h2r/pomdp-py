@@ -587,7 +587,7 @@ cdef class Option(Action):
     Described in `Between MDPs and semi-MDPs:
     A framework for temporal abstraction in reinforcement learning`
     """
-    def instantiate(self, state):
+    def initiate(self, state):
         """
         initiation(self, state)
         Returns True if the given parameters satisfy the initiation set"""
