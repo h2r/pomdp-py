@@ -290,7 +290,7 @@ cdef class POUCT(Planner):
 
     cpdef _search(self):
         cdef int sims_count = 0
-        cdef float start_time, time_taken
+        cdef double start_time, time_taken
         self._initialize_progress_bar()
         start_time = time.time()
 
@@ -313,14 +313,14 @@ cdef class POUCT(Planner):
     cpdef _perform_simulation(self, state):
         self._simulate(state, self._agent.history, self._agent.tree, None, None, 0)
 
-    cdef bint _should_stop(self, int sims_count, float start_time):
+    cdef bint _should_stop(self, int sims_count, double start_time):
         cdef float time_taken = time.time() - start_time
         if self._num_sims > 0:
             return sims_count >= self._num_sims
         else:
             return time_taken > self._planning_time
 
-    cdef _update_progress(self, int sims_count, float start_time):
+    cdef _update_progress(self, int sims_count, double start_time):
         if self._show_progress:
             self.pbar.n = sims_count if self._num_sims > 0 else time.time() - start_time
             self.pbar.refresh()
