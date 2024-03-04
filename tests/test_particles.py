@@ -66,6 +66,7 @@ def test_weighted_particles():
     assert particles_frozen.mpe() == pomdp_py.Histogram(random_dist).mpe()
     hash(particles_frozen)
 
+
 def run():
     test_particles()
     test_weighted_particles()
