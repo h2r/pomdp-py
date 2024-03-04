@@ -186,7 +186,7 @@ cdef class POUCT(Planner):
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=0, value_init=0,
-                 rollout_policy=RandomRollout(),
+                 rollout_policy=None,
                  action_prior=None, show_progress=False, pbar_update_interval=5):
         self._max_depth = max_depth
         self._planning_time = planning_time
@@ -246,6 +246,10 @@ cdef class POUCT(Planner):
         cdef Action action
         cdef float time_taken
         cdef int sims_count
+
+        if self._rollout_policy is None:
+            raise ValueError("rollout_policy unset. Please call set_rollout_policy, "
+                             "or pass in a rollout_policy upon initialization")
 
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
