@@ -1,4 +1,5 @@
 from pomdp_py.framework.basics cimport GenerativeDistribution
+from pomdp_py.utils.cython_utils cimport det_dict_hash
 import random
 
 cdef class WeightedParticles(GenerativeDistribution):
@@ -19,8 +20,10 @@ cdef class WeightedParticles(GenerativeDistribution):
             are comparable; "none" if no approximation, return 0.
        distance_func: Used when approx_method is 'nearest'. Returns
            a number given two values in this particle set.
+       frozen: if true, then this WeightedParticles object cannot be modified. This
+           makes it hashable.
     """
-    def __init__(self, list particles, str approx_method="none", distance_func=None):
+    def __init__(self, list particles, str approx_method="none", distance_func=None, frozen=False):
         self._values = [value for value, _ in particles]
         self._weights = [weight for _, weight in particles]
         self._particles = particles
@@ -30,6 +33,9 @@ cdef class WeightedParticles(GenerativeDistribution):
 
         self._approx_method = approx_method
         self._distance_func = distance_func
+        self._frozen = frozen
+        if self._frozen:
+            self._hashcode = det_dict_hash(self._hist)
 
     @property
     def particles(self):
@@ -46,6 +52,8 @@ cdef class WeightedParticles(GenerativeDistribution):
     def add(self, particle):
         """add(self, particle)
         particle: (value, weight) tuple"""
+        if self._frozen:
+            raise NotImplementedError("weighted particles is frozen and cannot be modified")
         self._particles.append(particle)
         s, w = particle
         self._values.append(s)
@@ -57,6 +65,16 @@ cdef class WeightedParticles(GenerativeDistribution):
 
     def __len__(self):
         return len(self._particles)
+
+    def __hash__(self):
+        if self._frozen:
+            return self._hashcode
+        raise NotImplementedError
+
+    def __eq__(self, other):
+        if isinstance(other, WeightedParticles):
+            return self._hist == other._hist
+        return False
 
     def __getitem__(self, value):
         """Returns the probability of `value`; normalized"""
