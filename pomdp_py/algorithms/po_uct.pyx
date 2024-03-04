@@ -231,6 +231,10 @@ cdef class POUCT(Planner):
         return self._num_visits_init
 
     @property
+    def discount_factor(self):
+        return self._discount_factor
+
+    @property
     def value_init(self):
         return self._value_init
 
