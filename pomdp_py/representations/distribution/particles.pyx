@@ -148,13 +148,13 @@ cdef class WeightedParticles(GenerativeDistribution):
         return hist
 
     @classmethod
-    def from_histogram(cls, histogram):
+    def from_histogram(cls, histogram, frozen=False):
         """Given a pomdp_py.Histogram return a particle representation of it,
         which is an approximation"""
         particles = []
         for v in histogram:
             particles.append((v, histogram[v]))
-        return WeightedParticles(particles)
+        return WeightedParticles(particles, frozen=frozen)
 
     def condense(self):
         """
