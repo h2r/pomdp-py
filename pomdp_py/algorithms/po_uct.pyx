@@ -222,6 +222,22 @@ cdef class POUCT(Planner):
         """Returns the amount of time (seconds) ran for the last `plan` call."""
         return self._last_planning_time
 
+    @property
+    def max_depth(self):
+        return self._max_depth
+
+    @property
+    def num_visits_init(self):
+        return self._num_visits_init
+
+    @property
+    def value_init(self):
+        return self._value_init
+
+    @property
+    def action_prior(self):
+        return self._action_prior
+
     cpdef public plan(self, Agent agent):
         cdef Action action
         cdef float time_taken
