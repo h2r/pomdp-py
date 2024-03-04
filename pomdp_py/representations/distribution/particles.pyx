@@ -49,6 +49,10 @@ cdef class WeightedParticles(GenerativeDistribution):
     def weights(self):
         return self._weights
 
+    @property
+    def frozen(self):
+        return self._frozen
+
     def add(self, particle):
         """add(self, particle)
         particle: (value, weight) tuple"""
