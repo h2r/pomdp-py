@@ -133,18 +133,14 @@ cdef class POMCP(POUCT):
             root.belief.add(state)  # belief update happens as simulation goes.
         return total_reward
 
-    def _VNode(self, agent=None, root=False, **kwargs):
+    def _VNode(self, root=False, **kwargs):
         """Returns a VNode with default values; The function naming makes it clear
         that this function is about creating a VNode object."""
         if root:
             # agent cannot be None.
             return RootVNodeParticles(self._num_visits_init,
-                                      agent.history,
-                                      belief=copy.deepcopy(agent.belief))
+                                      self._agent.history,
+                                      belief=copy.deepcopy(self._agent.belief))
         else:
-            if agent is None:
-                return VNodeParticles(self._num_visits_init,
-                                      belief=Particles([]))
-            else:
-                return VNodeParticles(self._num_visits_init,
-                                      belief=copy.deepcopy(agent.belief))
+            return VNodeParticles(self._num_visits_init,
+                                  belief=Particles([]))
