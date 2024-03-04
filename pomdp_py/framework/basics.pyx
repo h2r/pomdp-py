@@ -194,7 +194,7 @@ cdef class BlackboxModel:
     def sample(self, state, action):
         """
         sample(self, state, action)
-        Sample (s',o,r) ~ G(s',o,r)"""
+        Sample (s',o,r) ~ G(s,a)"""
         raise NotImplementedError
 
     def argmax(self, state, action):
