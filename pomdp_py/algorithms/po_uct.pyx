@@ -345,7 +345,7 @@ cdef class POUCT(Planner):
             return 0
         if root is None:
             if self._agent.tree is None:
-                root = self._VNode(agent=self._agent, root=True)
+                root = self._VNode(root=True)
                 self._agent.tree = root
                 if self._agent.tree.history != self._agent.history:
                     raise ValueError("Unable to plan for the given history.")
@@ -427,7 +427,7 @@ cdef class POUCT(Planner):
             reward = self._agent.reward_model.sample(state, action, next_state)
         return next_state, observation, reward
 
-    def _VNode(self, agent=None, root=False, **kwargs):
+    def _VNode(self, root=False, **kwargs):
         """Returns a VNode with default values; The function naming makes it clear
         that this function is about creating a VNode object."""
         if root:
