@@ -238,6 +238,10 @@ cdef class POUCT(Planner):
     def action_prior(self):
         return self._action_prior
 
+    @property
+    def rollout_policy(self):
+        return self._rollout_policy
+
     cpdef public plan(self, Agent agent):
         cdef Action action
         cdef float time_taken
