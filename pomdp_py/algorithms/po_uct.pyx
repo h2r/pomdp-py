@@ -288,55 +288,46 @@ cdef class POUCT(Planner):
                                             value_init)
                 vnode[action] = history_action_node
 
-
     cpdef _search(self):
-        cdef State state
-        cdef Action best_action
         cdef int sims_count = 0
-        cdef float time_taken = 0
-        cdef float best_value
-        cdef bint stop_by_sims = self._num_sims > 0
-        cdef object pbar
-
-        if self._show_progress:
-            if stop_by_sims:
-                total = int(self._num_sims)
-            else:
-                total = self._planning_time
-            pbar = tqdm(total=total)
-
+        cdef float start_time, time_taken
+        self._initialize_progress_bar()
         start_time = time.time()
-        while True:
-            ## Note: the tree node with () history will have
-            ## the init belief given to the agent.
+
+        while not self._should_stop(sims_count, start_time):
             state = self._agent.sample_belief()
-            self._simulate(state, self._agent.history, self._agent.tree,
-                           None, None, 0)
-            sims_count +=1
-            time_taken = time.time() - start_time
+            self._perform_simulation(state)
+            sims_count += 1
+            self._update_progress(sims_count, start_time)
 
-            if self._show_progress and sims_count % self._pbar_update_interval == 0:
-                if stop_by_sims:
-                    pbar.n = sims_count
-                else:
-                    pbar.n = time_taken
-                pbar.refresh()
-
-            if stop_by_sims:
-                if sims_count >= self._num_sims:
-                    break
-            else:
-                if time_taken > self._planning_time:
-                    if self._show_progress:
-                        pbar.n = self._planning_time
-                        pbar.refresh()
-                    break
-
-        if self._show_progress:
-            pbar.close()
-
+        self._finalize_progress_bar()
         best_action = self._agent.tree.argmax()
+        time_taken = time.time() - start_time
         return best_action, time_taken, sims_count
+
+    cdef _initialize_progress_bar(self):
+        if self._show_progress:
+            total = self._num_sims if self._num_sims > 0 else self._planning_time
+            self.pbar = tqdm(total=total)
+
+    cpdef _perform_simulation(self, state):
+        self._simulate(state, self._agent.history, self._agent.tree, None, None, 0)
+
+    cdef bint _should_stop(self, int sims_count, float start_time):
+        cdef float time_taken = time.time() - start_time
+        if self._num_sims > 0:
+            return sims_count >= self._num_sims
+        else:
+            return time_taken > self._planning_time
+
+    cdef _update_progress(self, int sims_count, float start_time):
+        if self._show_progress:
+            self.pbar.n = sims_count if self._num_sims > 0 else time.time() - start_time
+            self.pbar.refresh()
+
+    cdef _finalize_progress_bar(self):
+        if self._show_progress:
+            self.pbar.close()
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,
