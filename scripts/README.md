@@ -20,8 +20,6 @@ How to release pomdp-py:
     python3 -m twine upload --repository pypi dist/*
     ```
 
-     ![image](https://github.com/zkytony/pomdp-py-release/assets/7720184/16f272bf-0996-464a-8678-34f3a150b890)
-
 
 ## Repository Convention (est. 07/25/23)
 
