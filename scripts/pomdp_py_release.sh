@@ -13,6 +13,8 @@ find_pxd_files_and_write_manifest() {
     find "$dir" -name '*.pyx'| while read -r line; do
         echo "include $line"
     done >> "$output_file"
+    # Include pomdp-solve as well
+    echo "include ./thirdparty/pomdp-solve/src/pomdp-solve" >> "$output_file"
 }
 
 # Define the function.
