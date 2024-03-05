@@ -1,0 +1,36 @@
+name: pomdp-py build dev-latest wheel
+
+on:
+  push:
+    branches: [ master, dev-latest ]
+  pull_request:
+    branches: [ master, dev-latest ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+    - uses: actions/checkout@v4
+      ref: 'dev-latest'
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+    - name: Run release script
+      working-directory: .
+      run: |
+        cd scripts
+        ./pomdp_py_release.sh
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pomdp-py wheel
+        path: dist/*.whl
