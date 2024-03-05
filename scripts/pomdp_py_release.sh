@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Creates a wheel for pomdp-py and prompts user how to release it on
+# pypi.  Note that the wheel does not contain thirdparty binaries such
+# as pomdp-solve because we cannot ensure compatibility of the
+# pre-built binary. If needed, the user can clone the pomdp-py repo
+# and build those binary from within the thirdparty folder.
+#
 # Example usage:
 #
 #   ./release.sh
@@ -85,14 +92,6 @@ if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
         echo "pomdp-py repo must be either on dev-latest or dev-$version. Abort"
         exit 1
     fi
-fi
-
-echo -e "========= build pomdp-solve ========="
-if [ ! -f $pomdp_py_path/thirdparty/pomdp-solve/src/pomdp-solve ]; then
-    cd $pomdp_py_path/thirdparty/pomdp-solve
-    ./configure
-    make
-    cd $pomdp_py_path
 fi
 
 echo -e "========= making release for pomdp-py $version ========="
