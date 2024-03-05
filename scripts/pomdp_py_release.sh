@@ -79,13 +79,6 @@ cd $pomdp_py_path
 find_pxd_files_and_write_manifest ./ MANIFEST.in
 
 # Check if pomdp-py is on the right branch
-if [ $# -ne 1 ]; then
-    echo -e "Usage: $0 <version>\n"
-    echo -e "Help:"
-    echo -e "   version: version of pomdp-py release, e.g. 1.3.3"
-    exit 1
-fi
-
 version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
