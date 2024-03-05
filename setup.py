@@ -41,10 +41,9 @@ setup(
     ext_modules=cythonize(
         extensions, build_dir="build", compiler_directives={"language_level": "3"}
     ),
-    packages=find_packages(),
+    packages=find_packages(exclude=["thirdparty", "thirdparty.*"]),
     package_data={
-        "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c",
-                     "thirdparty/pomdp-solve/src/pomdp-solve"],
+        "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
     },
     zip_safe=False,
 )
