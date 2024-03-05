@@ -1,7 +1,7 @@
 #!/bin/bash
 # Example usage:
 #
-#   ./release.sh 1.3.3
+#   ./release.sh
 
 # Define the function.
 find_pxd_files_and_write_manifest() {
