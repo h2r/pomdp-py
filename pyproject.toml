@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pomdp-py"
-version = "1.3.5-dev"
+version = "1.3.5"
 description = "Python POMDP Library."
 authors = [{name = "Kaiyu Zheng", email = "kzheng10@cs.brown.edu"}]
 license = {file = "LICENSE"}
