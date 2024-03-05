@@ -56,10 +56,18 @@ get_python_version() {
     echo "cp${major_version}${minor_version}"
 }
 
+extract_package_version() {
+    local pyproject_path="$1"
+    local version_line=$(grep '^version\s*=\s*"' "$pyproject_path" | head -n 1)
+    local version=$(echo "$version_line" | sed -E 's/version\s*=\s*"([^"]+)"/\1/')
+    echo "$version"
+}
+
 user_pwd=$PWD
 
 # Write the MANIFEST.in file
-pomdp_py_path=$HOME/repo/pomdp-py
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+pomdp_py_path=$SCRIPTPATH/../
 cd $pomdp_py_path
 find_pxd_files_and_write_manifest ./ MANIFEST.in
 
@@ -71,11 +79,22 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-version=$1
+version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
-   echo "pomdp-py repo is not on the branch dev-$version that you want release for. Abort."
-   exit 1
+    if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
+        echo "pomdp-py repo must be either on dev-latest or dev-$version. Abort"
+        exit 1
+    fi
 fi
+
+echo -e "========= build pomdp-solve ========="
+if [ ! -f $pomdp_py_path/thirdparty/pomdp-solve/src/pomdp-solve ]; then
+    cd $pomdp_py_path/thirdparty/pomdp-solve
+    ./configure
+    make
+    cd $pomdp_py_path
+fi
+
 echo -e "========= making release for pomdp-py $version ========="
 
 pip install setuptools
