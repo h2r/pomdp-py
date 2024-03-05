@@ -106,10 +106,9 @@ fi
 cpv=$(get_python_version)
 wheel_name="pomdp_py-$version-$cpv-${cpv}-linux_x86_64.whl"
 command="auditwheel repair io/dist/${wheel_name} -w /io/wheelhouse/"
-docker run --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image  bash -c "$command"
+docker run --user $(id -u):$(id -g) --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image bash -c "$command"
 rm $pomdp_py_path/dist/$wheel_name
 fixed_wheel_name="pomdp_py-${version}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
-chown -R $(whoami).$(whoami) "$pomdp_py_path/wheelhouse/"
 mv "$pomdp_py_path/wheelhouse/$fixed_wheel_name" "$pomdp_py_path/dist/$fixed_wheel_name"
 rm -r $pomdp_py_path/wheelhouse
 
