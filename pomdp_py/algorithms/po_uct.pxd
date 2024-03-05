@@ -35,8 +35,8 @@ cdef class POUCT(Planner):
     cdef _initialize_progress_bar(self)
     cpdef _perform_simulation(self, state)
     cdef bint _should_stop(self, int sims_count, double start_time)
-    cdef _update_progress(self, int sims_count, double start_time)
-    cdef _finalize_progress_bar(self)
+    cdef _update_progress(self, pbar, int sims_count, double start_time)
+    cdef _finalize_progress_bar(self, pbar)
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,

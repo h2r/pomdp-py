@@ -319,16 +319,16 @@ cdef class POUCT(Planner):
     cpdef _search(self):
         cdef int sims_count = 0
         cdef double start_time, time_taken
-        self._initialize_progress_bar()
+        pbar = self._initialize_progress_bar()
         start_time = time.time()
 
         while not self._should_stop(sims_count, start_time):
             state = self._agent.sample_belief()
             self._perform_simulation(state)
             sims_count += 1
-            self._update_progress(sims_count, start_time)
+            self._update_progress(pbar, sims_count, start_time)
 
-        self._finalize_progress_bar()
+        self._finalize_progress_bar(pbar)
         best_action = self._agent.tree.argmax()
         time_taken = time.time() - start_time
         return best_action, time_taken, sims_count
@@ -336,7 +336,7 @@ cdef class POUCT(Planner):
     cdef _initialize_progress_bar(self):
         if self._show_progress:
             total = self._num_sims if self._num_sims > 0 else self._planning_time
-            self.pbar = tqdm(total=total)
+            return tqdm(total=total)
 
     cpdef _perform_simulation(self, state):
         self._simulate(state, self._agent.history, self._agent.tree, None, None, 0)
@@ -348,14 +348,14 @@ cdef class POUCT(Planner):
         else:
             return time_taken > self._planning_time
 
-    cdef _update_progress(self, int sims_count, double start_time):
+    cdef _update_progress(self, pbar, int sims_count, double start_time):
         if self._show_progress:
-            self.pbar.n = sims_count if self._num_sims > 0 else time.time() - start_time
-            self.pbar.refresh()
+            pbar.n = sims_count if self._num_sims > 0 else round(time.time() - start_time, 2)
+            pbar.refresh()
 
-    cdef _finalize_progress_bar(self):
+    cdef _finalize_progress_bar(self, pbar):
         if self._show_progress:
-            self.pbar.close()
+            pbar.close()
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,
