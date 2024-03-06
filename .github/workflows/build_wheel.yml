@@ -31,16 +31,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-    # - name: Run release script
-    #   working-directory: .
-    #   run: |
-    #     cd scripts
-    #     ./pomdp_py_release.sh
 
-    - name: Fake artifact
+    - name: Run release script
+      working-directory: .
       run: |
-        mkdir dist
-        echo "HELLO" >> dist/test.whl
+        cd scripts
+        ./pomdp_py_release.sh
 
     - name: Release artifact
       uses: softprops/action-gh-release@v1
