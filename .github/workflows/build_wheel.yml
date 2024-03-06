@@ -2,7 +2,8 @@ name: pomdp-py build dev-latest wheel
 
 on:
   push:
-    branches: [ dev-latest ]  # trigger on pushes to the dev-latest branch
+    tags:
+      - 'vdev-latest'  # trigger on the tag vdev-latest
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
