@@ -2,9 +2,7 @@ name: pomdp-py build dev-latest wheel
 
 on:
   push:
-    branches: [ master, dev-latest ]
-  pull_request:
-    branches: [ master, dev-latest ]
+    branches: [ dev-latest ]  # trigger on pushes to the dev-latest branch
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -25,13 +23,17 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-    - name: Run release script
-      working-directory: .
+    # - name: Run release script
+    #   working-directory: .
+    #   run: |
+    #     cd scripts
+    #     ./pomdp_py_release.sh
+    - name: Fake artifact
       run: |
-        cd scripts
-        ./pomdp_py_release.sh
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
+        mkdir dist
+        echo "HELLO" >> test.whl
+    - name: Release artifact
+      uses: softprops/action-gh-release@v1
       with:
         name: pomdp-py wheel
-        path: dist/*.whl
+        files: dist/*.whl
