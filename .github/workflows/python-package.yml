@@ -5,9 +5,9 @@ name: pomdp-py package
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev-latest" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev-latest" ]
 
 jobs:
   build:
