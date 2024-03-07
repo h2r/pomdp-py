@@ -3,10 +3,10 @@ name: Pre-Commit
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   pre-commit:
