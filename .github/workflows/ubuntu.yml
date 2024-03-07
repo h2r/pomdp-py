@@ -27,7 +27,9 @@ jobs:
         # build pomdp-solve
         sudo apt-get update
         sudo apt-get install -y autoconf automake libtool
-        cd thirdparty/pomdp-solve
+        commit_hash=4f5d399f260f7789bc1d95baab069eef5c93aaf9
+        git clone https://github.com/cassandra/pomdp-solve.git thirdparty/pomdp-solve
+        cd thirdparty/pomdp-solve && git checkout $commit_hash
         ./configure
         make
     - name: Install dependencies
