@@ -502,47 +502,48 @@ def init_particles_belief(k, num_particles, init_state, belief="uniform"):
     return init_belief
 
 
-def main():
-    n, k = 5, 5
-    init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
-    # # For debugging purpose
-    # n, k = 2,2
-    # rover_position = (0, 0)
-    # rock_locs = {}  # map from rock location to rock id
-    # rock_locs[(0,1)] = 0
-    # rock_locs[(1,1)] = 1
-    # rocktypes = ('good', 'good')
+def minimal_instance():
+    # A particular instance for debugging purpose
+    n, k = 2,2
+    rover_position = (0, 0)
+    rock_locs = {}  # map from rock location to rock id
+    rock_locs[(0,1)] = 0
+    rock_locs[(1,1)] = 1
+    rocktypes = ('good', 'good')
     # Ground truth state
-    # init_state = State(rover_position, rocktypes, False)
-    # belief = "uniform"
+    init_state = State(rover_position, rocktypes, False)
+    belief = "uniform"
+    init_belief = init_particles_belief(k, 200, init_state, belief=belief)
+    rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
+    return rocksample
+
+def create_instance(n, k):
+    init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
 
     belief = "uniform"
-
-    init_state_copy = copy.deepcopy(init_state)
 
     # init belief (uniform), represented in particles;
     # We don't factor the state here; We are also not doing any action prior.
     init_belief = init_particles_belief(k, 200, init_state, belief=belief)
 
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
+    return rocksample
+
+
+def main():
+    rocksample = debug_instance() #create_instance(7, 8)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
     pomcp = pomdp_py.POMCP(
-        max_depth=12,
+        max_depth=30,
         discount_factor=0.95,
         num_sims=10000,
-        exploration_const=20,
+        exploration_const=5,
         rollout_policy=rocksample.agent.policy_model,
         num_visits_init=1,
     )
     tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
-
-    rocksample.env.state.position = init_state_copy.position
-    rocksample.env.state.rocktypes = init_state_copy.rocktypes
-    rocksample.env.state.terminal = False
-    init_belief = init_particles_belief(k, 200, rocksample.env.state, belief=belief)
-    rocksample.agent.set_belief(init_belief)
 
 
 if __name__ == "__main__":
