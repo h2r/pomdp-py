@@ -1,5 +1,4 @@
-"""
-RockSample(n,k) problem
+"""RockSample(n,k) problem
 
 Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)
 
@@ -24,12 +23,16 @@ Action space:
     Check_i: receives a noisy observation about RockType_i
     (noise determined by eta (:math:`\eta`). eta=1 -> perfect sensor; eta=0 -> uniform)
 
-Observation: observes the property of rock i when taking Check_i.
+Observation: observes the property of rock i when taking Check_i.  The
+     observation may be noisy, depending on an efficiency parameter which
+     decreases exponentially as the distance increases between the rover and
+     rock i. 'half_efficiency_dist' influences this parameter (larger, more robust)
 
 Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.
         Move to exit area +10. Other actions have no cost or reward.
 
 Initial belief: every rock has equal probability of being Good or Bad.
+
 """
 
 import pomdp_py
@@ -427,13 +430,13 @@ class RockSampleProblem(pomdp_py.POMDP):
             string += "\n"
         print(string)
 
-    def __init__(self, n, k, init_state, rock_locs, init_belief):
+    def __init__(self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20):
         self._n, self._k = n, k
         agent = pomdp_py.Agent(
             init_belief,
             RSPolicyModel(n, k),
             RSTransitionModel(n, rock_locs, self.in_exit_area),
-            RSObservationModel(rock_locs),
+            RSObservationModel(rock_locs, half_efficiency_dist=half_efficiency_dist),
             RSRewardModel(rock_locs, self.in_exit_area),
         )
         env = pomdp_py.Environment(
@@ -502,7 +505,7 @@ def init_particles_belief(k, num_particles, init_state, belief="uniform"):
     return init_belief
 
 
-def minimal_instance():
+def minimal_instance(**kwargs):
     # A particular instance for debugging purpose
     n, k = 2,2
     rover_position = (0, 0)
@@ -514,10 +517,10 @@ def minimal_instance():
     init_state = State(rover_position, rocktypes, False)
     belief = "uniform"
     init_belief = init_particles_belief(k, 200, init_state, belief=belief)
-    rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
+    rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief, **kwargs)
     return rocksample
 
-def create_instance(n, k):
+def create_instance(n, k, **kwargs):
     init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
 
     belief = "uniform"
@@ -526,7 +529,7 @@ def create_instance(n, k):
     # We don't factor the state here; We are also not doing any action prior.
     init_belief = init_particles_belief(k, 200, init_state, belief=belief)
 
-    rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief)
+    rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief, **kwargs)
     return rocksample
 
 
