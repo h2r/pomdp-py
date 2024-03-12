@@ -25,10 +25,6 @@ jobs:
 
     steps:
 
-    - name: Set release name with date
-      id: set_release_name
-      run: echo "RELEASE_NAME=pomdp-py (dev-latest $(date +'%Y-%m-%d'))" >> $GITHUB_ENV
-
     - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
