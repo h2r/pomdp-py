@@ -2,9 +2,9 @@ name: pomdp-py repo macOS build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev-latest ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev-latest ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

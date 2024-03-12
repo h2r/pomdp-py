@@ -405,3 +405,9 @@ cdef class OOBelief(GenerativeDistribution):
     def b(self, objid):
         """convenient alias function call"""
         return self._object_beliefs[objid]
+
+cdef class DictState(ObjectState):
+    """This is synonymous as ObjectState, but does not convey 'objectness'
+    of the information being described."""
+    def __init__(self, attributes):
+        super().__init__(None, attributes)

@@ -44,7 +44,6 @@ setup(
     packages=find_packages(exclude=["thirdparty", "thirdparty.*"]),
     package_data={
         "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
-        "pomdp_problems": ["*.pxd", "*.pyx", "*.so", "*.c"],
     },
     zip_safe=False,
 )

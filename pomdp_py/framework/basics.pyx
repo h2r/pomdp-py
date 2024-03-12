@@ -194,7 +194,7 @@ cdef class BlackboxModel:
     def sample(self, state, action):
         """
         sample(self, state, action)
-        Sample (s',o,r) ~ G(s',o,r)"""
+        Sample (s',o,r) ~ G(s,a)"""
         raise NotImplementedError
 
     def argmax(self, state, action):
@@ -333,7 +333,7 @@ cdef class Agent:
              blackbox_model=None)
     """
     def __init__(self, init_belief,
-                 policy_model,
+                 policy_model=None,
                  transition_model=None,
                  observation_model=None,
                  reward_model=None,
@@ -345,11 +345,6 @@ cdef class Agent:
         self._observation_model = observation_model
         self._reward_model = reward_model
         self._blackbox_model = blackbox_model
-        # It cannot be the case that both explicit models and blackbox model are None.
-        if self._blackbox_model is None:
-            assert self._transition_model is not None\
-                and self._observation_model is not None\
-                and self._reward_model is not None
 
         # For online planning
         self._cur_belief = init_belief
@@ -419,6 +414,20 @@ cdef class Agent:
     def generative_model(self):
         return self.blackbox_model
 
+    def set_models(self, transition_model=None, observation_model=None,
+                   reward_model=None, blackbox_model=None, policy_model=None):
+        """Re-assign the models to be the ones given."""
+        if transition_model is not None:
+            self._transition_model = transition_model
+        if observation_model is not None:
+            self._observation_model = observation_model
+        if reward_model is not None:
+            self._reward_model = reward_model
+        if blackbox_model is not None:
+            self._blackbox_model = blackbox_model
+        if policy_model is not None:
+            self._policy_model = policy_model
+
     def add_attr(self, attr_name, attr_value):
         """
         add_attr(self, attr_name, attr_value)
@@ -482,11 +491,6 @@ cdef class Environment:
         self._reward_model = reward_model
         self._blackbox_model = blackbox_model
 
-        # It cannot be the case that both explicit models and blackbox model are None.
-        if self._blackbox_model is None:
-            assert self._transition_model is not None\
-                and self._reward_model is not None
-
     @property
     def state(self):
         """Synonym for :meth:`cur_state`"""
@@ -511,6 +515,15 @@ cdef class Environment:
     def blackbox_model(self):
         """The :class:`BlackboxModel` underlying the environment"""
         return self._blackbox_model
+
+    def set_models(self, transition_model=None, reward_model=None, blackbox_model=None):
+        """Re-assign the models to be the ones given."""
+        if transition_model is not None:
+            self._transition_model = transition_model
+        if reward_model is not None:
+            self._reward_model = reward_model
+        if blackbox_model is not None:
+            self._blackbox_model = blackbox_model
 
     def state_transition(self, action, execute=True, discount_factor=1.0):
         """
@@ -574,13 +587,13 @@ cdef class Option(Action):
     Described in `Between MDPs and semi-MDPs:
     A framework for temporal abstraction in reinforcement learning`
     """
-    def initiation(self, state):
+    def initiate(self, state):
         """
         initiation(self, state)
         Returns True if the given parameters satisfy the initiation set"""
         raise NotImplementedError
 
-    def termination(self, state):
+    def terminate(self, state):
         """termination(self, state)
         Returns a boolean of whether state satisfies the termination
         condition; Technically returning a float between 0 and 1 is also allowed."""

@@ -186,7 +186,7 @@ cdef class POUCT(Planner):
                  max_depth=5, planning_time=-1., num_sims=-1,
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=0, value_init=0,
-                 rollout_policy=RandomRollout(),
+                 rollout_policy=None,
                  action_prior=None, show_progress=False, pbar_update_interval=5):
         self._max_depth = max_depth
         self._planning_time = planning_time
@@ -222,10 +222,38 @@ cdef class POUCT(Planner):
         """Returns the amount of time (seconds) ran for the last `plan` call."""
         return self._last_planning_time
 
+    @property
+    def max_depth(self):
+        return self._max_depth
+
+    @property
+    def num_visits_init(self):
+        return self._num_visits_init
+
+    @property
+    def discount_factor(self):
+        return self._discount_factor
+
+    @property
+    def value_init(self):
+        return self._value_init
+
+    @property
+    def action_prior(self):
+        return self._action_prior
+
+    @property
+    def rollout_policy(self):
+        return self._rollout_policy
+
     cpdef public plan(self, Agent agent):
         cdef Action action
         cdef float time_taken
         cdef int sims_count
+
+        if self._rollout_policy is None:
+            raise ValueError("rollout_policy unset. Please call set_rollout_policy, "
+                             "or pass in a rollout_policy upon initialization")
 
         self._agent = agent   # switch focus on planning for the given agent
         if not hasattr(self._agent, "tree"):
@@ -288,55 +316,46 @@ cdef class POUCT(Planner):
                                             value_init)
                 vnode[action] = history_action_node
 
-
     cpdef _search(self):
-        cdef State state
-        cdef Action best_action
         cdef int sims_count = 0
-        cdef float time_taken = 0
-        cdef float best_value
-        cdef bint stop_by_sims = self._num_sims > 0
-        cdef object pbar
-
-        if self._show_progress:
-            if stop_by_sims:
-                total = int(self._num_sims)
-            else:
-                total = self._planning_time
-            pbar = tqdm(total=total)
-
+        cdef double start_time, time_taken
+        pbar = self._initialize_progress_bar()
         start_time = time.time()
-        while True:
-            ## Note: the tree node with () history will have
-            ## the init belief given to the agent.
+
+        while not self._should_stop(sims_count, start_time):
             state = self._agent.sample_belief()
-            self._simulate(state, self._agent.history, self._agent.tree,
-                           None, None, 0)
-            sims_count +=1
-            time_taken = time.time() - start_time
+            self._perform_simulation(state)
+            sims_count += 1
+            self._update_progress(pbar, sims_count, start_time)
 
-            if self._show_progress and sims_count % self._pbar_update_interval == 0:
-                if stop_by_sims:
-                    pbar.n = sims_count
-                else:
-                    pbar.n = time_taken
-                pbar.refresh()
+        self._finalize_progress_bar(pbar)
+        best_action = self._agent.tree.argmax()
+        time_taken = time.time() - start_time
+        return best_action, time_taken, sims_count
 
-            if stop_by_sims:
-                if sims_count >= self._num_sims:
-                    break
-            else:
-                if time_taken > self._planning_time:
-                    if self._show_progress:
-                        pbar.n = self._planning_time
-                        pbar.refresh()
-                    break
+    cdef _initialize_progress_bar(self):
+        if self._show_progress:
+            total = self._num_sims if self._num_sims > 0 else self._planning_time
+            return tqdm(total=total)
 
+    cpdef _perform_simulation(self, state):
+        self._simulate(state, self._agent.history, self._agent.tree, None, None, 0)
+
+    cdef bint _should_stop(self, int sims_count, double start_time):
+        cdef float time_taken = time.time() - start_time
+        if self._num_sims > 0:
+            return sims_count >= self._num_sims
+        else:
+            return time_taken > self._planning_time
+
+    cdef _update_progress(self, pbar, int sims_count, double start_time):
+        if self._show_progress:
+            pbar.n = sims_count if self._num_sims > 0 else round(time.time() - start_time, 2)
+            pbar.refresh()
+
+    cdef _finalize_progress_bar(self, pbar):
         if self._show_progress:
             pbar.close()
-
-        best_action = self._agent.tree.argmax()
-        return best_action, time_taken, sims_count
 
     cpdef _simulate(POUCT self,
                     State state, tuple history, VNode root, QNode parent,
@@ -345,7 +364,7 @@ cdef class POUCT(Planner):
             return 0
         if root is None:
             if self._agent.tree is None:
-                root = self._VNode(agent=self._agent, root=True)
+                root = self._VNode(root=True)
                 self._agent.tree = root
                 if self._agent.tree.history != self._agent.history:
                     raise ValueError("Unable to plan for the given history.")
@@ -427,7 +446,7 @@ cdef class POUCT(Planner):
             reward = self._agent.reward_model.sample(state, action, next_state)
         return next_state, observation, reward
 
-    def _VNode(self, agent=None, root=False, **kwargs):
+    def _VNode(self, root=False, **kwargs):
         """Returns a VNode with default values; The function naming makes it clear
         that this function is about creating a VNode object."""
         if root:

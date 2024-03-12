@@ -25,3 +25,6 @@ cdef class OOObservationModel(ObservationModel):
 
 cdef class OOBelief(GenerativeDistribution):
     cdef dict _object_beliefs
+
+cdef class DictState(ObjectState):
+    pass

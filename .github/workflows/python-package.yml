@@ -5,9 +5,9 @@ name: pomdp-py package
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev-latest" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev-latest" ]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v3
