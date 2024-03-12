@@ -8,7 +8,7 @@
 #
 # Example usage:
 #
-#   ./release.sh
+#   ./release.sh <attempt_count>
 
 # Define the function.
 find_pxd_files_and_write_manifest() {
@@ -80,6 +80,10 @@ find_pxd_files_and_write_manifest ./ MANIFEST.in
 
 # Check if pomdp-py is on the right branch
 version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
+if [ $# -gt 0 ]; then
+    attempt_count=$1
+    version="$version-$attempt_count"
+fi
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
         echo "pomdp-py repo must be either on dev-latest or dev-$version, but not $current_branch. Abort"
