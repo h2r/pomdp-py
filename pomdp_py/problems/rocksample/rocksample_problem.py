@@ -430,7 +430,9 @@ class RockSampleProblem(pomdp_py.POMDP):
             string += "\n"
         print(string)
 
-    def __init__(self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20):
+    def __init__(
+        self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20
+    ):
         self._n, self._k = n, k
         agent = pomdp_py.Agent(
             init_belief,
@@ -507,18 +509,19 @@ def init_particles_belief(k, num_particles, init_state, belief="uniform"):
 
 def minimal_instance(**kwargs):
     # A particular instance for debugging purpose
-    n, k = 2,2
+    n, k = 2, 2
     rover_position = (0, 0)
     rock_locs = {}  # map from rock location to rock id
-    rock_locs[(0,1)] = 0
-    rock_locs[(1,1)] = 1
-    rocktypes = ('good', 'good')
+    rock_locs[(0, 1)] = 0
+    rock_locs[(1, 1)] = 1
+    rocktypes = ("good", "good")
     # Ground truth state
     init_state = State(rover_position, rocktypes, False)
     belief = "uniform"
     init_belief = init_particles_belief(k, 200, init_state, belief=belief)
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief, **kwargs)
     return rocksample
+
 
 def create_instance(n, k, **kwargs):
     init_state, rock_locs = RockSampleProblem.generate_instance(n, k)
@@ -534,7 +537,7 @@ def create_instance(n, k, **kwargs):
 
 
 def main():
-    rocksample = debug_instance() #create_instance(7, 8)
+    rocksample = debug_instance()  # create_instance(7, 8)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
