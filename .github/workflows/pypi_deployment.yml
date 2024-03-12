@@ -59,7 +59,7 @@ jobs:
 
     - name: Upload to PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      if: ${{ not env.TRIGGER_FOR_TEST_PYPI }}
+      if: ${{ ! env.TRIGGER_FOR_TEST_PYPI }}
       with:
         # This will upload stuff under dist/ to PyPI
         user: __token__
@@ -69,7 +69,7 @@ jobs:
 
     - name: Release artifact
       uses: softprops/action-gh-release@v1
-      if: ${{ not env.TRIGGER_FOR_TEST_PYPI }}
+      if: ${{ ! env.TRIGGER_FOR_TEST_PYPI }}
       with:
         name: ${{ env.VERSION }}
         files: dist/*.whl
