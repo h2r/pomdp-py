@@ -22,8 +22,8 @@ jobs:
     environment:
       name: testpypi
       url: https://test.pypi.org/p/pomdp-py/
-    # permissions:
-    #   id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
     steps:
     - uses: actions/setup-python@v5
@@ -43,13 +43,12 @@ jobs:
       run: |
         cd scripts
         ./pomdp_py_release.sh ${{ vars.RELEASE_ATTEMPT_COUNT }}
-        #${{ secrets.RELEASE_ATTEMPT_COUNT }}
 
-    # - name: Upload to PyPi
-    #   uses: pypa/gh-action-pypi-publish@release/v1
-    #   with:
-    #     # This will upload stuff under dist/ to PyPI
-    #     user: __token__
-    #     password: ${{ secrets.TEST_PYPI_TOKEN }}
-    #     repository_url: https://test.pypi.org/legacy/
-        # verbose: true
+    - name: Upload to PyPi
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        # This will upload stuff under dist/ to PyPI
+        user: __token__
+        password: ${{ secrets.TEST_PYPI_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
+        verbose: true

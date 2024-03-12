@@ -85,55 +85,55 @@ if [ $# -gt 0 ]; then
     version="$version-$attempt_count"
 fi
 echo $version
-# if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
-#     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
-#         echo "pomdp-py repo must be either on dev-latest or dev-$version, but not $current_branch. Abort"
-#         exit 1
-#     fi
-# fi
+if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
+    if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
+        echo "pomdp-py repo must be either on dev-latest or dev-$version, but not $current_branch. Abort"
+        exit 1
+    fi
+fi
 
-# echo -e "========= making release for pomdp-py $version ========="
+echo -e "========= making release for pomdp-py $version ========="
 
-# pip install setuptools
-# pip install Cython
+pip install setuptools
+pip install Cython
 
-# # Note that we are building with pyproject.toml
-# python3 setup.py build_ext --inplace
-# pip install build
-# python -m build
+# Note that we are building with pyproject.toml
+python3 setup.py build_ext --inplace
+pip install build
+python -m build
 
-# # create the manylinux container
-# linux_dist=manylinux2014_x86_64
-# manylinux_image=quay.io/pypa/$linux_dist
-# if ! does_docker_image_exist $manylinux_image; then
-#    docker pull $manylinux_image
-# fi
-# cpv=$(get_python_version)
-# wheel_name="pomdp_py-$version-$cpv-${cpv}-linux_x86_64.whl"
-# command="auditwheel repair io/dist/${wheel_name} -w /io/wheelhouse/"
-# docker run --user $(id -u):$(id -g) --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image bash -c "$command"
-# rm $pomdp_py_path/dist/$wheel_name
-# fixed_wheel_name="pomdp_py-${version}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
-# mv "$pomdp_py_path/wheelhouse/$fixed_wheel_name" "$pomdp_py_path/dist/$fixed_wheel_name"
-# rm -r $pomdp_py_path/wheelhouse
+# create the manylinux container
+linux_dist=manylinux2014_x86_64
+manylinux_image=quay.io/pypa/$linux_dist
+if ! does_docker_image_exist $manylinux_image; then
+   docker pull $manylinux_image
+fi
+cpv=$(get_python_version)
+wheel_name="pomdp_py-$version-$cpv-${cpv}-linux_x86_64.whl"
+command="auditwheel repair io/dist/${wheel_name} -w /io/wheelhouse/"
+docker run --user $(id -u):$(id -g) --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image bash -c "$command"
+rm $pomdp_py_path/dist/$wheel_name
+fixed_wheel_name="pomdp_py-${version}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
+mv "$pomdp_py_path/wheelhouse/$fixed_wheel_name" "$pomdp_py_path/dist/$fixed_wheel_name"
+rm -r $pomdp_py_path/wheelhouse
 
-# # Verification (wheel)
-# echo -e "------------ verification: wheel ---------"
-# pip uninstall pomdp_py
-# pip install --force-reinstall "$pomdp_py_path/dist/$fixed_wheel_name"
-# python $pomdp_py_path/tests/test_all.py
+# Verification (wheel)
+echo -e "------------ verification: wheel ---------"
+pip uninstall pomdp_py
+pip install --force-reinstall "$pomdp_py_path/dist/$fixed_wheel_name"
+python $pomdp_py_path/tests/test_all.py
 
-# # Verification (source)
-# echo -e "------------ verification: source ---------"
-# pip uninstall pomdp_py
-# cd $pomdp_py_path/dist
-# pip install --force-reinstall pomdp-py-$version.tar.gz
-# python $pomdp_py_path/tests/test_all.py
+# Verification (source)
+echo -e "------------ verification: source ---------"
+pip uninstall pomdp_py
+cd $pomdp_py_path/dist
+pip install --force-reinstall pomdp-py-$version.tar.gz
+python $pomdp_py_path/tests/test_all.py
 
-# pip install twine
-# echo -e "If successful, run"
-# echo -e "    python3 -m twine upload --repository pypi $pomdp_py_path/dist/*"
-# echo -e "to upload the release to PyPI."
+pip install twine
+echo -e "If successful, run"
+echo -e "    python3 -m twine upload --repository pypi $pomdp_py_path/dist/*"
+echo -e "to upload the release to PyPI."
 
 
-# cd $user_pwd
+cd $user_pwd
