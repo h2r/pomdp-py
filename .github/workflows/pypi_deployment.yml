@@ -69,7 +69,6 @@ jobs:
 
     - name: Release artifact
       uses: softprops/action-gh-release@v1
-      if: ${{ ! env.TRIGGER_FOR_TEST_PYPI }}
       with:
         name: ${{ env.VERSION }}
         files: dist/*.whl
