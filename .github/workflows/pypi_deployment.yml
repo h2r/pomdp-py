@@ -42,7 +42,7 @@ jobs:
       working-directory: .
       run: |
         cd scripts
-        ./pomdp_py_release.sh $RELEASE_ATTEMPT_COUNT
+        ./pomdp_py_release.sh ${{ vars.RELEASE_ATTEMPT_COUNT }}
         #${{ secrets.RELEASE_ATTEMPT_COUNT }}
 
     # - name: Upload to PyPi
