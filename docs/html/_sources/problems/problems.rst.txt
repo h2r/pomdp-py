@@ -1,0 +1,25 @@
+problems package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.lasertag
+   problems.light_dark
+   problems.load_unload
+   problems.maze
+   problems.multi_object_search
+   problems.rocksample
+   problems.tag
+   problems.tiger
+
+Module contents
+---------------
+
+.. automodule:: problems
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,10 @@
+problems.lasertag package
+=========================
+
+Module contents
+---------------
+
+.. automodule:: problems.lasertag
+   :members:
+   :undoc-members:
+   :show-inheritance:

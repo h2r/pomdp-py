@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>problems.tag.agent package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="problems.tag.domain package" href="problems.tag.domain.html" />
+    <link rel="prev" title="problems.tag package" href="problems.tag.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">problems.tag.agent package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-problems.tag.agent.agent">problems.tag.agent.agent module</a><ul>
+<li><a class="reference internal" href="#problems.tag.agent.agent.initialize_belief"><code class="docutils literal notranslate"><span class="pre">initialize_belief()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.agent.agent.initialize_particles_belief"><code class="docutils literal notranslate"><span class="pre">initialize_particles_belief()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.agent.agent.belief_update"><code class="docutils literal notranslate"><span class="pre">belief_update()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.agent.agent.TagAgent"><code class="docutils literal notranslate"><span class="pre">TagAgent</span></code></a><ul>
+<li><a class="reference internal" href="#problems.tag.agent.agent.TagAgent.clear_history"><code class="docutils literal notranslate"><span class="pre">TagAgent.clear_history()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-problems.tag.agent">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="problems.html">problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="problems.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.html#module-problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+  <li><a href="problems.html">problems package</a><ul>
+  <li><a href="problems.tag.html">problems.tag package</a><ul>
+      <li>Previous: <a href="problems.tag.html" title="previous chapter">problems.tag package</a></li>
+      <li>Next: <a href="problems.tag.domain.html" title="next chapter">problems.tag.domain package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="problems-tag-agent-package">
+<h1>problems.tag.agent package<a class="headerlink" href="#problems-tag-agent-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-problems.tag.agent.agent">
+<span id="problems-tag-agent-agent-module"></span><h2>problems.tag.agent.agent module<a class="headerlink" href="#module-problems.tag.agent.agent" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="problems.tag.agent.agent.initialize_belief">
+<span class="sig-prename descclassname"><span class="pre">problems.tag.agent.agent.</span></span><span class="sig-name descname"><span class="pre">initialize_belief</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_robot_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/agent/agent.html#initialize_belief"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.agent.agent.initialize_belief" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize belief.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid_map</strong> (<a class="reference internal" href="../api/pomdp_py.problems.multi_object_search.models.components.html#pomdp_py.problems.multi_object_search.models.components.grid_map.GridMap" title="pomdp_py.problems.multi_object_search.models.components.grid_map.GridMap"><em>GridMap</em></a>) – Holds information of the map occupancy</p></li>
+<li><p><strong>prior</strong> (<em>dict</em>) – A map from (x,y)-&gt;[0,1]. If empty, the belief
+will be uniform.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="problems.tag.agent.agent.initialize_particles_belief">
+<span class="sig-prename descclassname"><span class="pre">problems.tag.agent.agent.</span></span><span class="sig-name descname"><span class="pre">initialize_particles_belief</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_robot_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/agent/agent.html#initialize_particles_belief"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.agent.agent.initialize_particles_belief" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize belief.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid_map</strong> (<a class="reference internal" href="../api/pomdp_py.problems.multi_object_search.models.components.html#pomdp_py.problems.multi_object_search.models.components.grid_map.GridMap" title="pomdp_py.problems.multi_object_search.models.components.grid_map.GridMap"><em>GridMap</em></a>) – Holds information of the map occupancy</p></li>
+<li><p><strong>prior</strong> (<em>dict</em>) – A map from (x,y)-&gt;[0,1]. If empty, the belief
+will be uniform.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="problems.tag.agent.agent.belief_update">
+<span class="sig-prename descclassname"><span class="pre">problems.tag.agent.agent.</span></span><span class="sig-name descname"><span class="pre">belief_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_observation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/agent/agent.html#belief_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.agent.agent.belief_update" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="problems.tag.agent.agent.TagAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">problems.tag.agent.agent.</span></span><span class="sig-name descname"><span class="pre">TagAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_belief</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pr_stay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">small</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">big</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/agent/agent.html#TagAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.agent.agent.TagAgent" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.Agent" title="pomdp_py.framework.basics.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.agent.agent.TagAgent.clear_history">
+<span class="sig-name descname"><span class="pre">clear_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/agent/agent.html#TagAgent.clear_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.agent.agent.TagAgent.clear_history" title="Link to this definition">¶</a></dt>
+<dd><p>Custum function; clear history</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-problems.tag.agent">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-problems.tag.agent" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/problems/problems.tag.agent.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

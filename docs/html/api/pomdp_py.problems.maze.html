@@ -5,15 +5,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.problems.maze package &#8212; pomdp_py 1.3.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <title>pomdp_py.problems.maze package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
-    <script src="../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_py.problems.maze.domain package" href="pomdp_py.problems.maze.domain.html" />
+    <link rel="prev" title="pomdp_py.problems.load_unload package" href="pomdp_py.problems.load_unload.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -35,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
 
 
 
@@ -53,10 +55,11 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">pomdp_py.problems.maze package</a><ul>
+<li><a class="reference internal" href="#">pomdp_py.problems.maze package</a></li>
+<li><a class="reference internal" href="#maze">Maze</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.problems.maze">Module contents</a><ul>
-<li><a class="reference internal" href="#maze">Maze</a></li>
+<li><a class="reference internal" href="#id1">Maze</a></li>
 </ul>
 </li>
 </ul>
@@ -70,10 +73,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_py</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_py</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_py.problems.html">pomdp_py.problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pomdp_py.problems.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.html#module-pomdp_py.problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -89,6 +101,12 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pomdp_py</a><ul>
+  <li><a href="pomdp_py.problems.html">pomdp_py.problems package</a><ul>
+      <li>Previous: <a href="pomdp_py.problems.load_unload.html" title="previous chapter">pomdp_py.problems.load_unload package</a></li>
+      <li>Next: <a href="pomdp_py.problems.maze.domain.html" title="next chapter">pomdp_py.problems.maze.domain package</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -128,6 +146,21 @@
             
   <section id="pomdp-py-problems-maze-package">
 <h1>pomdp_py.problems.maze package<a class="headerlink" href="#pomdp-py-problems-maze-package" title="Link to this heading">¶</a></h1>
+</section>
+<section id="maze">
+<h1>Maze<a class="headerlink" href="#maze" title="Link to this heading">¶</a></h1>
+<p>Problem originally introduced in <a class="reference external" href="https://arxiv.org/pdf/1301.6720.pdf">Solving POMDPs by Searching the Space of Finite Policies</a></p>
+<p><cite>Quoting from the original paper on problem description</cite>:</p>
+<blockquote>
+<div><p>A partially observable stochastic maze: the agent must go from the starting state marked with an “S” to the goal marked with an “G”. The problem  is partially observable because the agent cannot perceive its true location, but only its orientation and the presence or the absence of a wall on each side of the square defining its current state.  The problem is stochastic because there is a non-zero probability of slipping, so that the agent does not always know if its last attempt to make a move had any consequence on its actual position in the maze.</p>
+</div></blockquote>
+<figure class="align-default" id="id3">
+<img alt="Figure from the paper" src="https://i.imgur.com/i1RDsrL.png" />
+<figcaption>
+<p><span class="caption-text">Maze POMDP</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><strong>TODO</strong></p>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -173,17 +206,17 @@
 </section>
 <section id="module-pomdp_py.problems.maze">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.problems.maze" title="Link to this heading">¶</a></h2>
-<section id="maze">
-<h3>Maze<a class="headerlink" href="#maze" title="Link to this heading">¶</a></h3>
+<section id="id1">
+<h3>Maze<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <p>Problem originally introduced in <a class="reference external" href="https://arxiv.org/pdf/1301.6720.pdf">Solving POMDPs by Searching the Space of Finite Policies</a></p>
 <p><cite>Quoting from the original paper on problem description</cite>:</p>
 <blockquote>
 <div><p>A partially observable stochastic maze: the agent must go from the starting state marked with an “S” to the goal marked with an “G”. The problem  is partially observable because the agent cannot perceive its true location, but only its orientation and the presence or the absence of a wall on each side of the square defining its current state.  The problem is stochastic because there is a non-zero probability of slipping, so that the agent does not always know if its last attempt to make a move had any consequence on its actual position in the maze.</p>
 </div></blockquote>
-<figure class="align-default" id="id1">
+<figure class="align-default" id="id4">
 <img alt="Figure from the paper" src="https://i.imgur.com/i1RDsrL.png" />
 <figcaption>
-<p><span class="caption-text">Maze POMDP</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Maze POMDP</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p><strong>Not yet implemented</strong></p>

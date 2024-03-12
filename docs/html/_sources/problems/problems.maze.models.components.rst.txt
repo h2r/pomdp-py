@@ -1,0 +1,21 @@
+problems.maze.models.components package
+=======================================
+
+Submodules
+----------
+
+problems.maze.models.components.map module
+------------------------------------------
+
+.. automodule:: problems.maze.models.components.map
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.maze.models.components
+   :members:
+   :undoc-members:
+   :show-inheritance:

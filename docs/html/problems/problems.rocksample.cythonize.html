@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>problems.rocksample.cythonize package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="problems.tag package" href="problems.tag.html" />
+    <link rel="prev" title="problems.rocksample package" href="problems.rocksample.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">problems.rocksample.cythonize package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-problems.rocksample.cythonize.rocksample_problem">problems.rocksample.cythonize.rocksample_problem module</a></li>
+<li><a class="reference internal" href="#id1">problems.rocksample.cythonize.rocksample_problem module</a></li>
+<li><a class="reference internal" href="#problems-rocksample-cythonize-run-rocksample-module">problems.rocksample.cythonize.run_rocksample module</a></li>
+<li><a class="reference internal" href="#module-problems.rocksample.cythonize">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="problems.html">problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="problems.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.html#module-problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+  <li><a href="problems.html">problems package</a><ul>
+  <li><a href="problems.rocksample.html">problems.rocksample package</a><ul>
+      <li>Previous: <a href="problems.rocksample.html" title="previous chapter">problems.rocksample package</a></li>
+      <li>Next: <a href="problems.tag.html" title="next chapter">problems.tag package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="problems-rocksample-cythonize-package">
+<h1>problems.rocksample.cythonize package<a class="headerlink" href="#problems-rocksample-cythonize-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-problems.rocksample.cythonize.rocksample_problem">
+<span id="problems-rocksample-cythonize-rocksample-problem-module"></span><h2>problems.rocksample.cythonize.rocksample_problem module<a class="headerlink" href="#module-problems.rocksample.cythonize.rocksample_problem" title="Link to this heading">¶</a></h2>
+<p>RockSample(n,k) problem</p>
+<p>Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)</p>
+<p>Description:</p>
+<p>State space:</p>
+<blockquote>
+<div><p>Position {(1,1),(1,2),…(n,n)}
+<span class="math notranslate nohighlight">\(\times\)</span> RockType_1 <span class="math notranslate nohighlight">\(\times\)</span> RockType_2, …, <span class="math notranslate nohighlight">\(\times\)</span> RockType_k
+where RockType_i = {Good, Bad}
+<span class="math notranslate nohighlight">\(\times\)</span> TerminalState</p>
+<dl class="simple">
+<dt>(basically, the positions of rocks are known to the robot,</dt><dd><p>but not represented explicitly in the state space. Check_i
+will smartly check the rock i at its location.)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Action space:</p>
+<blockquote>
+<div><p>North, South, East, West, Sample, Check_1, …, Check_k
+The first four moves the agent deterministically
+Sample: samples the rock at agent’s current location
+Check_i: receives a noisy observation about RockType_i
+(noise determined by eta (<span class="math notranslate nohighlight">\(\eta\)</span>). eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</p>
+</div></blockquote>
+<p>Observation: observes the property of rock i when taking Check_i.</p>
+<dl class="simple">
+<dt>Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.</dt><dd><p>Move to exit area +10. Other actions have no cost or reward.</p>
+</dd>
+</dl>
+<p>Initial belief: every rock has equal probability of being Good or Bad.</p>
+</section>
+<section id="id1">
+<h2>problems.rocksample.cythonize.rocksample_problem module<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p id="module-0">RockSample(n,k) problem</p>
+<p>Origin: Heuristic Search Value Iteration for POMDPs (UAI 2004)</p>
+<p>Description:</p>
+<p>State space:</p>
+<blockquote>
+<div><p>Position {(1,1),(1,2),…(n,n)}
+<span class="math notranslate nohighlight">\(\times\)</span> RockType_1 <span class="math notranslate nohighlight">\(\times\)</span> RockType_2, …, <span class="math notranslate nohighlight">\(\times\)</span> RockType_k
+where RockType_i = {Good, Bad}
+<span class="math notranslate nohighlight">\(\times\)</span> TerminalState</p>
+<dl class="simple">
+<dt>(basically, the positions of rocks are known to the robot,</dt><dd><p>but not represented explicitly in the state space. Check_i
+will smartly check the rock i at its location.)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Action space:</p>
+<blockquote>
+<div><p>North, South, East, West, Sample, Check_1, …, Check_k
+The first four moves the agent deterministically
+Sample: samples the rock at agent’s current location
+Check_i: receives a noisy observation about RockType_i
+(noise determined by eta (<span class="math notranslate nohighlight">\(\eta\)</span>). eta=1 -&gt; perfect sensor; eta=0 -&gt; uniform)</p>
+</div></blockquote>
+<p>Observation: observes the property of rock i when taking Check_i.</p>
+<dl class="simple">
+<dt>Reward: +10 for Sample a good rock. -10 for Sampling a bad rock.</dt><dd><p>Move to exit area +10. Other actions have no cost or reward.</p>
+</dd>
+</dl>
+<p>Initial belief: every rock has equal probability of being Good or Bad.</p>
+</section>
+<section id="problems-rocksample-cythonize-run-rocksample-module">
+<h2>problems.rocksample.cythonize.run_rocksample module<a class="headerlink" href="#problems-rocksample-cythonize-run-rocksample-module" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-problems.rocksample.cythonize">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-problems.rocksample.cythonize" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/problems/problems.rocksample.cythonize.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

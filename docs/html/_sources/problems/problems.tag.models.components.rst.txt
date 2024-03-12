@@ -1,0 +1,29 @@
+problems.tag.models.components package
+======================================
+
+Submodules
+----------
+
+problems.tag.models.components.grid\_map module
+-----------------------------------------------
+
+.. automodule:: problems.tag.models.components.grid_map
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.models.components.motion\_policy module
+----------------------------------------------------
+
+.. automodule:: problems.tag.models.components.motion_policy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.tag.models.components
+   :members:
+   :undoc-members:
+   :show-inheritance:

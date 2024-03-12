@@ -1,0 +1,40 @@
+problems.multi\_object\_search package
+======================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.multi_object_search.agent
+   problems.multi_object_search.domain
+   problems.multi_object_search.env
+   problems.multi_object_search.models
+
+Submodules
+----------
+
+problems.multi\_object\_search.example\_worlds module
+-----------------------------------------------------
+
+.. automodule:: problems.multi_object_search.example_worlds
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.multi\_object\_search.problem module
+---------------------------------------------
+
+.. automodule:: problems.multi_object_search.problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.multi_object_search
+   :members:
+   :undoc-members:
+   :show-inheritance:

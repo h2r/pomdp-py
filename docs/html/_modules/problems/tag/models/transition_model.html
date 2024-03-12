@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>problems.tag.models.transition_model &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for problems.tag.models.transition_model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The Tag problem. Implemented according to the paper `Anytime Point-Based</span>
+<span class="sd">Approximations for Large POMDPs &lt;https://arxiv.org/pdf/1110.0027.pdf&gt;`_.</span>
+
+<span class="sd">Transition model: the robot moves deterministically. The target&#39;s movement</span>
+<span class="sd">    depends on the robot; With Pr=0.8 the target moves away from the robot,</span>
+<span class="sd">    and with Pr=0.2, the target stays at the same place. The target never</span>
+<span class="sd">    moves closer to the robot.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">import</span> <span class="nn">pomdp_py.problems.tag.constants</span> <span class="k">as</span> <span class="nn">constants</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.tag.domain.action</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="TagTransitionModel">
+<a class="viewcode-back" href="../../../../problems/problems.tag.models.html#problems.tag.models.transition_model.TagTransitionModel">[docs]</a>
+<span class="k">class</span> <span class="nc">TagTransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_map</span><span class="p">,</span> <span class="n">target_motion_policy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span> <span class="o">=</span> <span class="n">grid_map</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_motion_policy</span> <span class="o">=</span> <span class="n">target_motion_policy</span>
+
+<div class="viewcode-block" id="TagTransitionModel.if_move_by">
+<a class="viewcode-back" href="../../../../problems/problems.tag.models.html#problems.tag.models.transition_model.TagTransitionModel.if_move_by">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">if_move_by</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">grid_map</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">MotionAction</span><span class="p">):</span>
+            <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">motion</span>
+            <span class="n">next_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">grid_map</span><span class="o">.</span><span class="n">valid_pose</span><span class="p">(</span><span class="n">next_position</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">next_position</span>
+        <span class="k">return</span> <span class="n">position</span></div>
+
+
+<div class="viewcode-block" id="TagTransitionModel.probability">
+<a class="viewcode-back" href="../../../../problems/problems.tag.models.html#problems.tag.models.transition_model.TagTransitionModel.probability">[docs]</a>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Robot motion</span>
+        <span class="n">expected_robot_position</span> <span class="o">=</span> <span class="n">TagTransitionModel</span><span class="o">.</span><span class="n">if_move_by</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">,</span> <span class="n">action</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">expected_robot_position</span> <span class="o">!=</span> <span class="n">next_state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">EPSILON</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">TagAction</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">target_position</span> <span class="o">==</span> <span class="n">next_state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">target_found</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">EPSILON</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">EPSILON</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">target_found</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">EPSILON</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">EPSILON</span>
+
+        <span class="c1"># Target motion</span>
+        <span class="n">valid_target_motion_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span><span class="o">.</span><span class="n">valid_motions</span><span class="p">(</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">target_position</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_motion_policy</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span>
+            <span class="n">next_state</span><span class="o">.</span><span class="n">target_position</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">target_position</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">,</span>
+            <span class="n">valid_target_motion_actions</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TagTransitionModel.sample">
+<a class="viewcode-back" href="../../../../problems/problems.tag.models.html#problems.tag.models.transition_model.TagTransitionModel.sample">[docs]</a>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">argmax</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># Robot motion</span>
+        <span class="n">next_state</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">next_state</span><span class="o">.</span><span class="n">robot_position</span> <span class="o">=</span> <span class="n">TagTransitionModel</span><span class="o">.</span><span class="n">if_move_by</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">,</span> <span class="n">action</span>
+        <span class="p">)</span>
+
+        <span class="c1"># If Tag action</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">TagAction</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">target_found</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span> <span class="o">==</span> <span class="n">state</span><span class="o">.</span><span class="n">target_position</span><span class="p">:</span>
+                    <span class="n">next_state</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="n">next_state</span>
+
+        <span class="c1"># Target motion</span>
+        <span class="n">valid_target_motion_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grid_map</span><span class="o">.</span><span class="n">valid_motions</span><span class="p">(</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">target_position</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">argmax</span><span class="p">:</span>
+            <span class="n">next_state</span><span class="o">.</span><span class="n">target_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_motion_policy</span><span class="o">.</span><span class="n">random</span><span class="p">(</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">target_position</span><span class="p">,</span> <span class="n">valid_target_motion_actions</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_state</span><span class="o">.</span><span class="n">target_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_motion_policy</span><span class="o">.</span><span class="n">mpe</span><span class="p">(</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">robot_position</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">target_position</span><span class="p">,</span> <span class="n">valid_target_motion_actions</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">next_state</span></div>
+
+
+<div class="viewcode-block" id="TagTransitionModel.argmax">
+<a class="viewcode-back" href="../../../../problems/problems.tag.models.html#problems.tag.models.transition_model.TagTransitionModel.argmax">[docs]</a>
+    <span class="k">def</span> <span class="nf">argmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">argmax</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

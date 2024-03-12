@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>problems.tag.models.components package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="problems.tiger package" href="problems.tiger.html" />
+    <link rel="prev" title="problems.tag.models package" href="problems.tag.models.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">problems.tag.models.components package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-problems.tag.models.components.grid_map">problems.tag.models.components.grid_map module</a><ul>
+<li><a class="reference internal" href="#problems.tag.models.components.grid_map.GridMap"><code class="docutils literal notranslate"><span class="pre">GridMap</span></code></a><ul>
+<li><a class="reference internal" href="#problems.tag.models.components.grid_map.GridMap.valid_pose"><code class="docutils literal notranslate"><span class="pre">GridMap.valid_pose()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.models.components.grid_map.GridMap.valid_motions"><code class="docutils literal notranslate"><span class="pre">GridMap.valid_motions()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.models.components.grid_map.GridMap.from_str"><code class="docutils literal notranslate"><span class="pre">GridMap.from_str()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.models.components.grid_map.GridMap.free_cells"><code class="docutils literal notranslate"><span class="pre">GridMap.free_cells()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-problems.tag.models.components.motion_policy">problems.tag.models.components.motion_policy module</a><ul>
+<li><a class="reference internal" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy"><code class="docutils literal notranslate"><span class="pre">TagTargetMotionPolicy</span></code></a><ul>
+<li><a class="reference internal" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.probability"><code class="docutils literal notranslate"><span class="pre">TagTargetMotionPolicy.probability()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.random"><code class="docutils literal notranslate"><span class="pre">TagTargetMotionPolicy.random()</span></code></a></li>
+<li><a class="reference internal" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.mpe"><code class="docutils literal notranslate"><span class="pre">TagTargetMotionPolicy.mpe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-problems.tag.models.components">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="problems.html">problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="problems.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.html#module-problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+  <li><a href="problems.html">problems package</a><ul>
+  <li><a href="problems.tag.html">problems.tag package</a><ul>
+  <li><a href="problems.tag.models.html">problems.tag.models package</a><ul>
+      <li>Previous: <a href="problems.tag.models.html" title="previous chapter">problems.tag.models package</a></li>
+      <li>Next: <a href="problems.tiger.html" title="next chapter">problems.tiger package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="problems-tag-models-components-package">
+<h1>problems.tag.models.components package<a class="headerlink" href="#problems-tag-models-components-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-problems.tag.models.components.grid_map">
+<span id="problems-tag-models-components-grid-map-module"></span><h2>problems.tag.models.components.grid_map module<a class="headerlink" href="#module-problems.tag.models.components.grid_map" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="problems.tag.models.components.grid_map.GridMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">problems.tag.models.components.grid_map.</span></span><span class="sig-name descname"><span class="pre">GridMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obstacle_poses</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/grid_map.html#GridMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.grid_map.GridMap" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.grid_map.GridMap.valid_pose">
+<span class="sig-name descname"><span class="pre">valid_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/grid_map.html#GridMap.valid_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.grid_map.GridMap.valid_pose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.grid_map.GridMap.valid_motions">
+<span class="sig-name descname"><span class="pre">valid_motions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_motions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{Action(move</span> <span class="pre">-</span> <span class="pre">xy</span> <span class="pre">-</span> <span class="pre">East2D),</span> <span class="pre">Action(move</span> <span class="pre">-</span> <span class="pre">xy</span> <span class="pre">-</span> <span class="pre">North2D),</span> <span class="pre">Action(move</span> <span class="pre">-</span> <span class="pre">xy</span> <span class="pre">-</span> <span class="pre">South2D),</span> <span class="pre">Action(move</span> <span class="pre">-</span> <span class="pre">xy</span> <span class="pre">-</span> <span class="pre">West2D)}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/grid_map.html#GridMap.valid_motions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.grid_map.GridMap.valid_motions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.grid_map.GridMap.from_str">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">worldstr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/grid_map.html#GridMap.from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.grid_map.GridMap.from_str" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.grid_map.GridMap.free_cells">
+<span class="sig-name descname"><span class="pre">free_cells</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/grid_map.html#GridMap.free_cells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.grid_map.GridMap.free_cells" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-problems.tag.models.components.motion_policy">
+<span id="problems-tag-models-components-motion-policy-module"></span><h2>problems.tag.models.components.motion_policy module<a class="headerlink" href="#module-problems.tag.models.components.motion_policy" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="problems.tag.models.components.motion_policy.TagTargetMotionPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">problems.tag.models.components.motion_policy.</span></span><span class="sig-name descname"><span class="pre">TagTargetMotionPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pr_stay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/motion_policy.html#TagTargetMotionPolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/pomdp_py.framework.html#pomdp_py.framework.basics.GenerativeDistribution" title="pomdp_py.framework.basics.GenerativeDistribution"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenerativeDistribution</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.motion_policy.TagTargetMotionPolicy.probability">
+<span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_target_motion_actions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/motion_policy.html#TagTargetMotionPolicy.probability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.probability" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.motion_policy.TagTargetMotionPolicy.random">
+<span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_target_motion_actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/motion_policy.html#TagTargetMotionPolicy.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.random" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="problems.tag.models.components.motion_policy.TagTargetMotionPolicy.mpe">
+<span class="sig-name descname"><span class="pre">mpe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/problems/tag/models/components/motion_policy.html#TagTargetMotionPolicy.mpe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#problems.tag.models.components.motion_policy.TagTargetMotionPolicy.mpe" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the value of the variable that has the highest probability.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-problems.tag.models.components">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-problems.tag.models.components" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/problems/problems.tag.models.components.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

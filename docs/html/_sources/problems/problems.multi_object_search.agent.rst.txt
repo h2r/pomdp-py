@@ -1,0 +1,29 @@
+problems.multi\_object\_search.agent package
+============================================
+
+Submodules
+----------
+
+problems.multi\_object\_search.agent.agent module
+-------------------------------------------------
+
+.. automodule:: problems.multi_object_search.agent.agent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.multi\_object\_search.agent.belief module
+--------------------------------------------------
+
+.. automodule:: problems.multi_object_search.agent.belief
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.multi_object_search.agent
+   :members:
+   :undoc-members:
+   :show-inheritance:

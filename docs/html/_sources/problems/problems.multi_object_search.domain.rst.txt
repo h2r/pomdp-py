@@ -1,0 +1,37 @@
+problems.multi\_object\_search.domain package
+=============================================
+
+Submodules
+----------
+
+problems.multi\_object\_search.domain.action module
+---------------------------------------------------
+
+.. automodule:: problems.multi_object_search.domain.action
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.multi\_object\_search.domain.observation module
+--------------------------------------------------------
+
+.. automodule:: problems.multi_object_search.domain.observation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.multi\_object\_search.domain.state module
+--------------------------------------------------
+
+.. automodule:: problems.multi_object_search.domain.state
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.multi_object_search.domain
+   :members:
+   :undoc-members:
+   :show-inheritance:

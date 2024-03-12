@@ -1,6 +1,8 @@
 pomdp\_py.problems.tiger package
 ================================
 
+.. include:: ../../../pomdp_py/problems/tiger/README.rst
+
 Subpackages
 -----------
 

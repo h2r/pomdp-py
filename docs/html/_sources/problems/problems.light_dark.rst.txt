@@ -1,0 +1,40 @@
+problems.light\_dark package
+============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.light_dark.agent
+   problems.light_dark.domain
+   problems.light_dark.env
+   problems.light_dark.models
+
+Submodules
+----------
+
+problems.light\_dark.problem\_discrete module
+---------------------------------------------
+
+.. automodule:: problems.light_dark.problem_discrete
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.light\_dark.test module
+--------------------------------
+
+.. automodule:: problems.light_dark.test
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.light_dark
+   :members:
+   :undoc-members:
+   :show-inheritance:

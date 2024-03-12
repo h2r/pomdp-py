@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>problems.multi_object_search.env.visual &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for problems.multi_object_search.env.visual</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Visualization of a MOS instance using pygame</span>
+<span class="c1">#</span>
+<span class="c1"># Note to run this file, you need to run the following</span>
+<span class="c1"># in the parent directory of multi_object_search:</span>
+<span class="c1">#</span>
+<span class="c1">#   python -m multi_object_search.env.visual</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">pomdp_py.utils</span> <span class="k">as</span> <span class="nn">util</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.multi_object_search.env.env</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.multi_object_search.domain.observation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.multi_object_search.domain.action</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.multi_object_search.domain.state</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.problems.multi_object_search.example_worlds</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="c1"># Deterministic way to get object color</span>
+<div class="viewcode-block" id="object_color">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.object_color">[docs]</a>
+<span class="k">def</span> <span class="nf">object_color</span><span class="p">(</span><span class="n">objid</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mi">107</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">107</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">objid</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">%</span> <span class="mi">11</span><span class="p">))</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">elif</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">objid</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">%</span> <span class="mi">11</span><span class="p">))</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">objid</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">%</span> <span class="mi">11</span><span class="p">))</span>
+        <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">color</span><span class="p">)</span></div>
+
+
+
+<span class="c1">#### Visualization through pygame ####</span>
+<div class="viewcode-block" id="MosViz">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz">[docs]</a>
+<span class="k">class</span> <span class="nc">MosViz</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">controllable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">env</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_res</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_gridworld_image</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_observation</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># map from robot id to MosOOObservation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_viz_observation</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># map from robot id to MosOOObservation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_action</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># map from robot id to Action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_belief</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># map from robot id to OOBelief</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_controllable</span> <span class="o">=</span> <span class="n">controllable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="n">fps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_playtime</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># Generate some colors, one per target object</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">objid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">target_objects</span><span class="p">):</span>
+            <span class="n">colors</span><span class="p">[</span><span class="n">objid</span><span class="p">]</span> <span class="o">=</span> <span class="n">object_color</span><span class="p">(</span><span class="n">objid</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_colors</span> <span class="o">=</span> <span class="n">colors</span>
+
+    <span class="k">def</span> <span class="nf">_make_gridworld_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="c1"># Preparing 2d array</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">arr2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">length</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># free grids</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span>
+        <span class="k">for</span> <span class="n">objid</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">:</span>
+            <span class="n">pose</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">][</span><span class="s2">&quot;pose&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">]</span><span class="o">.</span><span class="n">objclass</span> <span class="o">==</span> <span class="s2">&quot;robot&quot;</span><span class="p">:</span>
+                <span class="n">arr2d</span><span class="p">[</span><span class="n">pose</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pose</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># free grid</span>
+            <span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">]</span><span class="o">.</span><span class="n">objclass</span> <span class="o">==</span> <span class="s2">&quot;obstacle&quot;</span><span class="p">:</span>
+                <span class="n">arr2d</span><span class="p">[</span><span class="n">pose</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pose</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># obstacle</span>
+            <span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">objid</span><span class="p">]</span><span class="o">.</span><span class="n">objclass</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
+                <span class="n">arr2d</span><span class="p">[</span><span class="n">pose</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pose</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># target</span>
+
+        <span class="c1"># Creating image</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">w</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">l</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">255</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">arr2d</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># free</span>
+                    <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                        <span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">arr2d</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># obstacle</span>
+                    <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                        <span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">arr2d</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># target</span>
+                    <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                        <span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="p">)</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                    <span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">img</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">img_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">img_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_observation</span>
+
+<div class="viewcode-block" id="MosViz.update">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_id</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">observation</span><span class="p">,</span> <span class="n">viz_observation</span><span class="p">,</span> <span class="n">belief</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the visualization after there is new real action and observation</span>
+<span class="sd">        and updated belief.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            observation (MosOOObservation): Real observation</span>
+<span class="sd">            viz_observation (MosOOObservation): An observation used to visualize</span>
+<span class="sd">                                                the sensing region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_action</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_observation</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">observation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_viz_observation</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">viz_observation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_belief</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">belief</span></div>
+
+
+<div class="viewcode-block" id="MosViz.draw_robot">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.draw_robot">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">draw_robot</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)):</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">radius</span><span class="p">),</span> <span class="n">radius</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th</span><span class="p">))),</span>
+            <span class="n">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">))),</span>
+        <span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">radius</span><span class="p">),</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MosViz.draw_observation">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.draw_observation">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">draw_observation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rth</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">255</span><span class="p">)):</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="n">MosOOObservation</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> != MosOOObservation&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">objid</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">objposes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span><span class="o">.</span><span class="n">for_obj</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span><span class="o">.</span><span class="n">pose</span> <span class="o">!=</span> <span class="n">ObjectObservation</span><span class="o">.</span><span class="n">NULL</span><span class="p">:</span>
+                <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">for_obj</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span><span class="o">.</span><span class="n">pose</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span>
+                    <span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">ly</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">radius</span><span class="p">,</span> <span class="n">lx</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">radius</span><span class="p">),</span> <span class="n">size</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=-</span><span class="mi">1</span>
+                <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MosViz.draw_belief">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.draw_belief">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">draw_belief</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">belief</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">target_colors</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;belief (OOBelief)&quot;&quot;&quot;</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">circle_drawn</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># map from pose to number of times drawn</span>
+
+        <span class="k">for</span> <span class="n">objid</span> <span class="ow">in</span> <span class="n">belief</span><span class="o">.</span><span class="n">object_beliefs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">belief</span><span class="o">.</span><span class="n">object_belief</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">RobotState</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">hist</span> <span class="o">=</span> <span class="n">belief</span><span class="o">.</span><span class="n">object_belief</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span><span class="o">.</span><span class="n">get_histogram</span><span class="p">()</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">target_colors</span><span class="p">[</span><span class="n">objid</span><span class="p">]</span>
+
+            <span class="n">last_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">hist</span><span class="o">.</span><span class="n">get</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">objclass</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">last_val</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">lighter</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">hist</span><span class="p">[</span><span class="n">state</span><span class="p">]</span> <span class="o">/</span> <span class="n">last_val</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="mf">0.99</span><span class="p">:</span>
+                        <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;pose&quot;</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">circle_drawn</span><span class="p">:</span>
+                            <span class="n">circle_drawn</span><span class="p">[(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">circle_drawn</span><span class="p">[(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                        <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span>
+                            <span class="n">img</span><span class="p">,</span>
+                            <span class="p">(</span><span class="n">ty</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">radius</span><span class="p">,</span> <span class="n">tx</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">radius</span><span class="p">),</span>
+                            <span class="n">size</span> <span class="o">//</span> <span class="n">circle_drawn</span><span class="p">[(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">)],</span>
+                            <span class="n">color</span><span class="p">,</span>
+                            <span class="n">thickness</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="n">last_val</span> <span class="o">=</span> <span class="n">hist</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">if</span> <span class="n">last_val</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="k">break</span></div>
+
+
+    <span class="c1"># PyGame interface functions</span>
+<div class="viewcode-block" id="MosViz.on_init">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_init">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;pygame init&quot;&quot;&quot;</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>  <span class="c1"># calls pygame.font.init()</span>
+        <span class="c1"># init main screen and background</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_surf</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_height</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">HWSURFACE</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display_surf</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+        <span class="c1"># Font</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_myfont</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;Comic Sans MS&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MosViz.on_event">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># TODO: Keyboard control multiple robots</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">robot_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Just pick the first one.</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># control signal according to motion model</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># control input by user</span>
+
+            <span class="c1"># odometry model</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveLeft</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveRight</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_UP</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveForward</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_DOWN</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveBackward</span>
+            <span class="c1"># euclidean axis model</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_a</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveWest</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_d</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveEast</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_s</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveSouth</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_w</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">MoveNorth</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_SPACE</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">Look</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_RETURN</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">Find</span>
+
+            <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controllable</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">MotionAction</span><span class="p">):</span>
+                    <span class="n">reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span>
+                        <span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">robot_id</span><span class="o">=</span><span class="n">robot_id</span>
+                    <span class="p">)</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">LookAction</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">FindAction</span><span class="p">):</span>
+                    <span class="n">robot_pose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">pose</span><span class="p">(</span><span class="n">robot_id</span><span class="p">)</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">robot_pose</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_observation</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_last_viz_observation</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span>
+                    <span class="n">reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state_transition</span><span class="p">(</span>
+                        <span class="n">action</span><span class="p">,</span> <span class="n">execute</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">robot_id</span><span class="o">=</span><span class="n">robot_id</span>
+                    <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;robot state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">robot_id</span><span class="p">]))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     action: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     observation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     reward: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">reward</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">action</span></div>
+
+
+<div class="viewcode-block" id="MosViz.on_loop">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_loop">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_playtime</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span></div>
+
+
+<div class="viewcode-block" id="MosViz.on_render">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_render">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># self._display_surf.blit(self._background, (0, 0))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_env</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_display_surf</span><span class="p">)</span>
+        <span class="n">robot_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">robot_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Just pick the first one.</span>
+        <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">pose</span><span class="p">(</span><span class="n">robot_id</span><span class="p">)</span>
+        <span class="n">fps_text</span> <span class="o">=</span> <span class="s2">&quot;FPS: </span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clock</span><span class="o">.</span><span class="n">get_fps</span><span class="p">())</span>
+        <span class="n">last_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_action</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">last_action_str</span> <span class="o">=</span> <span class="s2">&quot;no_action&quot;</span> <span class="k">if</span> <span class="n">last_action</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">last_action</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> | Robot</span><span class="si">%d</span><span class="s2">(</span><span class="si">%.2f</span><span class="s2">,</span><span class="si">%.2f</span><span class="s2">,</span><span class="si">%.2f</span><span class="s2">) | </span><span class="si">%s</span><span class="s2"> | </span><span class="si">%s</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="n">last_action_str</span><span class="p">,</span>
+                <span class="n">robot_id</span><span class="p">,</span>
+                <span class="n">rx</span><span class="p">,</span>
+                <span class="n">ry</span><span class="p">,</span>
+                <span class="n">rth</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">object_states</span><span class="p">[</span><span class="n">robot_id</span><span class="p">][</span><span class="s2">&quot;objects_found&quot;</span><span class="p">]),</span>
+                <span class="n">fps_text</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MosViz.on_cleanup">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_cleanup">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MosViz.on_execute">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.on_execute">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_init</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_loop</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_render</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cleanup</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MosViz.render_env">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.MosViz.render_env">[docs]</a>
+    <span class="k">def</span> <span class="nf">render_env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_surf</span><span class="p">):</span>
+        <span class="c1"># draw robot, a circle and a vector</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_img</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">robot_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">robot_ids</span><span class="p">):</span>
+            <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">pose</span><span class="p">(</span><span class="n">robot_id</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_res</span>  <span class="c1"># Not radius!</span>
+            <span class="n">last_observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_observation</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">last_viz_observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_viz_observation</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">last_belief</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_belief</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">robot_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">last_belief</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">MosViz</span><span class="o">.</span><span class="n">draw_belief</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">last_belief</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">r</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_colors</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">last_viz_observation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">MosViz</span><span class="o">.</span><span class="n">draw_observation</span><span class="p">(</span>
+                    <span class="n">img</span><span class="p">,</span>
+                    <span class="n">last_viz_observation</span><span class="p">,</span>
+                    <span class="n">rx</span><span class="p">,</span>
+                    <span class="n">ry</span><span class="p">,</span>
+                    <span class="n">rth</span><span class="p">,</span>
+                    <span class="n">r</span><span class="p">,</span>
+                    <span class="n">r</span> <span class="o">//</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">last_observation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">MosViz</span><span class="o">.</span><span class="n">draw_observation</span><span class="p">(</span>
+                    <span class="n">img</span><span class="p">,</span> <span class="n">last_observation</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rth</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">r</span> <span class="o">//</span> <span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="n">MosViz</span><span class="o">.</span><span class="n">draw_robot</span><span class="p">(</span>
+                <span class="n">img</span><span class="p">,</span> <span class="n">rx</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">ry</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">rth</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">255</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span> <span class="mi">12</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">surfarray</span><span class="o">.</span><span class="n">blit_array</span><span class="p">(</span><span class="n">display_surf</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="unittest">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.env.html#problems.multi_object_search.env.visual.unittest">[docs]</a>
+<span class="k">def</span> <span class="nf">unittest</span><span class="p">():</span>
+    <span class="c1"># If you don&#39;t want occlusion, use this:</span>
+    <span class="n">laserstr</span> <span class="o">=</span> <span class="n">make_laser_sensor</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># If you want occlusion, use this</span>
+    <span class="c1"># (the difference is mainly in angle_increment; this</span>
+    <span class="c1">#  is due to the discretization - discretization may</span>
+    <span class="c1">#  cause &quot;strange&quot; behavior when checking occlusion</span>
+    <span class="c1">#  but the model is actually doing the right thing.)</span>
+    <span class="n">laserstr_occ</span> <span class="o">=</span> <span class="n">make_laser_sensor</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Proximity sensor</span>
+    <span class="n">proxstr</span> <span class="o">=</span> <span class="n">make_proximity_sensor</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">proxstr_occ</span> <span class="o">=</span> <span class="n">make_proximity_sensor</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">worldmap</span><span class="p">,</span> <span class="n">robot</span> <span class="o">=</span> <span class="n">world1</span>
+    <span class="n">worldstr</span> <span class="o">=</span> <span class="n">equip_sensors</span><span class="p">(</span><span class="n">worldmap</span><span class="p">,</span> <span class="p">{</span><span class="n">robot</span><span class="p">:</span> <span class="n">laserstr</span><span class="p">})</span>
+
+    <span class="n">dim</span><span class="p">,</span> <span class="n">robots</span><span class="p">,</span> <span class="n">objects</span><span class="p">,</span> <span class="n">obstacles</span><span class="p">,</span> <span class="n">sensors</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="n">worldstr</span><span class="p">)</span>
+    <span class="n">init_state</span> <span class="o">=</span> <span class="n">MosOOState</span><span class="p">({</span><span class="o">**</span><span class="n">objects</span><span class="p">,</span> <span class="o">**</span><span class="n">robots</span><span class="p">})</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">MosEnvironment</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">init_state</span><span class="p">,</span> <span class="n">sensors</span><span class="p">,</span> <span class="n">obstacles</span><span class="o">=</span><span class="n">obstacles</span><span class="p">)</span>
+    <span class="n">viz</span> <span class="o">=</span> <span class="n">MosViz</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">controllable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">viz</span><span class="o">.</span><span class="n">on_execute</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

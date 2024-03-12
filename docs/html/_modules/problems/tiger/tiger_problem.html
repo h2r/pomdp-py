@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>problems.tiger.tiger_problem &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for problems.tiger.tiger_problem</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;The classic Tiger problem.</span>
+
+<span class="sd">This is a POMDP problem; Namely, it specifies both</span>
+<span class="sd">the POMDP (i.e. state, action, observation space)</span>
+<span class="sd">and the T/O/R for the agent as well as the environment.</span>
+
+<span class="sd">The description of the tiger problem is as follows: (Quote from</span>
+<span class="sd">`POMDP: Introduction to Partially Observable Markov Decision Processes</span>
+<span class="sd">&lt;https://cran.r-project.org/web/packages/pomdp/vignettes/POMDP.pdf&gt;`_ by</span>
+<span class="sd">Kamalzadeh and Hahsler )</span>
+
+<span class="sd">A tiger is put with equal probability behind one</span>
+<span class="sd">of two doors, while treasure is put behind the other one.</span>
+<span class="sd">You are standing in front of the two closed doors and</span>
+<span class="sd">need to decide which one to open. If you open the door</span>
+<span class="sd">with the tiger, you will get hurt (negative reward).</span>
+<span class="sd">But if you open the door with treasure, you receive</span>
+<span class="sd">a positive reward. Instead of opening a door right away,</span>
+<span class="sd">you also have the option to wait and listen for tiger noises. But</span>
+<span class="sd">listening is neither free nor entirely accurate. You might hear the</span>
+<span class="sd">tiger behind the left door while it is actually behind the right</span>
+<span class="sd">door and vice versa.</span>
+
+<span class="sd">States: tiger-left, tiger-right</span>
+<span class="sd">Actions: open-left, open-right, listen</span>
+<span class="sd">Rewards:</span>
+<span class="sd">    +10 for opening treasure door. -100 for opening tiger door.</span>
+<span class="sd">    -1 for listening.</span>
+<span class="sd">Observations: You can hear either &quot;tiger-left&quot;, or &quot;tiger-right&quot;.</span>
+
+<span class="sd">Note that in this example, the TigerProblem is a POMDP that</span>
+<span class="sd">also contains the agent and the environment as its fields. In</span>
+<span class="sd">general this doesn&#39;t need to be the case. (Refer to more</span>
+<span class="sd">complicated examples.)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">TreeDebugger</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+
+<div class="viewcode-block" id="TigerState">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerState">[docs]</a>
+<span class="k">class</span> <span class="nc">TigerState</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">State</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TigerState</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;TigerState(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="TigerState.other">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerState.other">[docs]</a>
+    <span class="k">def</span> <span class="nf">other</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TigerAction">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerAction">[docs]</a>
+<span class="k">class</span> <span class="nc">TigerAction</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TigerAction</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;TigerAction(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+
+<div class="viewcode-block" id="TigerObservation">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerObservation">[docs]</a>
+<span class="k">class</span> <span class="nc">TigerObservation</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Observation</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TigerObservation</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;TigerObservation(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+
+<span class="c1"># Observation model</span>
+<div class="viewcode-block" id="ObservationModel">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.ObservationModel">[docs]</a>
+<span class="k">class</span> <span class="nc">ObservationModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">ObservationModel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise</span> <span class="o">=</span> <span class="n">noise</span>
+
+<div class="viewcode-block" id="ObservationModel.probability">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.probability">[docs]</a>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;listen&quot;</span><span class="p">:</span>
+            <span class="c1"># heard the correct growl</span>
+            <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">next_state</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.5</span></div>
+
+
+<div class="viewcode-block" id="ObservationModel.sample">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.sample">[docs]</a>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;listen&quot;</span><span class="p">:</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TigerObservation</span><span class="p">(</span><span class="n">next_state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TigerObservation</span><span class="p">(</span><span class="n">next_state</span><span class="o">.</span><span class="n">other</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ObservationModel.get_all_observations">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.get_all_observations">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="sd">        a solver that needs to enumerate over the observation space</span>
+<span class="sd">        (e.g. value iteration)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">TigerObservation</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">}]</span></div>
+</div>
+
+
+
+<span class="c1"># Transition Model</span>
+<div class="viewcode-block" id="TransitionModel">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TransitionModel">[docs]</a>
+<span class="k">class</span> <span class="nc">TransitionModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">TransitionModel</span><span class="p">):</span>
+<div class="viewcode-block" id="TransitionModel.probability">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.probability">[docs]</a>
+    <span class="k">def</span> <span class="nf">probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;According to problem spec, the world resets once</span>
+<span class="sd">        action is open-left/open-right. Otherwise, stays the same&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">next_state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">1e-9</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mf">1e-9</span></div>
+
+
+<div class="viewcode-block" id="TransitionModel.sample">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.sample">[docs]</a>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_states</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TigerState</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransitionModel.get_all_states">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.get_all_states">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only need to implement this if you&#39;re using</span>
+<span class="sd">        a solver that needs to enumerate over the observation space (e.g. value iteration)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">TigerState</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">}]</span></div>
+</div>
+
+
+
+<span class="c1"># Reward Model</span>
+<div class="viewcode-block" id="RewardModel">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.RewardModel">[docs]</a>
+<span class="k">class</span> <span class="nc">RewardModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RewardModel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_reward_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;open-left&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">10</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">100</span>
+        <span class="k">elif</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;open-right&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;tiger-left&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">10</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">100</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># listen</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="RewardModel.sample">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.RewardModel.sample">[docs]</a>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">next_state</span><span class="p">):</span>
+        <span class="c1"># deterministic</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reward_func</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># Policy Model</span>
+<div class="viewcode-block" id="PolicyModel">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.PolicyModel">[docs]</a>
+<span class="k">class</span> <span class="nc">PolicyModel</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">RolloutPolicy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple policy model with uniform prior over a</span>
+<span class="sd">    small, finite action space&quot;&quot;&quot;</span>
+
+    <span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">TigerAction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;open-left&quot;</span><span class="p">,</span> <span class="s2">&quot;open-right&quot;</span><span class="p">,</span> <span class="s2">&quot;listen&quot;</span><span class="p">}]</span>
+
+<div class="viewcode-block" id="PolicyModel.sample">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.sample">[docs]</a>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_actions</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PolicyModel.rollout">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.rollout">[docs]</a>
+    <span class="k">def</span> <span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Treating this PolicyModel as a rollout policy&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PolicyModel.get_all_actions">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.get_all_actions">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PolicyModel</span><span class="o">.</span><span class="n">ACTIONS</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TigerProblem">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">TigerProblem</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMDP</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In fact, creating a TigerProblem class is entirely optional</span>
+<span class="sd">    to simulate and solve POMDPs. But this is just an example</span>
+<span class="sd">    of how such a class can be created.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_noise</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;init_belief is a Distribution.&quot;&quot;&quot;</span>
+        <span class="n">agent</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Agent</span><span class="p">(</span>
+            <span class="n">init_belief</span><span class="p">,</span>
+            <span class="n">PolicyModel</span><span class="p">(),</span>
+            <span class="n">TransitionModel</span><span class="p">(),</span>
+            <span class="n">ObservationModel</span><span class="p">(</span><span class="n">obs_noise</span><span class="p">),</span>
+            <span class="n">RewardModel</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Environment</span><span class="p">(</span><span class="n">init_true_state</span><span class="p">,</span> <span class="n">TransitionModel</span><span class="p">(),</span> <span class="n">RewardModel</span><span class="p">())</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TigerProblem&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TigerProblem.create">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.TigerProblem.create">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="n">belief</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">obs_noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state (str): could be &#39;tiger-left&#39; or &#39;tiger-right&#39;;</span>
+<span class="sd">                         True state of the environment</span>
+<span class="sd">            belief (float): Initial belief that the target is</span>
+<span class="sd">                            on the left; Between 0-1.</span>
+<span class="sd">            obs_noise (float): Noise for the observation</span>
+<span class="sd">                               model (default 0.15)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init_true_state</span> <span class="o">=</span> <span class="n">TigerState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">init_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span>
+            <span class="p">{</span><span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">):</span> <span class="n">belief</span><span class="p">,</span> <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">):</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">belief</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">tiger_problem</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="p">(</span><span class="n">obs_noise</span><span class="p">,</span> <span class="n">init_true_state</span><span class="p">,</span> <span class="n">init_belief</span><span class="p">)</span>
+        <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tiger_problem</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="test_planner">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.test_planner">[docs]</a>
+<span class="k">def</span> <span class="nf">test_planner</span><span class="p">(</span><span class="n">tiger_problem</span><span class="p">,</span> <span class="n">planner</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">debug_tree</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the action-feedback loop of Tiger problem POMDP</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tiger_problem (TigerProblem): a problem instance</span>
+<span class="sd">        planner (Planner): a planner</span>
+<span class="sd">        nsteps (int): Maximum number of steps to run this loop.</span>
+<span class="sd">        debug_tree (bool): True if get into the pdb with a</span>
+<span class="sd">                           TreeDebugger created as &#39;dd&#39; variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">planner</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">debug_tree</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pomdp_py.utils</span> <span class="kn">import</span> <span class="n">TreeDebugger</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==== Step </span><span class="si">%d</span><span class="s2"> ====&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True state: </span><span class="si">{</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Belief: </span><span class="si">{</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Action: </span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># There is no state transition for the tiger domain.</span>
+        <span class="c1"># In general, the ennvironment state can be transitioned</span>
+        <span class="c1"># using</span>
+        <span class="c1">#</span>
+        <span class="c1">#   reward = tiger_problem.env.state_transition(action, execute=True)</span>
+        <span class="c1">#</span>
+        <span class="c1"># Or, it is possible that you don&#39;t have control</span>
+        <span class="c1"># over the environment change (e.g. robot acting</span>
+        <span class="c1"># in real world); In that case, you could skip</span>
+        <span class="c1"># the state transition and re-estimate the state</span>
+        <span class="c1"># (e.g. through the perception stack on the robot).</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reward_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+            <span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reward:&quot;</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+
+        <span class="c1"># Let&#39;s create some simulated real observation;</span>
+        <span class="c1"># Here, we use observation based on true state for sanity</span>
+        <span class="c1"># checking solver behavior. In general, this observation</span>
+        <span class="c1"># should be sampled from agent&#39;s observation model, as</span>
+        <span class="c1">#</span>
+        <span class="c1">#    real_observation = tiger_problem.agent.observation_model.sample(tiger_problem.env.state, action)</span>
+        <span class="c1">#</span>
+        <span class="c1"># or coming from an external source (e.g. robot sensor</span>
+        <span class="c1"># reading). Note that tiger_problem.env.state stores the</span>
+        <span class="c1"># environment state after action execution.</span>
+        <span class="n">real_observation</span> <span class="o">=</span> <span class="n">TigerObservation</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; Observation:&quot;</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
+        <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">update_history</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
+
+        <span class="c1"># Update the belief. If the planner is POMCP, planner.update</span>
+        <span class="c1"># also automatically updates agent belief.</span>
+        <span class="n">planner</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">real_observation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">planner</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Num sims:&quot;</span><span class="p">,</span> <span class="n">planner</span><span class="o">.</span><span class="n">last_num_sims</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plan time: </span><span class="si">%.5f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">planner</span><span class="o">.</span><span class="n">last_planning_time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">,</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">):</span>
+            <span class="n">new_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">update_histogram_belief</span><span class="p">(</span>
+                <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">cur_belief</span><span class="p">,</span>
+                <span class="n">action</span><span class="p">,</span>
+                <span class="n">real_observation</span><span class="p">,</span>
+                <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">observation_model</span><span class="p">,</span>
+                <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">transition_model</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">tiger_problem</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">new_belief</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">):</span>
+            <span class="c1"># Make it clearer to see what actions are taken</span>
+            <span class="c1"># until every time door is opened.</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="make_tiger">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.make_tiger">[docs]</a>
+<span class="k">def</span> <span class="nf">make_tiger</span><span class="p">(</span><span class="n">noise</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">init_state</span><span class="o">=</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="n">init_belief</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenient function to quickly build a tiger domain.</span>
+<span class="sd">    Useful for testing&quot;&quot;&quot;</span>
+    <span class="n">tiger</span> <span class="o">=</span> <span class="n">TigerProblem</span><span class="p">(</span>
+        <span class="n">noise</span><span class="p">,</span>
+        <span class="n">TigerState</span><span class="p">(</span><span class="n">init_state</span><span class="p">),</span>
+        <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">):</span> <span class="n">init_belief</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">):</span> <span class="n">init_belief</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tiger</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../problems/problems.tiger.html#problems.tiger.tiger_problem.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">init_true_state</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">,</span> <span class="s2">&quot;tiger-right&quot;</span><span class="p">])</span>
+    <span class="n">init_belief</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-left&quot;</span><span class="p">):</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">TigerState</span><span class="p">(</span><span class="s2">&quot;tiger-right&quot;</span><span class="p">):</span> <span class="mf">0.5</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">tiger</span> <span class="o">=</span> <span class="n">make_tiger</span><span class="p">(</span><span class="n">init_state</span><span class="o">=</span><span class="n">init_true_state</span><span class="p">)</span>
+    <span class="n">init_belief</span> <span class="o">=</span> <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">belief</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;** Testing value iteration **&quot;</span><span class="p">)</span>
+    <span class="n">vi</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">ValueIteration</span><span class="p">(</span><span class="n">horizon</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+    <span class="n">test_planner</span><span class="p">(</span><span class="n">tiger</span><span class="p">,</span> <span class="n">vi</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** Testing POUCT **&quot;</span><span class="p">)</span>
+    <span class="n">pouct</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POUCT</span><span class="p">(</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+        <span class="n">num_sims</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+        <span class="n">exploration_const</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">,</span>
+        <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">test_planner</span><span class="p">(</span><span class="n">tiger</span><span class="p">,</span> <span class="n">pouct</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span><span class="o">.</span><span class="n">pp</span>
+
+    <span class="c1"># Reset agent belief</span>
+    <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;** Testing POMCP **&quot;</span><span class="p">)</span>
+    <span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">set_belief</span><span class="p">(</span>
+        <span class="n">pomdp_py</span><span class="o">.</span><span class="n">Particles</span><span class="o">.</span><span class="n">from_histogram</span><span class="p">(</span><span class="n">init_belief</span><span class="p">,</span> <span class="n">num_particles</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="n">prior</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">pomcp</span> <span class="o">=</span> <span class="n">pomdp_py</span><span class="o">.</span><span class="n">POMCP</span><span class="p">(</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">discount_factor</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+        <span class="n">num_sims</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">exploration_const</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">rollout_policy</span><span class="o">=</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">policy_model</span><span class="p">,</span>
+        <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">pbar_update_interval</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">test_planner</span><span class="p">(</span><span class="n">tiger</span><span class="p">,</span> <span class="n">pomcp</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">TreeDebugger</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span><span class="o">.</span><span class="n">pp</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

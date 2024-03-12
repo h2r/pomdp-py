@@ -40,7 +40,6 @@ Further
 * :doc:`extensions`
 * :doc:`other_libraries`
 * :doc:`building_docs`
-* :doc:`simple_rl_integration`
 
 .. toctree::
    :maxdepth: 2
@@ -76,7 +75,6 @@ API References
    :caption: API References
 
    api/modules
-   problems/modules
 
 Tools
 -----
