@@ -119,14 +119,14 @@ rm -r $pomdp_py_path/wheelhouse
 # Verification (wheel)
 echo -e "------------ verification: wheel ---------"
 pip uninstall pomdp_py
-pip install "$pomdp_py_path/dist/$fixed_wheel_name"
+pip install -y "$pomdp_py_path/dist/$fixed_wheel_name"
 python $pomdp_py_path/tests/test_all.py
 
 # Verification (source)
 echo -e "------------ verification: source ---------"
 pip uninstall pomdp_py
 cd $pomdp_py_path/dist
-pip install pomdp-py-$version.tar.gz
+pip install -y pomdp-py-$version.tar.gz
 python $pomdp_py_path/tests/test_all.py
 
 pip install twine
