@@ -33,6 +33,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - uses: actions/checkout@v4
+      with:
+        ref: 'dev-latest'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
