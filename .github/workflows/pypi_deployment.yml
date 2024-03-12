@@ -2,10 +2,9 @@ name: pomdp-py package pypi deployment
 
 on:
   push:
-    branches:
-      - "dev-latest"
     tags:
       - 'v1.3.5'
+      - 'vdev-latest'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -45,7 +44,7 @@ jobs:
 
     - name: Upload to Test PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      if: ${{ startsWith(github.ref, 'refs/heads/') }}
+      if: ${{ startsWith(github.ref, 'refs/heads/') && github.ref == 'refs/tags/vdev-latest' }}
       with:
         # This will upload stuff under dist/ to PyPI
         user: __token__
@@ -55,7 +54,7 @@ jobs:
 
     - name: Upload to PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      if: ${{ startsWith(github.ref, 'refs/heads/') && github.ref != 'refs/tags/vdev-latest' }}
       with:
         # This will upload stuff under dist/ to PyPI
         user: __token__
