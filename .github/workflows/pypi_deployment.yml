@@ -22,9 +22,10 @@ jobs:
     environment:
       name: testpypi
       url: https://test.pypi.org/p/pomdp-py/
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
 
     steps:
-
     - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
