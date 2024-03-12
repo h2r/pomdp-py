@@ -3,8 +3,7 @@ name: pomdp-py package pypi deployment
 on:
   push:
     tags:
-      - 'v[0-9]+(\.[0-9]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'  # accepts semantic versioning
-      - 'vdev-latest'
+      - 'v*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
