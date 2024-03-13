@@ -13,7 +13,7 @@ jobs:
   testpypi-publish:
     name: Build & publish pomdp-py to Test PyPi
     runs-on: ubuntu-latest
-    if: {{ github.ref == 'refs/tags/vdev-latest' }}
+    if: ${{ github.ref == 'refs/tags/vdev-latest' }}
 
     strategy:
       fail-fast: true
@@ -67,7 +67,7 @@ jobs:
   pypi-publish:
     name: Build & publish pomdp-py to PyPi
     runs-on: ubuntu-latest
-    if: {{ github.ref != 'refs/tags/vdev-latest' }}
+    if: ${{ github.ref != 'refs/tags/vdev-latest' }}
     strategy:
       fail-fast: true
       matrix:
