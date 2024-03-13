@@ -78,6 +78,7 @@ jobs:
       url: https://pypi.org/p/pomdp-py/
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: write
 
     steps:
     - name: Set Variables
@@ -104,7 +105,7 @@ jobs:
         # This will upload stuff under dist/ to PyPI
         user: __token__
         password: ${{ secrets.PYPI_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        repository_url: https://pypi.org/
         skip-existing: true
 
     - name: Release artifact
