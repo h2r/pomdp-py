@@ -112,7 +112,7 @@ jobs:
         # This will upload stuff under dist/ to PyPI
         user: __token__
         password: ${{ secrets.PYPI_TOKEN }}
-        repository_url: https://pypi.org/
+        repository_url: https://upload.pypi.org/legacy/
         skip-existing: true
 
     - name: Release artifact
