@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   testpypi-publish:
-    name: Build & publish pomdp-py to Test PyPi
+    name: publish to Test PyPi
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/tags/vdev-latest' }}
 
@@ -65,7 +65,7 @@ jobs:
 
 
   pypi-publish:
-    name: Build & publish pomdp-py to PyPi
+    name: publish to PyPi
     runs-on: ubuntu-latest
     if: ${{ github.ref != 'refs/tags/vdev-latest' }}
     strategy:
