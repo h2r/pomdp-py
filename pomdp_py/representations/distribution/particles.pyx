@@ -161,7 +161,7 @@ cdef class WeightedParticles(GenerativeDistribution):
         Returns a new set of weighted particles with unique values
         and weights aggregated (taken average).
         """
-        return WeightedParticles.from_histogram(self.get_histogram())
+        return WeightedParticles.from_histogram(self.get_histogram(), frozen=self._frozen)
 
 
 cdef class Particles(WeightedParticles):
