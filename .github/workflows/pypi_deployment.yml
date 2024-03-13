@@ -10,8 +10,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pypi-publish:
+  testpypi-publish:
+    name: Build & publish pomdp-py to Test PyPi
     runs-on: ubuntu-latest
+    if: {{ github.ref == 'refs/tags/vdev-latest' }}
+
     strategy:
       fail-fast: true
       matrix:
@@ -25,9 +28,7 @@ jobs:
     steps:
     - name: Set Variables
       if: startsWith(github.ref, 'refs/tags/v')
-      run: |   # Run the command within a multiline string
-          echo "VERSION=\"Version ${{ github.ref_name }}\"" >> $GITHUB_ENV
-          echo "TRIGGER_FOR_TEST_PYPI=${{ github.ref == 'refs/tags/vdev-latest' }}" >> $GITHUB_ENV
+      run: echo "VERSION=\"Version ${{ github.ref_name }}\"" >> $GITHUB_ENV
 
     - uses: actions/setup-python@v5
       with:
@@ -49,7 +50,6 @@ jobs:
 
     - name: Upload to Test PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      if: ${{ env.TRIGGER_FOR_TEST_PYPI }}
       with:
         # This will upload stuff under dist/ to PyPI
         user: __token__
@@ -57,9 +57,48 @@ jobs:
         repository_url: https://test.pypi.org/legacy/
         skip-existing: true
 
+    - name: Release artifact
+      uses: softprops/action-gh-release@v1
+      with:
+        name: ${{ env.VERSION }}
+        files: dist/*.whl
+
+
+  pypi-publish:
+    name: Build & publish pomdp-py to PyPi
+    runs-on: ubuntu-latest
+    if: {{ github.ref != 'refs/tags/vdev-latest' }}
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pomdp-py/
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+
+    steps:
+    - name: Set Variables
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: echo "VERSION=\"Version ${{ github.ref_name }}\"" >> $GITHUB_ENV
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Run release script
+      working-directory: .
+      run: |
+        cd scripts
+        ./pomdp_py_release.sh ${{ vars.RELEASE_ATTEMPT_COUNT }}
+
     - name: Upload to PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      if: ${{ ! env.TRIGGER_FOR_TEST_PYPI }}
       with:
         # This will upload stuff under dist/ to PyPI
         user: __token__
