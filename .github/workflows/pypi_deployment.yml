@@ -91,7 +91,7 @@ jobs:
 
     - uses: actions/checkout@v4
       with:
-        ref: 'main'
+        ref: "dev-${{ github.ref_name.split('v')[1] }}"
 
     - name: Install dependencies
       run: |
