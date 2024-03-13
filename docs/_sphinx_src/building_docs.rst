@@ -44,7 +44,7 @@ Building docs for `pomdp_py.problems`
 
 2. Building docs for `pomdp_py`. Run :code:`sphinx-apidoc`::
 
-    sphinx-apidoc -o problems/ ../../pomdp_py.problems
+    sphinx-apidoc -o problems/ ../../pomdp_py/problems
 
 3. Generate web pages::
 
@@ -54,13 +54,13 @@ Building docs for `pomdp_py.problems`
 
 Note that when creating the documentation for a problem under :code:`pomdp_py.problems`,
 you may want to re-use the README file on github for the documentation. To do that,
-first create a read-me file at :code:`pomdp_py.problems/<problem>/README.rst` with desirable
+first create a read-me file at :code:`pomdp_py/problems/<problem>/README.rst` with desirable
 content that describes the problem. Then, include this read-me file at the top of the
 generated :code:`pomdp_py.problems.<problem>.rst`, like so:
 
 .. code-block::
 
-   .. include:: ../../../pomdp_py.problems/<problem>/README.rst
+   .. include:: ../../../pomdp_py/problems/<problem>/README.rst
 
 
 Note on Changelog

@@ -1,0 +1,29 @@
+problems.rocksample package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.rocksample.cythonize
+
+Submodules
+----------
+
+problems.rocksample.rocksample\_problem module
+----------------------------------------------
+
+.. automodule:: problems.rocksample.rocksample_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.rocksample
+   :members:
+   :undoc-members:
+   :show-inheritance:

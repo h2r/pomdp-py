@@ -1,6 +1,8 @@
 pomdp\_py.problems.rocksample package
 =====================================
 
+.. include:: ../../../pomdp_py/problems/rocksample/README.rst
+
 Subpackages
 -----------
 

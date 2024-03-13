@@ -1,0 +1,21 @@
+problems.light\_dark.agent package
+==================================
+
+Submodules
+----------
+
+problems.light\_dark.agent.belief module
+----------------------------------------
+
+.. automodule:: problems.light_dark.agent.belief
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.light_dark.agent
+   :members:
+   :undoc-members:
+   :show-inheritance:

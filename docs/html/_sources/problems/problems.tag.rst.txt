@@ -1,0 +1,56 @@
+problems.tag package
+====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.tag.agent
+   problems.tag.domain
+   problems.tag.env
+   problems.tag.models
+
+Submodules
+----------
+
+problems.tag.constants module
+-----------------------------
+
+.. automodule:: problems.tag.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.example\_worlds module
+-----------------------------------
+
+.. automodule:: problems.tag.example_worlds
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.experiment module
+------------------------------
+
+.. automodule:: problems.tag.experiment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.problem module
+---------------------------
+
+.. automodule:: problems.tag.problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.tag
+   :members:
+   :undoc-members:
+   :show-inheritance:

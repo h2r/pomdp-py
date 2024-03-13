@@ -1,6 +1,8 @@
 pomdp\_py.problems.light\_dark package
 ======================================
 
+.. include:: ../../../pomdp_py/problems/light_dark/README.rst
+
 Subpackages
 -----------
 

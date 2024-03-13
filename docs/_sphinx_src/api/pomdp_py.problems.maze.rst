@@ -1,6 +1,8 @@
 pomdp\_py.problems.maze package
 ===============================
 
+.. include:: ../../../pomdp_py/problems/maze/README.rst
+
 Subpackages
 -----------
 

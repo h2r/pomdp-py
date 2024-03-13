@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.3.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <title>pomdp_py.representations.distribution package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
-    <script src="../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,7 +38,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
 
 
 
@@ -86,6 +86,7 @@
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.add"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.add()</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.condense"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.condense()</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.from_histogram()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.frozen"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.frozen</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.get_histogram()</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.mpe"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.mpe()</span></code></a></li>
 <li><a class="reference internal" href="#pomdp_py.representations.distribution.particles.WeightedParticles.particles"><code class="docutils literal notranslate"><span class="pre">WeightedParticles.particles</span></code></a></li>
@@ -121,6 +122,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
 <ul class="current">
@@ -134,6 +136,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../problems/modules.html">problems</a></li>
 </ul>
 
 
@@ -330,6 +333,8 @@ the probability of the value closest to it. Assuming values
 are comparable; “none” if no approximation, return 0.</p></li>
 <li><p><strong>distance_func</strong> – Used when approx_method is ‘nearest’. Returns
 a number given two values in this particle set.</p></li>
+<li><p><strong>frozen</strong> – if true, then this WeightedParticles object cannot be modified. This
+makes it hashable.</p></li>
 </ul>
 </dd>
 </dl>
@@ -360,10 +365,15 @@ and weights aggregated (taken average).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.from_histogram" title="Link to this definition">¶</a></dt>
 <dd><p>Given a pomdp_py.Histogram return a particle representation of it,
 which is an approximation</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.WeightedParticles.frozen">
+<span class="sig-name descname"><span class="pre">frozen</span></span><a class="headerlink" href="#pomdp_py.representations.distribution.particles.WeightedParticles.frozen" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pomdp_py.representations.distribution.particles.WeightedParticles.get_histogram">

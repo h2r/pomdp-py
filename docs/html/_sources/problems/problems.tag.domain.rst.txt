@@ -1,0 +1,37 @@
+problems.tag.domain package
+===========================
+
+Submodules
+----------
+
+problems.tag.domain.action module
+---------------------------------
+
+.. automodule:: problems.tag.domain.action
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.domain.observation module
+--------------------------------------
+
+.. automodule:: problems.tag.domain.observation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tag.domain.state module
+--------------------------------
+
+.. automodule:: problems.tag.domain.state
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.tag.domain
+   :members:
+   :undoc-members:
+   :show-inheritance:

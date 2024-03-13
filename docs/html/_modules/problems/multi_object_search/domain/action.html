@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>problems.multi_object_search.domain.action &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=51d35e29" />
+    <script src="../../../../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../problems/modules.html">problems</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for problems.multi_object_search.domain.action</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Defines the Action for the 2D Multi-Object Search domain;</span>
+
+<span class="sd">Action space:</span>
+
+<span class="sd">    Motion :math:`\cup` Look :math:`\cup` Find</span>
+
+<span class="sd">* Motion Actions scheme 1: South, East, West, North.</span>
+<span class="sd">* Motion Actions scheme 2: Left 45deg, Right 45deg, Forward</span>
+<span class="sd">* Look: Interprets sensor input as observation</span>
+<span class="sd">* Find: Marks objects observed in the last Look action as</span>
+<span class="sd">  (differs from original paper; reduces action space)</span>
+
+<span class="sd">It is possible to force &quot;Look&quot; after every N/S/E/W action;</span>
+<span class="sd">then the Look action could be dropped. This is optional behavior.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pomdp_py</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="c1">###### Actions ######</span>
+<div class="viewcode-block" id="Action">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.domain.html#problems.multi_object_search.domain.action.Action">[docs]</a>
+<span class="k">class</span> <span class="nc">Action</span><span class="p">(</span><span class="n">pomdp_py</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mos action; Simple named action.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Action</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Action(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+
+
+<span class="n">MOTION_SCHEME</span> <span class="o">=</span> <span class="s2">&quot;xy&quot;</span>  <span class="c1"># can be either xy or vw</span>
+<span class="n">STEP_SIZE</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="MotionAction">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.domain.html#problems.multi_object_search.domain.action.MotionAction">[docs]</a>
+<span class="k">class</span> <span class="nc">MotionAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="c1"># scheme 1 (vx,vy,th)</span>
+    <span class="n">SCHEME_XYTH</span> <span class="o">=</span> <span class="s2">&quot;xyth&quot;</span>
+    <span class="n">EAST</span> <span class="o">=</span> <span class="p">(</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># x is horizontal; x+ is right. y is vertical; y+ is down.</span>
+    <span class="n">WEST</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">NORTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">SOUTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">STEP_SIZE</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># scheme 2 (vt, vw) translational, rotational velocities.</span>
+    <span class="n">SCHEME_VW</span> <span class="o">=</span> <span class="s2">&quot;vw&quot;</span>
+    <span class="n">FORWARD</span> <span class="o">=</span> <span class="p">(</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">BACKWARD</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># left 45 deg</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># right 45 deg</span>
+
+    <span class="c1"># scheme 3 (vx,vy)</span>
+    <span class="n">SCHEME_XY</span> <span class="o">=</span> <span class="s2">&quot;xy&quot;</span>
+    <span class="n">EAST2D</span> <span class="o">=</span> <span class="p">(</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># x is horizontal; x+ is right. y is vertical; y+ is down.</span>
+    <span class="n">WEST2D</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">STEP_SIZE</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">NORTH2D</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">STEP_SIZE</span><span class="p">)</span>
+    <span class="n">SOUTH2D</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">STEP_SIZE</span><span class="p">)</span>
+
+    <span class="n">SCHEMES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;xyth&quot;</span><span class="p">,</span> <span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;vw&quot;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MOTION_SCHEME</span><span class="p">,</span> <span class="n">distance_cost</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        motion (tuple): a tuple of floats that describes the motion;</span>
+<span class="sd">        scheme (str): description of the motion scheme; Either</span>
+<span class="sd">                      &quot;xy&quot; or &quot;vw&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">scheme</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEMES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid motion scheme </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">scheme</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">motion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">WEST</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">,</span>
+            <span class="p">}:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid move motion </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">motion</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">scheme</span> <span class="o">==</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">motion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">FORWARD</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">BACKWARD</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span>
+            <span class="p">}:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid move motion </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">motion</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">scheme</span> <span class="o">==</span> <span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XY</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">motion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">EAST2D</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">WEST2D</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">NORTH2D</span><span class="p">,</span>
+                <span class="n">MotionAction</span><span class="o">.</span><span class="n">SOUTH2D</span><span class="p">,</span>
+            <span class="p">}:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid move motion </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">motion</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">motion</span> <span class="o">=</span> <span class="n">motion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="n">scheme</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance_cost</span> <span class="o">=</span> <span class="n">distance_cost</span>
+        <span class="k">if</span> <span class="n">motion_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">motion_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;move-</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scheme</span><span class="p">,</span> <span class="n">motion_name</span><span class="p">))</span></div>
+
+
+
+<span class="c1"># Define some constant actions</span>
+<span class="n">MoveEast</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">EAST</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;East&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveWest</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">WEST</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;West&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveNorth</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">NORTH</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;North&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveSouth</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XYTH</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;South&quot;</span>
+<span class="p">)</span>
+
+<span class="n">MoveForward</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">FORWARD</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;Forward&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveBackward</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">BACKWARD</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;Backward&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveLeft</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;TurnLeft&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveRight</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_VW</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;TurnRight&quot;</span>
+<span class="p">)</span>
+
+<span class="n">MoveEast2D</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">EAST2D</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XY</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;East2D&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveWest2D</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">WEST2D</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XY</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;West2D&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveNorth2D</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">NORTH2D</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XY</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;North2D&quot;</span>
+<span class="p">)</span>
+<span class="n">MoveSouth2D</span> <span class="o">=</span> <span class="n">MotionAction</span><span class="p">(</span>
+    <span class="n">MotionAction</span><span class="o">.</span><span class="n">SOUTH2D</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">MotionAction</span><span class="o">.</span><span class="n">SCHEME_XY</span><span class="p">,</span> <span class="n">motion_name</span><span class="o">=</span><span class="s2">&quot;South2D&quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="LookAction">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.domain.html#problems.multi_object_search.domain.action.LookAction">[docs]</a>
+<span class="k">class</span> <span class="nc">LookAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="c1"># For simplicity, this LookAction is not parameterized by direction</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;look&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FindAction">
+<a class="viewcode-back" href="../../../../problems/problems.multi_object_search.domain.html#problems.multi_object_search.domain.action.FindAction">[docs]</a>
+<span class="k">class</span> <span class="nc">FindAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;find&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="n">Look</span> <span class="o">=</span> <span class="n">LookAction</span><span class="p">()</span>
+<span class="n">Find</span> <span class="o">=</span> <span class="n">FindAction</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">MOTION_SCHEME</span> <span class="o">==</span> <span class="s2">&quot;xy&quot;</span><span class="p">:</span>
+    <span class="n">ALL_MOTION_ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">MoveEast</span><span class="p">,</span> <span class="n">MoveWest</span><span class="p">,</span> <span class="n">MoveNorth</span><span class="p">,</span> <span class="n">MoveSouth</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">MOTION_SCHEME</span> <span class="o">==</span> <span class="s2">&quot;vw&quot;</span><span class="p">:</span>
+    <span class="n">ALL_MOTION_ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">MoveForward</span><span class="p">,</span> <span class="n">MoveBackward</span><span class="p">,</span> <span class="n">MoveLeft</span><span class="p">,</span> <span class="n">MoveRight</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;motion scheme &#39;</span><span class="si">%s</span><span class="s2">&#39; is invalid&quot;</span> <span class="o">%</span> <span class="n">MOTION_SCHEME</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,37 @@
+problems.maze.domain package
+============================
+
+Submodules
+----------
+
+problems.maze.domain.action module
+----------------------------------
+
+.. automodule:: problems.maze.domain.action
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.maze.domain.observation module
+---------------------------------------
+
+.. automodule:: problems.maze.domain.observation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.maze.domain.state module
+---------------------------------
+
+.. automodule:: problems.maze.domain.state
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.maze.domain
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,6 +1,8 @@
 pomdp\_py.problems.multi\_object\_search package
 ================================================
 
+.. include:: ../../../pomdp_py/problems/multi_object_search/README.rst
+
 Subpackages
 -----------
 

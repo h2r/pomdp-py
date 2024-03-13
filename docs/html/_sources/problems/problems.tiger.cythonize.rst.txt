@@ -1,0 +1,37 @@
+problems.tiger.cythonize package
+================================
+
+Submodules
+----------
+
+problems.tiger.cythonize.run\_tiger module
+------------------------------------------
+
+.. automodule:: problems.tiger.cythonize.run_tiger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tiger.cythonize.tiger\_problem module
+----------------------------------------------
+
+.. automodule:: problems.tiger.cythonize.tiger_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.tiger.cythonize.tiger\_problem module
+----------------------------------------------
+
+.. automodule:: problems.tiger.cythonize.tiger_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.tiger.cythonize
+   :members:
+   :undoc-members:
+   :show-inheritance:

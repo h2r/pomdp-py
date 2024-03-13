@@ -5,15 +5,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.problems.multi_object_search package &#8212; pomdp_py 1.3.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <title>pomdp_py.problems.multi_object_search package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
-    <script src="../_static/documentation_options.js?v=e358f374"></script>
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pomdp_py.problems.multi_object_search.agent package" href="pomdp_py.problems.multi_object_search.agent.html" />
+    <link rel="prev" title="pomdp_py.problems.maze.models.components package" href="pomdp_py.problems.maze.models.components.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -35,7 +37,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.4).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
 
 
 
@@ -53,14 +55,21 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">pomdp_py.problems.multi_object_search package</a><ul>
+<li><a class="reference internal" href="#">pomdp_py.problems.multi_object_search package</a></li>
+<li><a class="reference internal" href="#multi-object-search-mos-task">Multi-Object Search (MOS) Task</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pomdp_py.problems.multi_object_search.example_worlds">pomdp_py.problems.multi_object_search.example_worlds module</a><ul>
 <li><a class="reference internal" href="#pomdp_py.problems.multi_object_search.example_worlds.random_world"><code class="docutils literal notranslate"><span class="pre">random_world()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#pomdp-py-problems-multi-object-search-problem-module">pomdp_py.problems.multi_object_search.problem module</a></li>
+<li><a class="reference internal" href="#module-pomdp_py.problems.multi_object_search.problem">pomdp_py.problems.multi_object_search.problem module</a><ul>
+<li><a class="reference internal" href="#pomdp_py.problems.multi_object_search.problem.MosOOPOMDP"><code class="docutils literal notranslate"><span class="pre">MosOOPOMDP</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.problems.multi_object_search.problem.belief_update"><code class="docutils literal notranslate"><span class="pre">belief_update()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.problems.multi_object_search.problem.solve"><code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li><a class="reference internal" href="#pomdp_py.problems.multi_object_search.problem.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-pomdp_py.problems.multi_object_search">Module contents</a></li>
 </ul>
 </li>
@@ -76,8 +85,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API References</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pomdp_py</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pomdp_py</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.html">pomdp_py package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pomdp_py.problems.html">pomdp_py.problems package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pomdp_py.problems.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.html#module-pomdp_py.problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -93,6 +110,12 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pomdp_py</a><ul>
+  <li><a href="pomdp_py.problems.html">pomdp_py.problems package</a><ul>
+      <li>Previous: <a href="pomdp_py.problems.maze.models.components.html" title="previous chapter">pomdp_py.problems.maze.models.components package</a></li>
+      <li>Next: <a href="pomdp_py.problems.multi_object_search.agent.html" title="next chapter">pomdp_py.problems.multi_object_search.agent package</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -132,6 +155,15 @@
             
   <section id="pomdp-py-problems-multi-object-search-package">
 <h1>pomdp_py.problems.multi_object_search package<a class="headerlink" href="#pomdp-py-problems-multi-object-search-package" title="Link to this heading">¶</a></h1>
+</section>
+<section id="multi-object-search-mos-task">
+<h1>Multi-Object Search (MOS) Task<a class="headerlink" href="#multi-object-search-mos-task" title="Link to this heading">¶</a></h1>
+<p>This task is based on the Multi-Object Search (MOS) task described in the
+following paper</p>
+<p><a class="reference external" href="https://h2r.cs.brown.edu/wp-content/uploads/wandzel19.pdf">Multi-Object Search using Object-Oriented POMDPs</a> (ICRA 2019)</p>
+<p>In this implementation, we consider a different (simpler) motion action scheme,
+instead of based on topological graph and room connectivity.</p>
+<p>Refer to <span class="xref std std-doc">examples.mos</span> for more details.</p>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -235,7 +267,28 @@
 <li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.env.make_proximity_sensor"><code class="docutils literal notranslate"><span class="pre">make_proximity_sensor()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp-py-problems-multi-object-search-env-visual-module">pomdp_py.problems.multi_object_search.env.visual module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#module-pomdp_py.problems.multi_object_search.env.visual">pomdp_py.problems.multi_object_search.env.visual module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.object_color"><code class="docutils literal notranslate"><span class="pre">object_color()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz"><code class="docutils literal notranslate"><span class="pre">MosViz</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.img_width"><code class="docutils literal notranslate"><span class="pre">MosViz.img_width</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.img_height"><code class="docutils literal notranslate"><span class="pre">MosViz.img_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.last_observation"><code class="docutils literal notranslate"><span class="pre">MosViz.last_observation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.update"><code class="docutils literal notranslate"><span class="pre">MosViz.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.draw_robot"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.draw_observation"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_observation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.draw_belief"><code class="docutils literal notranslate"><span class="pre">MosViz.draw_belief()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_init"><code class="docutils literal notranslate"><span class="pre">MosViz.on_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_event"><code class="docutils literal notranslate"><span class="pre">MosViz.on_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_loop"><code class="docutils literal notranslate"><span class="pre">MosViz.on_loop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_render"><code class="docutils literal notranslate"><span class="pre">MosViz.on_render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_cleanup"><code class="docutils literal notranslate"><span class="pre">MosViz.on_cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.on_execute"><code class="docutils literal notranslate"><span class="pre">MosViz.on_execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.MosViz.render_env"><code class="docutils literal notranslate"><span class="pre">MosViz.render_env()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#pomdp_py.problems.multi_object_search.env.visual.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="pomdp_py.problems.multi_object_search.env.html#module-pomdp_py.problems.multi_object_search.env">Module contents</a></li>
 </ul>
 </li>
@@ -327,8 +380,54 @@
 <dd></dd></dl>
 
 </section>
-<section id="pomdp-py-problems-multi-object-search-problem-module">
-<h2>pomdp_py.problems.multi_object_search.problem module<a class="headerlink" href="#pomdp-py-problems-multi-object-search-problem-module" title="Link to this heading">¶</a></h2>
+<section id="module-pomdp_py.problems.multi_object_search.problem">
+<span id="pomdp-py-problems-multi-object-search-problem-module"></span><h2>pomdp_py.problems.multi_object_search.problem module<a class="headerlink" href="#module-pomdp_py.problems.multi_object_search.problem" title="Link to this heading">¶</a></h2>
+<p>2D Multi-Object Search (MOS) Task.
+Uses the domain, models, and agent/environment
+to actually define the POMDP problem for multi-object search.
+Then, solve it using POUCT or POMCP.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pomdp_py.problems.multi_object_search.problem.MosOOPOMDP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.problems.multi_object_search.problem.</span></span><span class="sig-name descname"><span class="pre">MosOOPOMDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">belief_rep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'histogram'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_has_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/problems/multi_object_search/problem.html#MosOOPOMDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.problems.multi_object_search.problem.MosOOPOMDP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.oopomdp.OOPOMDP" title="pomdp_py.framework.oopomdp.OOPOMDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">OOPOMDP</span></code></a></p>
+<p>A MosOOPOMDP is instantiated given a string description
+of the search world, sensor descriptions for robots,
+and the necessary parameters for the agent’s models.</p>
+<p>Note: This is of course a simulation, where you can
+generate a world and know where the target objects are
+and then construct the Environment object. But in the
+real robot scenario, you don’t know where the objects
+are. In that case, as I have done it in the past, you
+could construct an Environment object and give None to
+the object poses.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_py.problems.multi_object_search.problem.belief_update">
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.problems.multi_object_search.problem.</span></span><span class="sig-name descname"><span class="pre">belief_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_observation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_robot_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/problems/multi_object_search/problem.html#belief_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.problems.multi_object_search.problem.belief_update" title="Link to this definition">¶</a></dt>
+<dd><p>Updates the agent’s belief; The belief update may happen
+through planner update (e.g. when planner is POMCP).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_py.problems.multi_object_search.problem.solve">
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.problems.multi_object_search.problem.</span></span><span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planning_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exploration_const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visualize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/problems/multi_object_search/problem.html#solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.problems.multi_object_search.problem.solve" title="Link to this definition">¶</a></dt>
+<dd><p>This function terminates when:
+- maximum time (max_time) reached; This time includes planning and updates
+- agent has planned <cite>max_steps</cite> number of steps
+- agent has taken n FindAction(s) where n = number of target objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>visualize</strong> (<em>bool</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pomdp_py.problems.multi_object_search.problem.unittest">
+<span class="sig-prename descclassname"><span class="pre">pomdp_py.problems.multi_object_search.problem.</span></span><span class="sig-name descname"><span class="pre">unittest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pomdp_py/problems/multi_object_search/problem.html#unittest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pomdp_py.problems.multi_object_search.problem.unittest" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-pomdp_py.problems.multi_object_search">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pomdp_py.problems.multi_object_search" title="Link to this heading">¶</a></h2>

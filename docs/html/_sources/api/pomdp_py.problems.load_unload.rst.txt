@@ -1,6 +1,8 @@
 pomdp\_py.problems.load\_unload package
 =======================================
 
+.. include:: ../../../pomdp_py/problems/load_unload/README.rst
+
 Submodules
 ----------
 

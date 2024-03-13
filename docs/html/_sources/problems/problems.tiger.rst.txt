@@ -1,0 +1,29 @@
+problems.tiger package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.tiger.cythonize
+
+Submodules
+----------
+
+problems.tiger.tiger\_problem module
+------------------------------------
+
+.. automodule:: problems.tiger.tiger_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.tiger
+   :members:
+   :undoc-members:
+   :show-inheritance:

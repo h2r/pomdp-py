@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>problems package &#8212; pomdp_py 1.3.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
+    <script src="../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="problems.lasertag package" href="problems.lasertag.html" />
+    <link rel="prev" title="problems" href="modules.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=h2r&repo=pomdp-py&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">problems package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_principles.html">Design Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../existing_solvers.html">Existing POMDP Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">What's New?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">pomdp_py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">problems</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">problems package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-problems">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://h2r.cs.brown.edu/">H2R lab</a></li>
+    
+    <li class="toctree-l1"><a href="http://kaiyuzh.me">Kaiyu's homepage</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">problems</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">problems</a></li>
+      <li>Next: <a href="problems.lasertag.html" title="next chapter">problems.lasertag package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+<h3 class="donation">Donate/support</h3>
+
+
+
+<p>
+<a class="badge" href="paypal.me/zkytony/10">
+<img src="https://img.shields.io/badge/donate-%E2%9D%A4%C2%A0-ff69b4.svg?style=flat" alt="Donate">
+</a>
+</p>
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="problems-package">
+<h1>problems package<a class="headerlink" href="#problems-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="problems.lasertag.html">problems.lasertag package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.lasertag.html#module-problems.lasertag">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.light_dark.html">problems.light_dark package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.light_dark.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.light_dark.agent.html">problems.light_dark.agent package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.agent.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.agent.html#problems-light-dark-agent-belief-module">problems.light_dark.agent.belief module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.agent.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.light_dark.domain.html">problems.light_dark.domain package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.domain.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.domain.html#problems-light-dark-domain-action-module">problems.light_dark.domain.action module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.domain.html#problems-light-dark-domain-observation-module">problems.light_dark.domain.observation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.domain.html#problems-light-dark-domain-state-module">problems.light_dark.domain.state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.domain.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.light_dark.env.html">problems.light_dark.env package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.env.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.env.html#problems-light-dark-env-env-module">problems.light_dark.env.env module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.env.html#problems-light-dark-env-plotting-module">problems.light_dark.env.plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.env.html#problems-light-dark-env-visual-module">problems.light_dark.env.visual module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.env.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.light_dark.models.html">problems.light_dark.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.models.html#problems-light-dark-models-observation-model-module">problems.light_dark.models.observation_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.models.html#problems-light-dark-models-transition-model-module">problems.light_dark.models.transition_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.light_dark.models.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.light_dark.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.light_dark.html#problems-light-dark-problem-discrete-module">problems.light_dark.problem_discrete module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.light_dark.html#problems-light-dark-test-module">problems.light_dark.test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.light_dark.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.load_unload.html">problems.load_unload package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.load_unload.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.load_unload.html#module-problems.load_unload.load_unload">problems.load_unload.load_unload module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUState"><code class="docutils literal notranslate"><span class="pre">LUState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUAction"><code class="docutils literal notranslate"><span class="pre">LUAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUObservation"><code class="docutils literal notranslate"><span class="pre">LUObservation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUObservationModel"><code class="docutils literal notranslate"><span class="pre">LUObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">LUObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">LUObservationModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">LUObservationModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUTransitionModel"><code class="docutils literal notranslate"><span class="pre">LUTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">LUTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">LUTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">LUTransitionModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LURewardModel"><code class="docutils literal notranslate"><span class="pre">LURewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LURewardModel.probability"><code class="docutils literal notranslate"><span class="pre">LURewardModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LURewardModel.sample"><code class="docutils literal notranslate"><span class="pre">LURewardModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LURewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">LURewardModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUPolicyModel"><code class="docutils literal notranslate"><span class="pre">LUPolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUPolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">LUPolicyModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUPolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">LUPolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUPolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">LUPolicyModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LUPolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">LUPolicyModel.get_all_actions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.LoadUnloadProblem"><code class="docutils literal notranslate"><span class="pre">LoadUnloadProblem</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.generate_random_state"><code class="docutils literal notranslate"><span class="pre">generate_random_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.generate_init_belief"><code class="docutils literal notranslate"><span class="pre">generate_init_belief()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.load_unload.html#problems.load_unload.load_unload.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.load_unload.html#module-problems.load_unload">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.maze.html">problems.maze package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.maze.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.maze.domain.html">problems.maze.domain package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.domain.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.domain.html#module-problems.maze.domain.action">problems.maze.domain.action module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.domain.html#module-problems.maze.domain.observation">problems.maze.domain.observation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.domain.html#module-problems.maze.domain.state">problems.maze.domain.state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.domain.html#module-problems.maze.domain">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.maze.env.html">problems.maze.env package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.env.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.env.html#module-problems.maze.env.env">problems.maze.env.env module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.env.html#module-problems.maze.env">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.maze.models.html">problems.maze.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.models.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.maze.models.html#module-problems.maze.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.maze.html#module-problems.maze">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.maze.html#maze">Maze</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.multi_object_search.html">problems.multi_object_search package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.multi_object_search.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.agent.html">problems.multi_object_search.agent package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.agent.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.agent.html#module-problems.multi_object_search.agent.agent">problems.multi_object_search.agent.agent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.agent.html#module-problems.multi_object_search.agent.belief">problems.multi_object_search.agent.belief module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.agent.html#module-problems.multi_object_search.agent">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.domain.html">problems.multi_object_search.domain package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.domain.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.domain.html#module-problems.multi_object_search.domain.action">problems.multi_object_search.domain.action module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.domain.html#module-problems.multi_object_search.domain.observation">problems.multi_object_search.domain.observation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.domain.html#module-problems.multi_object_search.domain.state">problems.multi_object_search.domain.state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.domain.html#module-problems.multi_object_search.domain">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.env.html">problems.multi_object_search.env package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.env.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.env.html#module-problems.multi_object_search.env.env">problems.multi_object_search.env.env module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.env.html#module-problems.multi_object_search.env.visual">problems.multi_object_search.env.visual module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.env.html#module-problems.multi_object_search.env">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.models.html">problems.multi_object_search.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#module-problems.multi_object_search.models.observation_model">problems.multi_object_search.models.observation_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#module-problems.multi_object_search.models.policy_model">problems.multi_object_search.models.policy_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#module-problems.multi_object_search.models.reward_model">problems.multi_object_search.models.reward_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#module-problems.multi_object_search.models.transition_model">problems.multi_object_search.models.transition_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.multi_object_search.models.html#module-problems.multi_object_search.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.multi_object_search.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.multi_object_search.html#module-problems.multi_object_search.example_worlds">problems.multi_object_search.example_worlds module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.html#problems.multi_object_search.example_worlds.random_world"><code class="docutils literal notranslate"><span class="pre">random_world()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.multi_object_search.html#module-problems.multi_object_search.problem">problems.multi_object_search.problem module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.html#problems.multi_object_search.problem.MosOOPOMDP"><code class="docutils literal notranslate"><span class="pre">MosOOPOMDP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.html#problems.multi_object_search.problem.belief_update"><code class="docutils literal notranslate"><span class="pre">belief_update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.html#problems.multi_object_search.problem.solve"><code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.multi_object_search.html#problems.multi_object_search.problem.unittest"><code class="docutils literal notranslate"><span class="pre">unittest()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.multi_object_search.html#module-problems.multi_object_search">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.rocksample.html">problems.rocksample package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.rocksample.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.cythonize.html">problems.rocksample.cythonize package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.cythonize.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.cythonize.html#module-problems.rocksample.cythonize.rocksample_problem">problems.rocksample.cythonize.rocksample_problem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.cythonize.html#id1">problems.rocksample.cythonize.rocksample_problem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.cythonize.html#problems-rocksample-cythonize-run-rocksample-module">problems.rocksample.cythonize.run_rocksample module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.cythonize.html#module-problems.rocksample.cythonize">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.rocksample.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.rocksample.html#module-problems.rocksample.rocksample_problem">problems.rocksample.rocksample_problem module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.euclidean_dist"><code class="docutils literal notranslate"><span class="pre">euclidean_dist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockType"><code class="docutils literal notranslate"><span class="pre">RockType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockType.GOOD"><code class="docutils literal notranslate"><span class="pre">RockType.GOOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockType.BAD"><code class="docutils literal notranslate"><span class="pre">RockType.BAD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockType.invert"><code class="docutils literal notranslate"><span class="pre">RockType.invert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockType.random"><code class="docutils literal notranslate"><span class="pre">RockType.random()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.State"><code class="docutils literal notranslate"><span class="pre">State</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.MoveAction"><code class="docutils literal notranslate"><span class="pre">MoveAction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.MoveAction.EAST"><code class="docutils literal notranslate"><span class="pre">MoveAction.EAST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.MoveAction.WEST"><code class="docutils literal notranslate"><span class="pre">MoveAction.WEST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.MoveAction.NORTH"><code class="docutils literal notranslate"><span class="pre">MoveAction.NORTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.MoveAction.SOUTH"><code class="docutils literal notranslate"><span class="pre">MoveAction.SOUTH</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.SampleAction"><code class="docutils literal notranslate"><span class="pre">SampleAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.CheckAction"><code class="docutils literal notranslate"><span class="pre">CheckAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.Observation"><code class="docutils literal notranslate"><span class="pre">Observation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSTransitionModel"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSTransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSTransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSTransitionModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSTransitionModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSObservationModel"><code class="docutils literal notranslate"><span class="pre">RSObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSObservationModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSObservationModel.argmax()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSRewardModel"><code class="docutils literal notranslate"><span class="pre">RSRewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSRewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSRewardModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSRewardModel.probability"><code class="docutils literal notranslate"><span class="pre">RSRewardModel.probability()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel.probability"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel.argmax"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.argmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.get_all_actions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RSPolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">RSPolicyModel.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockSampleProblem"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockSampleProblem.random_free_location"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.random_free_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockSampleProblem.in_exit_area"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.in_exit_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockSampleProblem.generate_instance"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.generate_instance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.RockSampleProblem.print_state"><code class="docutils literal notranslate"><span class="pre">RockSampleProblem.print_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.init_particles_belief"><code class="docutils literal notranslate"><span class="pre">init_particles_belief()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.minimal_instance"><code class="docutils literal notranslate"><span class="pre">minimal_instance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.create_instance"><code class="docutils literal notranslate"><span class="pre">create_instance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.rocksample.html#problems.rocksample.rocksample_problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.rocksample.html#module-problems.rocksample">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.tag.html">problems.tag package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.agent.html">problems.tag.agent package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.agent.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.agent.html#module-problems.tag.agent.agent">problems.tag.agent.agent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.agent.html#module-problems.tag.agent">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.domain.html">problems.tag.domain package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.domain.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.domain.html#module-problems.tag.domain.action">problems.tag.domain.action module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.domain.html#module-problems.tag.domain.observation">problems.tag.domain.observation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.domain.html#module-problems.tag.domain.state">problems.tag.domain.state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.domain.html#module-problems.tag.domain">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.env.html">problems.tag.env package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.env.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.env.html#module-problems.tag.env.env">problems.tag.env.env module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.env.html#module-problems.tag.env.visual">problems.tag.env.visual module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.env.html#module-problems.tag.env">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.models.html">problems.tag.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#module-problems.tag.models.observation_model">problems.tag.models.observation_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#module-problems.tag.models.policy_model">problems.tag.models.policy_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#module-problems.tag.models.reward_model">problems.tag.models.reward_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#module-problems.tag.models.transition_model">problems.tag.models.transition_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tag.models.html#module-problems.tag.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#module-problems.tag.constants">problems.tag.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#module-problems.tag.example_worlds">problems.tag.example_worlds module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#module-problems.tag.experiment">problems.tag.experiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.html#problems.tag.experiment.trial"><code class="docutils literal notranslate"><span class="pre">trial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.html#problems.tag.experiment.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#module-problems.tag.problem">problems.tag.problem module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.html#problems.tag.problem.TagProblem"><code class="docutils literal notranslate"><span class="pre">TagProblem</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.html#problems.tag.problem.solve"><code class="docutils literal notranslate"><span class="pre">solve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tag.html#problems.tag.problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tag.html#module-problems.tag">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problems.tiger.html">problems.tiger package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="problems.tiger.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.cythonize.html">problems.tiger.cythonize package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.cythonize.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.cythonize.html#problems-tiger-cythonize-run-tiger-module">problems.tiger.cythonize.run_tiger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.cythonize.html#module-problems.tiger.cythonize.tiger_problem">problems.tiger.cythonize.tiger_problem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.cythonize.html#id1">problems.tiger.cythonize.tiger_problem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.cythonize.html#module-problems.tiger.cythonize">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tiger.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tiger.html#module-problems.tiger.tiger_problem">problems.tiger.tiger_problem module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerState"><code class="docutils literal notranslate"><span class="pre">TigerState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerState.other"><code class="docutils literal notranslate"><span class="pre">TigerState.other()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerAction"><code class="docutils literal notranslate"><span class="pre">TigerAction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerObservation"><code class="docutils literal notranslate"><span class="pre">TigerObservation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.ObservationModel"><code class="docutils literal notranslate"><span class="pre">ObservationModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.probability"><code class="docutils literal notranslate"><span class="pre">ObservationModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.sample"><code class="docutils literal notranslate"><span class="pre">ObservationModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.ObservationModel.get_all_observations"><code class="docutils literal notranslate"><span class="pre">ObservationModel.get_all_observations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TransitionModel"><code class="docutils literal notranslate"><span class="pre">TransitionModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.probability"><code class="docutils literal notranslate"><span class="pre">TransitionModel.probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.sample"><code class="docutils literal notranslate"><span class="pre">TransitionModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TransitionModel.get_all_states"><code class="docutils literal notranslate"><span class="pre">TransitionModel.get_all_states()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.RewardModel"><code class="docutils literal notranslate"><span class="pre">RewardModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.RewardModel.sample"><code class="docutils literal notranslate"><span class="pre">RewardModel.sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.PolicyModel"><code class="docutils literal notranslate"><span class="pre">PolicyModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.ACTIONS"><code class="docutils literal notranslate"><span class="pre">PolicyModel.ACTIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.sample"><code class="docutils literal notranslate"><span class="pre">PolicyModel.sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.rollout"><code class="docutils literal notranslate"><span class="pre">PolicyModel.rollout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.PolicyModel.get_all_actions"><code class="docutils literal notranslate"><span class="pre">PolicyModel.get_all_actions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerProblem"><code class="docutils literal notranslate"><span class="pre">TigerProblem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.TigerProblem.create"><code class="docutils literal notranslate"><span class="pre">TigerProblem.create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.test_planner"><code class="docutils literal notranslate"><span class="pre">test_planner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.make_tiger"><code class="docutils literal notranslate"><span class="pre">make_tiger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="problems.tiger.html#problems.tiger.tiger_problem.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="problems.tiger.html#module-problems.tiger">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-problems">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-problems" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2020-2021, H2R@Brown.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/problems/problems.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

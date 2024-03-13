@@ -1,0 +1,20 @@
+problems.maze package
+=====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   problems.maze.domain
+   problems.maze.env
+   problems.maze.models
+
+Module contents
+---------------
+
+.. automodule:: problems.maze
+   :members:
+   :undoc-members:
+   :show-inheritance:

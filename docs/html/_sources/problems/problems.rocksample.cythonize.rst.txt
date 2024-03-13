@@ -1,0 +1,37 @@
+problems.rocksample.cythonize package
+=====================================
+
+Submodules
+----------
+
+problems.rocksample.cythonize.rocksample\_problem module
+--------------------------------------------------------
+
+.. automodule:: problems.rocksample.cythonize.rocksample_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.rocksample.cythonize.rocksample\_problem module
+--------------------------------------------------------
+
+.. automodule:: problems.rocksample.cythonize.rocksample_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+problems.rocksample.cythonize.run\_rocksample module
+----------------------------------------------------
+
+.. automodule:: problems.rocksample.cythonize.run_rocksample
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: problems.rocksample.cythonize
+   :members:
+   :undoc-members:
+   :show-inheritance:
