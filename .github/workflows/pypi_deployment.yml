@@ -94,7 +94,7 @@ jobs:
 
     - uses: actions/checkout@v4
       with:
-        ref: "dev-${{ env.VERSION }}"
+        ref: "main"
 
     - name: Install dependencies
       run: |
