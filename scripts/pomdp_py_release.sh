@@ -82,7 +82,7 @@ find_pxd_files_and_write_manifest ./ MANIFEST.in
 version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
 attempt_count=""
 if [ $# -gt 0 ]; then
-    attempt_count="-$1-"
+    attempt_count="-$1"
 fi
 echo $version
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
@@ -114,7 +114,7 @@ command="auditwheel repair io/dist/${wheel_name} -w /io/wheelhouse/"
 docker run --user $(id -u):$(id -g) --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image bash -c "$command"
 rm $pomdp_py_path/dist/$wheel_name
 fixed_wheel_name="pomdp_py-${version}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
-fixed_wheel_name_with_attempt="pomdp_py-${version}${attempt_count}${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
+fixed_wheel_name_with_attempt="pomdp_py-${version}${attempt_count}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
 mv "$pomdp_py_path/wheelhouse/$fixed_wheel_name" "$pomdp_py_path/dist/$fixed_wheel_name_with_attempt"
 rm -r $pomdp_py_path/wheelhouse
 
