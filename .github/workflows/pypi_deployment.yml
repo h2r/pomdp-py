@@ -58,12 +58,6 @@ jobs:
         repository_url: https://test.pypi.org/legacy/
         skip-existing: true
 
-    - name: Release artifact
-      uses: softprops/action-gh-release@v1
-      with:
-        name: ${{ env.RELEASE_NAME }}
-        files: dist/*.whl
-
 
   pypi-publish:
     name: publish to PyPi
