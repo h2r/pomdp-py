@@ -87,10 +87,8 @@ fi
 echo $version
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
-        if ! is_git_repo_on_branch $pomdp_py_path main; then
-            echo "pomdp-py repo must be either on dev-latest or dev-$version, or main, but not $current_branch. Abort"
-            exit 1
-        fi
+        echo "pomdp-py repo must be either on dev-latest or dev-$version, but not $current_branch. Abort"
+        exit 1
     fi
 fi
 
