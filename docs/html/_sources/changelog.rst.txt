@@ -13,20 +13,8 @@ Version 1.3.5 (03/12/2024)
 * Improved modularity and documentation for the RockSample example
 * :py:mod:`~pomdp_py.representations.distribution.particles.WeightedParticles` now hashable if frozen.
 * Changed :code:`det_dict_hash` to not use sorting
-* Added a GHA workflow  for automatically building, releasing wheels and uploading them to PyPI
-* Repo convention: default branch renamed from :code:`master` to :code:`main`, and :code:`dev-latest` is the development branch.
-
-
-WeightedParticles now hashable if frozen
-Refactor _search in POUCT for more modularity
-added a workflow that builds wheel
-*
-
-Modernize repo without introducing new features.
-* Migrate to :code:`pyproject.toml` to specify dependencies, with minimal :code:`setup.py` to build Cython extensions.
-* Separate core and optional dependencies. Optional dependencies are needed only for `pomdp_py.problems`.
-* Added CI testing to repo.
-* Added pre-commit checks to repo.
+* Added a Github Action workflow  for automatically building, releasing wheels and uploading them to PyPI
+* Default branch renamed to :code:`main`, and :code:`dev-latest` is the development branch. Before a release, :code:`dev-<version>` should be created based off of :code:`dev-latest`.
 
 
 Version 1.3.4 (01/26/2024)
