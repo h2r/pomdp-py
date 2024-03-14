@@ -440,6 +440,7 @@ class RockSampleProblem(pomdp_py.POMDP):
             RSTransitionModel(n, rock_locs, self.in_exit_area),
             RSObservationModel(rock_locs, half_efficiency_dist=half_efficiency_dist),
             RSRewardModel(rock_locs, self.in_exit_area),
+            name=f"RockSampleAgent({n}, {k})"
         )
         env = pomdp_py.Environment(
             init_state,
