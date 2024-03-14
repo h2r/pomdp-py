@@ -37,6 +37,7 @@ cdef class Agent:
     cdef GenerativeDistribution _cur_belief
     cdef tuple _history
     cdef dict __dict__
+    cdef str _name
 
 cdef class Environment:
     cdef State _init_state

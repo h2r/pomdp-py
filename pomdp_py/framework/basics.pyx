@@ -327,18 +327,20 @@ cdef class Agent:
     OR :class:`BlackboxModel` to the planner or the belief update algorithm.
 
     __init__(self, init_belief,
-             policy_model,
+             policy_model=None,
              transition_model=None,
              observation_model=None,
              reward_model=None,
-             blackbox_model=None)
+             blackbox_model=None,
+             name=None)
     """
     def __init__(self, init_belief,
                  policy_model=None,
                  transition_model=None,
                  observation_model=None,
                  reward_model=None,
-                 blackbox_model=None):
+                 blackbox_model=None,
+                 name=None):
         self._init_belief = init_belief
         self._policy_model = policy_model
 
@@ -346,6 +348,7 @@ cdef class Agent:
         self._observation_model = observation_model
         self._reward_model = reward_model
         self._blackbox_model = blackbox_model
+        self._name = name
 
         # For online planning
         self._cur_belief = init_belief
@@ -414,6 +417,15 @@ cdef class Agent:
     @property
     def generative_model(self):
         return self.blackbox_model
+
+    @property
+    def name(self):
+        return self._name
+
+    def set_name(self, str name):
+        """set_name(self, str name)
+        gives this agent a name"""
+        self._name = name
 
     def set_models(self, transition_model=None, observation_model=None,
                    reward_model=None, blackbox_model=None, policy_model=None):
