@@ -320,11 +320,11 @@ cdef class Observation:
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving
     observations, and updating its belief. Deciding what action to take is the
-    job of a planner (:class:`Planner`), and the belief update is the job taken
-    care of by the belief representation or the planner. The Agent supplies its
-    own version of the :class:`TransitionModel`, :class:`ObservationModel`,
-    :class:`RewardModel`, OR :class:`BlackboxModel` to the planner or the belief
-    update algorithm.
+    job of a planner (:class:`Planner`), and the belief update is usually done
+    outside of the agent, taken care of e.g. by the belief representation, or by
+    the planner. The Agent supplies its own version of the
+    :class:`TransitionModel`, :class:`ObservationModel`, :class:`RewardModel`,
+    OR :class:`BlackboxModel` to the planner or the belief update algorithm.
 
     __init__(self, init_belief,
              policy_model,
