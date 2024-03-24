@@ -15,7 +15,7 @@ it will do the rollouts and action selection as described.
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
-    sample_generative_model
+    sample_generative_model, Response
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
 from pomdp_py.representations.belief.particles cimport particle_reinvigoration
@@ -46,58 +46,60 @@ cdef class PORollout(Planner):
         self._particles = particles
 
         self._agent = None
-        self._last_best_reward = float('-inf')
+        self._last_best_response = Response({"reward": float('-inf')})
 
     @property
-    def last_best_reward(self):
-        return self._last_best_reward
+    def last_best_response(self):
+        return self._last_best_response
 
     cpdef public plan(self, Agent agent):
         self._agent = agent
-        best_action, best_reward = self._search()
-        self._last_best_reward = best_reward
+        best_action, best_response = self._search()
+        self._last_best_response = best_response
         return best_action
 
     cpdef _search(self):
         cdef Action best_action
-        cdef float best_reward, reward_avg, total_discounted_reward
+        cdef Response best_response = Response()
+        cdef Response response_avg = Response()
+        cdef Response total_discounted_response = Response()
         cdef set legal_actions
-        cdef list rewards
+        cdef list responses
 
-        best_action, best_reward = None, float("-inf")
+        best_action, best_response["reward"] = None, float("-inf")
         legal_actions = self._agent.valid_actions(history=self._agent.history)
         for action in legal_actions:
-            rewards = []
+            responses = []
             for i in range(self._num_sims // len(legal_actions)):
                 state = self._agent.belief.random()
-                total_discounted_reward = self._rollout(state, 0)
-                rewards.append(total_discounted_reward)
-            reward_avg = sum(rewards) / len(rewards)
-            if reward_avg > best_reward:
+                total_discounted_response = self._rollout(state, 0)
+                responses.append(total_discounted_response["reward"])
+            response_avg["reward"] = sum(responses) / len(responses)
+            if response_avg["reward"] > best_response["reward"]:
                 best_action = action
-                best_reward = reward_avg
-        return best_action, best_reward
+                best_response["reward"] = response_avg["reward"]
+        return best_action, best_response
 
     cpdef _rollout(self, State state, int depth):
         # Rollout without a tree.
         cdef Action action
         cdef float discount = 1.0
-        cdef float total_discounted_reward = 0
+        cdef Response total_discounted_response = Response()
         cdef State next_state
         cdef Observation observation
-        cdef float reward
+        cdef Response response = Response()
         cdef int nsteps
         cdef tuple history = self._agent.history
 
         while depth <= self._max_depth:
             action = self._rollout_policy.rollout(state, history=history)
-            next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
+            next_state, observation, response, nsteps = sample_generative_model(self._agent, state, action)
             history = history + ((action, observation),)
             depth += 1
-            total_discounted_reward += reward * discount
+            total_discounted_response = total_discounted_response + response * discount
             discount *= self._discount_factor
             state = next_state
-        return total_discounted_reward
+        return total_discounted_response
 
     cpdef update(self, Agent agent, Action real_action, Observation real_observation,
                  state_transform_func=None):
@@ -110,7 +112,7 @@ cdef class PORollout(Planner):
             if not isinstance(cur_belief, Particles):
                 raise ValueError("Agent's belief is not in particles.")
             for state in cur_belief.particles:
-                next_state, observation, reward, nsteps = sample_generative_model(agent, state,
+                next_state, observation, response, nsteps = sample_generative_model(agent, state,
                                                                                   real_action)
                 if observation == real_observation:
                     new_belief.add(next_state)
@@ -128,7 +130,7 @@ cdef class PORollout(Planner):
     def clear_agent(self):
         """clear_agent(self)"""
         self._agent = None  # forget about current agent so that can plan for another agent.
-        self._last_best_reward = float('-inf')
+        self._last_best_response["reward"] = float('-inf')
 
     cpdef set_rollout_policy(self, RolloutPolicy rollout_policy):
         """

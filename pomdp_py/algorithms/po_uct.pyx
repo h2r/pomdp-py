@@ -35,7 +35,7 @@ the prior knowledge.
 
 from pomdp_py.framework.basics cimport Action, Agent, POMDP, State, Observation,\
     ObservationModel, TransitionModel, GenerativeDistribution, PolicyModel,\
-    sample_generative_model
+    sample_generative_model, Response
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.representations.distribution.particles cimport Particles
 from pomdp_py.utils import typ
@@ -64,12 +64,19 @@ cdef class QNode(TreeNode):
         self.num_visits = num_visits
         self.value = value
         self.children = {}  # o -> VNode
+
     def __str__(self):
         return typ.red("QNode") + "(%.3f, %.3f | %s)" % (self.num_visits,
                                                          self.value,
                                                          str(self.children.keys()))
+
     def __repr__(self):
         return self.__str__()
+
+    cpdef void update(QNode self, Response response):
+        self.num_visits += 1
+        self.value = self.value + (response["reward"] - self.value) / self.num_visits
+
 
 cdef class VNode(TreeNode):
     def __init__(self, num_visits, **kwargs):
@@ -98,6 +105,9 @@ cdef class VNode(TreeNode):
                 best_value = self[action].value
         return best_action
 
+    cpdef void update(VNode self):
+        self.num_visits += 1
+        
     @property
     def value(self):
         best_action = max(self.children, key=lambda action: self.children[action].value)
@@ -361,7 +371,7 @@ cdef class POUCT(Planner):
                     State state, tuple history, VNode root, QNode parent,
                     Observation observation, int depth):
         if depth > self._max_depth:
-            return 0
+            return Response()
         if root is None:
             if self._agent.tree is None:
                 root = self._VNode(root=True)
@@ -373,46 +383,46 @@ cdef class POUCT(Planner):
             if parent is not None:
                 parent[observation] = root
             self._expand_vnode(root, history, state=state)
-            rollout_reward = self._rollout(state, history, root, depth)
-            return rollout_reward
+            rollout_response = self._rollout(state, history, root, depth)
+            return rollout_response
         cdef int nsteps
         action = self._ucb(root)
-        next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
+        next_state, observation, response, nsteps = sample_generative_model(self._agent, state, action)
         if nsteps == 0:
             # This indicates the provided action didn't lead to transition
             # Perhaps the action is not allowed to be performed for the given state
             # (for example, the state is not in the initiation set of the option,
             # or the state is a terminal state)
-            return reward
+            return response
 
-        total_reward = reward + (self._discount_factor**nsteps)*self._simulate(next_state,
+        total_response = response + (self._discount_factor**nsteps)*self._simulate(next_state,
                                                                                history + ((action, observation),),
                                                                                root[action][observation],
                                                                                root[action],
                                                                                observation,
                                                                                depth+nsteps)
-        root.num_visits += 1
-        root[action].num_visits += 1
-        root[action].value = root[action].value + (total_reward - root[action].value) / (root[action].num_visits)
-        return total_reward
+                                                                               
+        root.update()
+        root[action].update(total_response)
+        return total_response
 
     cpdef _rollout(self, State state, tuple history, VNode root, int depth):
         cdef Action action
         cdef float discount = 1.0
-        cdef float total_discounted_reward = 0
+        cdef Response total_discounted_response = Response()
         cdef State next_state
         cdef Observation observation
-        cdef float reward
+        cdef Response response = Response()
 
         while depth < self._max_depth:
             action = self._rollout_policy.rollout(state, history)
-            next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
+            next_state, observation, response, nsteps = sample_generative_model(self._agent, state, action)
             history = history + ((action, observation),)
             depth += nsteps
-            total_discounted_reward += reward * discount
+            total_discounted_response = total_discounted_response + response * discount
             discount *= (self._discount_factor**nsteps)
             state = next_state
-        return total_discounted_reward
+        return total_discounted_response
 
     cpdef Action _ucb(self, VNode root):
         """UCB1"""
@@ -436,15 +446,15 @@ cdef class POUCT(Planner):
         '''
         cdef State next_state
         cdef Observation observation
-        cdef float reward
+        cdef Response response
 
         if self._agent.transition_model is None:
-            next_state, observation, reward = self._agent.generative_model.sample(state, action)
+            next_state, observation, response = self._agent.generative_model.sample(state, action)
         else:
             next_state = self._agent.transition_model.sample(state, action)
             observation = self._agent.observation_model.sample(next_state, action)
-            reward = self._agent.reward_model.sample(state, action, next_state)
-        return next_state, observation, reward
+            response = self._agent.response_model.sample(state, action, next_state)
+        return next_state, observation, response
 
     def _VNode(self, root=False, **kwargs):
         """Returns a VNode with default values; The function naming makes it clear

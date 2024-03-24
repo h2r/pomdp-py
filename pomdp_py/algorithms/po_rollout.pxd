@@ -1,4 +1,4 @@
-from pomdp_py.framework.basics cimport Action, State, Observation, Agent
+from pomdp_py.framework.basics cimport Action, State, Observation, Agent, Response
 from pomdp_py.framework.planner cimport Planner
 from pomdp_py.algorithms.po_uct cimport RolloutPolicy, ActionPrior
 
@@ -11,7 +11,7 @@ cdef class PORollout(Planner):
     cdef float _discount_factor
     cdef bint _particles
     cdef Agent _agent
-    cdef float _last_best_reward
+    cdef Response _last_best_response
 
     cpdef _search(self)
     cpdef _rollout(self, State state, int depth)

@@ -186,6 +186,39 @@ cdef class RewardModel:
         Returns the underlying distribution of the model"""
         raise NotImplementedError
 
+cdef class ResponseModel(dict):
+    """A ResponseModel returns a real or simulated response
+    after the agent interacts with the real or a simulated environment.
+    The implementation of this model contains a collection of more
+    specific models such as reward and cost models."""
+
+    def __init__(self, models):
+        if not isinstance(models, dict):
+            raise TypeError("models must be a dictionary of models.")
+        for key, model in models.items():
+            if not hasattr(model, "sample"):
+                raise NotImplementedError(f"Model named {key} must implement a sample function.")
+            self[key] = model
+
+    def sample(self, state, action, next_state, **kwargs):
+        """sample(self, state, action, next_state)
+        Returns a randomly sampled response according to the
+        distribution of the internal models.
+
+        Args:
+            state (~pomdp_py.framework.basics.State): the next state :math:`s`
+            action (~pomdp_py.framework.basics.Action): the action :math:`a`
+            next_state (State): the next state :math:`s'`
+        Returns:
+            Response: the response
+        """
+        return Response(
+            dict([
+                (name, model.sample(state, action, next_state, **kwargs))
+                for name, model in self.items()
+            ])
+        )
+
 cdef class BlackboxModel:
     """
     A BlackboxModel is the generative distribution :math:`G(s,a)`
@@ -317,33 +350,100 @@ cdef class Observation:
     def __ne__(self, other):
         return not self.__eq__(other)
 
+cdef class Vector(list):
+    def __init__(self, values=list()):
+        if not isinstance(values, list):
+            raise TypeError(f"values must be type list, but got {type(values)}.")
+        for v in values:
+            self.append(v)
+
+    def __eq__(self, other):
+        if not isinstance(other, (Vector, list)):
+            raise TypeError(f"other must be type Vector or list, but got {type(other)}.")
+        return len(self) == len(other) and all(v0 == v1 for v0, v1 in zip(self, other))
+
+    def __add__(self, other):
+        if isinstance(other, (float, int)):
+            vec = [other] * len(self)
+        elif isinstance(other, Vector):
+            vec = other
+        else:
+            raise TypeError(f"other must be type Vector, float, or int, but got {type(other)}.")
+        return Vector([v0 + v1 for v0, v1 in zip(self, vec)])
+
+    def __mul__(self, other):
+        if not isinstance(other, (float, int)):
+            raise TypeError(f"other must be type float or int, but got {type(other)}.")
+        return Vector([v * other for v in self])
+
+cdef class Response(dict):
+    """
+    The Response class.
+    """
+    def __init__(self, variables=dict(reward=0.0)):
+        super().__init__()
+        if not isinstance(variables, dict):
+            raise TypeError(f"reward must be type dict, but got {type(variables)}.")
+        for k, v in variables.items():
+            self[k] = v
+
+    def __add__(self, other):
+        if not isinstance(other, Response):
+            raise TypeError("other must be type Response.")
+        return Response(
+            dict([
+                (name, value + other[name])
+                for name, value in self.items()
+            ])
+        )
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        if not isinstance(other, (float, int)):
+            raise TypeError("other must be type float or int.")
+        return Response(
+            dict([
+                (name, value * other)
+                for name, value in self.items()
+            ])
+        )
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __str__(self):
+        return ", ".join([f"{k}={v}" for k, v in self.items()])
+
+
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving
     observations, and updating its belief. Taking actions is the job of a
     planner (:class:`Planner`), and the belief update is the job taken care of
     by the belief representation or the planner. But, the Agent supplies the
-    :class:`TransitionModel`, :class:`ObservationModel`, :class:`RewardModel`,
+    :class:`TransitionModel`, :class:`ObservationModel`, :class:`ResponseModel`,
     OR :class:`BlackboxModel` to the planner or the belief update algorithm.
 
     __init__(self, init_belief,
              policy_model,
              transition_model=None,
              observation_model=None,
-             reward_model=None,
+             response_model=None,
              blackbox_model=None)
     """
     def __init__(self, init_belief,
                  policy_model=None,
                  transition_model=None,
                  observation_model=None,
-                 reward_model=None,
+                 response_model=None,
                  blackbox_model=None):
         self._init_belief = init_belief
         self._policy_model = policy_model
 
         self._transition_model = transition_model
         self._observation_model = observation_model
-        self._reward_model = reward_model
+        self._response_model = response_model
         self._blackbox_model = blackbox_model
 
         # For online planning
@@ -399,8 +499,8 @@ cdef class Agent:
         return self._transition_model
 
     @property
-    def reward_model(self):
-        return self._reward_model
+    def response_model(self):
+        return self._response_model
 
     @property
     def policy_model(self):
@@ -415,14 +515,14 @@ cdef class Agent:
         return self.blackbox_model
 
     def set_models(self, transition_model=None, observation_model=None,
-                   reward_model=None, blackbox_model=None, policy_model=None):
+                   response_model=None, blackbox_model=None, policy_model=None):
         """Re-assign the models to be the ones given."""
         if transition_model is not None:
             self._transition_model = transition_model
         if observation_model is not None:
             self._observation_model = observation_model
-        if reward_model is not None:
-            self._reward_model = reward_model
+        if response_model is not None:
+            self._response_model = response_model
         if blackbox_model is not None:
             self._blackbox_model = blackbox_model
         if policy_model is not None:
@@ -478,17 +578,17 @@ cdef class Environment:
 
     __init__(self, init_state,
              transition_model=None,
-             reward_model=None,
+             response_model=None,
              blackbox_model=None)
     """
     def __init__(self, init_state,
                  transition_model=None,
-                 reward_model=None,
+                 response_model=None,
                  blackbox_model=None):
         self._init_state = init_state
         self._cur_state = init_state
         self._transition_model = transition_model
-        self._reward_model = reward_model
+        self._response_model = response_model
         self._blackbox_model = blackbox_model
 
     @property
@@ -507,21 +607,21 @@ cdef class Environment:
         return self._transition_model
 
     @property
-    def reward_model(self):
-        """The :class:`RewardModel` underlying the environment"""
-        return self._reward_model
+    def response_model(self):
+        """The :class:`ResponseModel` underlying the environment"""
+        return self._response_model
 
     @property
     def blackbox_model(self):
         """The :class:`BlackboxModel` underlying the environment"""
         return self._blackbox_model
 
-    def set_models(self, transition_model=None, reward_model=None, blackbox_model=None):
+    def set_models(self, transition_model=None, response_model=None, blackbox_model=None):
         """Re-assign the models to be the ones given."""
         if transition_model is not None:
             self._transition_model = transition_model
-        if reward_model is not None:
-            self._reward_model = reward_model
+        if response_model is not None:
+            self._response_model = response_model
         if blackbox_model is not None:
             self._blackbox_model = blackbox_model
 
@@ -538,17 +638,17 @@ cdef class Environment:
                 factor when executing actions following an option's policy until reaching terminal condition.
 
         Returns:
-            float or tuple: reward as a result of `action` and state transition, if `execute` is True
-            (next_state, reward) if `execute` is False.
+            Response or tuple: response as a result of `action` and state transition, if `execute` is True
+            (next_state, response) if `execute` is False.
         """
-        next_state, reward, _ = sample_explict_models(self.transition_model, None, self.reward_model,
+        next_state, response, _ = sample_explict_models(self.transition_model, None, self.response_model,
                                                       self.state, action,
                                                       discount_factor=discount_factor)
         if execute:
             self.apply_transition(next_state)
-            return reward
+            return response
         else:
-            return next_state, reward
+            return next_state, response
 
     def apply_transition(self, next_state):
         """
@@ -558,9 +658,9 @@ cdef class Environment:
         self._cur_state = next_state
 
     def execute(self, action, observation_model):
-        reward = self.state_transition(action, execute=True)
+        response = self.state_transition(action, execute=True)
         observation = self.provide_observation(observation_model, action)
-        return (observation, reward)
+        return (observation, response)
 
     def provide_observation(self, observation_model, action):
         """
@@ -652,21 +752,21 @@ cpdef sample_generative_model(Agent agent, State state, Action action, float dis
     else:
         result = sample_explict_models(agent.transition_model,
                                        agent.observation_model,
-                                       agent.reward_model,
+                                       agent.response_model,
                                        state,
                                        action,
                                        discount_factor)
     return result
 
 
-cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R,
+cpdef sample_explict_models(TransitionModel T, ObservationModel O, ResponseModel R,
                             State state, Action action, float discount_factor=1.0):
     """
-    sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R, State state, Action action, float discount_factor=1.0)
+    sample_explict_models(TransitionModel T, ObservationModel O, ResponseModel R, State state, Action action, float discount_factor=1.0)
     """
     cdef State next_state
     cdef Observation observation
-    cdef float reward
+    cdef Response response = Response()
     cdef Option option
     cdef int nsteps = 0
 
@@ -682,17 +782,17 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
             # action will lead to no state change, no observation, and 0 reward,
             # because nothing happened.
             if O is not None:
-                return state, None, 0, 0
+                return state, None, 0, response
             else:
-                return state, 0, 0
+                return state, 0, response
 
-        reward = 0
+        # response = 0
         step_discount_factor = 1.0
         while not option.termination(state):
             action = option.sample(state)
             next_state = T.sample(state, action)
             # For now, we don't care about intermediate observations (future work?).
-            reward += step_discount_factor * R.sample(state, action, next_state)
+            response = response + step_discount_factor * R.sample(state, action, next_state)
             step_discount_factor *= discount_factor
             state = next_state
             nsteps += 1
@@ -700,10 +800,10 @@ cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R
         # (doesn't quite make sense to just use option as the action at this point.)
     else:
         next_state = T.sample(state, action)
-        reward = R.sample(state, action, next_state)
+        response = R.sample(state, action, next_state)
         nsteps += 1
     if O is not None:
         observation = O.sample(next_state, action)
-        return next_state, observation, reward, nsteps
+        return next_state, observation, response, nsteps
     else:
-        return next_state, reward, nsteps
+        return next_state, response, nsteps

@@ -8,6 +8,10 @@ cdef class TransitionModel:
     pass
 cdef class PolicyModel:
     pass
+    
+cdef class ResponseModel(dict):
+    pass
+
 cdef class BlackboxModel:
     pass
 cdef class RewardModel:
@@ -27,6 +31,12 @@ cdef class State:
 cdef class Observation:
     pass
 
+cdef class Vector(list):
+    pass
+
+cdef class Response(dict):
+    pass
+
 cdef class Agent:
     cdef GenerativeDistribution _init_belief
     cdef PolicyModel _policy_model
@@ -41,7 +51,7 @@ cdef class Agent:
 cdef class Environment:
     cdef State _init_state
     cdef TransitionModel _transition_model
-    cdef RewardModel _reward_model
+    cdef ResponseModel _response_model
     cdef BlackboxModel _blackbox_model
     cdef State _cur_state
 
@@ -49,4 +59,4 @@ cdef class Option(Action):
     pass
 
 cpdef sample_generative_model(Agent agent, State state, Action action, float discount_factor=*)
-cpdef sample_explict_models(TransitionModel T, ObservationModel O, RewardModel R, State state, Action a, float discount_factor=*)
+cpdef sample_explict_models(TransitionModel T, ObservationModel O, ResponseModel R, State state, Action a, float discount_factor=*)

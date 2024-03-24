@@ -48,8 +48,8 @@ cdef class _PolicyTreeNode:
                         subtree_value = self.children[o].values[sp]  # corresponds to V_{oi(p)} in paper
                     else:
                         subtree_value = 0.0
-                    reward = self._agent.reward_model.sample(s, self.action, sp)
-                    expected_future_value += trans_prob * obsrv_prob * (reward + discount_factor*subtree_value)
+                    response = self._agent.response_model.sample(s, self.action, sp)
+                    expected_future_value += trans_prob * obsrv_prob * (response["reward"] + discount_factor*subtree_value)
             values[s] = expected_future_value
         return values
 
