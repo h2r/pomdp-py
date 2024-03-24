@@ -217,9 +217,9 @@ class TigerProblem(pomdp_py.POMDP):
             PolicyModel(),
             TransitionModel(),
             ObservationModel(obs_noise),
-            RewardModel(),
+            pomdp_py.ResponseModel({"reward": RewardModel()}),
         )
-        env = pomdp_py.Environment(init_true_state, TransitionModel(), RewardModel())
+        env = pomdp_py.Environment(init_true_state, TransitionModel(), pomdp_py.ResponseModel({"reward": RewardModel()}))
         super().__init__(agent, env, name="TigerProblem")
 
     @staticmethod
@@ -273,7 +273,7 @@ def test_planner(tiger_problem, planner, nsteps=3, debug_tree=False):
         # in real world); In that case, you could skip
         # the state transition and re-estimate the state
         # (e.g. through the perception stack on the robot).
-        reward = tiger_problem.env.reward_model.sample(
+        reward = tiger_problem.env.response_model["reward"].sample(
             tiger_problem.env.state, action, None
         )
         print("Reward:", reward)

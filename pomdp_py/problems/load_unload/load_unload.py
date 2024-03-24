@@ -220,10 +220,10 @@ class LoadUnloadProblem(pomdp_py.POMDP):
             LUPolicyModel(),
             LUTransitionModel(),
             LUObservationModel(),
-            LURewardModel(),
+            pomdp_py.ResponseModel({"reward": LURewardModel()}),
         )
 
-        env = pomdp_py.Environment(init_state, LUTransitionModel(), LURewardModel())
+        env = pomdp_py.Environment(init_state, LUTransitionModel(), pomdp_py.ResponseModel({"reward": LURewardModel()}))
 
         super().__init__(agent, env, name="LoadUnloadProblem")
 
@@ -267,7 +267,8 @@ def test_planner(load_unload_problem, planner, nsteps=3, discount=0.95):
         print("==== Step %d ====" % (t + 1))
         action = planner.plan(load_unload_problem.agent)
 
-        env_reward = load_unload_problem.env.state_transition(action, execute=True)
+        env_response = load_unload_problem.env.state_transition(action, execute=True)
+        env_reward = env_response["reward"]
         true_state = copy.deepcopy(load_unload_problem.env.state)
 
         real_observation = load_unload_problem.env.provide_observation(

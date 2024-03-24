@@ -87,7 +87,7 @@ def solve(
             break  # no more time to update.
 
         # Execute action
-        reward = problem.env.state_transition(real_action, execute=True)
+        response = problem.env.state_transition(real_action, execute=True)
 
         # Receive observation
         _start = time.time()
@@ -104,13 +104,13 @@ def solve(
         _time_used += time.time() - _start
 
         # Info and render
-        _total_reward += reward
-        _total_discounted_reward += reward * _discount
+        _total_reward += response["reward"]
+        _total_discounted_reward += response["reward"] * _discount
         _discount = _discount * discount_factor
         print("==== Step %d ====" % (i + 1))
         print("Action: %s" % str(real_action))
         print("Observation: %s" % str(real_observation))
-        print("Reward: %s" % str(reward))
+        print("Reward: %s" % str(response["reward"]))
         print("Reward (Cumulative): %s" % str(_total_reward))
         print("Reward (Discounted): %s" % str(_total_discounted_reward))
         print("Find Actions Count: %d" % _find_actions_count)
