@@ -197,6 +197,17 @@ cdef class ResponseModel:
     
     @staticmethod
     def generate_response_model(model_dict, response=Response()):
+        """
+        Generate a response model based on a dictionary of model attributes. This is a 
+        convenience method to make it easier to build a Response model.
+         
+        Args:
+         	model_dict (dict): A dictionary of models in the form {model_type: model} (e.g., {reward: reward_model})
+         	response (Response): A response that will be used to generate new responses.
+         
+        Returns: 
+         	The response model.
+        """
         # Do a sanity check to ensure the response model and response are compatible.
         for name in model_dict.keys():
             if not hasattr(response, name):
@@ -208,6 +219,12 @@ cdef class ResponseModel:
         return model
 
     def add_attrs(self, attr_dict):
+        """
+        Adds attributes to this object dynamically.
+
+         Args:
+         	attr_dict: A dictionary of attribute names and values.
+        """
         if not isinstance(attr_dict, dict):
             raise TypeError(f"attr_dict must be type dict, but got {type(attr_dict)}.")
 
@@ -217,6 +234,12 @@ cdef class ResponseModel:
             setattr(self, ak, None)
 
     def add_models(self, model_dict):
+        """
+        Add models to the response.
+        
+        Args:
+         	model_dict: A dictionary of models in the form {model_type: model} (e.g., {reward: reward_model}).
+        """
         if not isinstance(model_dict, dict):
             raise TypeError(f"model_dict must be type dict, but got {type(model_dict)}.")
 
@@ -249,11 +272,13 @@ cdef class ResponseModel:
         ]))
 
     def create_response(self, *args, **kwargs):
+        """
+        Create a response with the given arguments.
+         
+        Returns: 
+         	An instance of : class : ` Response ` with the given parameters.
+        """
         return self._response.new(*args, **kwargs)
-
-    # @property
-    # def response_type(self):
-    #     return type(self._response_type)
 
 cdef class BlackboxModel:
     """
@@ -387,6 +412,9 @@ cdef class Observation:
         return not self.__eq__(other)
 
 cdef class Vector(list):
+    """
+    The Vector class. Provides an implementation of a vector for multi-valued response models.
+    """
     def __init__(self, values=list()):
         if not isinstance(values, list):
             raise TypeError(f"values must be type list, but got {type(values)}.")
