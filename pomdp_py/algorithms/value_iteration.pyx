@@ -49,7 +49,7 @@ cdef class _PolicyTreeNode:
                     else:
                         subtree_value = 0.0
                     response = self._agent.response_model.sample(s, self.action, sp)
-                    expected_future_value += trans_prob * obsrv_prob * (response["reward"] + discount_factor*subtree_value)
+                    expected_future_value += trans_prob * obsrv_prob * (response.reward + discount_factor*subtree_value)
             values[s] = expected_future_value
         return values
 

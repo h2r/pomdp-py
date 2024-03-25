@@ -104,13 +104,13 @@ def solve(
         _time_used += time.time() - _start
 
         # Info and render
-        _total_reward += response["reward"]
-        _total_discounted_reward += response["reward"] * _discount
+        _total_reward += response.reward
+        _total_discounted_reward += response.reward * _discount
         _discount = _discount * discount_factor
         print("==== Step %d ====" % (i + 1))
         print("Action: %s" % str(real_action))
         print("Observation: %s" % str(real_observation))
-        print("Reward: %s" % str(response["reward"]))
+        print("Reward: %s" % str(response.reward))
         print("Reward (Cumulative): %s" % str(_total_reward))
         print("Reward (Discounted): %s" % str(_total_discounted_reward))
         print("Find Actions Count: %d" % _find_actions_count)

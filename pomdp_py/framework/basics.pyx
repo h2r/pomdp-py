@@ -186,19 +186,50 @@ cdef class RewardModel:
         Returns the underlying distribution of the model"""
         raise NotImplementedError
 
-cdef class ResponseModel(dict):
+cdef class ResponseModel:
     """A ResponseModel returns a real or simulated response
     after the agent interacts with the real or a simulated environment.
     The implementation of this model contains a collection of more
     specific models such as reward and cost models."""
+    def __init__(self, response):
+        self._model_dict = dict()
+        self._response = response
+    
+    @staticmethod
+    def generate_response_model(model_dict, response=Response()):
+        # Do a sanity check to ensure the response model and response are compatible.
+        for name in model_dict.keys():
+            if not hasattr(response, name):
+                raise AttributeError(f"The response {type(response)} does not have the attribute {name}.")
 
-    def __init__(self, models):
-        if not isinstance(models, dict):
-            raise TypeError("models must be a dictionary of models.")
-        for key, model in models.items():
+        # Create the response model and add the models.
+        model = ResponseModel(response)
+        model.add_models(model_dict)
+        return model
+
+    def add_attrs(self, attr_dict):
+        if not isinstance(attr_dict, dict):
+            raise TypeError(f"attr_dict must be type dict, but got {type(attr_dict)}.")
+
+        for ak, av in attr_dict.items():
+            if hasattr(self, ak):
+                raise KeyError(f"The attribute {ak} already exists.")
+            setattr(self, ak, None)
+
+    def add_models(self, model_dict):
+        if not isinstance(model_dict, dict):
+            raise TypeError(f"model_dict must be type dict, but got {type(model_dict)}.")
+
+        for model_name, model in model_dict.items():
+            # Perform a sanity check.
             if not hasattr(model, "sample"):
-                raise NotImplementedError(f"Model named {key} must implement a sample function.")
-            self[key] = model
+                raise AttributeError(f"The model {model_name} does not have a sample(...) function.")
+
+            # Store the model name for quick access in sample(...) function.
+            self._model_dict[model_name] = model
+
+        # Add the models to the response model.
+        self.add_attrs(model_dict)
 
     def sample(self, state, action, next_state, **kwargs):
         """sample(self, state, action, next_state)
@@ -212,12 +243,17 @@ cdef class ResponseModel(dict):
         Returns:
             Response: the response
         """
-        return Response(
-            dict([
-                (name, model.sample(state, action, next_state, **kwargs))
-                for name, model in self.items()
-            ])
-        )
+        return self.create_response(**dict([
+            (name, model.sample(state, action, next_state, **kwargs))
+            for name, model in self._model_dict.items()
+        ]))
+
+    def create_response(self, *args, **kwargs):
+        return self._response.new(*args, **kwargs)
+
+    # @property
+    # def response_type(self):
+    #     return type(self._response_type)
 
 cdef class BlackboxModel:
     """
@@ -371,31 +407,48 @@ cdef class Vector(list):
             raise TypeError(f"other must be type Vector, float, or int, but got {type(other)}.")
         return Vector([v0 + v1 for v0, v1 in zip(self, vec)])
 
+    def __radd__(self, other):
+        return self.__add__(other)
+
     def __mul__(self, other):
         if not isinstance(other, (float, int)):
             raise TypeError(f"other must be type float or int, but got {type(other)}.")
         return Vector([v * other for v in self])
 
-cdef class Response(dict):
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+
+cdef class Response:
     """
-    The Response class.
+    A Response class that only handles a scalar reward. Subclasses of Response can add
+    more (scalar or vector) variables. But the subclasses must implement how to handle
+    arithmetic and comparison operations.
     """
-    def __init__(self, variables=dict(reward=0.0)):
+    def __init__(self, reward=0.0):
         super().__init__()
-        if not isinstance(variables, dict):
-            raise TypeError(f"reward must be type dict, but got {type(variables)}.")
-        for k, v in variables.items():
-            self[k] = v
+        self._reward = reward
+
+    @property
+    def reward(self):
+        return self._reward
+
+    @classmethod
+    def new(cls, reward=0.0):
+        return cls(reward=reward)
+
+    def _check_reward_compatibility(self, value):
+        if not isinstance(value, (float, int, Response)):
+            raise TypeError(f"other must be type Response, float, or int, but got {type(value)}.")
+
+    def _get_value(self, value):
+        self._check_reward_compatibility(value)
+        if isinstance(value, Response):
+            value = value.reward
+        return value
 
     def __add__(self, other):
-        if not isinstance(other, Response):
-            raise TypeError("other must be type Response.")
-        return Response(
-            dict([
-                (name, value + other[name])
-                for name, value in self.items()
-            ])
-        )
+        return Response(self._reward + self._get_value(other))
 
     def __radd__(self, other):
         return self.__add__(other)
@@ -403,19 +456,31 @@ cdef class Response(dict):
     def __mul__(self, other):
         if not isinstance(other, (float, int)):
             raise TypeError("other must be type float or int.")
-        return Response(
-            dict([
-                (name, value * other)
-                for name, value in self.items()
-            ])
-        )
+        return Response(self._reward * other)
 
     def __rmul__(self, other):
         return self.__mul__(other)
 
-    def __str__(self):
-        return ", ".join([f"{k}={v}" for k, v in self.items()])
+    def __eq__(self, other):
+        return self._reward == self._get_value(other)
 
+    def __ne__(self, other):
+        return self._reward != self._get_value(other)
+
+    def __lt__(self, other):
+        return self._reward < self._get_value(other)
+
+    def __le__(self, other):
+        return self._reward <= self._get_value(other)
+
+    def __gt__(self, other):
+        return self._reward > self._get_value(other)
+
+    def __ge__(self, other):
+        return self._reward >= self._get_value(other)
+        
+    def __str__(self):
+        return f"reward={self._reward}"
 
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving

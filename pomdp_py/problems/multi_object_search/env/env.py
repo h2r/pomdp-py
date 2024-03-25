@@ -33,7 +33,7 @@ class MosEnvironment(pomdp_py.Environment):
             if not isinstance(init_state.object_states[objid], RobotState)
         }
         reward_model = GoalRewardModel(self.target_objects)
-        super().__init__(init_state, transition_model, pomdp_py.ResponseModel({"reward": reward_model}))
+        super().__init__(init_state, transition_model, pomdp_py.ResponseModel.generate_response_model(dict(reward=reward_model)))
 
     @property
     def robot_ids(self):
@@ -69,7 +69,7 @@ class MosEnvironment(pomdp_py.Environment):
         response = self.response_model.sample(
             self.state, action, next_state, robot_id=robot_id
         )
-        reward = response["reward"]
+        reward = response.reward
         if execute:
             self.apply_transition(next_state)
             return reward
