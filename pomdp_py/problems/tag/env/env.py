@@ -14,7 +14,7 @@ class TagEnvironment(pomdp_py.Environment):
         target_motion_policy = TagTargetMotionPolicy(grid_map, pr_stay)
         transition_model = TagTransitionModel(grid_map, target_motion_policy)
         reward_model = TagRewardModel(small=small, big=big)
-        super().__init__(init_state, transition_model, pomdp_py.ResponseModel({"reward": reward_model}))
+        super().__init__(init_state, transition_model, pomdp_py.ResponseModel.generate_response_model({"reward": reward_model}))
 
     @property
     def width(self):

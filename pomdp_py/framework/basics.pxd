@@ -9,8 +9,10 @@ cdef class TransitionModel:
 cdef class PolicyModel:
     pass
     
-cdef class ResponseModel(dict):
-    pass
+cdef class ResponseModel:
+    cdef dict _model_dict
+    cdef Response _response
+    cdef dict __dict__
 
 cdef class BlackboxModel:
     pass
@@ -34,8 +36,8 @@ cdef class Observation:
 cdef class Vector(list):
     pass
 
-cdef class Response(dict):
-    pass
+cdef class Response:
+    cdef float _reward
 
 cdef class Agent:
     cdef GenerativeDistribution _init_belief

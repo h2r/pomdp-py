@@ -46,7 +46,7 @@ cdef class PORollout(Planner):
         self._particles = particles
 
         self._agent = None
-        self._last_best_response = Response({"reward": float('-inf')})
+        self._last_best_response = None
 
     @property
     def last_best_response(self):
@@ -60,24 +60,24 @@ cdef class PORollout(Planner):
 
     cpdef _search(self):
         cdef Action best_action
-        cdef Response best_response = Response()
-        cdef Response response_avg = Response()
-        cdef Response total_discounted_response = Response()
+        cdef Response best_response
+        cdef Response response_avg
+        cdef Response total_discounted_response
         cdef set legal_actions
         cdef list responses
 
-        best_action, best_response["reward"] = None, float("-inf")
+        best_action, best_response = None, Response(float("-inf"))
         legal_actions = self._agent.valid_actions(history=self._agent.history)
         for action in legal_actions:
             responses = []
             for i in range(self._num_sims // len(legal_actions)):
                 state = self._agent.belief.random()
                 total_discounted_response = self._rollout(state, 0)
-                responses.append(total_discounted_response["reward"])
-            response_avg["reward"] = sum(responses) / len(responses)
-            if response_avg["reward"] > best_response["reward"]:
+                responses.append(total_discounted_response)
+            response_avg = sum(responses) / len(responses)
+            if response_avg > best_response:
                 best_action = action
-                best_response["reward"] = response_avg["reward"]
+                best_response = response_avg
         return best_action, best_response
 
     cpdef _rollout(self, State state, int depth):
@@ -87,7 +87,7 @@ cdef class PORollout(Planner):
         cdef Response total_discounted_response = Response()
         cdef State next_state
         cdef Observation observation
-        cdef Response response = Response()
+        cdef Response response
         cdef int nsteps
         cdef tuple history = self._agent.history
 
@@ -130,8 +130,8 @@ cdef class PORollout(Planner):
     def clear_agent(self):
         """clear_agent(self)"""
         self._agent = None  # forget about current agent so that can plan for another agent.
-        self._last_best_response["reward"] = float('-inf')
-
+        self._last_best_response = Response(float('-inf'))
+        
     cpdef set_rollout_policy(self, RolloutPolicy rollout_policy):
         """
         set_rollout_policy(self, RolloutPolicy rollout_policy)

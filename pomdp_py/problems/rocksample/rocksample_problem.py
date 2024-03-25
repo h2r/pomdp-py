@@ -434,17 +434,18 @@ class RockSampleProblem(pomdp_py.POMDP):
         self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20
     ):
         self._n, self._k = n, k
+        reponse_model = pomdp_py.ResponseModel.generate_response_model(dict(reward=RSRewardModel(rock_locs, self.in_exit_area)))
         agent = pomdp_py.Agent(
             init_belief,
             RSPolicyModel(n, k),
             RSTransitionModel(n, rock_locs, self.in_exit_area),
             RSObservationModel(rock_locs, half_efficiency_dist=half_efficiency_dist),
-            pomdp_py.ResponseModel({"reward": RSRewardModel(rock_locs, self.in_exit_area)}),
+            copy.deepcopy(reponse_model),
         )
         env = pomdp_py.Environment(
             init_state,
             RSTransitionModel(n, rock_locs, self.in_exit_area),
-            pomdp_py.ResponseModel({"reward": RSRewardModel(rock_locs, self.in_exit_area)}),
+            copy.deepcopy(reponse_model),
         )
         self._rock_locs = rock_locs
         super().__init__(agent, env, name="RockSampleProblem")
@@ -469,20 +470,20 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         )
         rocksample.agent.update_history(action, real_observation)
         planner.update(rocksample.agent, action, real_observation)
-        total_reward += env_response["reward"]
-        total_discounted_reward += env_response["reward"] * gamma
+        total_reward += env_response.reward
+        total_discounted_reward += env_response.reward * gamma
         gamma *= discount
         print("True state: %s" % true_state)
         print("Action: %s" % str(action))
         print("Observation: %s" % str(real_observation))
-        print("Reward: %s" % str(env_response["reward"]))
+        print("Reward: %s" % str(env_response.reward))
         print("Reward (Cumulative): %s" % str(total_reward))
         print("Reward (Cumulative Discounted): %s" % str(total_discounted_reward))
         if isinstance(planner, pomdp_py.POUCT):
             print("__num_sims__: %d" % planner.last_num_sims)
             print("__plan_time__: %.5f" % planner.last_planning_time)
         if isinstance(planner, pomdp_py.PORollout):
-            print("__best_reward__: %d" % planner.last_best_response["reward"])
+            print("__best_reward__: %d" % planner.last_best_response.reward)
         print("World:")
         rocksample.print_state()
 

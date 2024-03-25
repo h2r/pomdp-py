@@ -212,14 +212,15 @@ class TigerProblem(pomdp_py.POMDP):
 
     def __init__(self, obs_noise, init_true_state, init_belief):
         """init_belief is a Distribution."""
+        response_model = pomdp_py.ResponseModel.generate_response_model(dict(reward=RewardModel()))
         agent = pomdp_py.Agent(
             init_belief,
             PolicyModel(),
             TransitionModel(),
             ObservationModel(obs_noise),
-            pomdp_py.ResponseModel({"reward": RewardModel()}),
+            copy.deepcopy(response_model),
         )
-        env = pomdp_py.Environment(init_true_state, TransitionModel(), pomdp_py.ResponseModel({"reward": RewardModel()}))
+        env = pomdp_py.Environment(init_true_state, TransitionModel(), copy.deepcopy(response_model))
         super().__init__(agent, env, name="TigerProblem")
 
     @staticmethod
@@ -273,10 +274,10 @@ def test_planner(tiger_problem, planner, nsteps=3, debug_tree=False):
         # in real world); In that case, you could skip
         # the state transition and re-estimate the state
         # (e.g. through the perception stack on the robot).
-        reward = tiger_problem.env.response_model["reward"].sample(
+        response = tiger_problem.env.response_model.sample(
             tiger_problem.env.state, action, None
         )
-        print("Reward:", reward)
+        print("Reward:", response.reward)
 
         # Let's create some simulated real observation;
         # Here, we use observation based on true state for sanity

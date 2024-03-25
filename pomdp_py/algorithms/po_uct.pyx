@@ -75,7 +75,7 @@ cdef class QNode(TreeNode):
 
     cpdef void update(QNode self, Response response):
         self.num_visits += 1
-        self.value = self.value + (response["reward"] - self.value) / self.num_visits
+        self.value = self.value + (response.reward - self.value) / self.num_visits
 
 
 cdef class VNode(TreeNode):
@@ -371,7 +371,7 @@ cdef class POUCT(Planner):
                     State state, tuple history, VNode root, QNode parent,
                     Observation observation, int depth):
         if depth > self._max_depth:
-            return Response()
+            return self._agent.response_model.create_response()
         if root is None:
             if self._agent.tree is None:
                 root = self._VNode(root=True)
@@ -409,10 +409,10 @@ cdef class POUCT(Planner):
     cpdef _rollout(self, State state, tuple history, VNode root, int depth):
         cdef Action action
         cdef float discount = 1.0
-        cdef Response total_discounted_response = Response()
+        cdef Response total_discounted_response = self._agent.response_model.create_response()
         cdef State next_state
         cdef Observation observation
-        cdef Response response = Response()
+        cdef Response response
 
         while depth < self._max_depth:
             action = self._rollout_policy.rollout(state, history)

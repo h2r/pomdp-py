@@ -60,7 +60,7 @@ class MosAgent(pomdp_py.Agent):
             policy_model,
             transition_model=transition_model,
             observation_model=observation_model,
-            response_model=pomdp_py.ResponseModel({"reward": reward_model}),
+            response_model=pomdp_py.ResponseModel.generate_response_model(dict(reward=reward_model)),
         )
 
     def clear_history(self):
