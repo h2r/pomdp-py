@@ -1,5 +1,5 @@
 from pomdp_py.framework.planner cimport Planner
-from pomdp_py.framework.basics cimport Agent, PolicyModel, Action, State, Observation
+from pomdp_py.framework.basics cimport Agent, PolicyModel, Action, State, Observation, Response
 
 cdef class TreeNode:
     cdef public dict children
@@ -7,10 +7,11 @@ cdef class TreeNode:
     cdef public float value
 
 cdef class QNode(TreeNode):
-    pass
+    cpdef void update(QNode self, Response response)
 
 cdef class VNode(TreeNode):
     cpdef argmax(VNode self)
+    cpdef void update(VNode self)
 
 cdef class RootVNode(VNode):
     cdef public tuple history

@@ -128,10 +128,10 @@ cdef class POMCP(POUCT):
     cpdef _simulate(POMCP self,
                     State state, tuple history, VNode root, QNode parent,
                     Observation observation, int depth):
-        total_reward = POUCT._simulate(self, state, history, root, parent, observation, depth)
+        total_response = POUCT._simulate(self, state, history, root, parent, observation, depth)
         if depth == 1 and root is not None:
             root.belief.add(state)  # belief update happens as simulation goes.
-        return total_reward
+        return total_response
 
     def _VNode(self, root=False, **kwargs):
         """Returns a VNode with default values; The function naming makes it clear
