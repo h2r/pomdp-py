@@ -319,25 +319,28 @@ cdef class Observation:
 
 cdef class Agent:
     """ An Agent operates in an environment by taking actions, receiving
-    observations, and updating its belief. Taking actions is the job of a
-    planner (:class:`Planner`), and the belief update is the job taken care of
-    by the belief representation or the planner. But, the Agent supplies the
+    observations, and updating its belief. Deciding what action to take is the
+    job of a planner (:class:`Planner`), and the belief update is usually done
+    outside of the agent, taken care of e.g. by the belief representation, or by
+    the planner. The Agent supplies its own version of the
     :class:`TransitionModel`, :class:`ObservationModel`, :class:`RewardModel`,
     OR :class:`BlackboxModel` to the planner or the belief update algorithm.
 
     __init__(self, init_belief,
-             policy_model,
+             policy_model=None,
              transition_model=None,
              observation_model=None,
              reward_model=None,
-             blackbox_model=None)
+             blackbox_model=None,
+             name=None)
     """
     def __init__(self, init_belief,
                  policy_model=None,
                  transition_model=None,
                  observation_model=None,
                  reward_model=None,
-                 blackbox_model=None):
+                 blackbox_model=None,
+                 name=None):
         self._init_belief = init_belief
         self._policy_model = policy_model
 
@@ -345,6 +348,7 @@ cdef class Agent:
         self._observation_model = observation_model
         self._reward_model = reward_model
         self._blackbox_model = blackbox_model
+        self._name = name
 
         # For online planning
         self._cur_belief = init_belief
@@ -413,6 +417,15 @@ cdef class Agent:
     @property
     def generative_model(self):
         return self.blackbox_model
+
+    @property
+    def name(self):
+        return self._name
+
+    def set_name(self, str name):
+        """set_name(self, str name)
+        gives this agent a name"""
+        self._name = name
 
     def set_models(self, transition_model=None, observation_model=None,
                    reward_model=None, blackbox_model=None, policy_model=None):
