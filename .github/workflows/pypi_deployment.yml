@@ -29,7 +29,7 @@ jobs:
     steps:
     - name: Set Variables
       if: startsWith(github.ref, 'refs/tags/v')
-      run: echo "RELEASE_NAME=\"Version ${{ github.ref_name }}\"" >> $GITHUB_ENV
+      run: echo "RELEASE_NAME=Version ${{ github.ref_name }}" >> $GITHUB_ENV
 
     - uses: actions/setup-python@v5
       with:
@@ -57,12 +57,6 @@ jobs:
         password: ${{ secrets.TEST_PYPI_TOKEN }}
         repository_url: https://test.pypi.org/legacy/
         skip-existing: true
-
-    - name: Release artifact
-      uses: softprops/action-gh-release@v1
-      with:
-        name: ${{ env.RELEASE_NAME }}
-        files: dist/*.whl
 
 
   pypi-publish:
