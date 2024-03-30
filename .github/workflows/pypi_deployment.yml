@@ -47,7 +47,7 @@ jobs:
       working-directory: .
       run: |
         cd scripts
-        ./pomdp_py_release.sh ${{ vars.RELEASE_ATTEMPT_COUNT }}
+        ./pomdp_py_release.sh
 
     - name: Upload to Test PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
@@ -98,7 +98,7 @@ jobs:
       working-directory: .
       run: |
         cd scripts
-        ./pomdp_py_release.sh ${{ vars.RELEASE_ATTEMPT_COUNT }}
+        ./pomdp_py_release.sh
 
     - name: Upload to PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
