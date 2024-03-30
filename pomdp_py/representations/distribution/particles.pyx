@@ -13,7 +13,7 @@ cdef class WeightedParticles(GenerativeDistribution):
 
     Args:
        particles (list): List of (value, weight) tuples. The weight represents
-           the likelihood that the value is drawn from the underlying distribution.
+           the likelihood that the value is drawn from the underlying distribution. Note that the weights may not be normalized. To normalize, call condense().
        approx_method (str): 'nearest' if when querying the probability
             of a value, and there is no matching particle for it, return
             the probability of the value closest to it. Assuming values
