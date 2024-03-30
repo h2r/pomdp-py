@@ -73,20 +73,20 @@ def test_weighted_particles():
     hash(particles_frozen)
 
     # Manually add a particle - this changes the distribution
-    particles.add(("x1", 0.1))    
+    particles.add(("x1", 0.1))
     assert not particles.hist_valid
-    particles.random()  # operation does not re-compute histogram 
-    assert not particles.hist_valid    
+    particles.random()  # operation does not re-compute histogram
+    assert not particles.hist_valid
     pr_x1 = particles["x1"]  # operation will re-compute histogram
     assert particles.hist_valid
 
     # However, weights won't sum up to 1 due to the additional particle
     assert abs(sum(particles[v] for v, _ in particles) - 1.0) > 1e-6
-    
+
     # After condensing, weights sum up to 1
     particles = particles.condense()
     assert abs(sum(particles[v] for v, _ in particles) - 1.0) <= 1e-6
-    
+
     # Test frozen after condense
     assert not particles.condense().frozen
     assert particles_frozen.condense().frozen
