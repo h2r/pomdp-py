@@ -77,7 +77,11 @@ get_base_version() {
 
 get_post_version() {
     version_string="$1"
-    echo "${version_string##*-}"
+    if [[ "$version_string" == *-* ]]; then  # Check if hyphen exists
+	echo "${version_string##*-}"
+    else
+	echo ""  # Output an empty string if no hyphen found
+    fi
 }
 
 
