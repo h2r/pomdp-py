@@ -80,7 +80,7 @@ find_pxd_files_and_write_manifest ./ MANIFEST.in
 
 # Check if pomdp-py is on the right branch
 version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
-echo $version
+echo "RELEASE VERSION: $version"
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
         echo "pomdp-py repo must be either on dev-latest or dev-$version, but not $current_branch. Abort"
