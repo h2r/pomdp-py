@@ -70,6 +70,17 @@ extract_package_version() {
     echo "$version"
 }
 
+get_base_version() {
+    version_string="$1"
+    echo "${version_string%-*}"
+}
+
+get_post_version() {
+    version_string="$1"
+    echo "${version_string##*-}"
+}
+
+
 user_pwd=$PWD
 
 # Write the MANIFEST.in file
@@ -79,7 +90,16 @@ cd $pomdp_py_path
 find_pxd_files_and_write_manifest ./ MANIFEST.in
 
 # Check if pomdp-py is on the right branch
-version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
+package_version=$(extract_package_version "$pomdp_py_path/pyproject.toml")
+base_version=$(get_base_version $package_version)
+post_version=$(get_post_version $package_version)
+
+if [[ -n "$post_version" ]]; then  # Check if $post_version is not empty
+    version="${base_version}.post${post_version}"
+else
+    version="$base_version"
+fi
+
 echo "RELEASE VERSION: $version"
 if ! is_git_repo_on_branch $pomdp_py_path dev-$version; then
     if ! is_git_repo_on_branch $pomdp_py_path dev-latest; then
@@ -110,14 +130,12 @@ command="auditwheel repair io/dist/${wheel_name} -w /io/wheelhouse/"
 docker run --user $(id -u):$(id -g) --mount type=bind,source=${pomdp_py_path},target=/io $manylinux_image bash -c "$command"
 rm $pomdp_py_path/dist/$wheel_name
 fixed_wheel_name="pomdp_py-${version}-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
-fixed_wheel_name_with_attempt="pomdp_py-${version}$-${cpv}-${cpv}-manylinux_2_17_x86_64.$linux_dist.whl"
-mv "$pomdp_py_path/wheelhouse/$fixed_wheel_name" "$pomdp_py_path/dist/$fixed_wheel_name_with_attempt"
 rm -r $pomdp_py_path/wheelhouse
 
 # Verification (wheel)
 echo -e "------------ verification: wheel ---------"
 pip uninstall pomdp_py
-pip install --force-reinstall "$pomdp_py_path/dist/$fixed_wheel_name_with_attempt"
+pip install --force-reinstall "$pomdp_py_path/dist/$fixed_wheel_name"
 python $pomdp_py_path/tests/test_all.py
 
 # Verification (source)
