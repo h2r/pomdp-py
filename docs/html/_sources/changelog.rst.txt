@@ -3,6 +3,12 @@ Changelog
 
 Best viewed on `the website <https://h2r.github.io/pomdp-py/html/changelog.html>`_.
 
+Version 1.3.5.1 (03/30/2024)
+----------------------------
+* Hot fixes for :py:mod:`~pomdp_py.representations.distribution.particles.WeightedParticles`.
+* :py:mod:`~pomdp_py.framework.basics.Agent` can be created with a name.
+* Bug fixes for release script and GHA workflow.
+
 Version 1.3.5 (03/12/2024)
 --------------------------
 * Refactored :code:`_search` in :py:mod:`~pomdp_py.algorithms.po_uct.POUCT` to be more modular

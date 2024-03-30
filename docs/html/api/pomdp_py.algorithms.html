@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pomdp_py.algorithms package &#8212; pomdp_py 1.3.5 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <title>pomdp_py.algorithms package &#8212; pomdp_py 1.3.5.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=51d35e29" />
-    <script src="../_static/documentation_options.js?v=4720776d"></script>
+    <script src="../_static/documentation_options.js?v=3fd01b6e"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,7 +38,7 @@
 
 
 
-<p class="blurb">A framework to build and solve POMDP problems (v1.3.5).</p>
+<p class="blurb">A framework to build and solve POMDP problems (v1.3.5.1).</p>
 
 
 
@@ -248,7 +248,7 @@
 <td><p>PO-rollout: Baseline algorithm in the POMCP paper</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pomdp_py.algorithms.po_uct.POUCT" title="pomdp_py.algorithms.po_uct.POUCT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POUCT</span></code></a></p></td>
-<td><p>POUCT (Partially Observable UCT) <span id="id1">[<a class="reference internal" href="#id33" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
+<td><p>POUCT (Partially Observable UCT) <span id="id1">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP paper as an extension of the UCT algorithm to partially-observable domains that combines MCTS and UCB1 for action selection.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pomdp_py.algorithms.pomcp.POMCP" title="pomdp_py.algorithms.pomcp.POMCP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POMCP</span></code></a></p></td>
 <td><p>POMCP is POUCT + particle belief representation.</p></td>
@@ -261,14 +261,14 @@
 <p>Solvers under development (<strong>contribution wanted</strong>):</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#module-pomdp_py.algorithms.bsp.blqr" title="pomdp_py.algorithms.bsp.blqr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blqr</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="pomdp_py.algorithms.bsp.html#module-pomdp_py.algorithms.bsp.blqr" title="pomdp_py.algorithms.bsp.blqr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blqr</span></code></a></p></td>
 <td><p>Implementation of B-LQR algorithm described in &quot;Belief space planning assuming maximum likelihood observations&quot; <span id="id2">[<a class="reference internal" href="#id43" title="R. Platt, R. Tedrake, L. Kaelbling, and T. Lozano-Perez. Belief space planning assuming maximum likelihood observations. In Proceedings of Robotics: Science and Systems. Zaragoza, Spain, June 2010. doi:10.15607/RSS.2010.VI.037.">4</a>]</span></p></td>
 </tr>
 </tbody>
 </table>
 <section id="module-pomdp_py.algorithms.po_rollout">
 <span id="pomdp-py-algorithms-po-rollout-module"></span><h2>pomdp_py.algorithms.po_rollout module<a class="headerlink" href="#module-pomdp_py.algorithms.po_rollout" title="Link to this heading">¶</a></h2>
-<p>PO-rollout: Baseline algorithm in the POMCP paper <span id="id3">[<a class="reference internal" href="#id33" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>.</p>
+<p>PO-rollout: Baseline algorithm in the POMCP paper <span id="id3">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span>.</p>
 <p>Quote from the POMCP paper:</p>
 <blockquote>
 <div><p>To provide a performance benchmark in these cases, we evaluated the
@@ -329,7 +329,7 @@ belief.</p>
 <section id="module-pomdp_py.algorithms.po_uct">
 <span id="pomdp-py-algorithms-po-uct-module"></span><h2>pomdp_py.algorithms.po_uct module<a class="headerlink" href="#module-pomdp_py.algorithms.po_uct" title="Link to this heading">¶</a></h2>
 <p>This algorithm is PO-UCT (Partially Observable UCT). It is
-presented in the POMCP paper <span id="id4">[<a class="reference internal" href="#id33" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> as an extension to the UCT
+presented in the POMCP paper <span id="id4">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> as an extension to the UCT
 algorithm <span id="id5">[<a class="reference internal" href="#id42" title="Levente Kocsis and Csaba Szepesvári. Bandit based monte-carlo planning. In European conference on machine learning, 282–293. Springer, 2006.">3</a>]</span> that combines MCTS and UCB1
 for action selection.</p>
 <p>In other words, this is just POMCP without particle belief,
@@ -386,7 +386,7 @@ be used as a heuristic for planning.</p>
 <dt class="sig sig-object py" id="pomdp_py.algorithms.po_uct.POUCT">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pomdp_py.algorithms.po_uct.</span></span><span class="sig-name descname"><span class="pre">POUCT</span></span><a class="headerlink" href="#pomdp_py.algorithms.po_uct.POUCT" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pomdp_py.framework.html#pomdp_py.framework.planner.Planner" title="pomdp_py.framework.planner.Planner"><code class="xref py py-class docutils literal notranslate"><span class="pre">Planner</span></code></a></p>
-<p>POUCT (Partially Observable UCT) <span id="id9">[<a class="reference internal" href="#id33" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP
+<p>POUCT (Partially Observable UCT) <span id="id9">[<a class="reference internal" href="../examples.tiger.html#id37" title="David Silver and Joel Veness. Monte-carlo planning in large pomdps. In Advances in neural information processing systems, 2164–2172. 2010.">2</a>]</span> is presented in the POMCP
 paper as an extension of the UCT algorithm to partially-observable domains
 that combines MCTS and UCB1 for action selection.</p>
 <p>POUCT only works for problems with action space that can be enumerated.</p>
@@ -668,7 +668,7 @@ belief.</p>
 <span id="pomdp-py-algorithms-value-iteration-module"></span><h2>pomdp_py.algorithms.value_iteration module<a class="headerlink" href="#module-pomdp_py.algorithms.value_iteration" title="Link to this heading">¶</a></h2>
 <p>Implementation of the basic policy tree based value iteration as explained
 in section 4.1 of <cite>Planning and acting in partially observable stochastic
-domains</cite> <span id="id10">[<a class="reference internal" href="#id31" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span></p>
+domains</cite> <span id="id10">[<a class="reference internal" href="../index.html#id21" title="Leslie Pack Kaelbling, Michael L Littman, and Anthony R Cassandra. Planning and acting in partially observable stochastic domains. Artificial intelligence, 101(1-2):99–134, 1998.">1</a>]</span></p>
 <p>Warning: No pruning - the number of policy trees explodes very fast.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pomdp_py.algorithms.value_iteration.ValueIteration">
