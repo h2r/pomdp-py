@@ -2,6 +2,7 @@
 
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
+import numpy
 import os.path
 
 
@@ -19,7 +20,7 @@ def build_extensions(pkg_name, major_submodules):
                 filename = os.path.splitext(f)[0]
                 ext_name = f"{pkg_name}.{subm}.{filename}"
                 ext_path = os.path.join(pkg_name, subm.replace(".", "/"), f)
-                extensions.append(Extension(ext_name, [ext_path]))
+                extensions.append(Extension(ext_name, [ext_path], language="c++"))
 
     return extensions
 
@@ -45,5 +46,6 @@ setup(
     package_data={
         "pomdp_py": ["*.pxd", "*.pyx", "*.so", "*.c"],
     },
+    include_dirs=[numpy.get_include()],
     zip_safe=False,
 )

@@ -330,6 +330,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
 
     def __init__(self, n, k):
         check_actions = set({CheckAction(rock_id) for rock_id in range(k)})
+        print(check_actions)
         self._move_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth}
         self._other_actions = {SampleAction()} | check_actions
         self._all_actions = self._move_actions | self._other_actions
@@ -430,22 +431,28 @@ class RockSampleProblem(pomdp_py.POMDP):
             string += "\n"
         print(string)
 
-    def __init__(
-        self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20
-    ):
-        self._n, self._k = n, k
-        agent = pomdp_py.Agent(
+    def build_agent(self, n, k, rock_locs, init_belief, half_efficiency_dist):
+        return pomdp_py.Agent(
             init_belief,
             RSPolicyModel(n, k),
             RSTransitionModel(n, rock_locs, self.in_exit_area),
             RSObservationModel(rock_locs, half_efficiency_dist=half_efficiency_dist),
             RSRewardModel(rock_locs, self.in_exit_area),
         )
-        env = pomdp_py.Environment(
+
+    def build_env(self, n, init_state, rock_locs):
+        return pomdp_py.Environment(
             init_state,
             RSTransitionModel(n, rock_locs, self.in_exit_area),
             RSRewardModel(rock_locs, self.in_exit_area),
         )
+
+    def __init__(
+        self, n, k, init_state, rock_locs, init_belief, half_efficiency_dist=20
+    ):
+        self._n, self._k = n, k
+        agent = self.build_agent(n, k, rock_locs, init_belief, half_efficiency_dist)
+        env = self.build_env(n, init_state, rock_locs)
         self._rock_locs = rock_locs
         super().__init__(agent, env, name="RockSampleProblem")
 
@@ -537,7 +544,7 @@ def create_instance(n, k, **kwargs):
 
 
 def main():
-    rocksample = debug_instance()  # create_instance(7, 8)
+    rocksample = create_instance(7, 8)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")

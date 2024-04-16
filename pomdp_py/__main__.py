@@ -1,6 +1,6 @@
 import argparse
 
-available_problems = ["tiger", "rocksample", "mos", "tag", "load_unload"]
+available_problems = ["tiger", "rocksample", "mos", "tag", "load_unload", "ccrocksample"]
 
 
 def parse_args():
@@ -42,6 +42,11 @@ if __name__ == "__main__":
 
         elif args.run.lower() == "load_unload":
             from pomdp_py.problems.load_unload.load_unload import main
+
+            main()
+
+        elif args.run.lower() == "ccrocksample":
+            from pomdp_py.problems.cc_rocksample.cc_rocksample_problem import main
 
             main()
 
