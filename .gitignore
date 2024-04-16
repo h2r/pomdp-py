@@ -136,3 +136,8 @@ Thumbs.db
 *.pg
 
 .DS_Store
+
+# Cython debugging files
+########################
+*.c
+*.html
