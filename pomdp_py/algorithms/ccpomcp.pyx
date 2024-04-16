@@ -376,7 +376,7 @@ cdef class CCPOMCP(POMCP):
         cdef int best_q_index = 0
         cdef double logN = log(<double> vnode.num_visits + 1)
         cdef double q_value
-        cdef Vector
+        cdef Vector Q_lambda, Action_UCB
         cdef CCQNode ccqnode
         cdef Action action
         cdef int i = 0
