@@ -41,6 +41,8 @@ cdef class CCPOMCP(POMCP):
     cdef double _nu
     cdef list[float] _cost_value_init
     cdef unsigned int _n_constraints
+    # Buffers
+    cdef Vector _Q_lambda, _Action_UCB
 
     cpdef public Action plan(CCPOMCP self, Agent agent)
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state = *)

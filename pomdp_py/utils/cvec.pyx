@@ -1,10 +1,9 @@
-# cython: profile=True
+# cython: language_level=3 profile=True
 
 from __future__ import annotations
 cimport cython
 from libc.math cimport fmin, fmax
 from typing import Iterator
-
 
 cdef vectord_t null_vector(unsigned int n_zeros) except *:
     cdef vectord_t vec
@@ -13,6 +12,7 @@ cdef vectord_t null_vector(unsigned int n_zeros) except *:
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef vectord_t list_to_vectord(list[float] values):
     cdef int length = len(values)
     cdef unsigned int i = 0
@@ -25,6 +25,7 @@ cpdef vectord_t list_to_vectord(list[float] values):
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef list[float] vectord_to_list(vectord_t values):
     cdef int length = len(values)
     cdef unsigned int i = 0
@@ -37,6 +38,7 @@ cpdef list[float] vectord_to_list(vectord_t values):
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef double vector_dot_prod(const vectord_t& v0, const vectord_t& v1) except *:
     if v0.size() != v1.size():
         raise ValueError("Both vectors must have the same size.")
@@ -51,6 +53,7 @@ cdef double vector_dot_prod(const vectord_t& v0, const vectord_t& v1) except *:
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_add(const vectord_t& v0, const vectord_t& v1, vectord_t& res) except *:
     if v0.size() != v1.size():
         raise ValueError("Both vectors must have the same size.")
@@ -64,6 +67,7 @@ cdef void vector_add(const vectord_t& v0, const vectord_t& v1, vectord_t& res) e
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_adds(const vectord_t& v, const double& scalar, vectord_t& res) except *:
     if v.size() == 0:
         raise ValueError("Vector should contain at least one value.")
@@ -75,6 +79,7 @@ cdef void vector_adds(const vectord_t& v, const double& scalar, vectord_t& res) 
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_muls(const vectord_t& v, const double& scalar, vectord_t& res) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -87,6 +92,7 @@ cdef void vector_muls(const vectord_t& v, const double& scalar, vectord_t& res) 
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_sub(const vectord_t& v0, const vectord_t& v1, vectord_t& res) except *:
     if v0.size() != v1.size():
         raise ValueError("Both vectors must have the same size.")
@@ -100,6 +106,7 @@ cdef void vector_sub(const vectord_t& v0, const vectord_t& v1, vectord_t& res) e
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_subvs(const vectord_t& v, const double& scalar, vectord_t& res) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -112,6 +119,7 @@ cdef void vector_subvs(const vectord_t& v, const double& scalar, vectord_t& res)
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_subsv(const double& scalar, const vectord_t& v, vectord_t& res) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -124,6 +132,7 @@ cdef void vector_subsv(const double& scalar, const vectord_t& v, vectord_t& res)
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_scalar_div(const vectord_t& v, const double& scalar, vectord_t& res) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -138,6 +147,7 @@ cdef void vector_scalar_div(const vectord_t& v, const double& scalar, vectord_t&
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef double vector_max(const vectord_t& v) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -154,6 +164,7 @@ cdef double vector_max(const vectord_t& v) except *:
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef double vector_min(const vectord_t& v) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -170,6 +181,7 @@ cdef double vector_min(const vectord_t& v) except *:
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_clip(vectord_t& v, const double& min_value, const double& max_value) except *:
     cdef int n_values = v.size()
     if n_values == 0:
@@ -184,6 +196,7 @@ cdef void vector_clip(vectord_t& v, const double& min_value, const double& max_v
 
 
 @cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void vector_copy(const vectord_t& src, vectord_t& dst) except *:
     cdef int n_values = src.size()
     if n_values == 0:
@@ -194,13 +207,19 @@ cdef void vector_copy(const vectord_t& src, vectord_t& dst) except *:
         dst[i] = src[i]
 
 
+cdef void vector_resize(vectord_t& v, unsigned int new_size):
+    if new_size <= 0:
+        raise ValueError("New vector size must be a positive integer.")
+    v.resize(new_size)
+
+
 cdef class Vector:
     """
     The Vector class. Provides an implementation of a vector for
     maintaining multiple values.
     """
 
-    def __init__(self, values: list | tuple):
+    def __init__(self, values: list | tuple = (0.0,)):
         if not isinstance(values, (list, tuple)):
             raise TypeError(f"Unhandled type: {type(values)}.")
         if len(values) == 0:
@@ -208,7 +227,14 @@ cdef class Vector:
         if not all(isinstance(v, (float, int)) for v in values):
             raise ValueError("All values must be type float or int.")
 
-        self._vals = list_to_vectord(values)
+        cdef int i
+        cdef int n_values = len(values)
+        self._vals = vectord_t(n_values)
+        if n_values == 1:
+            self._vals[0] = values[0]
+        else:
+            for i in range(n_values):
+                self._vals[i] = values[i]
         self._length = self._vals.size()
 
     cdef bint _is_in_range(Vector self, int index):
@@ -266,6 +292,18 @@ cdef class Vector:
     @staticmethod
     def null(n_zeros: int) -> Vector:
         return Vector.fill(0.0, n_zeros)
+
+    cdef void resize(Vector self, unsigned int new_size):
+        vector_resize(self._vals, new_size)
+        self._length = self._vals.size()
+
+    cdef void zeros(Vector self):
+        cdef int i
+        if self._length == 1:
+            self._vals[0] = 0.
+        else:
+            for i in range(self._length):
+                self._vals[i] = 0.
 
     def __getitem__(self, index: int) -> float:
         index = int(index)

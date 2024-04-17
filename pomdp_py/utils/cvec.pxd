@@ -36,3 +36,5 @@ cdef class Vector:
     cpdef int len(Vector self)
     cdef double max(Vector self)
     cdef double min(Vector self)
+    cdef void resize(Vector self, unsigned int new_size)
+    cdef void zeros(Vector self)
