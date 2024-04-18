@@ -1,4 +1,4 @@
-# cython: language_level=3
+# cython: language_level=3, profile=True
 
 from pomdp_py.algorithms.po_uct cimport QNode
 from pomdp_py.algorithms.pomcp cimport POMCP, VNode

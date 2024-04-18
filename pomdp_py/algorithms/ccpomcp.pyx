@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 cimport cython
-from cython.parallel cimport prange
 from libc.math cimport log, sqrt, abs
 import math
 cimport numpy as cnp
@@ -327,7 +326,6 @@ cdef class CCPOMCP(POMCP):
 
     cpdef public Action plan(CCPOMCP self, Agent agent):
         cdef Action action
-        cdef _CCPolicyModel policy_dist
         cdef double time_taken
         cdef int sims_count
 

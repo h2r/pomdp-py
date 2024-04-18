@@ -1,4 +1,4 @@
-# cython: language_level=3, boundscheck=False, wraparound=False
+# cython: language_level=3, boundscheck=False, wraparound=False, profile=True
 
 from __future__ import annotations
 cimport numpy as cnp
