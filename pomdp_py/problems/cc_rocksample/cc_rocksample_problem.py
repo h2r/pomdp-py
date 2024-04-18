@@ -216,7 +216,7 @@ def main(n_grid: int = 7, n_rocks: int = 8) -> None:
     total_response, total_discounted_response = test_planner(
         cc_rocksample=cc_rocksample,
         ccpomcp=ccpomcp,
-        nsteps=1,
+        nsteps=100,
         discount=k_discount_factor,
     )
 
