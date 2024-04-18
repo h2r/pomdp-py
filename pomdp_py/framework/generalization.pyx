@@ -1,4 +1,4 @@
-# cython: language_level=3
+# cython: language_level=3, profile=True
 
 from __future__ import annotations
 from pomdp_py.framework.basics cimport (
