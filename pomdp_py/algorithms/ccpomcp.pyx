@@ -1,4 +1,4 @@
-# cython: language_level=3
+# cython: language_level=3, profile=True
 
 from __future__ import annotations
 cimport cython
@@ -152,6 +152,9 @@ cdef class _CCPolicyActionData:
     def avg_cost_value(self) -> Vector:
         return self._avg_cost_value
 
+    def __str__(self) -> str:
+        return f"prob: {self._prob}, cost: {self._cost_value}, avg_cost: {self._avg_cost_value}"
+
 
 cdef class _CCPolicyModel(PolicyModel):
     def __init__(self) -> None:
@@ -170,8 +173,13 @@ cdef class _CCPolicyModel(PolicyModel):
         )
         self._prob_sum += prob
         if self._prob_sum > 1.0:
+            error_str = ""
+            for action, datum in self._data.items():
+                error_str += f"  action={action} | datum={datum}\n"
             raise RuntimeError(
-                "Too much actions were added. The probability sum is greater than one!"
+                f"Too much actions were added. The probability sum {self._prob_sum} is greater than one! "
+                "Actions added:\n"
+                + error_str
             )
 
     cpdef void clear(_CCPolicyModel self):
@@ -549,7 +557,7 @@ cdef class CCPOMCP(POMCP):
                 self._greedy_policy_model.add(action_min, min_prob, vnode[action_min])
                 self._greedy_policy_model.add(action_max, 1.-min_prob, vnode[action_max])
 
-    cdef void _init_lambda_fn(CCPOMCP self) except *:
+    cdef void _init_lambda_fn(CCPOMCP self):
         if self._use_random_lambda:
             self._lambda = Vector(
                 np.random.uniform(
@@ -563,6 +571,9 @@ cdef class CCPOMCP(POMCP):
             self._lambda.zeros()
 
     cpdef _perform_simulation(self, state):
+        cdef double lambda_vec_max
+        cdef Action action
+
         super(CCPOMCP, self)._perform_simulation(state=state)
 
         # Sample using the greedy policy. This greedy policy corresponds to the first
@@ -725,7 +736,7 @@ cdef class CCPOMCP(POMCP):
     cdef void _update_cost_constraint(
         CCPOMCP self,
         Action sampled_action
-    ) except *:
+    ):
         cdef double action_prob, prob_prime
         cdef Action action_prime
         cdef list[Action] action_prime_list
@@ -764,7 +775,7 @@ cdef double _compute_visits_ratio(
     double visits_num,
     double visits_denom,
     double explore_const,
-) except *:
+):
     if visits_denom == 0.0:
         return DBL_MIN
     else:
@@ -774,7 +785,7 @@ cdef double _compute_visits_ratio(
 cdef double _get_ccqnode_scalar_cost(
     VNode node,
     Action action
-) except *:
+):
     if action not in node:
         raise KeyError(f"Action {action} does not exist in node.")
     return node[action].cost_value[0]
