@@ -1,4 +1,4 @@
-# cython: profile=True
+# cython: language_level=3
 
 from __future__ import annotations
 from pomdp_py.framework.basics cimport (
@@ -74,18 +74,12 @@ cdef class ResponseModel:
     the real or a simulated environment. The implementation of this model contains a 
     collection of more specific models such as reward and cost models.
     """
-
-    def __init__(self, null_response: Response) -> None:
-        if not isinstance(null_response, Response):
-            raise TypeError(
-                "null_response must be type Response, "
-                f"but got {type(null_response)}."
-            )
-        self._null_response = null_response.copy()
+    def __init__(self):
+        pass
 
     def null_response(self) -> Response:
-        return self._null_response.copy()
-        
+        raise NotImplementedError
+
     def sample(self, state: State, action: Action, next_state: State) -> Response:
         raise NotImplementedError
 
@@ -265,7 +259,7 @@ cpdef tuple[State, Observation, Response, int] sample_generative_model_with_resp
 ):
     cdef State next_state
     cdef Observation observation
-    cdef Response response = null_response.copy()
+    cdef Response response = null_response
     cdef Option option
     cdef int nsteps = 0
 
