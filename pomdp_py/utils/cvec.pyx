@@ -29,7 +29,7 @@ cdef inline bint vector_size_is_zero(double[:] v):
     return v.shape[0] == 0
 
 
-cdef double vector_dot_prod(double[:] v0, double[:] v1) except *:
+cdef double vector_dot_prod(double[:] v0, double[:] v1):
     cdef unsigned int i = 0
     cdef double _sum = 0.
 
@@ -43,7 +43,7 @@ cdef double vector_dot_prod(double[:] v0, double[:] v1) except *:
     return _sum
 
 
-cdef void vector_add(double[:] v0, double[:] v1, double[:] res) except *:
+cdef void vector_add(double[:] v0, double[:] v1, double[:] res):
     if vectors_are_not_same_size(v0, v1):
         raise ValueError("Both vectors must have the same size.")
     if vector_size_is_zero(v0):
@@ -54,7 +54,7 @@ cdef void vector_add(double[:] v0, double[:] v1, double[:] res) except *:
         res[i] = v0[i] + v1[i]
 
 
-cdef void vector_adds(double[:] v, double scalar, double[:] res) except *:
+cdef void vector_adds(double[:] v, double scalar, double[:] res):
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
 
@@ -63,7 +63,7 @@ cdef void vector_adds(double[:] v, double scalar, double[:] res) except *:
         res[i] = v[i] + scalar
 
 
-cdef void vector_muls(double[:] v, double scalar,double[:] res) except *:
+cdef void vector_muls(double[:] v, double scalar,double[:] res):
     if vectors_are_not_same_size(v, res):
         raise ValueError("Vectors v and res must be the same size.")
     if vector_size_is_zero(v):
@@ -74,7 +74,7 @@ cdef void vector_muls(double[:] v, double scalar,double[:] res) except *:
         res[i] = v[i] * scalar
 
 
-cdef void vector_sub(double[:] v0, double[:] v1, double[:] res) except *:
+cdef void vector_sub(double[:] v0, double[:] v1, double[:] res):
     if vectors_are_not_same_size(v0, v1):
         raise ValueError("Both vectors must have the same size.")
     if vector_size_is_zero(v0):
@@ -85,7 +85,7 @@ cdef void vector_sub(double[:] v0, double[:] v1, double[:] res) except *:
         res[i] = v0[i] - v1[i]
 
 
-cdef void vector_subvs(double[:] v, double scalar, double[:] res) except *:
+cdef void vector_subvs(double[:] v, double scalar, double[:] res):
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
 
@@ -94,7 +94,7 @@ cdef void vector_subvs(double[:] v, double scalar, double[:] res) except *:
         res[i] = v[i] - scalar
 
 
-cdef void vector_subsv(double scalar, double[:] v, double[:] res) except *:
+cdef void vector_subsv(double scalar, double[:] v, double[:] res):
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
 
@@ -103,7 +103,7 @@ cdef void vector_subsv(double scalar, double[:] v, double[:] res) except *:
         res[i] = scalar - v[i]
 
 
-cdef void vector_scalar_div(double[:] v, double scalar, double[:] res) except *:
+cdef void vector_scalar_div(double[:] v, double scalar, double[:] res):
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
     if scalar == 0.0:
@@ -113,7 +113,7 @@ cdef void vector_scalar_div(double[:] v, double scalar, double[:] res) except *:
     for i in range(v.shape[0]):
         res[i] = v[i] / scalar
 
-cdef unsigned int vector_argmax(double[:] v) except *:
+cdef unsigned int vector_argmax(double[:] v):
     cdef int n_values = v.shape[0]
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
@@ -128,7 +128,7 @@ cdef unsigned int vector_argmax(double[:] v) except *:
     return max_idx
 
 
-cdef unsigned int vector_argmin(double[:] v) except *:
+cdef unsigned int vector_argmin(double[:] v):
     cdef int n_values = v.shape[0]
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
@@ -143,7 +143,7 @@ cdef unsigned int vector_argmin(double[:] v) except *:
     return min_idx
 
 
-cdef void vector_clip(double[:] v, double min_value, double max_value) except *:
+cdef void vector_clip(double[:] v, double min_value, double max_value):
     cdef int n_values = v.shape[0]
     if vector_size_is_zero(v):
         raise ValueError("Vector should contain at least one value.")
@@ -156,7 +156,7 @@ cdef void vector_clip(double[:] v, double min_value, double max_value) except *:
         v[i] = fmax(min_value, fmin(max_value, v[i]))
 
 
-cdef void vector_copy(double[:] src, double[:] dst) except *:
+cdef void vector_copy(double[:] src, double[:] dst):
     if vector_size_is_zero(src):
         raise ValueError("Vector should contain at least one value.")
     cdef int i = 0
