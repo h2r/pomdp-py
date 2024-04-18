@@ -10,22 +10,23 @@ ctypedef cnp.ndarray Arrayf_t
 cdef Arrayf_t null_vector(unsigned int n_zeros)
 cpdef Arrayf_t list_to_vectord(list[float] values)
 cpdef list[float] vectord_to_list(Arrayf_t values)
-cdef bint vectors_are_not_same_size(double[:] v0, double[:] v1)
 cdef bint vector_size_is_zero(double[:] v)
+cdef bint vectors2_are_not_valid(double[:] v0, double[:] v1)
+cdef bint vectors3_are_not_valid(double[:] v0, double[:] v1, double[:] v2)
 
-cdef double vector_dot_prod(double[:] v0, double[:] v1) except *
-cdef void vector_add(double[:] v0, double[:] v1, double[:] res) except *
-cdef void vector_adds(double[:] v, double scalar, double[:] res) except *
-cdef void vector_muls(double[:] v, double scalar, double[:] res) except *
-cdef void vector_sub(double[:] v0, double[:] v1, double[:] res) except *
-cdef void vector_subvs(double[:] v, double scalar, double[:] res) except *
-cdef void vector_subsv(double scalar, double[:] v, double[:] res) except *
-cdef void vector_scalar_div(double[:] v, double scalar, double[:] res) except *
+cdef double vector_dot_prod(double[:] v0, double[:] v1)
+cdef void vector_add(double[:] v0, double[:] v1, double[:] res)
+cdef void vector_adds(double[:] v, double scalar, double[:] res)
+cdef void vector_muls(double[:] v, double scalar, double[:] res)
+cdef void vector_sub(double[:] v0, double[:] v1, double[:] res)
+cdef void vector_subvs(double[:] v, double scalar, double[:] res)
+cdef void vector_subsv(double scalar, double[:] v, double[:] res)
+cdef void vector_scalar_div(double[:] v, double scalar, double[:] res)
 
-cdef unsigned int vector_argmax(double[:] v) except *
-cdef unsigned int vector_argmin(double[:] v) except *
-cdef void vector_clip(double[:] v, double min_value, double max_value) except *
-cdef void vector_copy(double[:] src, double[:] dst) except *
+cdef unsigned int vector_argmax(double[:] v)
+cdef unsigned int vector_argmin(double[:] v)
+cdef void vector_clip(double[:] v, double min_value, double max_value)
+cdef void vector_copy(double[:] src, double[:] dst)
 
 
 cdef class Vector:
