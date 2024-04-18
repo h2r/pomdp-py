@@ -32,9 +32,6 @@ class RSResponse(pomdp_py.Response):
     def __str__(self) -> str:
         return f"reward={self.reward}, cost={self.cost}"
 
-    # def copy(self) -> RSResponse:
-    #     return RSResponse(self.reward, self.cost)
-
     @staticmethod
     def null() -> RSResponse:
         return RSResponse(reward=0, cost=0)
@@ -219,7 +216,7 @@ def main(n_grid: int = 7, n_rocks: int = 8) -> None:
     total_response, total_discounted_response = test_planner(
         cc_rocksample=cc_rocksample,
         ccpomcp=ccpomcp,
-        nsteps=10,
+        nsteps=1,
         discount=k_discount_factor,
     )
 
