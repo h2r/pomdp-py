@@ -5,9 +5,14 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
-      - dev-latest
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
+      - ready_for_review
+
 jobs:
   pre-commit:
     runs-on: ubuntu-latest

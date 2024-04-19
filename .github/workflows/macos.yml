@@ -4,7 +4,13 @@ on:
   push:
     branches: [ main, dev-latest ]
   pull_request:
-    branches: [ main, dev-latest ]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
+      - ready_for_review
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
