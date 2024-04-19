@@ -1,38 +1,49 @@
-# cython: language_level=3
+# cython: language_level=3, boundscheck=False, wraparound=False
 
 from __future__ import annotations
-from libcpp.vector cimport vector
+cimport numpy as cnp
+cnp.import_array()
 
-ctypedef vector[double] vectord_t
+ctypedef cnp.ndarray Arrayf_t
 
 
-cdef vectord_t null_vector(unsigned int n_zeros) except *
-cpdef vectord_t list_to_vectord(list[float] values)
-cpdef list[float] vectord_to_list(vectord_t values)
+cdef Arrayf_t null_vector(unsigned int n_zeros)
+cpdef Arrayf_t list_to_vectord(list[float] values)
+cpdef list[float] vectord_to_list(Arrayf_t values)
+cdef bint vector_size_is_zero(double[:] v)
+cdef bint vectors2_are_not_valid(double[:] v0, double[:] v1)
+cdef bint vectors3_are_not_valid(double[:] v0, double[:] v1, double[:] v2)
 
-cdef double vector_dot_prod(const vectord_t& v0, const vectord_t& v1) except *
-cdef void vector_add(const vectord_t& v0, const vectord_t& v1, vectord_t& res) except *
-cdef void vector_adds(const vectord_t& v, const double& scalar, vectord_t& res) except *
-cdef void vector_muls(const vectord_t& v, const double& scalar, vectord_t& res) except *
-cdef void vector_sub(const vectord_t& v0, const vectord_t& v1, vectord_t& res) except *
-cdef void vector_subvs(const vectord_t& v, const double& scalar, vectord_t& res) except *
-cdef void vector_subsv(const double& scalar, const vectord_t& v, vectord_t& res) except *
-cdef void vector_scalar_div(const vectord_t& v, const double& scalar, vectord_t& res) except *
+cdef double vector_dot_prod(double[:] v0, double[:] v1)
+cdef void vector_add(double[:] v0, double[:] v1, double[:] res)
+cdef void vector_adds(double[:] v, double scalar, double[:] res)
+cdef void vector_muls(double[:] v, double scalar, double[:] res)
+cdef void vector_sub(double[:] v0, double[:] v1, double[:] res)
+cdef void vector_subvs(double[:] v, double scalar, double[:] res)
+cdef void vector_subsv(double scalar, double[:] v, double[:] res)
+cdef void vector_scalar_div(double[:] v, double scalar, double[:] res)
 
-cdef double vector_max(const vectord_t& v) except *
-cdef double vector_min(const vectord_t& v) except *
-cdef void vector_clip(vectord_t& v, const double& min_value, const double& max_value) except *
-cdef void vector_copy(const vectord_t& src, vectord_t& dst) except *
+cdef unsigned int vector_argmax(double[:] v)
+cdef unsigned int vector_argmin(double[:] v)
+cdef void vector_clip(double[:] v, double min_value, double max_value)
+cdef void vector_copy(double[:] src, double[:] dst)
 
 
 cdef class Vector:
-    cdef vectord_t _vals
-    cdef vectord_t _res_buff
+    cdef cnp.ndarray _vals
+    cdef cnp.ndarray _res_buff
     cdef int _length
 
-    cdef bint _is_in_range(Vector self, int index)
+    cdef bint _index_is_out_of_range(Vector self, unsigned int index)
+    cpdef void clip(Vector self, double min_value, double max_value)
     cpdef Vector copy(Vector self)
     cpdef double dot(Vector self, Vector other)
     cpdef int len(Vector self)
-    cdef double max(Vector self)
-    cdef double min(Vector self)
+    cpdef unsigned int argmax(Vector self)
+    cpdef unsigned int argmin(Vector self)
+    cpdef double max(Vector self)
+    cpdef double min(Vector self)
+    cdef void resize(Vector self, unsigned int new_size)
+    cpdef void zeros(Vector self)
+    cpdef double get(Vector self, unsigned int index)
+    cpdef void set(Vector self, unsigned int index, double value)

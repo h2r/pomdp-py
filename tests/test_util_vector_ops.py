@@ -25,21 +25,25 @@ def test_as_list():
 
 def test_as_vector():
     v = Vector([1., 2., 3.])
-    assert v.as_vector() == [1., 2., 3.]
+    assert list(v.as_vector()) == [1., 2., 3.]
 
 
 def test_clip():
     v = Vector([2, 5, 7])
-    assert Vector.clip(v, 0, 10) == [2., 5., 7.]
+    v.clip(0, 10)
+    assert v == [2., 5., 7.]
 
     v = Vector([2, 5, 7])
-    assert Vector.clip(v, 0, 4) == [2., 4., 4.]
+    v.clip(0, 4)
+    assert v == [2., 4., 4.]
 
     v = Vector([2, 5, 7])
-    assert Vector.clip(v, 4, 10) == [4., 5., 7.]
+    v.clip(4, 10)
+    assert v == [4., 5., 7.]
 
     v = Vector([2, 5, 7])
-    assert Vector.clip(v, 3, 4) == [3., 4., 4.]
+    v.clip(3, 4)
+    assert v == [3., 4., 4.]
 
 
 def test_copy():
@@ -128,6 +132,22 @@ def test_str():
     assert str(v) == str([2., 4.])
 
 
+def test_min():
+    v = Vector([1., 2.])
+    assert v.min() == 1.
+
+    v = Vector([1., -90., 3.])
+    assert v.min() == -90.
+
+
+def test_max():
+    v = Vector([1., 2.])
+    assert v.max() == 2.
+
+    v = Vector([1., -90., 3.])
+    assert v.max() == 3.
+
+
 def run():
     test_assign()
     test_as_list()
@@ -145,6 +165,8 @@ def run():
     test_sub()
     test_truediv()
     test_str()
+    test_min()
+    test_max()
 
 
 if __name__ == "__main__":

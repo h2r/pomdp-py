@@ -1,8 +1,8 @@
-# cython: profile=True
+# cython: language_level=3
 
 from __future__ import annotations
 cimport cython
-from libc.math cimport log, sqrt, exp, abs
+from libc.math cimport log, sqrt, abs
 import math
 cimport numpy as cnp
 import numpy as np
@@ -14,7 +14,6 @@ from pomdp_py.framework.generalization cimport (
     ResponseAgent,
     sample_generative_model_with_response
 )
-from pomdp_py.representations.distribution.histogram cimport Histogram
 from pomdp_py.representations.distribution.particles cimport Particles
 from pomdp_py.utils import typ
 from pomdp_py.utils.cvec cimport Vector
@@ -22,20 +21,22 @@ from typing import Optional
 cnp.import_array()
 
 
-cdef double DBL_MIN = <double> -1e200
-cdef double DBL_MAX = <double> 1e200
+cdef double NEG_INFINITY = <double> -1e10
+cdef double POS_INFINITY = <double> 1e10
 
 
 cdef class CostModel:
     """
+    A CostModel models the distribution :math:`\Pr(c|s,a,s')` where
+    :math:`c\in\mathbb{C}`.
     """
 
     def probability(
-            self,
-            cost: float | Vector,
-            state: State,
-            action: Action,
-            next_state: State
+        self,
+        cost: float | Vector,
+        state: State,
+        action: Action,
+        next_state: State
     ) -> float:
         """
         probability(self, cost, state, action, next_state)
@@ -53,11 +54,11 @@ cdef class CostModel:
         raise NotImplementedError
 
     def sample(
-            self,
-            state: State,
-            action: Action,
-            next_state: State,
-            **kwargs,
+        self,
+        state: State,
+        action: Action,
+        next_state: State,
+        **kwargs,
     ) -> float | Vector:
         """
         sample(self, state, action, next_state)
@@ -104,7 +105,10 @@ cdef class CCQNode(QNode):
 
     @property
     def avg_cost_value(self) -> Vector:
-        return self._avg_cost_value.copy()
+        """
+        The average cost value (Vector).
+        """
+        return self._avg_cost_value
 
     @avg_cost_value.setter
     def avg_cost_value(self, avg_cost_value: Vector) -> None:
@@ -117,7 +121,10 @@ cdef class CCQNode(QNode):
 
     @property
     def cost_value(self) -> Vector:
-        return self._cost_value.copy()
+        """
+        The cost value.
+        """
+        return self._cost_value
 
     @cost_value.setter
     def cost_value(self, cost_value: Vector) -> None:
@@ -136,59 +143,170 @@ cdef class CCQNode(QNode):
         )
 
 cdef class _CCPolicyActionData:
+    """
+    A data structure used internally within _CCPolicyModel. Stores the probability, cost
+    value, and average cost value for a particular CCQNode.
+    """
     def __init__(self, double prob, Vector cost_value, Vector avg_cost_value):
         self._prob = prob
-        self._cost_value = cost_value.copy()
-        self._avg_cost_value = avg_cost_value.copy()
+        self._cost_value = cost_value
+        self._avg_cost_value = avg_cost_value
 
     @property
     def prob(self) -> float:
+        """The probability of a corresponding action."""
         return self._prob
 
     @property
     def cost_value(self) -> Vector:
+        """The cost value for a corresponding action."""
         return self._cost_value
 
     @property
     def avg_cost_value(self) -> Vector:
+        """The average cost value for a corresponding action."""
         return self._avg_cost_value
+
+    def __str__(self) -> str:
+        return (
+            f"prob: {self._prob}, cost: {self._cost_value}, "
+            f"avg_cost: {self._avg_cost_value}"
+        )
 
 
 cdef class _CCPolicyModel(PolicyModel):
-    def __init__(self, dict[Action, _CCPolicyActionData] data_dict) -> None:
+    """
+    A derived policy class used internally within the CCPOMCP algorithm for sampling
+    actions and updating the cost constraint.
+    """
+    def __init__(self) -> None:
         super().__init__()
-        cdef Action action
-        cdef _CCPolicyActionData datum
-        cdef double prob_sum = 0.0
+        self._data = dict()
+        self.clear()
 
-        for action, datum in data_dict.items():
-            if not isinstance(action, Action):
-                raise TypeError("action must be type Action.")
-            prob_sum += datum.prob
+    cdef bint _total_prob_is_not_one(_CCPolicyModel self):
+        return self._prob_sum != 1.0
 
-        if prob_sum != 1.0:
-            raise ValueError(f"The probabilities must sum to 1.0, but got {prob_sum}.")
-        self._data = data_dict.copy()
+    cpdef void add(_CCPolicyModel self, Action action, double prob, CCQNode node):
+        """
+        Adds an action, its probability, and appropriate information from a CCQNode. 
+        This method also raises an exception if the sum of the probabilities sum over
+        1.
+        
+        Args:
+            action (Action): The action. 
+            prob (double): The probability. 
+            node (CCQNode): The CCQNode.
+        """
+        self._data[action] = _CCPolicyActionData(
+            prob=prob,
+            cost_value=node.cost_value,
+            avg_cost_value=node.avg_cost_value
+        )
+        self._prob_sum += prob
+        if self._prob_sum > 1.0:
+            error_str = ""
+            for action, datum in self._data.items():
+                error_str += f"  action={action} | datum={datum}\n"
+            raise RuntimeError(
+                "Too much actions were added. "
+                f"The probability sum {self._prob_sum} is greater than one! "
+                "Actions added:\n"
+                + error_str
+            )
+
+    cpdef void clear(_CCPolicyModel self):
+        """Clears the internal data structures."""
+        self._data.clear()
+        self._prob_sum = 0.0
 
     cpdef Vector action_avg_cost(_CCPolicyModel self, Action action):
+        """
+        Returns the average cost value for a given action.
+        
+        Args:
+            action (Action): The action.
+
+        Returns:
+            The average cost value (Vector).
+        """
+        if self._total_prob_is_not_one():
+            raise RuntimeError(
+                "Tried to get action avg cost when total probability != 1.0."
+            )
         if action not in self._data:
             raise KeyError(f"The action {action} is not exist in this policy model.")
-        return self._data[action].cost_value.copy()
+        return self._data[action].cost_value
 
     cpdef Vector action_cost_value(_CCPolicyModel self, Action action):
+        """
+        Returns the cost value for a given action.
+
+        Args:
+            action (Action): The action.
+
+        Returns:
+            The cost value (Vector).
+        """
+        if self._total_prob_is_not_one():
+            raise RuntimeError(
+                "Tried to get action cost value when total probability != 1.0."
+            )
         if action not in self._data:
             raise KeyError(f"The action {action} is not exist in this policy model.")
-        return self._data[action].avg_cost_value.copy()
+        return self._data[action].avg_cost_value
 
     cdef public float probability(_CCPolicyModel self, Action action, State state):
+        """
+        Returns the probability for a given action.
+
+        Args:
+            action (Action): The action.
+            state (State): Currently ignored.
+
+        Returns:
+            The probability (float).
+        """
+        if self._total_prob_is_not_one():
+            raise RuntimeError(
+                "Tried to get action probability when total probability != 1.0."
+            )
         if action not in self._data:
             raise KeyError(f"The action {action} is not exist in this policy model.")
         return self._data[action].prob
 
     cdef public Action sample(_CCPolicyModel self, State state):
+        """
+        Samples an action using the underlying probability distribution.
+        
+        Args:
+            state (State): Currently ignored.
+
+        Returns:
+            The sampled action (Action).
+        """
+        if self._prob_sum != 1.0:
+            raise RuntimeError("Tried to sample with a total probability != 1.0.")
+
+        if len(self._data) == 1:
+            return list(self._data.keys())[0]
         return np.random.choice(np.array(list(self._data.keys()), dtype=object))
 
-    def get_all_actions(self, state: Optional[State] = None, history: Optional[tuple] = None):
+    def get_all_actions(
+        self,
+        state: Optional[State] = None,
+        history: Optional[tuple] = None
+    ):
+        """
+        Returns all the stored actions.
+
+        Args:
+            state (State): Currently ignored.
+            history (tuple): Currently ignored.
+
+        Returns:
+            The list of actions (list[Action]).
+        """
         return list(self._data.keys())
 
 
@@ -274,16 +392,15 @@ cdef class CCPOMCP(POMCP):
 
         # Initialize lambda, cost constraint, and cost value init.
         if isinstance(cost_constraint, list):
-            self._n_constraints = len(cost_constraint)
             if len(cost_value_init) != len(cost_value_init):
                 raise ValueError(
                     "The cost constraint and cost value init must have the same length."
                 )
         else:
-            self._n_constraints = 1
             cost_constraint = [cost_constraint]
             cost_value_init = [cost_value_init] if cost_value_init is not None else [0.0]
 
+        self._n_constraints = len(cost_constraint)
         self._lambda = Vector.null(self._n_constraints)
         self._cost_value_init = list(cost_value_init)
         self._cost_constraint = Vector(cost_constraint)
@@ -294,9 +411,22 @@ cdef class CCPOMCP(POMCP):
         self._nu = <double> nu
         self._use_random_lambda = <bint> use_random_lambda
 
+        # Initialize buffers.
+        self._Q_lambda = Vector()
+        self._Action_UCB = Vector()
+        self._greedy_policy_model = _CCPolicyModel()
+
     cpdef public Action plan(CCPOMCP self, Agent agent):
+        """
+        Determines the next action to perform.
+        
+        Args:
+            agent (ResponseAgent): The agent used to plan. 
+
+        Returns:
+            The next action.
+        """
         cdef Action action
-        cdef _CCPolicyModel policy_dist
         cdef double time_taken
         cdef int sims_count
 
@@ -325,9 +455,8 @@ cdef class CCPOMCP(POMCP):
 
         # Then get the policy distribution, sample from it,
         # and update the cost constraint.
-        policy_dist, time_taken, sims_count = self._search()
-        action = policy_dist.sample(state=None)
-        self._update_cost_constraint(policy_dist, action)
+        action, time_taken, sims_count = self._search()
+        self._update_cost_constraint(action)
 
         # Update stats.
         self._last_num_sims = sims_count
@@ -335,30 +464,24 @@ cdef class CCPOMCP(POMCP):
 
         return action
 
-    cpdef _expand_vnode(
-        CCPOMCP self,
-        VNode vnode,
-        tuple history,
-        State state = None,
+    cpdef QNode _create_qnode(
+        self,
+        tuple qnode_params = tuple()
     ):
-        cdef Action action
+        cdef int num_visits_init
+        cdef double value_init
+        cdef list[float] cost_value_init
 
-        for action in self._agent.valid_actions(state=state, history=history):
-            if vnode[action] is None:
-                vnode[action] = CCQNode(
-                    self._num_visits_init, self._value_init, self._cost_value_init
-                )
+        if len(qnode_params) == 3:
+            # Expand the tuple and set the new CCQNode.
+            num_visits_init, value_init, cost_value_init = qnode_params
+            return CCQNode(num_visits_init, value_init, cost_value_init)
 
-        if self._action_prior is not None:
-            # Using action prior; special values are set;
-            for preference in self._action_prior.get_preferred_actions(state, history):
-                action, num_visits_init, value_init = preference
-                vnode[action] = CCQNode(
-                    self._num_visits_init, self._value_init, self._cost_value_init
-                )
+        return CCQNode(self._num_visits_init, self._value_init, self._cost_value_init)
 
     @cython.boundscheck(False)
-    cpdef _CCPolicyModel _greedy_policy(
+    @cython.wraparound(False)
+    cpdef void _greedy_policy(
         CCPOMCP self,
         VNode vnode,
         double explore_const,
@@ -372,17 +495,22 @@ cdef class CCPOMCP(POMCP):
 
         # Compute Q_lambda.
         cdef double n_ccqnode_visits
-        cdef double best_q_lambda = DBL_MIN
-        cdef int best_q_index = 0
         cdef double logN = log(<double> vnode.num_visits + 1)
-        cdef double q_value
-        cdef Vector Q_lambda, Action_UCB
+        cdef double q_value = 0.
+        cdef double action_ucb = 0.
         cdef CCQNode ccqnode
         cdef Action action
         cdef int i = 0
 
-        Q_lambda = Vector.null(n_actions)
-        Action_UCB = Vector.null(n_actions)
+        if n_actions == 0:
+            raise RuntimeError("The number of actions is 0?")
+
+        if n_actions == self._Q_lambda.len():
+            self._Q_lambda.zeros()
+            self._Action_UCB.zeros()
+        else:
+            self._Q_lambda.resize(n_actions)
+            self._Action_UCB.resize(n_actions)
 
         for i in range(n_actions):
             ccqnode = vnode[action_list[i]]
@@ -395,63 +523,59 @@ cdef class CCPOMCP(POMCP):
                     n_ccqnode_visits,
                     explore_const
                 )
-                Action_UCB[i] = _compute_visits_ratio(
+                action_ucb = _compute_visits_ratio(
                     log(n_ccqnode_visits),
-                    n_ccqnode_visits
+                    n_ccqnode_visits,
+                    1.0
                 )
-
-            if q_value > best_q_lambda:
-                best_q_lambda = q_value
-                best_q_index = i
-
-            Q_lambda[i] = q_value
+                self._Action_UCB.set(i, action_ucb)
+            self._Q_lambda.set(i, q_value)
 
         # Compute a*, the best action(s).
         cdef list[Action] best_action_list = list()
-        cdef double best_ucb_add = Action_UCB[best_q_index]
+        cdef int best_q_index = self._Q_lambda.argmax()
+        cdef double best_ucb_add = self._Action_UCB.get(best_q_index)
+        cdef double best_q_lambda = self._Q_lambda.get(best_q_index)
         cdef double ucb_add, q_value_diff
         cdef bint add_to_best_action_list = False
 
         q_value = 0.0
-        best_q_lambda = Q_lambda[best_q_index]
 
         for i in range(n_actions):
-            action = action_list[i]
-            ccqnode = vnode[action]
-            q_value = Q_lambda[i]
+            q_value = self._Q_lambda.get(i)
 
             if q_value == best_q_lambda:
                 add_to_best_action_list = True
 
             else:
                 q_value_diff = abs(q_value - best_q_lambda)
-                ucb_add = nu * (Action_UCB[i] + best_ucb_add)
-                if q_value_diff <= ucb_add and action not in best_action_list:
+                ucb_add = nu * (self._Action_UCB.get(i) + best_ucb_add)
+                # The original statement also checks the condition:
+                #   "action not in best_action_list"
+                # But since actions in the list are unique, we do not need to perform it.
+                if q_value_diff <= ucb_add:
                     add_to_best_action_list = True
 
             if add_to_best_action_list:
-                best_action_list.append(action)
+                best_action_list.append(action_list[i])
 
         # Find the policy.
         cdef int n_best_actions = len(best_action_list)
-        cdef Action action_min, action_max
+        cdef int action_min_idx, action_max_idx
+        cdef Action action_max, action_min
         cdef CCQNode ccqnode_min, ccqnode_max
-        cdef double cost_constraint_scalar = self._cost_constraint[0]
+        cdef double cost_constraint_scalar = self._cost_constraint.get(0)
         cdef double max_cost_value, min_cost_value, min_prob, cost_value
         cdef dict[Action, _CCPolicyActionData] data
+
+        self._greedy_policy_model.clear()
 
         if n_best_actions == 0:
             raise RuntimeError("No best actions were found?!")
 
         elif n_best_actions == 1:
             action = best_action_list[0]
-            data = {
-                action: _CCPolicyActionData(
-                    1.0,
-                    vnode[action].cost_value,
-                    vnode[action].avg_cost_value
-                )
-            }
+            self._greedy_policy_model.add(action, 1.0, vnode[action])
 
         else:
             # TODO: Implement linear programming to handle multiple constraints.
@@ -470,50 +594,42 @@ cdef class CCPOMCP(POMCP):
 
             # Find a_max and a_min, the actions with the max and min scalar costs
             # from the list of best actions.
-            max_cost_value = DBL_MIN
-            min_cost_value = DBL_MAX
+            max_cost_value = NEG_INFINITY
+            min_cost_value = POS_INFINITY
 
             for i in range(n_best_actions):
-                action = best_action_list[i]
-                cost_value = _get_ccqnode_scalar_cost(vnode, action)
+                cost_value = _get_ccqnode_scalar_cost(vnode, best_action_list[i])
 
                 if cost_value < min_cost_value:
-                    action_min = action
+                    action_min_idx = i
                     min_cost_value = cost_value
 
                 if cost_value > max_cost_value:
-                    action_max = action
+                    action_max_idx = i
                     max_cost_value = cost_value
 
             # Sanity checks.
-            if max_cost_value == DBL_MIN:
+            if max_cost_value == NEG_INFINITY:
                 raise RuntimeError(
-                    f"Max cost value ({max_cost_value}) must be more than {DBL_MIN}. "
+                    f"Max cost value ({max_cost_value}) must be more than {NEG_INFINITY}. "
                     f"Note: there are {n_best_actions} best actions. An error exists!"
                 )
-            if min_cost_value == DBL_MAX:
+            if min_cost_value == POS_INFINITY:
                 raise RuntimeError(
-                    f"Min cost value ({min_cost_value}) must be less than {DBL_MAX}. "
+                    f"Min cost value ({min_cost_value}) must be less than {POS_INFINITY}. "
                     f"Note: there are {n_best_actions} best actions. An error exists!"
                 )
 
-            if max_cost_value <= cost_constraint_scalar or action_min == action_max:
-                data = {
-                    action_max: _CCPolicyActionData(
-                        1.0,
-                        vnode[action_max].cost_value,
-                        vnode[action_max].avg_cost_value
-                    )
-                }
+            if (
+                max_cost_value <= cost_constraint_scalar
+                or action_min_idx == action_max_idx
+            ):
+                action = best_action_list[action_max_idx]
+                self._greedy_policy_model.add(action, 1.0, vnode[action])
 
             elif min_cost_value <= cost_constraint_scalar:
-                data = {
-                    action_min: _CCPolicyActionData(
-                        1.0,
-                        vnode[action_min].cost_value,
-                        vnode[action_min].avg_cost_value
-                    )
-                }
+                action = best_action_list[action_min_idx]
+                self._greedy_policy_model.add(action, 1.0, vnode[action])
 
             else:
                 min_prob = (
@@ -521,45 +637,33 @@ cdef class CCPOMCP(POMCP):
                     / (max_cost_value - min_cost_value)
                 )
 
-                data = {
-                    action_min: _CCPolicyActionData(
-                        min_prob,
-                        vnode[action_min].cost_value,
-                        vnode[action_min].avg_cost_value
-                    ),
-                    action_max: _CCPolicyActionData(
-                        1.0 - min_prob,
-                        vnode[action_max].cost_value,
-                        vnode[action_max].avg_cost_value
-                    ),
-                }
-
-        return _CCPolicyModel(data)
+                action_min = best_action_list[action_min_idx]
+                action_max = best_action_list[action_max_idx]
+                self._greedy_policy_model.add(action_min, min_prob, vnode[action_min])
+                self._greedy_policy_model.add(action_max, 1.-min_prob, vnode[action_max])
 
     cdef void _init_lambda_fn(CCPOMCP self):
+        cdef cnp.ndarray rand_vec
+        cdef double value
+        cdef int i
         if self._use_random_lambda:
-            self._lambda = Vector(
-                np.random.uniform(
-                    0.00001,
-                    1.0,
-                    size=self._cost_constraint.len()
-                ).tolist()
-            )
-
+            rand_vec = np.random.uniform(0.00001, 1.0, size=self._n_constraints)
+            for i in range(self._n_constraints):
+                value = rand_vec[i]
+                self._lambda.set(i, value)
         else:
-            self._lambda = Vector.null(self._n_constraints)
+            self._lambda.zeros()
 
     cpdef _perform_simulation(self, state):
+        cdef double lambda_vec_max
+        cdef Action action
+
         super(CCPOMCP, self)._perform_simulation(state=state)
 
         # Sample using the greedy policy. This greedy policy corresponds to the first
         # call in the search(h_0) function.
-        policy_dist = self._greedy_policy(
-            self._agent.tree,
-            0.0,
-            0.0,
-        )
-        action = policy_dist.sample(state=state)
+        self._greedy_policy(self._agent.tree, 0.0, 0.0)
+        action = self._greedy_policy_model.sample(state=state)
 
         # Update lambda.
         self._lambda = self._lambda + self._alpha_n * (
@@ -569,7 +673,7 @@ cdef class CCPOMCP(POMCP):
             lambda_vec_max = self._r_diff / (
                     self._tau * (1.0 - self._discount_factor)
             )
-            self._lambda = Vector.clip(self._lambda, 0.0, lambda_vec_max)
+            self._lambda.clip(0.0, lambda_vec_max)
 
     cpdef _rollout(self, State state, tuple history, VNode root, int depth):
         cdef Action action
@@ -605,22 +709,18 @@ cdef class CCPOMCP(POMCP):
         cdef Action action
         cdef double time_taken
         cdef int sims_count
-        cdef PolicyModel policy_dist
 
         # Initialize the lambda vector.
         self._init_lambda_fn()
 
-        # Run the _search(...) method in the super class.
-        action, time_taken, sims_count = super(CCPOMCP, self)._search()
+        # Run the _search(...) method in the super class. Ignore this action.
+        _, time_taken, sims_count = super(CCPOMCP, self)._search()
 
         # After the search times out, create a policy using the greedy method.
         # This greedy policy corresponds to the last call in the search(h_0) function.
-        policy_dist = self._greedy_policy(
-            self._agent.tree,
-            0.0,
-            self._nu,
-        )
-        return policy_dist, time_taken, sims_count
+        self._greedy_policy(self._agent.tree, 0.0, self._nu)
+        action = self._greedy_policy_model.sample(state=None)
+        return action, time_taken, sims_count
 
     cpdef Response _simulate(
         CCPOMCP self,
@@ -635,7 +735,6 @@ cdef class CCPOMCP(POMCP):
         cdef int nsteps = 1
         cdef Action action
         cdef State next_state
-        cdef _CCPolicyModel policy_dist
 
         if depth > self._max_depth:
             return self._null_response
@@ -659,12 +758,8 @@ cdef class CCPOMCP(POMCP):
 
         # This greedy policy corresponds to the call in the simulate(s, h, d) function
         # in the paper.
-        policy_dist = self._greedy_policy(
-            root,
-            self._exploration_const,
-            self._nu
-        )
-        action = policy_dist.sample(state=state)
+        self._greedy_policy(root, self._exploration_const, self._nu)
+        action = self._greedy_policy_model.sample(state)
         next_state, observation, response, nsteps = (
             sample_generative_model_with_response(
                 self._agent.transition_model,
@@ -714,49 +809,53 @@ cdef class CCPOMCP(POMCP):
 
         return total_response
 
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
     cdef void _update_cost_constraint(
         CCPOMCP self,
-        _CCPolicyModel policy_dist,
         Action sampled_action
     ):
         cdef double action_prob, prob_prime
-        cdef Vector chat_minus_avg_cost, action_avg_cost, cost_value, cost_sum
         cdef Action action_prime
         cdef list[Action] action_prime_list
         cdef int i = 0
+        cdef int n_actions
 
-        action_prob = policy_dist.probability(
+        action_prob = self._greedy_policy_model.probability(
             action=sampled_action,
             state=None
         )
-        action_avg_cost = policy_dist.action_avg_cost(sampled_action)
-        self._cost_constraint -= (action_prob * action_avg_cost)
+        self._cost_constraint -= (
+            action_prob
+            * self._greedy_policy_model.action_avg_cost(sampled_action)
+        )
 
         if action_prob < 1.0:
-            cost_sum = Vector.null(self._n_constraints)
-            action_prime_list = policy_dist.get_all_actions()
-            for i in range(len(action_prime_list)):
+            action_prime_list = self._greedy_policy_model.get_all_actions()
+            n_actions = len(action_prime_list)
+            for i in range(n_actions):
                 action_prime = action_prime_list[i]
                 if action_prime == sampled_action:
                     continue
 
-                prob_prime = policy_dist.probability(
+                prob_prime = self._greedy_policy_model.probability(
                     action=action_prime,
                     state=self._agent.history
                 )
-                cost_value = policy_dist.action_cost_value(sampled_action)
-                cost_sum[i] += (prob_prime * cost_value)
-            self._cost_constraint -= cost_sum
+                self._cost_constraint -= (
+                    prob_prime
+                    * self._greedy_policy_model.action_cost_value(sampled_action)
+                )
         self._cost_constraint /= (self._discount_factor * action_prob)
 
 
 cdef double _compute_visits_ratio(
-        double visits_num,
-        double visits_denom,
-        double explore_const = 1.0,
+    double visits_num,
+    double visits_denom,
+    double explore_const,
 ):
     if visits_denom == 0.0:
-        return DBL_MIN
+        return NEG_INFINITY
     else:
         return explore_const * sqrt(visits_num / visits_denom)
 
