@@ -1,4 +1,4 @@
-# cython: language_level=3, boundscheck=False, wraparound=False, profile=True
+# cython: language_level=3, boundscheck=False, wraparound=False
 
 from __future__ import annotations
 from libc.math cimport fmin, fmax
