@@ -330,7 +330,6 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
 
     def __init__(self, n, k):
         check_actions = set({CheckAction(rock_id) for rock_id in range(k)})
-        print(check_actions)
         self._move_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth}
         self._other_actions = {SampleAction()} | check_actions
         self._all_actions = self._move_actions | self._other_actions
