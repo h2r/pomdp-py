@@ -19,12 +19,10 @@ from typing import Optional
 
 cdef class Response:
     """
-    A Response class maintains variables within a dictionary.
-    However, subclasses of Response can provide access to the
-    dictionary variables using the dot (.) operator. Currently,
-    this class can handle arithmetic and comparison operations.
-    However, if special operations will need to be performed,
-    these operations need to be handled in the subclass.
+    A Response class serves as the output of ResponseModel. This 
+    class should be derived for specific problems. All operations,
+    including arithmetic, comparison, null, and copy must be
+    implemented in subclasses.
     """
 
     def copy(self) -> Response:
