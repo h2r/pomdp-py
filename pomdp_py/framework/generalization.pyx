@@ -1,4 +1,4 @@
-# cython: language_level=3, profile=True
+# cython: language_level=3
 
 from __future__ import annotations
 from pomdp_py.framework.basics cimport (
@@ -28,10 +28,12 @@ cdef class Response:
     """
 
     def copy(self) -> Response:
+        """Returns a copy of a Response."""
         raise NotImplementedError
 
     @staticmethod
     def null() -> Response:
+        """Returns a null Response. This is equivalent to a 'zero' reward."""
         raise NotImplementedError
 
     def __add__(self, other: Response) -> Response:
@@ -78,16 +80,28 @@ cdef class ResponseModel:
         pass
 
     def null_response(self) -> Response:
+        """Returns a null Response."""
         raise NotImplementedError
 
     def sample(self, state: State, action: Action, next_state: State) -> Response:
+        """
+        Samples a response given the state, action, and next state.
+
+        Args:
+            state (State): The state.
+            action (Action): The action.
+            next_state (State): The next state.
+
+        Returns:
+            The sampled response (Response).
+        """
         raise NotImplementedError
 
 
 cdef class ResponseAgent(Agent):
     """
     A `ResponseAgent` behaves the same as an `Agent` with one difference: a
-    `ReponseAgent` adds a `ResponseModel`. The `ResponseAgent` also provides direct
+    `ReponseAgent` adds a `ResponseModel`. The `ResponseAgent` can also provide direct
     access to the models maintained in the `ResponseModel` to reduce the wordiness of
     the code.
     """
@@ -131,6 +145,7 @@ cdef class ResponseAgent(Agent):
 
     @property
     def response_model(self) -> ResponseModel:
+        """Returns the response model."""
         if self._response_model is None:
             raise ValueError(
                 "response_model is None. Call set_response_model to set a model."
@@ -138,6 +153,12 @@ cdef class ResponseAgent(Agent):
         return self._response_model
 
     def set_response_model(self, response_model: ResponseModel) -> None:
+        """
+        Sets the response model.
+
+        Args:
+            response_model (ResponseModel): The response model.
+        """
         if not isinstance(response_model, ResponseModel):
             raise TypeError(
                 f"model must be type ResponseModel, but got type {type(response_model)}."
@@ -146,6 +167,12 @@ cdef class ResponseAgent(Agent):
 
 
 cdef class ResponseEnvironment(Environment):
+    """
+    A `ResponseEnvironment` is the same as an `Environment` with one difference: a
+    `ResponseEnvironment` adds a `ResponseModel`. The `ResponseEnvironment` can also
+    provide direct access to the models maintained in the `ResponseModel` to reduce
+    the wordiness of the code.
+    """
 
     def __init__(
         self,
@@ -175,8 +202,7 @@ cdef class ResponseEnvironment(Environment):
     @property
     def response_model(self) -> ResponseModel:
         """
-        Returns:
-            The ResponseModel.
+        Returns the ResponseModel.
         """
         return self._response_model
 
@@ -194,9 +220,6 @@ cdef class ResponseEnvironment(Environment):
             response_model (ResponseModel): The response model.
             blackbox_model (BlackboxModel): Provided when the transition model and
                 response model are not available.
-
-        Returns:
-            None
         """
         super().set_models(
             transition_model=transition_model,
@@ -257,6 +280,23 @@ cpdef tuple[State, Observation, Response, int] sample_generative_model_with_resp
     Response null_response,
     float discount_factor = 1.0
 ):
+    """
+    Samples the next state, observation, and response from the underlying models. It also
+    returns the number of steps performed during sampling.
+    
+    Args:
+        T (TransitionModel): The transition model. 
+        O (ObservationModel): The observation model.
+        R (ResponseModel): The response model.
+        state (State): The current state. 
+        action (Action): The action. 
+        null_response (Response): A null response.
+        discount_factor (float): The discount factor. Default = 1.
+
+    Returns:
+        A tuple of the next state (State), observation (Observation), 
+        response (Response), and the number of steps performed (int).
+    """
     cdef State next_state
     cdef Observation observation
     cdef Response response = null_response
