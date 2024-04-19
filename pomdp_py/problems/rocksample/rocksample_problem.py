@@ -556,8 +556,7 @@ def main():
         rollout_policy=rocksample.agent.policy_model,
         num_visits_init=1,
     )
-    # tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
-    tt, ttd = test_planner(rocksample, pomcp, nsteps=1, discount=0.95)
+    tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
 
 
 if __name__ == "__main__":
