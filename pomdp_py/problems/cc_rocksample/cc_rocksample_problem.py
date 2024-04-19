@@ -1,7 +1,6 @@
 from __future__ import annotations
 import copy
 import math
-import numpy as np
 import pomdp_py
 from pomdp_py.problems.rocksample.rocksample_problem import (
     RockSampleProblem,
