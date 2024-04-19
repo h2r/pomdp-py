@@ -295,6 +295,20 @@ cdef class POUCT(Planner):
         """
         self._rollout_policy = rollout_policy
 
+    cpdef QNode _create_qnode(
+        self,
+        tuple qnode_params = tuple()
+    ):
+        cdef int num_visits_init
+        cdef double value_init
+
+        if len(qnode_params) == 2:
+            # Expand the tuple and set the new QNode.
+            num_visits_init, value_init = qnode_params
+            return QNode(num_visits_init, value_init)
+
+        return QNode(self._num_visits_init, self._value_init)
+
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=None):
         cdef Action action
         cdef tuple preference
@@ -303,17 +317,15 @@ cdef class POUCT(Planner):
 
         for action in self._agent.valid_actions(state=state, history=history):
             if vnode[action] is None:
-                history_action_node = QNode(self._num_visits_init,
-                                            self._value_init)
+                history_action_node = self._create_qnode()
                 vnode[action] = history_action_node
 
         if self._action_prior is not None:
             # Using action prior; special values are set;
             for preference in \
                 self._action_prior.get_preferred_actions(state, history):
-                action, num_visits_init, value_init = preference
-                history_action_node = QNode(num_visits_init,
-                                            value_init)
+                action = preference[0]
+                history_action_node = self._create_qnode(preference[1:])
                 vnode[action] = history_action_node
 
     cpdef _search(self):

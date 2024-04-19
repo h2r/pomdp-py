@@ -1,4 +1,4 @@
-# cython: language_level=3, profile=True
+# cython: language_level=3
 
 from pomdp_py.algorithms.po_uct cimport QNode
 from pomdp_py.algorithms.pomcp cimport POMCP, VNode
@@ -52,7 +52,7 @@ cdef class CCPOMCP(POMCP):
     cdef _CCPolicyModel _greedy_policy_model
 
     cpdef public Action plan(CCPOMCP self, Agent agent)
-    cpdef _expand_vnode(self, VNode vnode, tuple history, State state = *)
+    cpdef QNode _create_qnode(self, tuple qnode_params = *)
     cpdef void _greedy_policy(CCPOMCP self, VNode vnode, double explore_const, double nu)
     cdef void _init_lambda_fn(CCPOMCP self)
     cpdef tuple[State, Observation, Response] _sample_generative_model(CCPOMCP self, State state, Action action)
