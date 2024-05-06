@@ -13,7 +13,7 @@ cdef class WeightedParticles(GenerativeDistribution):
 
     Args:
        particles (list): List of (value, weight) tuples. The weight represents
-           the likelihood that the value is drawn from the underlying distribution.
+           the likelihood that the value is drawn from the underlying distribution. Note that the weights may not be normalized. To normalize, call condense().
        approx_method (str): 'nearest' if when querying the probability
             of a value, and there is no matching particle for it, return
             the probability of the value closest to it. Assuming values
@@ -53,6 +53,14 @@ cdef class WeightedParticles(GenerativeDistribution):
     def frozen(self):
         return self._frozen
 
+    @property
+    def hist(self):
+        return self._hist
+
+    @property
+    def hist_valid(self):
+        return self._hist_valid
+
     def add(self, particle):
         """add(self, particle)
         particle: (value, weight) tuple"""
@@ -77,7 +85,7 @@ cdef class WeightedParticles(GenerativeDistribution):
 
     def __eq__(self, other):
         if isinstance(other, WeightedParticles):
-            return self._hist == other._hist
+            return self._hist == other.hist
         return False
 
     def __getitem__(self, value):
@@ -161,7 +169,7 @@ cdef class WeightedParticles(GenerativeDistribution):
         Returns a new set of weighted particles with unique values
         and weights aggregated (taken average).
         """
-        return WeightedParticles.from_histogram(self.get_histogram())
+        return WeightedParticles.from_histogram(self.get_histogram(), frozen=self._frozen)
 
 
 cdef class Particles(WeightedParticles):
