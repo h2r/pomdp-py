@@ -42,6 +42,7 @@ cdef class POUCT(Planner):
                     State state, tuple history, VNode root, QNode parent,
                     Observation observation, int depth)
 
+    cpdef QNode _create_qnode(self, tuple qnode_params = *)
     cpdef _expand_vnode(self, VNode vnode, tuple history, State state=*)
     cpdef _rollout(self, State state, tuple history, VNode root, int depth)
     cpdef Action _ucb(self, VNode root)
