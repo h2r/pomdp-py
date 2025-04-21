@@ -538,7 +538,7 @@ def create_instance(n, k, **kwargs):
 
 
 def main():
-    rocksample = debug_instance()  # create_instance(7, 8)
+    rocksample = create_instance(5, 5)
     rocksample.print_state()
 
     print("*** Testing POMCP ***")
