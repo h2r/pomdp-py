@@ -105,37 +105,37 @@ class TigerObservation(pomdp_py.Observation):
         return "TigerObservation(%s)" % self.name
 
 
-# Observation model
-class ObservationModel(pomdp_py.ObservationModel):
-    def __init__(self, noise=0.15):
-        self.noise = noise
+# # Observation model
+# class ObservationModel(pomdp_py.ObservationModel):
+#     def __init__(self, noise=0.15):
+#         self.noise = noise
 
-    def probability(self, observation, next_state, action):
-        if action.name == "listen":
-            # heard the correct growl
-            if observation.name == next_state.name:
-                return 1.0 - self.noise
-            else:
-                return self.noise
-        else:
-            return 0.5
+#     def probability(self, observation, next_state, action):
+#         if action.name == "listen":
+#             # heard the correct growl
+#             if observation.name == next_state.name:
+#                 return 1.0 - self.noise
+#             else:
+#                 return self.noise
+#         else:
+#             return 0.5
 
-    def sample(self, next_state, action):
-        if action.name == "listen":
-            thresh = 1.0 - self.noise
-        else:
-            thresh = 0.5
+#     def sample(self, next_state, action):
+#         if action.name == "listen":
+#             thresh = 1.0 - self.noise
+#         else:
+#             thresh = 0.5
 
-        if random.uniform(0, 1) < thresh:
-            return TigerObservation(next_state.name)
-        else:
-            return TigerObservation(next_state.other().name)
+#         if random.uniform(0, 1) < thresh:
+#             return TigerObservation(next_state.name)
+#         else:
+#             return TigerObservation(next_state.other().name)
 
-    def get_all_observations(self):
-        """Only need to implement this if you're using
-        a solver that needs to enumerate over the observation space
-        (e.g. value iteration)"""
-        return [TigerObservation(s) for s in {"tiger-left", "tiger-right"}]
+#     def get_all_observations(self):
+#         """Only need to implement this if you're using
+#         a solver that needs to enumerate over the observation space
+#         (e.g. value iteration)"""
+#         return [TigerObservation(s) for s in {"tiger-left", "tiger-right"}]
 
 
 # Transition Model
@@ -341,39 +341,39 @@ def main():
 
     print("** Testing value iteration **")
     vi = pomdp_py.ValueIteration(horizon=3, discount_factor=0.95)
-    test_planner(tiger, vi, nsteps=10)
+    test_planner(tiger, vi, nsteps=3)
 
-    # print("\n** Testing POUCT **")
-    # pouct = pomdp_py.POUCT(
-    #     max_depth=3,
-    #     discount_factor=0.95,
-    #     num_sims=4096,
-    #     exploration_const=50,
-    #     rollout_policy=tiger.agent.policy_model,
-    #     show_progress=True,
-    # )
-    # test_planner(tiger, pouct, nsteps=10)
-    # TreeDebugger(tiger.agent.tree).pp
+    print("\n** Testing POUCT **")
+    pouct = pomdp_py.POUCT(
+        max_depth=3,
+        discount_factor=0.95,
+        num_sims=4096,
+        exploration_const=50,
+        rollout_policy=tiger.agent.policy_model,
+        show_progress=True,
+    )
+    test_planner(tiger, pouct, nsteps=10)
+    TreeDebugger(tiger.agent.tree).pp
 
-    # # Reset agent belief
-    # tiger.agent.set_belief(init_belief, prior=True)
-    # tiger.agent.tree = None
+    # Reset agent belief
+    tiger.agent.set_belief(init_belief, prior=True)
+    tiger.agent.tree = None
 
-    # print("** Testing POMCP **")
-    # tiger.agent.set_belief(
-    #     pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True
-    # )
-    # pomcp = pomdp_py.POMCP(
-    #     max_depth=3,
-    #     discount_factor=0.95,
-    #     num_sims=1000,
-    #     exploration_const=50,
-    #     rollout_policy=tiger.agent.policy_model,
-    #     show_progress=True,
-    #     pbar_update_interval=500,
-    # )
-    # test_planner(tiger, pomcp, nsteps=10)
-    # TreeDebugger(tiger.agent.tree).pp
+    print("** Testing POMCP **")
+    tiger.agent.set_belief(
+        pomdp_py.Particles.from_histogram(init_belief, num_particles=100), prior=True
+    )
+    pomcp = pomdp_py.POMCP(
+        max_depth=3,
+        discount_factor=0.95,
+        num_sims=1000,
+        exploration_const=50,
+        rollout_policy=tiger.agent.policy_model,
+        show_progress=True,
+        pbar_update_interval=500,
+    )
+    test_planner(tiger, pomcp, nsteps=10)
+    TreeDebugger(tiger.agent.tree).pp
 
 
 if __name__ == "__main__":
