@@ -70,11 +70,12 @@ class RockType:
 
 
 class State(pomdp_py.State):
-    def __init__(self, position, rocktypes, terminal=False):
+    def __init__(self, position, rocktypes, terminal=False, removed_rocks=None):
         """
         position (tuple): (x,y) position of the rover on the grid.
         rocktypes: tuple of size k. Each is either Good or Bad.
         terminal (bool): The robot is at the terminal state.
+        removed_rocks: set of rock IDs that have been sampled and removed.
 
         (It is so true that the agent's state doesn't need to involve the map!)
 
@@ -85,9 +86,12 @@ class State(pomdp_py.State):
             rocktypes = tuple(rocktypes)
         self.rocktypes = rocktypes
         self.terminal = terminal
+        if removed_rocks is None:
+            removed_rocks = set()
+        self.removed_rocks = removed_rocks
 
     def __hash__(self):
-        return hash((self.position, self.rocktypes, self.terminal))
+        return hash((self.position, self.rocktypes, self.terminal, tuple(sorted(self.removed_rocks))))
 
     def __eq__(self, other):
         if isinstance(other, State):
@@ -95,6 +99,7 @@ class State(pomdp_py.State):
                 self.position == other.position
                 and self.rocktypes == other.rocktypes
                 and self.terminal == other.terminal
+                and self.removed_rocks == other.removed_rocks
             )
         else:
             return False
@@ -218,6 +223,7 @@ class RSTransitionModel(pomdp_py.TransitionModel):
         rocktypes = tuple(state.rocktypes)
         next_rocktypes = rocktypes
         next_terminal = state.terminal
+        next_removed_rocks = set(state.removed_rocks)  # Copy the removed rocks set
         if state.terminal:
             next_terminal = True  # already terminated. So no state transition happens
         else:
@@ -228,10 +234,9 @@ class RSTransitionModel(pomdp_py.TransitionModel):
             elif isinstance(action, SampleAction):
                 if next_position in self._rock_locs:
                     rock_id = self._rock_locs[next_position]
-                    _rocktypes = list(rocktypes)
-                    _rocktypes[rock_id] = RockType.BAD
-                    next_rocktypes = tuple(_rocktypes)
-        return State(next_position, next_rocktypes, next_terminal)
+                    # Add the rock to removed_rocks instead of changing its type
+                    next_removed_rocks.add(rock_id)
+        return State(next_position, next_rocktypes, next_terminal, next_removed_rocks)
 
     def argmax(self, state, action):
         """Returns the most likely next state"""
@@ -245,6 +250,14 @@ class RSObservationModel(pomdp_py.ObservationModel):
 
     def probability(self, observation, next_state, action):
         if isinstance(action, CheckAction):
+            # Check if the rock has been removed (defensive programming)
+            if action.rock_id in next_state.removed_rocks:
+                # Rock has been removed, only no observation is possible
+                if observation.quality is None:
+                    return 1.0 - EPSILON
+                else:
+                    return EPSILON
+            
             # compute efficiency
             rock_pos = self._rocks[action.rock_id]
             dist = euclidean_dist(rock_pos, next_state.position)
@@ -264,6 +277,11 @@ class RSObservationModel(pomdp_py.ObservationModel):
 
     def sample(self, next_state, action, argmax=False):
         if not next_state.terminal and isinstance(action, CheckAction):
+            # Check if the rock has been removed (defensive programming)
+            if action.rock_id in next_state.removed_rocks:
+                # Rock has been removed, return no observation
+                return Observation(None)
+            
             # compute efficiency
             rock_pos = self._rocks[action.rock_id]
             dist = euclidean_dist(rock_pos, next_state.position)
@@ -301,15 +319,20 @@ class RSRewardModel(pomdp_py.RewardModel):
         if state.terminal:
             return 0  # terminated. No reward
         if isinstance(action, SampleAction):
-            # need to check the rocktype in `state` because it has turned bad in `next_state`
+            # Check if there's a rock at current position and if it hasn't been removed
             if state.position in self._rock_locs:
-                if state.rocktypes[self._rock_locs[state.position]] == RockType.GOOD:
+                rock_id = self._rock_locs[state.position]
+                # Check if rock has already been removed
+                if rock_id in state.removed_rocks:
+                    return -100  # Penalty for sampling an already removed rock
+                # Check if rock is good
+                if state.rocktypes[rock_id] == RockType.GOOD:
                     return 10
                 else:
-                    # No rock or bad rock
+                    # Bad rock
                     return -10
             else:
-                return 0  # problem didn't specify penalty for sampling empty space.
+                return -100  # Large penalty for sampling at non-rock position (defensive programming)
 
         elif isinstance(action, MoveAction):
             if self._in_exit_area(next_state.position):
@@ -328,12 +351,13 @@ class RSRewardModel(pomdp_py.RewardModel):
 class RSPolicyModel(pomdp_py.RolloutPolicy):
     """Simple policy model according to problem description."""
 
-    def __init__(self, n, k):
+    def __init__(self, n, k, rock_locs=None):
         check_actions = set({CheckAction(rock_id) for rock_id in range(k)})
         self._move_actions = {MoveEast, MoveWest, MoveNorth, MoveSouth}
         self._other_actions = {SampleAction()} | check_actions
         self._all_actions = self._move_actions | self._other_actions
         self._n = n
+        self._rock_locs = rock_locs if rock_locs is not None else {}
 
     def sample(self, state, normalized=False, **kwargs):
         return random.sample(self.get_all_actions(state=state), 1)[0]
@@ -350,7 +374,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
         if state is None:
             return list(self._all_actions)
         else:
-            motions = set(self._all_actions)
+            motions = set(self._move_actions)
             rover_x, rover_y = state.position
             if rover_x == 0:
                 motions.remove(MoveWest)
@@ -358,7 +382,22 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
                 motions.remove(MoveNorth)
             if rover_y == self._n - 1:
                 motions.remove(MoveSouth)
-            return list(motions | self._other_actions)
+            
+            # Filter out check actions for removed rocks and sample actions
+            available_other_actions = set()
+            for action in self._other_actions:
+                if isinstance(action, CheckAction):
+                    # Only include check actions for rocks that haven't been removed
+                    if action.rock_id not in state.removed_rocks:
+                        available_other_actions.add(action)
+                elif isinstance(action, SampleAction):
+                    # Only include SampleAction if agent is at a rock position and rock hasn't been removed
+                    if state.position in self._rock_locs:
+                        rock_id = self._rock_locs[state.position]
+                        if rock_id not in state.removed_rocks:
+                            available_other_actions.add(action)
+            
+            return list(motions | available_other_actions)
 
     def rollout(self, state, history=None):
         return random.sample(self.get_all_actions(state=state), 1)[0]
@@ -392,7 +431,7 @@ class RockSampleProblem(pomdp_py.POMDP):
         rocktypes = tuple(RockType.random() for i in range(k))
 
         # Ground truth state
-        init_state = State(rover_position, rocktypes, False)
+        init_state = State(rover_position, rocktypes, False, set())
 
         return init_state, rock_locs
 
@@ -436,7 +475,7 @@ class RockSampleProblem(pomdp_py.POMDP):
         self._n, self._k = n, k
         agent = pomdp_py.Agent(
             init_belief,
-            RSPolicyModel(n, k),
+            RSPolicyModel(n, k, rock_locs),
             RSTransitionModel(n, rock_locs, self.in_exit_area),
             RSObservationModel(rock_locs, half_efficiency_dist=half_efficiency_dist),
             RSRewardModel(rock_locs, self.in_exit_area),
@@ -451,12 +490,13 @@ class RockSampleProblem(pomdp_py.POMDP):
         super().__init__(agent, env, name="RockSampleProblem")
 
 
-def test_planner(rocksample, planner, nsteps=3, discount=0.95):
+def test_planner(rocksample, planner, nsteps=3, discount=0.95, verbose=False):
     gamma = 1.0
     total_reward = 0
     total_discounted_reward = 0
     for i in range(nsteps):
-        print("==== Step %d ====" % (i + 1))
+        if verbose:
+            print("==== Step %d ====" % (i + 1))
         action = planner.plan(rocksample.agent)
         # pomdp_py.visual.visualize_pouct_search_tree(rocksample.agent.tree,
         #                                             max_depth=5, anonymize=False)
@@ -473,19 +513,20 @@ def test_planner(rocksample, planner, nsteps=3, discount=0.95):
         total_reward += env_reward
         total_discounted_reward += env_reward * gamma
         gamma *= discount
-        print("True state: %s" % true_state)
-        print("Action: %s" % str(action))
-        print("Observation: %s" % str(real_observation))
-        print("Reward: %s" % str(env_reward))
-        print("Reward (Cumulative): %s" % str(total_reward))
-        print("Reward (Cumulative Discounted): %s" % str(total_discounted_reward))
-        if isinstance(planner, pomdp_py.POUCT):
-            print("__num_sims__: %d" % planner.last_num_sims)
-            print("__plan_time__: %.5f" % planner.last_planning_time)
-        if isinstance(planner, pomdp_py.PORollout):
-            print("__best_reward__: %d" % planner.last_best_reward)
-        print("World:")
-        rocksample.print_state()
+        if verbose:
+            print("True state: %s" % true_state)
+            print("Action: %s" % str(action))
+            print("Observation: %s" % str(real_observation))
+            print("Reward: %s" % str(env_reward))
+            print("Reward (Cumulative): %s" % str(total_reward))
+            print("Reward (Cumulative Discounted): %s" % str(total_discounted_reward))
+            if isinstance(planner, pomdp_py.POUCT):
+                print("__num_sims__: %d" % planner.last_num_sims)
+                print("__plan_time__: %.5f" % planner.last_planning_time)
+            if isinstance(planner, pomdp_py.PORollout):
+                print("__best_reward__: %d" % planner.last_best_reward)
+            print("World:")
+            rocksample.print_state()
 
         if rocksample.in_exit_area(rocksample.env.state.position):
             break
@@ -503,7 +544,7 @@ def init_particles_belief(k, num_particles, init_state, belief="uniform"):
             rocktypes = tuple(rocktypes)
         elif belief == "groundtruth":
             rocktypes = copy.deepcopy(init_state.rocktypes)
-        particles.append(State(init_state.position, rocktypes, False))
+        particles.append(State(init_state.position, rocktypes, False, set()))
     init_belief = pomdp_py.Particles(particles)
     return init_belief
 
@@ -517,11 +558,20 @@ def minimal_instance(**kwargs):
     rock_locs[(1, 1)] = 1
     rocktypes = ("good", "good")
     # Ground truth state
-    init_state = State(rover_position, rocktypes, False)
+    init_state = State(rover_position, rocktypes, False, set())
     belief = "uniform"
     init_belief = init_particles_belief(k, 200, init_state, belief=belief)
     rocksample = RockSampleProblem(n, k, init_state, rock_locs, init_belief, **kwargs)
     return rocksample
+
+
+def calculate_std(values):
+    """Calculate standard deviation of a list of values."""
+    if len(values) <= 1:
+        return 0.0
+    mean = sum(values) / len(values)
+    variance = sum((x - mean) ** 2 for x in values) / (len(values) - 1)
+    return variance ** 0.5
 
 
 def create_instance(n, k, **kwargs):
@@ -538,19 +588,60 @@ def create_instance(n, k, **kwargs):
 
 
 def main():
-    rocksample = create_instance(5, 5)
-    rocksample.print_state()
-
-    print("*** Testing POMCP ***")
-    pomcp = pomdp_py.POMCP(
-        max_depth=30,
-        discount_factor=0.95,
-        num_sims=10000,
-        exploration_const=5,
-        rollout_policy=rocksample.agent.policy_model,
-        num_visits_init=1,
-    )
-    tt, ttd = test_planner(rocksample, pomcp, nsteps=100, discount=0.95)
+    k_runs = 20  # Number of runs to perform
+    max_depth = 90
+    num_sims = 16000
+    exploration_const = 10
+    
+    print(f"*** Testing POMCP with {k_runs} runs ***")
+    print(f"Max depth: {max_depth}")
+    print(f"Number of simulations: {num_sims}")
+    print(f"Exploration constant: {exploration_const}")
+    
+    total_rewards = []
+    total_discounted_rewards = []
+    
+    for run in range(k_runs):
+        print(f"\n==== Run {run + 1}/{k_runs} ====")
+        print("testing with legal actions")
+        
+        # Create a fresh instance for each run
+        rocksample = create_instance(11, 11)
+        
+        # Create POMCP planner
+        pomcp = pomdp_py.POMCP(
+            max_depth=max_depth,
+            discount_factor=0.95,
+            num_sims=num_sims,
+            exploration_const=exploration_const,
+            rollout_policy=rocksample.agent.policy_model,
+            num_visits_init=1,
+        )
+        
+        # Run the test planner
+        tt, ttd = test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=False)
+        
+        total_rewards.append(tt)
+        total_discounted_rewards.append(ttd)
+        
+        print(f"Run {run + 1} - Total reward: {tt}, Discounted reward: {ttd:.3f}")
+    
+    # Calculate averages
+    avg_total_reward = sum(total_rewards) / len(total_rewards)
+    avg_discounted_reward = sum(total_discounted_rewards) / len(total_discounted_rewards)
+    
+    print("\n" + "="*50)
+    print(f"FINAL RESULTS ({k_runs} runs)")
+    print("="*50)
+    print(f"Average total reward: {avg_total_reward:.3f}")
+    print(f"Average discounted reward: {avg_discounted_reward:.3f}")
+    print(f"Standard deviation of total reward: {calculate_std(total_rewards):.3f}")
+    print(f"Standard deviation of discounted reward: {calculate_std(total_discounted_rewards):.3f}")
+    print(f"Min total reward: {min(total_rewards)}")
+    print(f"Max total reward: {max(total_rewards)}")
+    print(f"Min discounted reward: {min(total_discounted_rewards):.3f}")
+    print(f"Max discounted reward: {max(total_discounted_rewards):.3f}")
+    print("="*50)
 
 
 if __name__ == "__main__":

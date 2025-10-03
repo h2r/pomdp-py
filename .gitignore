@@ -135,4 +135,8 @@ Thumbs.db
 *.alpha
 *.pg
 
+# Rocksample output files
+##########################
+pomdp_py/problems/rocksample/output*.txt
+
 .DS_Store
