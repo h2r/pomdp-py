@@ -403,10 +403,22 @@ cdef class POUCT(Planner):
         cdef State next_state
         cdef Observation observation
         cdef float reward
+        cdef int nsteps
 
         while depth < self._max_depth:
+            # Check if current state is terminal before sampling action
+            if hasattr(self._agent.transition_model, 'is_terminal') and \
+               self._agent.transition_model.is_terminal(state):
+                break
+
             action = self._rollout_policy.rollout(state, history)
             next_state, observation, reward, nsteps = sample_generative_model(self._agent, state, action)
+
+            # Early termination if terminal state reached (nsteps == 0)
+            if nsteps == 0:
+                total_discounted_reward += reward * discount
+                break
+
             history = history + ((action, observation),)
             depth += nsteps
             total_discounted_reward += reward * discount
