@@ -29,15 +29,16 @@ jobs:
     - name: Build dependencies
       shell: bash
       run: |
-        # pomdp-solve (native)
+        # pomdp-solve (native, via autotools)
         mkdir -p thirdparty
         curl -L https://www.pomdp.org/code/pomdp-solve-5.5.tar.gz -o thirdparty/pomdp-solve-5.5.tar.gz
         tar -xzf thirdparty/pomdp-solve-5.5.tar.gz -C thirdparty
         mv thirdparty/pomdp-solve-5.5 thirdparty/pomdp-solve
+        ( cd thirdparty/pomdp-solve && ./configure )
         make -C thirdparty/pomdp-solve/src
         ln -sf "$(pwd)/thirdparty/pomdp-solve/src/pomdp-solve" thirdparty/pomdp-solve.bin
 
-        # APPL / SARSOP
+        # APPL / SARSOP (strip x86-only flags on arm64)
         git clone https://github.com/personalrobotics/appl.git thirdparty/appl
         git -C thirdparty/appl apply ../../tests/appl.patch
         if [[ $(uname -m) == "arm64" ]]; then
