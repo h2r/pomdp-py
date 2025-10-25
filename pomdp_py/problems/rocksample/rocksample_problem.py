@@ -92,7 +92,14 @@ class State(pomdp_py.State):
         self.removed_rocks = removed_rocks
 
     def __hash__(self):
-        return hash((self.position, self.rocktypes, self.terminal, tuple(sorted(self.removed_rocks))))
+        return hash(
+            (
+                self.position,
+                self.rocktypes,
+                self.terminal,
+                tuple(sorted(self.removed_rocks)),
+            )
+        )
 
     def __eq__(self, other):
         if isinstance(other, State):
@@ -118,7 +125,7 @@ class State(pomdp_py.State):
         return "State(%s | %s | %s)" % (
             str(self.position),
             str(rocks_status),
-            str(self.terminal)
+            str(self.terminal),
         )
 
 
@@ -339,7 +346,9 @@ class RSRewardModel(pomdp_py.RewardModel):
                     # Bad rock
                     return -10
             else:
-                return -100  # Large penalty for sampling at non-rock position (defensive programming)
+                return (
+                    -100
+                )  # Large penalty for sampling at non-rock position (defensive programming)
 
         elif isinstance(action, MoveAction):
             if self._in_exit_area(next_state.position):
@@ -578,7 +587,7 @@ def calculate_std(values):
         return 0.0
     mean = sum(values) / len(values)
     variance = sum((x - mean) ** 2 for x in values) / (len(values) - 1)
-    return variance ** 0.5
+    return variance**0.5
 
 
 def create_instance(n, k, **kwargs):
@@ -623,11 +632,13 @@ def benchmark(verbose=False):
             exploration_const=exploration_const,
             rollout_policy=rocksample.agent.policy_model,
             num_visits_init=1,
-            show_progress=verbose
+            show_progress=verbose,
         )
 
         # Run the test planner
-        tt, ttd = test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=verbose)
+        tt, ttd = test_planner(
+            rocksample, pomcp, nsteps=200, discount=0.95, verbose=verbose
+        )
 
         total_rewards.append(tt)
         total_discounted_rewards.append(ttd)
@@ -636,20 +647,26 @@ def benchmark(verbose=False):
 
     # Calculate averages
     avg_total_reward = sum(total_rewards) / len(total_rewards)
-    avg_discounted_reward = sum(total_discounted_rewards) / len(total_discounted_rewards)
+    avg_discounted_reward = sum(total_discounted_rewards) / len(
+        total_discounted_rewards
+    )
 
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(f"FINAL RESULTS ({k_runs} runs)")
-    print("="*50)
+    print("=" * 50)
     print(f"Average total reward: {avg_total_reward:.3f}")
     print(f"Average discounted reward: {avg_discounted_reward:.3f}")
     print(f"Standard deviation of total reward: {calculate_std(total_rewards):.3f}")
-    print(f"Standard deviation of discounted reward: {calculate_std(total_discounted_rewards):.3f}")
+    print(
+        "Standard deviation of discounted reward:"
+        f" {calculate_std(total_discounted_rewards):.3f}"
+    )
     print(f"Min total reward: {min(total_rewards)}")
     print(f"Max total reward: {max(total_rewards)}")
     print(f"Min discounted reward: {min(total_discounted_rewards):.3f}")
     print(f"Max discounted reward: {max(total_discounted_rewards):.3f}")
-    print("="*50)
+    print("=" * 50)
+
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description="RockSample Problem Runner")
@@ -661,7 +678,7 @@ def main(argv=None):
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Enable verbose output during the benchmark."
+        help="Enable verbose output during the benchmark.",
     )
     args = parser.parse_args(argv)
 
@@ -677,7 +694,7 @@ def main(argv=None):
             exploration_const=10,
             rollout_policy=rocksample.agent.policy_model,
             num_visits_init=1,
-            show_progress=True
+            show_progress=True,
         )
         test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=True)
 
