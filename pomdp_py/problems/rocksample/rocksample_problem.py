@@ -41,6 +41,7 @@ import math
 import numpy as np
 import sys
 import copy
+import argparse
 
 EPSILON = 1e-9
 
@@ -75,7 +76,7 @@ class State(pomdp_py.State):
         position (tuple): (x,y) position of the rover on the grid.
         rocktypes: tuple of size k. Each is either Good or Bad.
         terminal (bool): The robot is at the terminal state.
-        removed_rocks: set of rock IDs that have been sampled and removed.
+        removed_rocks (set): set of rock IDs that have been sampled and removed.
 
         (It is so true that the agent's state doesn't need to involve the map!)
 
@@ -108,10 +109,16 @@ class State(pomdp_py.State):
         return self.__repr__()
 
     def __repr__(self):
+        rocks_status = []
+        for rock_id in range(len(self.rocktypes)):
+            if rock_id in self.removed_rocks:
+                rocks_status.append("x")
+            else:
+                rocks_status.append(self.rocktypes[rock_id])
         return "State(%s | %s | %s)" % (
             str(self.position),
-            str(self.rocktypes),
-            str(self.terminal),
+            str(rocks_status),
+            str(self.terminal)
         )
 
 
@@ -257,7 +264,7 @@ class RSObservationModel(pomdp_py.ObservationModel):
                     return 1.0 - EPSILON
                 else:
                     return EPSILON
-            
+
             # compute efficiency
             rock_pos = self._rocks[action.rock_id]
             dist = euclidean_dist(rock_pos, next_state.position)
@@ -281,7 +288,7 @@ class RSObservationModel(pomdp_py.ObservationModel):
             if action.rock_id in next_state.removed_rocks:
                 # Rock has been removed, return no observation
                 return Observation(None)
-            
+
             # compute efficiency
             rock_pos = self._rocks[action.rock_id]
             dist = euclidean_dist(rock_pos, next_state.position)
@@ -382,7 +389,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
                 motions.remove(MoveNorth)
             if rover_y == self._n - 1:
                 motions.remove(MoveSouth)
-            
+
             # Filter out check actions for removed rocks and sample actions
             available_other_actions = set()
             for action in self._other_actions:
@@ -396,7 +403,7 @@ class RSPolicyModel(pomdp_py.RolloutPolicy):
                         rock_id = self._rock_locs[state.position]
                         if rock_id not in state.removed_rocks:
                             available_other_actions.add(action)
-            
+
             return list(motions | available_other_actions)
 
     def rollout(self, state, history=None):
@@ -587,27 +594,27 @@ def create_instance(n, k, **kwargs):
     return rocksample
 
 
-def main():
+def benchmark(verbose=False):
     k_runs = 20  # Number of runs to perform
     max_depth = 90
     num_sims = 16000
     exploration_const = 10
-    
+
     print(f"*** Testing POMCP with {k_runs} runs ***")
     print(f"Max depth: {max_depth}")
     print(f"Number of simulations: {num_sims}")
     print(f"Exploration constant: {exploration_const}")
-    
+
     total_rewards = []
     total_discounted_rewards = []
-    
+
     for run in range(k_runs):
         print(f"\n==== Run {run + 1}/{k_runs} ====")
         print("testing with legal actions")
-        
+
         # Create a fresh instance for each run
         rocksample = create_instance(11, 11)
-        
+
         # Create POMCP planner
         pomcp = pomdp_py.POMCP(
             max_depth=max_depth,
@@ -616,20 +623,21 @@ def main():
             exploration_const=exploration_const,
             rollout_policy=rocksample.agent.policy_model,
             num_visits_init=1,
+            show_progress=verbose
         )
-        
+
         # Run the test planner
-        tt, ttd = test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=False)
-        
+        tt, ttd = test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=verbose)
+
         total_rewards.append(tt)
         total_discounted_rewards.append(ttd)
-        
+
         print(f"Run {run + 1} - Total reward: {tt}, Discounted reward: {ttd:.3f}")
-    
+
     # Calculate averages
     avg_total_reward = sum(total_rewards) / len(total_rewards)
     avg_discounted_reward = sum(total_discounted_rewards) / len(total_discounted_rewards)
-    
+
     print("\n" + "="*50)
     print(f"FINAL RESULTS ({k_runs} runs)")
     print("="*50)
@@ -642,6 +650,36 @@ def main():
     print(f"Min discounted reward: {min(total_discounted_rewards):.3f}")
     print(f"Max discounted reward: {max(total_discounted_rewards):.3f}")
     print("="*50)
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="RockSample Problem Runner")
+    parser.add_argument(
+        "--benchmark",
+        action="store_true",
+        help="Run the benchmark tests for the RockSample problem.",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Enable verbose output during the benchmark."
+    )
+    args = parser.parse_args(argv)
+
+    if args.benchmark:
+        benchmark(args.verbose)
+    else:
+        # Default behavior: run a small instance with a POMCP that returns quicker
+        rocksample = create_instance(5, 5)
+        pomcp = pomdp_py.POMCP(
+            max_depth=30,
+            discount_factor=0.95,
+            planning_time=2.0,
+            exploration_const=10,
+            rollout_policy=rocksample.agent.policy_model,
+            num_visits_init=1,
+            show_progress=True
+        )
+        test_planner(rocksample, pomcp, nsteps=200, discount=0.95, verbose=True)
 
 
 if __name__ == "__main__":
