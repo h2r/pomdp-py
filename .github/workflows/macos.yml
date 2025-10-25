@@ -25,17 +25,26 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     - name: Build dependencies
+      shell: bash
       run: |
-        # Install pomdp-solve macOS binary
-        wget -P thirdparty https://www.pomdp.org/code/pomdp-solve-os-x.bin
-        chmod +x thirdparty/pomdp-solve-os-x.bin
+        # pomdp-solve (native, via autotools)
+        mkdir -p thirdparty
+        curl -L https://www.pomdp.org/code/pomdp-solve-5.5.tar.gz -o thirdparty/pomdp-solve-5.5.tar.gz
+        tar -xzf thirdparty/pomdp-solve-5.5.tar.gz -C thirdparty
+        mv thirdparty/pomdp-solve-5.5 thirdparty/pomdp-solve
+        ( cd thirdparty/pomdp-solve && ./configure )
+        make -C thirdparty/pomdp-solve/src
+        ln -sf "$(pwd)/thirdparty/pomdp-solve/src/pomdp-solve" thirdparty/pomdp-solve.bin
 
-        # Build and install SARSOP
+        # APPL / SARSOP (strip x86-only flags on arm64)
         git clone https://github.com/personalrobotics/appl.git thirdparty/appl
-        # Fix Arm build (remove -mfpmath=sse) and declare implict functions
         git -C thirdparty/appl apply ../../tests/appl.patch
+        if [[ $(uname -m) == "arm64" ]]; then
+          find thirdparty/appl/src -name "Makefile*" -print0 \
+            | xargs -0 sed -i '' -E 's/ -m(sse|sse2|ssse3|sse4[^ ]*)//g; s/ -mfpmath=sse//g; s/ -march=[^ ]+//g; s/ -mtune=[^ ]+//g'
+        fi
         make -C thirdparty/appl/src
         make -C thirdparty/appl/src install
     - name: Install dependencies
@@ -43,9 +52,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
     - name: Test
-      working-directory: .
       run: |
-        export POMDP_SOLVE_PATH=./thirdparty/pomdp-solve-os-x.bin
+        export POMDP_SOLVE_PATH=./thirdparty/pomdp-solve.bin
         export POMDPSOL_PATH=./thirdparty/appl/bin/pomdpsol
         export POMDPCONVERT_PATH=./thirdparty/appl/src/pomdpconvert
         python tests/test_all.py
