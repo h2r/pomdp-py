@@ -13,12 +13,12 @@ def parse_args():
             available_problems
         ),
     )
-    args = parser.parse_args()
-    return parser, args
+    args, unknown_args = parser.parse_known_args()
+    return parser, args, unknown_args
 
 
 if __name__ == "__main__":
-    parser, args = parse_args()
+    parser, args, unknown_args = parse_args()
     if args.run:
         if args.run.lower() == "tiger":
             from pomdp_py.problems.tiger.tiger_problem import main
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         elif args.run.lower() == "rocksample":
             from pomdp_py.problems.rocksample.rocksample_problem import main
 
-            main()
+            main(unknown_args)
 
         elif args.run.lower() == "mos":
             from pomdp_py.problems.multi_object_search.problem import unittest
