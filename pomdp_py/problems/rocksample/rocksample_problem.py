@@ -97,7 +97,6 @@ class State(pomdp_py.State):
                 self.position,
                 self.rocktypes,
                 self.terminal,
-                tuple(sorted(self.removed_rocks)),
             )
         )
 
