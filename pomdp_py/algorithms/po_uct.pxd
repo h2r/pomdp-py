@@ -25,6 +25,7 @@ cdef class POUCT(Planner):
     cdef float _exploration_const
     cdef ActionPrior _action_prior
     cdef RolloutPolicy _rollout_policy
+    cdef HeuristicFunction _heuristic_fn
     cdef Agent _agent
     cdef int _last_num_sims
     cdef float _last_planning_time
@@ -53,6 +54,9 @@ cdef class RolloutPolicy(PolicyModel):
 
 cdef class RandomRollout(RolloutPolicy):
     pass
+
+cdef class HeuristicFunction:
+    cpdef float value(self, State state)
 
 cdef class ActionPrior:
     cpdef get_preferred_actions(ActionPrior self, State state, tuple history)

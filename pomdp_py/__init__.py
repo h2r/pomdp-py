@@ -32,6 +32,7 @@ from pomdp_py.algorithms.po_uct import (
     RolloutPolicy,
     RandomRollout,
     ActionPrior,
+    HeuristicFunction,
 )
 from pomdp_py.algorithms.bsp.blqr import BLQR
 

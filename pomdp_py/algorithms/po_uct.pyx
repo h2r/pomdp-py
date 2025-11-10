@@ -151,6 +151,27 @@ cdef class RandomRollout(RolloutPolicy):
         """rollout(self, State state, tuple history=None)"""
         return random.sample(self.get_all_actions(state=state, history=history), 1)[0]
 
+cdef class HeuristicFunction:
+    """A problem-specific heuristic function for estimating cost-to-go.
+
+    This is used to provide better value estimates when max depth is reached
+    during rollouts in POUCT. The heuristic should be admissible (never overestimate
+    the true cost-to-go) for best performance.
+    """
+
+    cpdef float value(self, State state):
+        """Compute the heuristic value (cost-to-go estimate) for the given state.
+
+        Args:
+            state: The state to evaluate
+
+        Returns:
+            float: Estimated discounted reward-to-go from this state.
+                   For cost problems, this should be negative (cost).
+                   For reward problems, this should be positive.
+        """
+        raise NotImplementedError
+
 cdef class POUCT(Planner):
 
     """ POUCT (Partially Observable UCT) :cite:`silver2010monte` is presented in the POMCP
@@ -164,7 +185,7 @@ cdef class POUCT(Planner):
              discount_factor=0.9, exploration_const=math.sqrt(2),
              num_visits_init=1, value_init=0,
              rollout_policy=RandomRollout(),
-             action_prior=None, show_progress=False, pbar_update_interval=5)
+             action_prior=None, heuristic_fn=None, show_progress=False, pbar_update_interval=5)
 
     Args:
         max_depth (int): Depth of the MCTS tree. Default: 5.
@@ -176,6 +197,8 @@ cdef class POUCT(Planner):
             If both `num_sims` and `planning_time` are negative, then the planner will run for 1 second.
         rollout_policy (RolloutPolicy): rollout policy. Default: RandomRollout.
         action_prior (ActionPrior): a prior over preferred actions given state and history.
+        heuristic_fn (HeuristicFunction): optional heuristic function for estimating cost-to-go
+            when max_depth is reached during rollouts. Default: None.
         show_progress (bool): True if print a progress bar for simulations.
         pbar_update_interval (int): The number of simulations to run after each update of the progress bar,
             Only useful if show_progress is True; You can set this parameter even if your stopping criteria
@@ -187,7 +210,7 @@ cdef class POUCT(Planner):
                  discount_factor=0.9, exploration_const=math.sqrt(2),
                  num_visits_init=0, value_init=0,
                  rollout_policy=None,
-                 action_prior=None, show_progress=False, pbar_update_interval=5):
+                 action_prior=None, heuristic_fn=None, show_progress=False, pbar_update_interval=5):
         self._max_depth = max_depth
         self._planning_time = planning_time
         self._num_sims = num_sims
@@ -199,6 +222,7 @@ cdef class POUCT(Planner):
         self._discount_factor = discount_factor
         self._exploration_const = exploration_const
         self._action_prior = action_prior
+        self._heuristic_fn = heuristic_fn
 
         self._show_progress = show_progress
         self._pbar_update_interval = pbar_update_interval
@@ -404,6 +428,7 @@ cdef class POUCT(Planner):
         cdef Observation observation
         cdef float reward
         cdef int nsteps
+        cdef float heuristic_value
 
         while depth < self._max_depth:
             # Check if current state is terminal before sampling action
@@ -424,6 +449,12 @@ cdef class POUCT(Planner):
             total_discounted_reward += reward * discount
             discount *= (self._discount_factor**nsteps)
             state = next_state
+
+        # Add heuristic estimate if max depth reached and heuristic function provided
+        if depth >= self._max_depth and self._heuristic_fn is not None:
+            heuristic_value = self._heuristic_fn.value(state)
+            total_discounted_reward += discount * heuristic_value
+
         return total_discounted_reward
 
     cpdef Action _ucb(self, VNode root):
